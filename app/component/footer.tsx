@@ -1,14 +1,37 @@
+'use client'
+import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { Textarea } from "@nextui-org/input";
 import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock, Star} from 'lucide-react';
 import { AnimatedTestimonialsDemo } from "./AnimatedTestimonialsDemo";
 import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
 
 
+
+
 export default function Footer() {
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
+
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+    const response = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email }),
+    });
+    if (response.ok) {
+      setIsSubscribed(true);
+      setEmail('Subscribed successfully!');
+    } else {
+      console.log("Subscription failed.", e)
+    }
+  };
+
+  
+
   return (
     <footer className="bg-black text-white">
 
@@ -128,16 +151,27 @@ export default function Footer() {
           <div className="space-y-4">
             <h2 className="text-white text-xl font-semibold">Stay Connected</h2>
             <p>Subscribe to our newsletter for updates and exclusive offers.</p>
-            <form className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-2">
               <Input
                 isClearable
                 isRequired
                 type="email"
+                value={email}
+                onChange={(e) => {
+                  if (!isSubscribed) setEmail(e.target.value);
+                }}
                 placeholder="Enter your email"
                 className="bg-black text-white border-gray-700 focus:border-gray-600"
+                disabled={isSubscribed}
               />
-              <Button type="submit" className="w-full bg-white hover:bg-black text-black hover:text-white">
-                Subscribe
+              <Button 
+                type="submit"
+                className={`w-full ${
+                  isSubscribed ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-white hover:bg-black text-black hover:text-white'
+                }`}
+                disabled={isSubscribed}
+                >
+              {isSubscribed ? 'Subscribed' : 'Subscribe'}
               </Button>
             </form>
           </div>
