@@ -95,7 +95,7 @@ const PrivacyPolicy = () => {
             <li>Withdraw your consent for processing at any time, where applicable</li>
           </ul>
           <p>
-            To exercise these rights, please contact us using the details provided in the "Contact Us" section below.
+            To exercise these rights, please contact us using the details provided in the &quot;Contact Us&quot; section below.
           </p>
         </section>
 
