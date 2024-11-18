@@ -77,13 +77,13 @@ export default function Component() {
             </div>
           </div>
           <div className="hidden lg:flex items-center space-x-4">
-            <Button className="bg-black">
+            <Button className="bg-black text-white">
               <Search className="h-5 w-5 text-white" />
-              <span className="sr-only">Search</span>
+              <span className="sr-only text-white">Search</span>
             </Button>
-            <Button className="bg-black">
+            <Button className="bg-black text-white">
               <ShoppingBag className="h-5 w-5 text-white" />
-              <span className="sr-only">Cart</span>
+              <span className="sr-only text-white">Cart</span>
             </Button>
           </div>
           <div className="lg:hidden">
@@ -97,7 +97,7 @@ export default function Component() {
               <SheetContent side="right" className="w-full bg-black text-white">
                 <div className="flex flex-col space-y-4 py-4">
                   <Button variant="ghost" className="self-end" onClick={() => setIsMobileMenuOpen(false)}>
-                    <X className="h-6 w-6" />
+                    <X className="h-6 w-6 text-white" />
                     <span className="sr-only">Close menu</span>
                   </Button>
                   {categories.map((category) => (
