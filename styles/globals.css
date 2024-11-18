@@ -10,6 +10,16 @@ body {
   color: white;
 }
 
+/* For Chrome, Edge, and Safari */
+* {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

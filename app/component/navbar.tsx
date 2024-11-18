@@ -52,7 +52,9 @@ export default function Component() {
   }
 
   return (
-    <nav className="bg-black text-white">
+    <>
+    <div className="bg-white w-full text-small text-black p-3 flex align-middle justify-center">FREE EXPRESS SHIPPING OVER $100 USD</div>
+    <nav className="bg-black text-white top-0 sticky z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
@@ -193,5 +195,6 @@ export default function Component() {
         </div>
       )}
     </nav>
+    </>
   )
 }
