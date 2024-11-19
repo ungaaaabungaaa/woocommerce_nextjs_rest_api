@@ -1,4 +1,5 @@
 'use client'
+
 import { useState } from 'react';
 import Link from "next/link";
 import Image from "next/image";
@@ -7,8 +8,6 @@ import { Button } from "@nextui-org/button";
 import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock, Star} from 'lucide-react';
 import { AnimatedTestimonialsDemo } from "./AnimatedTestimonialsDemo";
 import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
-
-
 
 
 export default function Footer() {
@@ -30,7 +29,6 @@ export default function Footer() {
     }
   };
 
-  
 
   return (
     <footer className="bg-black text-white">
@@ -64,7 +62,6 @@ export default function Footer() {
               </Link>
             </div>
           </div>
-
           {/* Quick Links */}
           <div className="space-y-4">
             <h2 className="text-white text-xl font-semibold">Quick Links</h2>
@@ -110,7 +107,6 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
           {/* Contact Info */}
           <div className="space-y-4">
             <h2 className="text-white text-xl font-semibold">Contact Us</h2>
@@ -146,7 +142,6 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-
           {/* Newsletter */}
           <div className="space-y-4">
             <h2 className="text-white text-xl font-semibold">Stay Connected</h2>
@@ -176,13 +171,11 @@ export default function Footer() {
             </form>
           </div>
         </div>
-
         {/* Payment Methods and Trust Badges */}
         <div className="mb-12">
           <h2 className="text-white text-xl font-semibold mb-4">Secure Payment Methods</h2>
           <span className="logos--paypal"></span>
         </div>
-
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
           <p className="text-sm mb-4 sm:mb-0">&copy; {new Date().getFullYear()} Studio Universal. All rights reserved.</p>

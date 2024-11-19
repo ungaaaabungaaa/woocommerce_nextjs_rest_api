@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@nextui-org/button": "2.0.38",
+		"@nextui-org/card": "^2.0.34",
 		"@nextui-org/code": "2.0.33",
 		"@nextui-org/input": "2.2.5",
 		"@nextui-org/kbd": "2.0.34",
@@ -29,12 +30,15 @@
 		"clsx": "^2.1.1",
 		"framer-motion": "~11.1.1",
 		"intl-messageformat": "^10.5.0",
+		"lottie-react": "^2.4.0",
 		"lucide-react": "^0.460.0",
 		"next": "14.2.4",
 		"next-themes": "^0.2.1",
 		"react": "18.3.1",
+		"react-confetti": "^6.1.0",
 		"react-dom": "18.3.1",
 		"react-dropzone": "^14.3.5",
+		"react-use": "^17.5.1",
 		"tailwind-merge": "^2.5.4",
 		"tailwindcss-animate": "^1.0.7",
 		"woocommerce-api": "^1.5.0"
