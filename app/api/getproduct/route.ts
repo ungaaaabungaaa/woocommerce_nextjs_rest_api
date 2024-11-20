@@ -19,6 +19,7 @@ interface ResponseData {
 
 // GET handler for fetching products
 export async function GET(req: NextRequest) {
+  
   const responseData: ResponseData = {
     success: false,
     products: [],
