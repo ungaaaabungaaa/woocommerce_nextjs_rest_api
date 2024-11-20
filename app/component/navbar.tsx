@@ -165,7 +165,7 @@ export default function Component() {
                       <p className="text-sm text-gray-300">
                         Discover our latest {item.name.toLowerCase()} collection, featuring trendy styles for every occasion.
                       </p>
-                      <Button className="text-white border-white hover:bg-white hover:text-black">Shop Now</Button>
+                      <Button className="text-black bg-white">Shop Now</Button>
                     </div>
                   ))}
                 </div>

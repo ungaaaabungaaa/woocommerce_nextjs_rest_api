@@ -3,7 +3,9 @@
 import { useState } from "react"
 import { Button } from "@nextui-org/button"
 import { Input } from "@nextui-org/input"
-import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card"
+import { Divider } from "@nextui-org/divider"
+import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react'
 
 // Mock API call
 const fetchOrderDetails = async (orderNumber: string) => {
@@ -63,77 +65,142 @@ export default function TrackOrder() {
 
   return (
     <>
-    <br></br>
-    <br></br>
-    <br></br>
-    <div className="container mx-auto p-4 max-w-2xl">
-      <Card className="flex align-middle justify-center flex-col">
-        <CardBody>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="flex flex-col space-y-1.5">
-              <h3 className="text-lg font-semibold">Track Your Order</h3>
-              <p className="text-sm text-gray-500">
-                Enter your order number to see the details
+      <br />
+      <br />
+      <div className="min-h-screen bg-black text-white">
+        <main className="container mx-auto px-4 py-8">
+          <Card className="bg-black text-white max-w-2xl mx-auto">
+            <CardHeader className="flex flex-col items-center space-y-4">
+              <Package size={48} className="text-white" />
+              <h1 className="text-3xl font-bold">Track Your Order</h1>
+              <p className="text-center text-white">
+                Enter your order number to see the details and status of your order.
               </p>
-              <h3 className="text-lg font-semibold">Order Number</h3>
-              <Input
-                isRequired
-                isClearable
-                id="orderNumber"
-                placeholder="Enter your order number"
-                value={orderNumber}
-                onChange={(e) => setOrderNumber(e.target.value)}
-              />
-            </div>
-            <Button type="submit" disabled={loading}>
-              {loading ? "Loading..." : "Track Order"}
-            </Button>
-          </form>
+            </CardHeader>
 
-          {error && <p className="text-red-500 mt-4">{error}</p>}
+            <Divider className="my-4" />
 
-          {orderDetails && (
-            <div className="mt-6 space-y-4">
-              <h3 className="text-lg font-semibold">Order Details</h3>
-              <p>Order Number: {orderDetails.number}</p>
-              <p>Status: {orderDetails.status}</p>
-              <p>Date: {new Date(orderDetails.date_created).toLocaleDateString()}</p>
-              <p>Total: ${orderDetails.total}</p>
+            <CardBody>
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                  <label htmlFor="order-number" className="block text-sm font-medium text-white">
+                    Order Number
+                  </label>
+                  <Input
+                    id="order-number"
+                    name="orderNumber"
+                    type="text"
+                    isClearable
+                    size="lg"
+                    isRequired
+                    className="mt-1 w-full bg-black text-white"
+                    placeholder="Enter your Order Number"
+                    value={orderNumber}
+                    onChange={(e) => setOrderNumber(e.target.value)}
+                  />
+                </div>
 
-              <h4 className="font-semibold">Items:</h4>
-              <ul className="list-disc pl-5">
-                {orderDetails.line_items.map((item: any, index: number) => (
-                  <li key={index}>
-                    {item.name} - Quantity: {item.quantity}, Total: ${item.total}
-                  </li>
-                ))}
-              </ul>
+                <Button
+                  type="submit"
+                  className="w-full bg-white text-black py-2 px-4 rounded"
+                  disabled={loading}
+                >
+                  {loading ? "Loading..." : "Track Order"}
+                </Button>
+              </form>
 
-              <h4 className="font-semibold">Shipping Address:</h4>
-              <p>
-                {orderDetails.billing.first_name} {orderDetails.billing.last_name}
-                <br />
-                {orderDetails.billing.address_1}
-                <br />
-                {orderDetails.billing.city}, {orderDetails.billing.state} {orderDetails.billing.postcode}
-                <br />
-                {orderDetails.billing.country}
-              </p>
+              {error && (
+                <div className="mt-4 p-4 rounded bg-red-800">
+                  {error}
+                </div>
+              )}
 
-              <p>Shipping Total: ${orderDetails.shipping_total}</p>
-            </div>
-          )}
-        </CardBody>
-        <CardFooter>
-          <p className="text-sm text-gray-500">
-            If you have any questions about your order, please contact our support team.
-          </p>
-        </CardFooter>
-      </Card>
-    </div>
-    <br></br>
-    <br></br>
-    <br></br>
+              {orderDetails && (
+                <div className="mt-6 space-y-6">
+                  <h2 className="text-2xl font-semibold">Order Details</h2>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="flex items-center space-x-2">
+                      <Package className="w-6 h-6" />
+                      <div>
+                        <p className="text-gray-400">Order Number</p>
+                        <p className="font-semibold">{orderDetails.number}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Clock className="w-6 h-6" />
+                      <div>
+                        <p className="text-gray-400">Order Date</p>
+                        <p className="font-semibold">{new Date(orderDetails.date_created).toLocaleDateString()}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Truck className="w-6 h-6" />
+                      <div>
+                        <p className="text-gray-400">Status</p>
+                        <p className="font-semibold capitalize">{orderDetails.status}</p>
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <DollarSign className="w-6 h-6" />
+                      <div>
+                        <p className="text-gray-400">Total</p>
+                        <p className="font-semibold">${orderDetails.total}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Items</h3>
+                    <ul className="space-y-2">
+                      {orderDetails.line_items.map((item: any, index: number) => (
+                        <li key={index} className="bg-white text-black p-3 rounded-lg flex justify-between">
+                          <span>{item.name}</span>
+                          <span>Qty: {item.quantity} - ${item.total}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h3 className="text-xl font-semibold mb-2">Shipping Address</h3>
+                    <p className="bg-white text-black p-3 rounded-lg">
+                      {orderDetails.billing.first_name} {orderDetails.billing.last_name}<br />
+                      {orderDetails.billing.address_1}<br />
+                      {orderDetails.billing.city}, {orderDetails.billing.state} {orderDetails.billing.postcode}<br />
+                      {orderDetails.billing.country}
+                    </p>
+                  </div>
+
+                  <div className="bg-white text-black p-3 rounded-lg flex justify-between items-center">
+                    <span className="font-semibold">Shipping Total</span>
+                    <span>${orderDetails.shipping_total}</span>
+                  </div>
+                </div>
+              )}
+            </CardBody>
+
+            <CardFooter>
+              <div className="w-full space-y-4">
+                <div className="flex items-center">
+                  <ShieldCheck className="text-white mr-2" />
+                  <p className="text-sm text-gray-300">Your order information is secure and protected.</p>
+                </div>
+                <div className="flex items-center">
+                  <HelpCircle className="text-white mr-2" />
+                  <p className="text-sm text-gray-300">
+                    Need help? Contact our support team at{' '}
+                    <a href="mailto:support@example.com" className="underline">
+                      support@example.com
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </CardFooter>
+          </Card>
+        </main>
+      </div>
+      <br />
+      <br />
     </>
   )
 }

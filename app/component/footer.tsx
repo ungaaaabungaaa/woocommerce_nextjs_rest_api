@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Input } from "@nextui-org/input";
 import { Button } from "@nextui-org/button";
-import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock, Star} from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { AnimatedTestimonialsDemo } from "./AnimatedTestimonialsDemo";
 import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
 
@@ -32,12 +32,18 @@ export default function Footer() {
 
   return (
     <footer className="bg-black text-white">
-
+      
+      <div className="hidden md:block">
       <ScrollBasedVelocityDemo></ScrollBasedVelocityDemo>
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-       <AnimatedTestimonialsDemo></AnimatedTestimonialsDemo>
-        <br></br>
+      <div className="hidden md:block">
+        <AnimatedTestimonialsDemo />
+      </div>
+
+        <br className='hidden md:block'></br>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="space-y-4">
@@ -95,13 +101,13 @@ export default function Footer() {
               </ul>
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
-                    Shipping & Returns
+                  <Link href="/refund" className="hover:text-white transition-colors duration-200">
+                    Refund & Returns
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
-                    Gift Cards
+                  <Link href="/trackorder" className="hover:text-white transition-colors duration-200">
+                    Track Order
                   </Link>
                 </li>
               </ul>
