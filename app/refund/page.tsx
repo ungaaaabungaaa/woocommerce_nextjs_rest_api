@@ -49,7 +49,7 @@ export default function RefundPage() {
             <RefreshCcw size={48} className="text-white" />
             <h1 className="text-3xl font-bold">Request a Refund</h1>
             <p className="text-center text-white">
-              We're sorry you're not satisfied with your purchase. Please fill out the form below to request a refund.
+              We&apos;re sorry you&apos;re not satisfied with your purchase. Please fill out the form below to request a refund.
             </p>
           </CardHeader>
 
