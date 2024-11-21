@@ -8,6 +8,8 @@ import { Divider } from '@nextui-org/divider'
 import LottieAnimation from '../../component/LottieAnimation'
 import axios from 'axios'
 
+// test url : http://localhost:3000/thankyou/114
+
 export default function ThankYouPage() {
   const router = useRouter()
   const params = useParams()
@@ -67,7 +69,7 @@ export default function ThankYouPage() {
         <CardBody className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-6">
-              <div className="magic-card-bg p-4 rounded-lg">
+              <div className="p-4 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2">Order Summary</h3>
                 <Divider className="my-2" />
                 <p className="flex justify-between"><span>Invoice Number:</span> <strong>{orderId}</strong></p>
@@ -75,7 +77,7 @@ export default function ThankYouPage() {
                 <p className="flex justify-between"><span>Payment Method:</span> <strong>{payment_method}</strong></p>
                 <p className="flex justify-between"><span>Order Date:</span> <strong>{new Date(date_created).toLocaleDateString()}</strong></p>
               </div>
-              <div className="magic-card-bg p-4 rounded-lg">
+              <div className="p-4 rounded-lg">
                 <h3 className="font-semibold text-lg mb-2">Shipping Details</h3>
                 <Divider className="my-2" />
                 <p>
@@ -87,7 +89,7 @@ export default function ThankYouPage() {
                 </p>
               </div>
             </div>
-            <div className="magic-card-bg p-4 rounded-lg">
+            <div className="p-4 rounded-lg">
               <h3 className="font-semibold text-lg mb-2">Items Ordered</h3>
               <Divider className="my-2" />
               <ul className="space-y-2">

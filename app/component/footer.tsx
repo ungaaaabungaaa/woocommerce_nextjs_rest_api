@@ -152,7 +152,7 @@ export default function Footer() {
           <div className="space-y-4">
             <h2 className="text-white text-xl font-semibold">Stay Connected</h2>
             <p>Subscribe to our newsletter for updates and exclusive offers.</p>
-            <form onSubmit={handleSubmit} className="space-y-2">
+            <form onSubmit={handleSubmit} className="space-y-2 flex align-middle justify-center flex-col">
               <Input
                 isClearable
                 isRequired
@@ -167,8 +167,8 @@ export default function Footer() {
               />
               <Button 
                 type="submit"
-                className={`w-full ${
-                  isSubscribed ? 'bg-gray-400 text-gray-800 cursor-not-allowed' : 'bg-white hover:bg-black text-black hover:text-white'
+                className={`w-2/4  ${
+                  isSubscribed ? 'bg-gray-400 text-gray-800 cursor-not-allowed px-6 py-2 rounded-full'  : 'bg-white hover:bg-black text-black hover:text-white    px-6 py-2 rounded-full'
                 }`}
                 disabled={isSubscribed}
                 >
