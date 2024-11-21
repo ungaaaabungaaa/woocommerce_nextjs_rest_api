@@ -26,6 +26,7 @@
 		"@react-aria/visually-hidden": "3.8.12",
 		"@tabler/icons-react": "^3.22.0",
 		"@woocommerce/woocommerce-rest-api": "^1.0.1",
+		"axios": "^1.7.7",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.1.1",
 		"framer-motion": "~11.1.1",

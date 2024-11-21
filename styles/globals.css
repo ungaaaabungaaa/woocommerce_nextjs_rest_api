@@ -20,6 +20,10 @@ body {
   display: none; /* Chrome, Safari, and Opera */
 }
 
+input::placeholder {
+  color: white;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
