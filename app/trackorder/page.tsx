@@ -1,67 +1,47 @@
 "use client"
 
-import { useState } from "react"
-import { Button } from "@nextui-org/button"
-import { Input } from "@nextui-org/input"
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card"
-import { Divider } from "@nextui-org/divider"
-import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react'
-
-// Mock API call
-const fetchOrderDetails = async (orderNumber: string) => {
-  await new Promise(resolve => setTimeout(resolve, 1000)) // Simulate API delay
-  // This is where you'd typically make an API call
-  // For this example, we'll return mock data based on the provided API response
-  return {
-    id: 727,
-    number: "727",
-    status: "processing",
-    date_created: "2017-03-22T16:28:02",
-    total: "329.35",
-    billing: {
-      first_name: "John",
-      last_name: "Doe",
-      address_1: "969 Market",
-      city: "San Francisco",
-      state: "CA",
-      postcode: "94103",
-      country: "US",
-      email: "john.doe@example.com",
-      phone: "(555) 555-5555"
-    },
-    line_items: [
-      { name: "Woo Single #1", quantity: 2, total: "68.00" },
-      { name: "Ship Your Idea – Color: Black, Size: M Test", quantity: 1, total: "12.00" },
-      { name: "Woo Single #1", quantity: 2, total: "21.00" },
-      { name: "Ship Your Idea – Color: Black, Size: M Test", quantity: 1, total: "12.00" },
-      { name: "Woo Single #52", quantity: 2, total: "21.00" },
-      { name: "Ship Your Idea – Color: Black, Size: M Test", quantity: 4, total: "12.00" },
-    ],
-    shipping_total: "123.00"
-  }
-}
+import { useState, useEffect } from 'react';
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
+import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react';
+import axios from "axios";
 
 export default function TrackOrder() {
-  const [orderNumber, setOrderNumber] = useState("")
-  const [orderDetails, setOrderDetails] = useState<any>(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [orderNumber, setOrderNumber] = useState("");
+  const [orderDetails, setOrderDetails] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const fetchOrderDetails = async (orderId: string) => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_SITE_URL}/api/trackorder?id=${orderId}`
+      );
+      return response.data; // Adjust this based on the actual response structure
+    } catch (error: any) {
+      throw new Error(
+        error.response?.data?.message || "Failed to fetch order details"
+      );
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError("")
-    setOrderDetails(null)
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setOrderDetails(null);
 
     try {
-      const details = await fetchOrderDetails(orderNumber)
-      setOrderDetails(details)
-    } catch (err) {
-      setError("Failed to fetch order details. Please try again.")
+      const details = await fetchOrderDetails(orderNumber);
+      setOrderDetails(details);
+    } catch (err: any) {
+      setError(err.message || "Failed to fetch order details. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -130,7 +110,9 @@ export default function TrackOrder() {
                       <Clock className="w-6 h-6" />
                       <div>
                         <p className="text-gray-400">Order Date</p>
-                        <p className="font-semibold">{new Date(orderDetails.date_created).toLocaleDateString()}</p>
+                        <p className="font-semibold">
+                          {new Date(orderDetails.date_created).toLocaleDateString()}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -202,5 +184,5 @@ export default function TrackOrder() {
       <br />
       <br />
     </>
-  )
+  );
 }

@@ -11,6 +11,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet"
 
+import { useRouter } from "next/navigation"
+
 const categories = [
   {
     name: "Women",
@@ -49,6 +51,16 @@ export default function Component() {
     setActiveCategory(null)
   }
 
+  const router = useRouter();
+
+  const handleSearchClick = () => {
+    router.push('/search')
+  }
+
+  const handleTrackOrderClick = () => {
+    router.push('/trackorder')
+  }
+
   return (
     <>
       <div className="bg-white w-full text-small text-black p-3 flex items-center justify-center">
@@ -79,10 +91,10 @@ export default function Component() {
               </div>
             </div>
             <div className="hidden lg:flex items-center space-x-4">
-                <Search className="h-5" />
-                <ShoppingBag className="h-5" />
-                <Heart className="h-5" />
-                <Truck className="h-5" />
+                <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
+                <ShoppingBag className="h-5 cursor-pointer" />
+                <Heart className="h-5 cursor-pointer" />
+                <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
             </div>
             <div className="lg:hidden">
               <Sheet>
