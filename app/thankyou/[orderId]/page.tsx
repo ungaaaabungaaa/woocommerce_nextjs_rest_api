@@ -1,22 +1,15 @@
-'use client';
-
-import { useParams } from 'next/navigation';
-import dynamic from 'next/dynamic';
 import { Card, CardHeader, CardBody, CardFooter } from '@nextui-org/card';
 import { Button } from '@nextui-org/button';
+import LottieAnimation from '../../component/LottieAnimation';
 
-// Dynamic import for LottieAnimation
-const LottieAnimation = dynamic(() => import('../component/LottieAnimation'), { ssr: false });
-
-export default function ThankYouPage() {
-  // Use useParams instead of useRouter
-  const { invoiceNumber, name, address } = useParams();
+export default function ThankYouPage({ params }: { params: { orderId: string } }) {
+  const { orderId } = params;
 
   return (
     <>
-      <br></br>
-      <br></br>
-      <br></br>
+      <br />
+      <br />
+      <br />
       {/* Main content */}
       <div className="min-h-screen text-white bg-black flex items-center justify-center p-4 relative z-10">
         <Card className="w-full max-w-2xl bg-black text-white">
@@ -32,9 +25,8 @@ export default function ThankYouPage() {
           <CardBody className="space-y-6">
             <div className="space-y-2">
               <h3 className="font-semibold text-lg">Order Details</h3>
-              <p>Invoice Number: {invoiceNumber}</p>
-              <p>Name: {name}</p>
-              <p>Shipping Address: {address}</p>
+              <p>Invoice Number: {orderId}</p>
+              {/* You can display other dynamic data here */}
             </div>
             <div className="space-y-4">
               <p className="text-center text-gray-400">
@@ -42,7 +34,7 @@ export default function ThankYouPage() {
                 If you have any questions, please don&apos;t hesitate to contact our support team.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button className="bg-white text-black hover:bg-black hover:text-white">
+                <Button as="a" href="/" className="bg-white text-black hover:bg-black hover:text-white">
                   Continue Shopping
                 </Button>
               </div>
@@ -50,9 +42,10 @@ export default function ThankYouPage() {
           </CardBody>
         </Card>
       </div>
-      <br></br>
-      <br></br>
-      <br></br>
+      <br />
+      <br />
+      <br />
     </>
   );
 }
+
