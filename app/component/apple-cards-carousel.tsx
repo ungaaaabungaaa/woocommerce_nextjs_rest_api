@@ -1,23 +1,10 @@
 "use client";
-import React from "react";
+
+import React, { useState, useEffect } from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
-export function AppleCardsCarouselDemo() {
-  const cards = data.map((card, index) => (
-    <Card key={card.src} card={card} index={index} layout={true} />
-  ));
-
-  return (
-    <div className="w-full h-full py-20">
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-boldtext-neutral-200 font-sans">
-        Shop By Categories.
-      </h2>
-      <Carousel items={cards} />
-    </div>
-  );
-}
-
-const data = [
+// Fallback data
+const fallbackData = [
   {
     category: "Men's Clothing",
     title: "Classic Cotton T-Shirt",
@@ -49,3 +36,52 @@ const data = [
     content: <></>,
   },
 ];
+
+export function AppleCardsCarouselDemo() {
+  const [categories, setCategories] = useState(fallbackData);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_SITE_URL}/api/getcategories`
+        );
+        
+        if (!response.ok) {
+          throw new Error('Failed to fetch categories');
+        }
+
+        const data = await response.json();
+        
+        // Transform API data to match our card format
+        const transformedData = data.map((category: any) => ({
+          category: category.name,
+          title: category.description || "No Description Available",
+          src: category.image?.src || "https://via.placeholder.com/800",
+          content: <></>,
+        }));
+
+        setCategories(transformedData);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+        // Keep using fallback data if there's an error
+        setCategories(fallbackData);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
+  const cards = categories.map((card, index) => (
+    <Card key={card.src} card={card} index={index} layout={true} />
+  ));
+
+  return (
+    <div className="w-full h-full py-20">
+      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
+        Shop By Categories
+      </h2>
+      <Carousel items={cards} />
+    </div>
+  );
+}
