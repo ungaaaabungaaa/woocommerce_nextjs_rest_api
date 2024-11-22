@@ -8,6 +8,7 @@ import { Divider } from "@nextui-org/divider";
 import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react';
 import axios from "axios";
 
+
 export default function TrackOrder() {
   const [orderNumber, setOrderNumber] = useState("");
   const [orderDetails, setOrderDetails] = useState<any>(null);
@@ -47,9 +48,9 @@ export default function TrackOrder() {
     <>
       <br />
       <br />
-      <div className="min-h-screen bg-black text-white">
+      <div className="h-3/4 bg-black text-white">
         <main className="container mx-auto px-4 py-8">
-          <Card className="bg-black text-white max-w-2xl mx-auto">
+          <Card className=" bg-black text-white max-w-2xl mx-auto">
             <CardHeader className="flex flex-col items-center space-y-4">
               <Package size={48} className="text-white" />
               <h1 className="text-3xl font-bold">Track Your Order</h1>
@@ -178,8 +179,11 @@ export default function TrackOrder() {
                 </div>
               </div>
             </CardFooter>
+            
           </Card>
+          
         </main>
+        
       </div>
       <br />
       <br />

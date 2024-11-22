@@ -1,10 +1,12 @@
 // pages/terms-and-conditions.js
 
+import AnimatedGridPattern from '@/components/ui/animated-grid-pattern';
 import React from 'react';
+import { cn } from "@/lib/utils";
 
 const TermsAndConditions = () => {
   return (
-    <div className="terms-and-conditions">
+    <div className="terms-and-conditions overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <br></br>  
         <br></br> 
@@ -141,6 +143,20 @@ const TermsAndConditions = () => {
         </section>
         <br></br>  
       </div>
+
+
+      <AnimatedGridPattern
+        numSquares={30}
+        maxOpacity={0.1}
+        duration={3}
+        repeatDelay={1}
+        className={cn(
+          "[mask-image:radial-gradient(500px_circle_at_center,white,transparent)]",
+          "inset-x-0 inset-y-[-30%] h-[200%] skew-y-12",
+        )}
+      />
+
+
     </div>
   );
 };

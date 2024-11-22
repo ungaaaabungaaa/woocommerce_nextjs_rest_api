@@ -98,7 +98,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           <div
             className={cn(
               "flex flex-row justify-start gap-4 pl-4",
-              "max-w-7xl mx-auto" // remove max-w-4xl if you want the carousel to span the full width of its container
+              "max-w-7xl mx-auto"
             )}
           >
             {items.map((item, index) => (
@@ -157,8 +157,8 @@ export const Card = ({
   const { onCardClose } = useContext(CarouselContext);
 
   const handleCardClick = () => {
-    console.log("hello");
-    onCardClose(index); // Optional: Keep if you want to retain scrolling functionality
+    console.log('Card category:', card.category); // Added this line to log the category
+    onCardClose(index);
   };
 
   return (
