@@ -83,7 +83,7 @@ export default function TrackOrder() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-white text-black py-2 px-4 rounded"
+                  className="w-2/4 lg:w-1/4 bg-white text-black py-2 px-4 rounded-full hover:bg-black hover:text-white"
                   disabled={loading}
                 >
                   {loading ? "Loading..." : "Track Order"}

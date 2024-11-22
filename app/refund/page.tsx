@@ -99,10 +99,10 @@ export default function RefundPage() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-white text-black py-2 px-4 rounded"
+                  className="w-2/4 lg:w-1/4 bg-white text-black py-2 px-4 rounded-full hover:bg-black hover:text-white"
                   disabled={status === 'loading'}
                 >
-                  {status === 'loading' ? 'Processing...' : 'Submit Refund Request'}
+                  {status === 'loading' ? 'Processing...' : 'Request Refund'}
                 </Button>
               </form>
 
