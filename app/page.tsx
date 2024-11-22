@@ -1,6 +1,7 @@
 import { AppleCardsCarouselDemo } from "./component/apple-cards-carousel";
 import { ImagesSliderDemo } from "./component/ImagesSliderDemo";
 import FeaturedProducts from "./component/featuredproducts";
+import { WobbleCardDemo } from "./component/wobble-card";
 
 
 
@@ -15,7 +16,8 @@ export default function Home() {
       <br></br>
       <FeaturedProducts></FeaturedProducts>
       <br></br>
-     
+      <WobbleCardDemo></WobbleCardDemo>
+      <br></br>
     </section>
   );
 }
