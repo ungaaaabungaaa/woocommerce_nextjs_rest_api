@@ -21,6 +21,25 @@ interface ProductCardProps {
   product: Product;
 }
 
+
+
+async function addToCart(productId: any, quantity = 1) {
+  try {
+    console.log(productId);
+    const response = await axios.post('http://localhost:3000/api/addtocart', {
+      productId,
+      quantity,
+    });
+    if (response.data.success) {
+      alert('Product added to cart!');
+    } else {
+      alert(`Failed to add to cart: ${response.data.message}`);
+    }
+  } catch (error) {
+    console.error('Error adding product to cart:', error);
+  }
+}
+
 const ProductCard = ({ product }: ProductCardProps) => (
   <Card className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4">    
     <CardHeader className="line-clamp-1 text-2xl text-white">
@@ -54,9 +73,7 @@ const ProductCard = ({ product }: ProductCardProps) => (
       <Button 
         size="md"
         className="w-full bg-white text-black"
-        onClick={() => {
-          console.log('Added to cart:', product);
-        }}
+        onClick={()=>addToCart(product.id,1)}
       >
         Add to cart
       </Button>
@@ -113,6 +130,12 @@ const ProductCarousel = () => {
       </div>
     );
   }
+
+  
+
+
+
+
 
   return (
     <div className="w-full h-full py-20">
