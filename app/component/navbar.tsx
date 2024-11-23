@@ -70,12 +70,12 @@ export default function Nav_bar() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarItem className="text-white hover:font-bold">
           <Link color="foreground" href="#">
-            Men's
+            Men&apos;s
           </Link>
         </NavbarItem>
         <NavbarItem className="text-white hover:font-bold">
           <Link href="#" aria-current="page">
-            Women's
+            Women&apos;s
           </Link>
         </NavbarItem>
         <NavbarItem className="text-white hover:font-bold">
@@ -85,7 +85,7 @@ export default function Nav_bar() {
         </NavbarItem>
         <NavbarItem className="text-white hover:font-bold">
           <Link color="foreground" href="#">
-            Kid's
+            Kid&apos;s
           </Link>
         </NavbarItem>
         <NavbarItem className="text-white hover:font-bold">
