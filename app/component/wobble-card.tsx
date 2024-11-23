@@ -22,7 +22,7 @@ export function WobbleCardDemo() {
           </h2>
           <p className="mt-4 text-left  text-base/6 text-neutral-200">
           Join over 100,000 trendsetters who trust us for high-quality, stylish clothing. 
-          From casual to couture, we've got you covered.  
+          From casual to couture, we&apos;ve got you covered.  
           </p>
         </div>
         <Image
