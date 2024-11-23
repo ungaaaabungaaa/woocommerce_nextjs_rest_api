@@ -111,9 +111,9 @@ export default function Nav_bar() {
         <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
       </NavbarContent>
 
-      <NavbarMenu>
+      <NavbarMenu className="bg-black text-white">
         {menuItems.map((item, index) => (
-          <NavbarMenuItem key={`${item}-${index}`}>
+          <NavbarMenuItem className="bg-black text-white" key={`${item}-${index}`}>
             <Link
               color={
                 index === 2
@@ -122,7 +122,7 @@ export default function Nav_bar() {
                   ? "danger"
                   : "foreground"
               }
-              className="w-full"
+              className="w-full bg-black text-white"
               href="#"
             >
               {item}

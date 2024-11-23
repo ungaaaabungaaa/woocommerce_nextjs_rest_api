@@ -4,9 +4,6 @@ import FeaturedProducts from "./component/featuredproducts";
 import { WobbleCardDemo } from "./component/wobble-card";
 
 
-
-
-
 export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center">
