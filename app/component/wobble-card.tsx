@@ -38,7 +38,7 @@ export function WobbleCardDemo() {
           No excuses, no limits, just style.
         </h2>
         <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-         When comfort meets confidence, you’re always dressed to win. Discover your perfect fit today.
+         When comfort meets confidence, you&apos;re always dressed to win. Discover your perfect fit today.
         </p>
       </WobbleCard>
       <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px]">
