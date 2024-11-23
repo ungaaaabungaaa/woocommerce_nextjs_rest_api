@@ -32,6 +32,10 @@ export default function Nav_bar() {
     router.push('/trackorder')
   };
 
+  const handleLogoClick = () => {
+    router.push('/')
+  };
+
   const menuItems = [
     "Shop",
     "Search",
@@ -58,6 +62,7 @@ export default function Nav_bar() {
         />
         <NavbarBrand>
           <NextImage
+            onClick={handleLogoClick}
             src={SiteLogo}
             alt="Site Logo"
             width={120}
