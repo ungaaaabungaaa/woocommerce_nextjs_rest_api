@@ -15,6 +15,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { Search, ShoppingBag, Heart, Truck } from "lucide-react"; // Assuming you're using lucide-react for icons
 import SiteLogo from "../../public/sitelogo.jpeg";
+import {Badge} from "@nextui-org/badge";
 
 
 export default function Nav_bar() {
@@ -45,6 +46,10 @@ export default function Nav_bar() {
   ];
 
   return (
+    <>
+    <div className="bg-white w-full text-small text-black p-3 flex items-center justify-center">
+      FREE EXPRESS SHIPPING OVER $100 USD
+    </div>
     <Navbar className="bg-black text-white" onMenuOpenChange={setIsMenuOpen}>
       <NavbarContent>
         <NavbarMenuToggle
@@ -63,32 +68,41 @@ export default function Nav_bar() {
       </NavbarContent>
 
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem className="text-gray-400 hover:text-white">
+        <NavbarItem className="text-white hover:font-bold">
           <Link color="foreground" href="#">
             Men's
           </Link>
         </NavbarItem>
-        <NavbarItem className="text-gray-400 hover:text-white">
+        <NavbarItem className="text-white hover:font-bold">
           <Link href="#" aria-current="page">
             Women's
           </Link>
         </NavbarItem>
-        <NavbarItem className="text-gray-400 hover:text-white">
+        <NavbarItem className="text-white hover:font-bold">
           <Link color="foreground" href="#">
             Accessories
           </Link>
         </NavbarItem>
-        <NavbarItem className="text-gray-400 hover:text-white">
+        <NavbarItem className="text-white hover:font-bold">
           <Link color="foreground" href="#">
             Kid's
+          </Link>
+        </NavbarItem>
+        <NavbarItem className="text-white hover:font-bold">
+          <Link color="foreground" href="#">
+            FootWare
           </Link>
         </NavbarItem>
       </NavbarContent>
 
       <NavbarContent justify="end" className="gap-4">
         <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
-        <ShoppingBag className="h-5 cursor-pointer" />
-        <Heart className="h-5 cursor-pointer" />
+        <Badge content="99" className="border-none" shape="circle" color="danger">
+         <ShoppingBag className="h-5 cursor-pointer" />
+        </Badge>
+        <Badge content="22" className="border-none" shape="circle" color="danger">
+         <Heart className="h-5 cursor-pointer" />
+        </Badge>
         <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
       </NavbarContent>
 
@@ -112,5 +126,6 @@ export default function Nav_bar() {
         ))}
       </NavbarMenu>
     </Navbar>
+    </>
   );
 }
