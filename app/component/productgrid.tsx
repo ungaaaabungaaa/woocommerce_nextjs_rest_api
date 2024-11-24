@@ -1,12 +1,8 @@
 'use client'
 
 import Image from "next/image"
-import Link from "next/link"
-import {Badge} from "@nextui-org/badge";
-
 import { Button } from "@nextui-org/button"
 import {Card, CardHeader, CardBody, CardFooter} from "@nextui-org/card";
-import { Heart, ShoppingCart } from "lucide-react"
 
 interface Product {
   id: number
@@ -73,7 +69,6 @@ export default function ProductGrid({ products }: { products: Product[] }) {
                     console.log('Added to cart:', product.id)
                   }}
                 >
-
                   Add to cart
                 </Button>
               </CardFooter>

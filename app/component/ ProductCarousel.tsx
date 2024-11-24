@@ -80,7 +80,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <div className="mt-2 flex justify-between items-center">
           <span className="text-white font-bold">{product.price}</span>
           {product.isNew && (
-            <span className="bg-white text-black text-xs px-2 py-1 rounded">New</span>
+            <span className=" text-white text-xs px-2 py-1 rounded-full">New</span>
           )}
         </div>
         <br />
@@ -111,6 +111,8 @@ const ProductCarousel = () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/getproduct`);
       const fetchedProducts = response.data.products
+        // Filter to only include featured products
+        .filter((product: any) => product.featured)
         .map((product: any) => ({
           id: product.id,
           title: sanitizeHTML(product.name),
@@ -124,15 +126,16 @@ const ProductCarousel = () => {
         }))
         // Sort by date_created in descending order (newest first)
         .sort((a: Product, b: Product) => {
-          return new Date(b.date_created).getTime() - new Date(a.date_created).getTime()
+          return new Date(b.date_created).getTime() - new Date(a.date_created).getTime();
         });
-
+  
       setProducts(fetchedProducts);
     } catch (error: any) {
       setError(error.message);
       console.error('Error fetching products:', error);
     }
   };
+  
 
   useEffect(() => {
     fetchProducts();

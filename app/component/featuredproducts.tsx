@@ -115,7 +115,7 @@ function FeaturedProducts() {
     return description.replace(/<[^>]+>/g, ''); // Strips HTML tags
   };
 
-  const limitedProducts = (products.length > 0 ? products : sampleProducts).slice(0, 8);
+  const limitedProducts = (products.length > 0 ? products : sampleProducts).slice(0, 16);
 
   return (
     <div className="w-full h-full py-5">
