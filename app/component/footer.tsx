@@ -74,27 +74,27 @@ export default function Footer() {
             <div className="grid grid-cols-2 gap-2">
               <ul className="space-y-2">
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
+                  <Link href="/" className="hover:text-white transition-colors duration-200">
                     Home
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
-                    Products
+                  <Link href="/store" className="hover:text-white transition-colors duration-200">
+                    Store
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
+                  <Link href="/about" className="hover:text-white transition-colors duration-200">
                     About Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
-                    Contact
+                  <Link href="/contact" className="hover:text-white transition-colors duration-200">
+                    Contact Us
                   </Link>
                 </li>
                 <li>
-                  <Link href="#" className="hover:text-white transition-colors duration-200">
+                  <Link href="/faq" className="hover:text-white transition-colors duration-200">
                     FAQ
                   </Link>
                 </li>
