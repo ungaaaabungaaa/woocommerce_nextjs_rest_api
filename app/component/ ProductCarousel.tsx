@@ -4,6 +4,7 @@ import Image from "next/image"
 import { Button } from "@nextui-org/button"
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import axios from 'axios';
+import { useCartKey } from '../../hooks/useCartKey';
 
 interface Product {
   id: string;
@@ -21,65 +22,79 @@ interface ProductCardProps {
   product: Product;
 }
 
+const ProductCard = ({ product }: ProductCardProps) => {
+  const { cartKey, loading, error: cartKeyError } = useCartKey();
 
-
-async function addToCart(productId: any, quantity = 1) {
-  try {
-    console.log(productId);
-    const response = await axios.post('http://localhost:3000/api/addtocart', {
-      productId,
-      quantity,
-    });
-    if (response.data.success) {
-      alert('Product added to cart!');
-    } else {
-      alert(`Failed to add to cart: ${response.data.message}`);
+  const addToCart = async (productId: string, prodQuantity: number = 1) => {
+    if (loading) {
+      console.log('Cart key is still loading...');
+      return;
     }
-  } catch (error) {
-    console.error('Error adding product to cart:', error);
-  }
-}
+    if (cartKeyError) {
+      console.error('Error with cart key:', cartKeyError);
+      return;
+    }
+    const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+    try {
+      const response = await axios.post(
+        endpoint,
+        new URLSearchParams({
+          id: productId,
+          quantity: prodQuantity.toString(),
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        }
+      );
+      console.log('Item added to cart:', response.data);
+    } catch (error: any) {
+      console.error('Error adding item to cart:', error.response?.data || error.message);
+    }
+  };
 
-const ProductCard = ({ product }: ProductCardProps) => (
-  <Card className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4">    
-    <CardHeader className="line-clamp-1 text-2xl text-white">
-      {product.title}
-    </CardHeader>
-    <CardBody>
-      <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
-        <Image
-          src={product.image}
-          alt={product.title}
-          fill
-          className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-        />
-        <Image
-          src={product.hoverimage}
-          alt={`${product.title} hover`}
-          fill
-          className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-        />
-      </div>
-      <p className="text-sm text-white mt-2">
-        {product.description}
-      </p>
-      <div className="mt-2 flex justify-between items-center">
-        <span className="text-white font-bold">{product.price}</span>
-        {product.isNew && (
-          <span className="bg-white text-black text-xs px-2 py-1 rounded">New</span>
-        )}
-      </div>
-      <br />
-      <Button 
-        size="md"
-        className="w-full bg-white text-black"
-        onClick={()=>addToCart(product.id,1)}
-      >
-        Add to cart
-      </Button>
-    </CardBody>
-  </Card>
-);
+  return (
+    <Card className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4">    
+      <CardHeader className="line-clamp-1 text-2xl text-white">
+        {product.title}
+      </CardHeader>
+      <CardBody>
+        <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+          <Image
+            src={product.image}
+            alt={product.title}
+            fill
+            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+          />
+          <Image
+            src={product.hoverimage}
+            alt={`${product.title} hover`}
+            fill
+            className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+          />
+        </div>
+        <p className="text-sm text-white mt-2">
+          {product.description}
+        </p>
+        <div className="mt-2 flex justify-between items-center">
+          <span className="text-white font-bold">{product.price}</span>
+          {product.isNew && (
+            <span className="bg-white text-black text-xs px-2 py-1 rounded">New</span>
+          )}
+        </div>
+        <br />
+        <Button 
+          size="md"
+          className="w-full bg-white text-black"
+          onClick={() => addToCart(product.id, 1)}
+        >
+          Add to cart
+        </Button>
+      </CardBody>
+    </Card>
+  );
+};
 
 const ProductCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -131,16 +146,10 @@ const ProductCarousel = () => {
     );
   }
 
-  
-
-
-
-
-
   return (
     <div className="w-full h-full py-20">
       <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
-        Newest Products
+        Newest Products 
       </h2>
       <div className="w-full overflow-hidden bg-black p-4">
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
@@ -154,3 +163,4 @@ const ProductCarousel = () => {
 };
 
 export default ProductCarousel;
+
