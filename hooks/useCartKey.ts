@@ -21,6 +21,7 @@ export function useCartKey() {
 
         setCartKey(storedCartKey);
       } catch (err) {
+        console.error('Error initializing cart key:', err);
         setError(err instanceof Error ? err : new Error('An unknown error occurred'));
       } finally {
         setLoading(false);
@@ -32,4 +33,3 @@ export function useCartKey() {
 
   return { cartKey, loading, error };
 }
-
