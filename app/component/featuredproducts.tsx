@@ -13,6 +13,7 @@ const sampleProducts = [
       isNew: true,
       price: "$129.99",
       slug: "training-shoes",
+      type:"simple"
     },
     {
       id: 2,
@@ -22,6 +23,7 @@ const sampleProducts = [
       hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGFic3RyYWN0fGVufDB8fDB8fHww",
       price: "$99.99",
       slug: "sneakers",
+      type:"simple",
     },
     {
       id: 3,
@@ -32,6 +34,7 @@ const sampleProducts = [
       isNew: true,
       price: "$119.99",
       slug: "running-shoes",
+      type:"simple",
     },
     {
       id: 4,
@@ -41,6 +44,7 @@ const sampleProducts = [
       hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGFic3RyYWN0fGVufDB8fDB8fHww",
       price: "$139.99",
       slug: "formal-shoes",
+      type:"simple",
     },
     {
       id: 5,
@@ -50,6 +54,7 @@ const sampleProducts = [
       hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGFic3RyYWN0fGVufDB8fDB8fHww",
       price: "$79.99",
       slug: "casual-shoes",
+      type:"simple",
     },
     {
       id: 6,
@@ -60,6 +65,7 @@ const sampleProducts = [
       isNew: true,
       price: "$159.99",
       slug: "hiking-boots",
+      type:"simple",
     },
     {
       id: 7,
@@ -69,6 +75,7 @@ const sampleProducts = [
       hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGFic3RyYWN0fGVufDB8fDB8fHww",
       price: "$89.99",
       slug: "loafers",
+      type:"simple",
     },
     {
       id: 8,
@@ -78,6 +85,7 @@ const sampleProducts = [
       hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGFic3RyYWN0fGVufDB8fDB8fHww",
       price: "$49.99",
       slug: "sandals",
+      type:"simple",
     },
 ];
 
@@ -98,6 +106,7 @@ function FeaturedProducts() {
         isNew: product.featured,
         price: `$${product.price}`,
         slug: product.slug,
+        type: product.type || 'simple',
       }));
       setProducts(fetchedProducts);
     } catch (error: any) {
