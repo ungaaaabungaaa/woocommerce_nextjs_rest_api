@@ -22,7 +22,11 @@ module.exports = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src *; connect-src *; script-src 'unsafe-inline' 'unsafe-eval' *; style-src 'unsafe-inline' *;",
+            value: "default-src * 'unsafe-inline' 'unsafe-eval' http: https: data: blob:; connect-src * 'unsafe-inline' 'unsafe-eval' http: https: data: blob:;",
+          },
+          {
+            key: "Access-Control-Allow-Origin",
+            value: "*",
           },
         ],
       },

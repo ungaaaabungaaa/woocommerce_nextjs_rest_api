@@ -27,11 +27,6 @@ export default function RootLayout({
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
         <meta name="apple-mobile-web-app-title" content="Studio" />
         <link rel="manifest" href="/site.webmanifest" />
-        {/* Add Content-Security-Policy for testing */}
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="upgrade-insecure-requests"
-        />
       </Head>
       <body className="min-h-screen">
         <Navbar />
