@@ -17,6 +17,7 @@ interface Product {
   price: string;
   slug: string;
   date_created: string;
+  type: string; // e.g., "simple" or other types
 }
 
 interface ProductCardProps {
@@ -26,6 +27,13 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+
+
+
+
+  const ViewProduct = async (productId: string) => {
+    console.log(productId)
+  };
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
     
@@ -88,12 +96,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
         <br />
+        {product.type === "simple" && (
+          <Button 
+            size="md"
+            className="w-full bg-white text-black"
+            onClick={() => addToCart(product.id, 1)}
+          >
+            Add to cart
+          </Button>
+        )}
+        <br></br>
         <Button 
           size="md"
-          className="w-full bg-white text-black"
-          onClick={() => addToCart(product.id, 1)}
+          className="w-full bg-black text-white"
+          onClick={() => ViewProduct(product.id)}
         >
-          Add to cart
+          View Product
         </Button>
       </CardBody>
     </Card>
@@ -127,7 +145,8 @@ const ProductCarousel = () => {
           isNew: product.featured,
           price: `$${product.price}`,
           slug: product.slug,
-          date_created: product.date_created
+          date_created: product.date_created,
+          type: product.type || "simple", // Default to "simple" if not provided
         }))
         // Sort by date_created in descending order (newest first)
         .sort((a: Product, b: Product) => {
