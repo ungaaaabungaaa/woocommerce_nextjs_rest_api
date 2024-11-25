@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -12,30 +12,50 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Heart, Truck } from "lucide-react";
+import { Search, ShoppingBag, Truck } from "lucide-react";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import { Badge } from "@nextui-org/badge";
-
-const cart_count = 0;
+import { useCartKey } from "../../hooks/useCartKey";
+import React from "react";
+import axios from "axios";
 
 export default function Nav_bar() {
+  const { cartKey, loading, error } = useCartKey();
+  const [cartCount, setCartCount] = useState(0); // State to store cart count
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
+  useEffect(() => {
+    if (cartKey) {
+      fetchCartDetails();
+    }
+  }, [cartKey]);
+
+  const fetchCartDetails = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`;
+      const response = await axios.get(url, { params: { cart_key: cartKey } });
+      console.log(response.data.item_count);
+      setCartCount(response.data.item_count); // Update state with cart count
+    } catch (err) {
+      console.error("Error fetching cart details:", err);
+    }
+  };
+
   const handleSearchClick = () => {
-    router.push('/search');
+    router.push("/search");
   };
 
   const handleTrackOrderClick = () => {
-    router.push('/trackorder');
+    router.push("/trackorder");
   };
 
   const handleCartClick = () => {
-    router.push('/cart');
+    router.push("/cart");
   };
 
   const handleLogoClick = () => {
-    router.push('/');
+    router.push("/");
   };
 
   const menuItems = [
@@ -50,7 +70,7 @@ export default function Nav_bar() {
     { label: "Terms & Condition", route: "/terms" },
   ];
 
-  const handleMenuItemClick = (route:any) => {
+  const handleMenuItemClick = (route: any) => {
     router.push(route);
     setIsMenuOpen(false); // Close the menu after clicking
   };
@@ -108,7 +128,13 @@ export default function Nav_bar() {
         </NavbarContent>
 
         <NavbarContent justify="end" className="gap-4">
-          <Badge onClick={handleCartClick} content={cart_count} className="border-none" shape="circle" color="danger">
+          <Badge
+            onClick={handleCartClick}
+            content={cartCount} // Use the state variable here
+            className="border-none"
+            shape="circle"
+            color="danger"
+          >
             <ShoppingBag onClick={handleCartClick} className="h-5 cursor-pointer" />
           </Badge>
           <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
@@ -117,7 +143,7 @@ export default function Nav_bar() {
 
         <NavbarMenu className="bg-black text-white">
           {menuItems.map((item, index) => (
-            <NavbarMenuItem 
+            <NavbarMenuItem
               key={`${item.label}-${index}`}
               className="bg-black text-white hover:bg-gray-800"
             >
