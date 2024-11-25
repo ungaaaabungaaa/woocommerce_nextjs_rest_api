@@ -29,7 +29,7 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
         {/* Add Content-Security-Policy for testing */}
         <meta
-          http-equiv="Content-Security-Policy"
+          httpEquiv="Content-Security-Policy"
           content="upgrade-insecure-requests"
         />
       </Head>
