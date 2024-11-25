@@ -21,17 +21,17 @@ interface Product {
 }
 
 export default function ProductGrid({ products = [] }: { products?: Product[] }) {
-  
+  // Always call hooks at the top of the component
+  const { cartKey, loading, error: cartKeyError } = useCartKey();
+  const { fetchCartDetails } = useCart();
+
   // Ensure products is always an array
   const safeProducts = products || [];
-  
+
   // Guard clause to return early if no products are available
   if (safeProducts.length === 0) {
     return <div className="text-white text-center p-4">No products available</div>;
   }
-
-  const { cartKey, loading, error: cartKeyError } = useCartKey();
-  const { fetchCartDetails } = useCart();
 
   // Add to cart function
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
