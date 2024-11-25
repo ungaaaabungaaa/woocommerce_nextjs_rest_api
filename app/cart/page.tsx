@@ -1,193 +1,213 @@
 'use client'
 
-import { useCartKey } from '../../hooks/useCartKey';
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { Button } from '@nextui-org/button';
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
-import { Input } from "@nextui-org/input";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/table";
-import Image from 'next/image';
-import { Divider } from "@nextui-org/divider";
+import { useCartKey } from '../../hooks/useCartKey'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import Image from 'next/image'
+import { Button } from '@nextui-org/button'
+import { Minus, Plus, Trash2 } from 'lucide-react'
+import { cn } from "@/lib/utils"
 
 interface CartItem {
-  item_key: string;
-  id: number;
-  name: string;
-  price: string;
-  quantity: { value: number };
-  featured_image: string;
+  item_key: string
+  id: number
+  name: string
+  desc:string
+  price: string
+  quantity: { value: number }
+  featured_image: string
 }
 
 interface CartData {
-  items: CartItem[];
+  items: CartItem[]
   totals: { 
-    subtotal: string;
-    total: string;
-  };
+    subtotal: string
+    total: string
+  }
 }
 
-function Cart() {
-  const { cartKey, loading, error } = useCartKey();
-  const [cartData, setCartData] = useState<CartData | null>(null);
-  const [couponCode, setCouponCode] = useState('');
+export default function Cart() {
+  const { cartKey, loading, error } = useCartKey()
+  const [cartData, setCartData] = useState<CartData | null>(null)
 
   useEffect(() => {
     if (cartKey) {
-      fetchCartDetails();
+      fetchCartDetails()
     }
-  }, [cartKey]);
+  }, [cartKey])
 
   const fetchCartDetails = async () => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`;
-      const response = await axios.get(url, { params: { cart_key: cartKey } });
-      setCartData(response.data);
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`
+      const response = await axios.get(url, { params: { cart_key: cartKey } })
+      setCartData(response.data)
     } catch (err) {
-      console.error('Error fetching cart details:', err);
+      console.error('Error fetching cart details:', err)
     }
-  };
+  }
 
   const updateItemQuantity = async (itemKey: string, quantity: number) => {
-    // try {
-    //   // cart/item/<item_key>
-    //   const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`;
-    //   await axios.post(url, { quantity }, { params: { cart_key: cartKey } });
-    //   console.log('Updated item ID:', itemKey);
-    //   fetchCartDetails();
-    // } catch (err) {
-    //   console.error('Error updating item quantity:', err);
-    // }
-    console.log(itemKey);
+    try {
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`;
+      const response = await axios({
+        method: 'post',
+        url: url,
+        data: { quantity: quantity.toString() }, // Convert number to string
+        headers: { 'Content-Type': 'application/json' },
+        params: { cart_key: cartKey }
+      });
+  
+      fetchCartDetails();
+      return response.data;
+    } catch (err: any) {
+      console.error("Error:", err.response?.data);
+      throw err;
+    }
   };
+  
 
   const removeItem = async (itemKey: string) => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`;
-      await axios.delete(url, { params: { cart_key: cartKey } });
-      fetchCartDetails();
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`
+      await axios.delete(url, { params: { cart_key: cartKey } })
+      fetchCartDetails()
     } catch (err) {
-      console.error('Error removing item:', err);
+      console.error('Error removing item:', err)
     }
-  };
+  }
 
   const clearCart = async () => {
     try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`;
-      await axios.post(url, {}, { params: { cart_key: cartKey } });
-      fetchCartDetails();
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`
+      await axios.post(url, {}, { params: { cart_key: cartKey } })
+      fetchCartDetails()
     } catch (err) {
-      console.error('Error clearing cart:', err);
+      console.error('Error clearing cart:', err)
     }
-  };
+  }
 
-  const applyCoupon = async () => {
-    // Implement coupon logic here
-    console.log('Applying coupon:', couponCode);
-  };
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading cart...</p>
+      </div>
+    )
+  }
 
-  
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Error loading cart. Please try again.</p>
+      </div>
+    )
+  }
 
   return (
-    <div className="min-h-screen bg-black text-white py-8">
-      <div className="container mx-auto px-4">
-        <h1 className="text-2xl font-bold mb-8 text-center">Your Shopping Cart</h1>
+    <div className="min-h-screen bg-black">
+      <div className="container max-w-4xl mx-auto px-4 py-8">
+        <h1 className="text-3xl font-bold mb-6">
+          Your Cart ({cartData?.items.length || 0})
+        </h1>
+        
         {cartData && cartData.items.length > 0 ? (
-          <div className="flex flex-col md:flex-row gap-8">
-            <div className="md:w-2/3">
-              <Card className="mb-4">
-                <CardBody className='bg-black'>
-                  <Table aria-label="Cart items">
-                    <TableHeader className='bg-black text-white'>
-                      <TableColumn className='bg-black text-white'>CART</TableColumn>
-                      <TableColumn className='bg-black text-white'>PRICE</TableColumn>
-                      <TableColumn className='bg-black text-white'>QUANTITY</TableColumn>
-                      <TableColumn className='bg-black text-white'>TOTAL</TableColumn>
-                      <TableColumn className='bg-black text-white'>REMOVE</TableColumn>
-                    </TableHeader>
-                    <TableBody>
-                      {cartData.items.map((item) => (
-                        <TableRow key={item.item_key}>
-                          <TableCell>
-                            <div className="flex items-center">
-                              <Image
-                                src={item.featured_image}
-                                alt={item.name}
-                                width={60}
-                                height={60}
-                                className="rounded-md mr-4"
-                              />
-                              <span>{item.name}</span>
-                            </div>
-                          </TableCell>
-                          <TableCell>${parseFloat(item.price) / 100}</TableCell>
-                          <TableCell>
-                            <div className="flex items-center">
-                              <Button className='bg-black text-white' size="sm" onClick={() => updateItemQuantity(item.item_key, item.quantity.value - 1)}>-</Button>
-                              <span className="mx-2">{item.quantity.value}</span>
-                              <Button className='bg-black text-white' size="sm" onClick={() => updateItemQuantity(item.item_key, item.quantity.value + 1)}>+</Button>
-                            </div>
-                          </TableCell>
-                          <TableCell>${(parseFloat(item.price) * item.quantity.value / 100).toFixed(2)}</TableCell>
-                          <TableCell>
-                            <Button size="sm" color="danger" onClick={() => removeItem(item.item_key)}>Remove</Button>
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </CardBody>
-              </Card>
-              <div className="flex justify-between items-center">
-                <Button color="primary" className='text-black bg-white rounded-full' onClick={() => window.history.back()}>Continue Shopping</Button>
-                <Button color="danger" className='text-white  rounded-full' onClick={clearCart}>Clear Cart</Button>
-              </div>
+          <div className="space-y-6">
+            {/* Cart Items */}
+            <div className="space-y-4">
+              {cartData.items.map((item) => (
+                <div key={item.item_key} className="bg-card rounded-lg p-4 shadow-sm">
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <div className="relative w-24 h-24 bg-muted rounded-md overflow-hidden flex-shrink-0">
+                      <Image
+                        src={item.featured_image}
+                        alt={item.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-2">
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-medium">{item.name}</h3>
+                        <h3 className="font-medium">{item.desc}</h3>
+                        <p className="text-lg font-semibold">
+                          ${parseFloat(item.price) / 100}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center  rounded-full">
+                          <button
+                            onClick={() => updateItemQuantity(item.item_key, item.quantity.value - 1)}
+                            className="p-2"
+                            disabled={item.quantity.value <= 1}
+                          >
+                            <Minus className="h-4 w-4" />
+                          </button>
+                          <span className="px-4 font-medium">{item.quantity.value}</span>
+                          <button
+                            onClick={() => updateItemQuantity(item.item_key, item.quantity.value + 1)}
+                            className="p-2"
+                          >
+                            <Plus className="h-4 w-4" />
+                          </button>
+                        </div>
+                        <Button
+                          onClick={() => removeItem(item.item_key)}
+                         
+                          size="sm"
+                          className="flex items-center gap-2 bg-red rounded-full text-white"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <div className="md:w-1/3">
-              <Card className='bg-black text-white'>
-                <CardHeader>
-                  <h2 className="text-xl font-semibold">Order Summary</h2>
-                </CardHeader>
-                <CardBody>
-                  <div className="flex justify-between mb-2">
-                    <span>Subtotal</span>
-                    <span>${parseFloat(cartData.totals.subtotal) / 100}</span>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <span>Shipping</span>
-                    <span>Calculated at checkout</span>
-                  </div>
-                  <Divider className="my-4" />
-                  <div className="flex justify-between mb-4">
-                    <span className="font-semibold">Total</span>
-                    <span className="font-semibold">${parseFloat(cartData.totals.total) / 100}</span>
-                  </div>
-                  <div className="mb-4">
-                    <Input
-                      isClearable
-                      isRequired
-                      placeholder="Coupon Code"
-                      value={couponCode}
-                      onChange={(e) => setCouponCode(e.target.value)}
-                    />
-                    <Button className="mt-2 w-full rounded-full bg-white text-black" onClick={applyCoupon}>Apply Coupon</Button>
-                  </div>
-                  <Button className="mt-2 w-full rounded-full bg-white text-black">Proceed to Checkout</Button>
-                </CardBody>
-              </Card>
+
+            {/* Cart Summary */}
+            <div className="bg-card rounded-lg p-6 space-y-4 shadow-sm">
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Subtotal</span>
+                  <span className="font-medium">${parseFloat(cartData.totals.subtotal) / 100}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">Shipping</span>
+                  <span className="font-medium">$10.00</span>
+                </div>
+              </div>
+              
+              <div className="flex justify-between text-lg font-semibold">
+                <span>Total</span>
+                <span>${(parseFloat(cartData.totals.total) / 100 + 10).toFixed(2)}</span>
+              </div>
+
+              <Button className="w-full rounded-full bg-white text-black" size="lg">
+                Checkout
+              </Button>
+            </div>
+
+            {/* Actions */}
+            <div className="flex flex-col sm:flex-row justify-between gap-4">
+              <Button  onClick={() => window.history.back()} className="w-full sm:w-auto bg-black text-white">
+                Continue Shopping
+              </Button>
+              <Button  onClick={clearCart} className="w-full rounded-full bg-red text-white sm:w-auto">
+                Clear Cart
+              </Button>
             </div>
           </div>
         ) : (
-          <Card className='bg-black text-white border-none outline-none'>
-            <CardBody className='bg-black text-white border-none outline-none'>
-              <p className="text-center">Your cart is empty.</p>
-              <Button  className="mt-4 bg-white text-black rounded-full mx-auto block" onClick={() => window.history.back()}>Continue Shopping</Button>
-            </CardBody>
-          </Card>
+          <div className="text-center py-12">
+            <p className="text-muted-foreground mb-4">Your cart is empty</p>
+            <Button onClick={() => window.history.back()}>
+              Continue Shopping
+            </Button>
+          </div>
         )}
       </div>
     </div>
-  );
+  )
 }
 
-export default Cart;

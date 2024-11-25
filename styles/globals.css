@@ -24,6 +24,10 @@ input::placeholder {
   color: white;
 }
 
+.bg-red {
+  background-color: #ee1864;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
