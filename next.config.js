@@ -15,4 +15,17 @@ module.exports = {
       },
     ],
   },
+  async headers() {
+    return [
+      {
+        source: "/(.*)", // Apply to all routes
+        headers: [
+          {
+            key: "Content-Security-Policy",
+            value: "default-src *; connect-src *; script-src 'unsafe-inline' 'unsafe-eval' *; style-src 'unsafe-inline' *;",
+          },
+        ],
+      },
+    ];
+  },
 };
