@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import Footer from "./component/footer";
 import Navbar from "./component/navbar";
 import Head from "next/head";
+import { CartProvider } from '../context/cartcontext';
 
 export const metadata = {
   title: "Studio Universal",
@@ -29,9 +30,11 @@ export default function RootLayout({
         <link rel="manifest" href="/site.webmanifest" />
       </Head>
       <body className="min-h-screen">
+      <CartProvider>
         <Navbar />
         {children}
         <Footer />
+      </CartProvider>
       </body>
     </html>
   );

@@ -15,32 +15,21 @@ import NextImage from "next/image";
 import { Search, ShoppingBag, Truck } from "lucide-react";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import { Badge } from "@nextui-org/badge";
-import { useCartKey } from "../../hooks/useCartKey";
 import React from "react";
-import axios from "axios";
+import { useCart } from '../../context/cartcontext';
+
 
 export default function Nav_bar() {
-  const { cartKey, loading, error } = useCartKey();
-  const [cartCount, setCartCount] = useState(0); // State to store cart count
+ 
+
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const { cartCount } = useCart();
+  console.log(cartCount)
 
-  useEffect(() => {
-    if (cartKey) {
-      fetchCartDetails();
-    }
-  }, [cartKey]);
 
-  const fetchCartDetails = async () => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`;
-      const response = await axios.get(url, { params: { cart_key: cartKey } });
-      console.log(response.data.item_count);
-      setCartCount(response.data.item_count); // Update state with cart count
-    } catch (err) {
-      console.error("Error fetching cart details:", err);
-    }
-  };
+
+
 
   const handleSearchClick = () => {
     router.push("/search");

@@ -5,6 +5,7 @@ import { Button } from "@nextui-org/button"
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
+import { useCart } from '../../context/cartcontext';
 
 interface Product {
   id: string;
@@ -24,8 +25,10 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
+  const { fetchCartDetails } = useCart();
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
+    
     if (loading) {
       console.log('Cart key is still loading...');
       return;
@@ -49,6 +52,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         }
       );
       console.log('Item added to cart:', response.data);
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
     } catch (error: any) {
       console.error('Error adding item to cart:', error.response?.data || error.message);
     }
@@ -99,6 +103,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 const ProductCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  
 
   // HTML sanitization function
   const sanitizeHTML = (html: string) => {

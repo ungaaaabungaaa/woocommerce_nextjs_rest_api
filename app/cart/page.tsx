@@ -6,6 +6,9 @@ import axios from 'axios';
 import Image from 'next/image';
 import { Button } from '@nextui-org/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
+import { useRouter } from "next/navigation";
+import { useCart } from '../../context/cartcontext';
+
 
 interface CartItem {
   item_key: string
@@ -25,21 +28,35 @@ interface CartData {
   }
 }
 
+
+
 export default function Cart() {
   const { cartKey, loading, error } = useCartKey()
   const [cartData, setCartData] = useState<CartData | null>(null)
+  const router = useRouter();
+  const { fetchCartDetails } = useCart();
+
+
+ 
+  const handleCheckoutClick = () => {
+    router.push("/checkout");
+  };
+
 
   useEffect(() => {
     if (cartKey) {
-      fetchCartDetails()
+      fetch_Cart_Details()
+      
     }
   }, [cartKey])
 
-  const fetchCartDetails = async () => {
+  const fetch_Cart_Details = async () => {
     try {
       const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`
       const response = await axios.get(url, { params: { cart_key: cartKey } })
       setCartData(response.data)
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      
     } catch (err) {
       console.error('Error fetching cart details:', err)
     }
@@ -55,8 +72,9 @@ export default function Cart() {
         headers: { 'Content-Type': 'application/json' },
         params: { cart_key: cartKey }
       });
-  
-      fetchCartDetails();
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      fetch_Cart_Details();
+     
       return response.data;
     } catch (err: any) {
       console.error("Error:", err.response?.data);
@@ -69,7 +87,9 @@ export default function Cart() {
     try {
       const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`
       await axios.delete(url, { params: { cart_key: cartKey } })
-      fetchCartDetails()
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      fetch_Cart_Details()
+      
     } catch (err) {
       console.error('Error removing item:', err)
     }
@@ -79,7 +99,8 @@ export default function Cart() {
     try {
       const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`
       await axios.post(url, {}, { params: { cart_key: cartKey } })
-      fetchCartDetails()
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      fetch_Cart_Details()
     } catch (err) {
       console.error('Error clearing cart:', err)
     }
@@ -182,7 +203,7 @@ export default function Cart() {
                 <span>${(parseFloat(cartData.totals.total) / 100 + 10).toFixed(2)}</span>
               </div>
 
-              <Button className="w-full rounded-full bg-white text-black" size="lg">
+              <Button onClick={handleCheckoutClick} className="w-full rounded-full bg-white text-black" size="lg">
                 Checkout
               </Button>
             </div>
