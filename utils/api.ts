@@ -1,6 +1,6 @@
 export async function fetchCartKey(): Promise<string> {
   try {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://13.235.113.210';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://13.235.113.210';
     const response = await fetch(`${apiUrl}/wp-json/cocart/v2/cart`, {
       method: 'GET',
       headers: {
