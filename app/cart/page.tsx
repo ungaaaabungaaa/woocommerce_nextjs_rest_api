@@ -1,12 +1,11 @@
 'use client'
 
-import { useCartKey } from '../../hooks/useCartKey'
-import React, { useEffect, useState } from 'react'
-import axios from 'axios'
-import Image from 'next/image'
-import { Button } from '@nextui-org/button'
-import { Minus, Plus, Trash2 } from 'lucide-react'
-import { cn } from "@/lib/utils"
+import { useCartKey } from '../../hooks/useCartKey';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Image from 'next/image';
+import { Button } from '@nextui-org/button';
+import { Minus, Plus, Trash2 } from 'lucide-react';
 
 interface CartItem {
   item_key: string

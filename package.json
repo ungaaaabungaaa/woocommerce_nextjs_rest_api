@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@cocart/cocart-rest-api": "^1.1.0",
+		"@nextui-org/accordion": "^2.0.40",
 		"@nextui-org/badge": "^2.0.32",
 		"@nextui-org/button": "2.0.38",
 		"@nextui-org/card": "^2.0.34",
