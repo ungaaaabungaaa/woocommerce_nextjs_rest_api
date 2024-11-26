@@ -3,6 +3,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
+import { PayPalButtons } from "@paypal/react-paypal-js"
 
 
 
@@ -31,12 +32,14 @@ function Checkout() {
     phoneNumber: ""
   });
 
+ 
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
 
-  const notify = () => toast("Wow so easy !");
+
 
   const handleSubmit = () => {
     const requiredFields: Record<keyof FormData, string> = {
@@ -66,9 +69,20 @@ function Checkout() {
     console.log("Form submitted successfully!", formData);
   };
 
+  const [isPaid, setIsPaid] = useState(false)
+
+  const handleApprove = (orderId: string) => {
+    // Call your backend to process the order
+    setIsPaid(true)
+  }
+
+  if (isPaid) {
+    return <div>Thank you for your purchase!</div>
+  }
+
   return (
     <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">
-      <div className="w-full h-auto lg:order-2 p-6 lg:p-12 flex align-middle justify-center flex-col">
+      <div className="w-full h-auto lg:order-2 p-6 lg:p-12 flex align-middle justify-start flex-col">
         <h1 className="text-3xl font-bold mb-6">Chekout Form</h1>
         <h3 className="text-1xl text-gray-400 mb-6">Shipping Information</h3>
 
@@ -260,10 +274,53 @@ function Checkout() {
         >
           Checkout
         </button>
+        <br></br>
+
+        <PayPalButtons 
+        
+        className='rounded-full'
+       style={{ 
+        layout: "vertical",
+        color: "gold",
+        shape: "pill",
+        label: "pay",
+       }}
+        createOrder={(data, actions) => {
+          return actions.order.create({
+            purchase_units: [
+              {
+                amount: {
+                  value: "10.00", // The amount to charge
+                },
+              },
+            ],
+          });
+        }}
+        onApprove={async (data, actions) => {
+          const order = await actions.order?.capture();
+          handleApprove(data.orderID);
+        }}
+      />
+
+        
       </div>
     </div>
   );
 }
 
+
+
 export default Checkout;
+
+
+// once only all the feilds are filled allow paypal button to be cliked 
+// tosat all the error feild properly
+// once paypal captures the order ID 
+// take the order id , cartitems , form data .. use the woocommerce create order api endpoint 
+// once order is confirmed get the woocommerce order id 
+// clear the cart 
+// thank you page redirection 
+
+
+
 
