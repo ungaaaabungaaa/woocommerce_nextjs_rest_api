@@ -4,6 +4,8 @@ import FeaturedProducts from "./component/featuredproducts";
 import { WobbleCardDemo } from "./component/wobble-card";
 import { TabsDemo } from "./component/tabs";
 import ProductCarousel from "./component/ ProductCarousel";
+import PromoBar from "./component/promo-bar";
+import InstagramGallery from "./component/instagram-gallery";
 
 
 export default function Home() {
@@ -18,6 +20,9 @@ export default function Home() {
       <WobbleCardDemo></WobbleCardDemo>
       <br></br>
       <ProductCarousel></ProductCarousel>
+      <br></br>
+      <br></br>
+     <InstagramGallery></InstagramGallery>
       <br></br>
     </section>
   );

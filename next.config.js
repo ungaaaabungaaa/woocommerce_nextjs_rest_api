@@ -13,6 +13,11 @@ module.exports = {
         protocol: 'http',
         hostname: '13.235.113.210',
       },
+      // Add more patterns here
+      {
+        protocol: 'https',
+        hostname: 'nextui.org',
+      },
     ],
   },
   async headers() {

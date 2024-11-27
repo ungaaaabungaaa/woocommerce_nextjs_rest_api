@@ -8,6 +8,7 @@ import { Button } from "@nextui-org/button";
 import { Facebook, Instagram, Twitter, Youtube, MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { AnimatedTestimonialsDemo } from "./AnimatedTestimonialsDemo";
 import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
+import PromoBar from './promo-bar';
 
 
 export default function Footer() {
@@ -25,30 +26,40 @@ export default function Footer() {
       setIsSubscribed(true);
       setEmail('Subscribed successfully!');
     } else {
-      console.log("Subscription failed.", e)
+      console.log('Subscription failed.', e);
     }
   };
 
-
   return (
     <footer className="bg-black text-white">
-      
+      <PromoBar></PromoBar>
+      <br></br>
       <div className="hidden md:block">
-      <ScrollBasedVelocityDemo></ScrollBasedVelocityDemo>
+        <ScrollBasedVelocityDemo />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="hidden md:block">
+          <AnimatedTestimonialsDemo />
+        </div>
 
-      <div className="hidden md:block">
-        <AnimatedTestimonialsDemo />
-      </div>
+        <br className="hidden md:block"></br>
 
-        <br className='hidden md:block'></br>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+        <div className="flex flex-col md:flex-row justify-between gap-8 mb-12">
           {/* Company Info */}
-          <div className="space-y-4">
-            <Image src="/sitelogo.jpeg" alt="Company Logo" width={200} height={60} className="" />
-            <p>We provide high-quality products and excellent customer service. Our mission is to deliver the best shopping experience to our valued customers.</p>
+          <div className="space-y-4 flex-1">
+            <Image
+              src="/sitelogo.jpeg"
+              alt="Company Logo"
+              width={200}
+              height={60}
+              className=""
+            />
+            <p>
+              We provide high-quality products and excellent customer service.
+              Our mission is to deliver the best shopping experience to our valued
+              customers.
+            </p>
             <div className="flex space-x-4">
               <Link href="#" className="hover:text-white transition-colors duration-200">
                 <Facebook className="h-6 w-6" />
@@ -68,8 +79,9 @@ export default function Footer() {
               </Link>
             </div>
           </div>
+
           {/* Quick Links */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex-1">
             <h2 className="text-white text-xl font-semibold">Quick Links</h2>
             <div className="grid grid-cols-2 gap-2">
               <ul className="space-y-2">
@@ -113,46 +125,15 @@ export default function Footer() {
               </ul>
             </div>
           </div>
-          {/* Contact Info */}
-          <div className="space-y-4">
-            <h2 className="text-white text-xl font-semibold">Contact Us</h2>
-            <ul className="space-y-2">
-              <li className="flex items-center">
-                <MapPin className="h-5 w-5 mr-2" />
-                <span>123 E-commerce St, City, Country</span>
-              </li>
-              <li className="flex items-center">
-                <Phone className="h-5 w-5 mr-2" />
-                <span>+1 (555) 123-4567</span>
-              </li>
-              <li className="flex items-center">
-                <Mail className="h-5 w-5 mr-2" />
-                <span>support@example.com</span>
-              </li>
-            </ul>
-            <div>
-              <h3 className="text-white text-lg font-semibold mb-2">Customer Service Hours</h3>
-              <ul className="space-y-1">
-                <li className="flex items-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span>Mon-Fri: 9AM - 6PM</span>
-                </li>
-                <li className="flex items-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span>Sat: 10AM - 4PM</span>
-                </li>
-                <li className="flex items-center">
-                  <Clock className="h-4 w-4 mr-2" />
-                  <span>Sun: Closed</span>
-                </li>
-              </ul>
-            </div>
-          </div>
+
           {/* Newsletter */}
-          <div className="space-y-4">
+          <div className="space-y-4 flex-1">
             <h2 className="text-white text-xl font-semibold">Stay Connected</h2>
             <p>Subscribe to our newsletter for updates and exclusive offers.</p>
-            <form onSubmit={handleSubmit} className="space-y-2 flex align-middle justify-center flex-col">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-2 flex flex-col items-start"
+            >
               <Input
                 isClearable
                 isRequired
@@ -165,36 +146,42 @@ export default function Footer() {
                 className="bg-black text-white border-gray-700 focus:border-gray-600"
                 disabled={isSubscribed}
               />
-              <Button 
+              <Button
                 type="submit"
-                className={`w-2/4  ${
-                  isSubscribed ? 'bg-gray-400 text-gray-800 cursor-not-allowed px-6 py-2 rounded-full'  : 'bg-white hover:bg-black text-black hover:text-white    px-6 py-2 rounded-full'
+                className={`w-2/4 ${
+                  isSubscribed
+                    ? 'bg-gray-400 text-gray-800 cursor-not-allowed px-6 py-2 rounded-full'
+                    : 'bg-white hover:bg-black text-black hover:text-white px-6 py-2 rounded-full'
                 }`}
                 disabled={isSubscribed}
-                >
-              {isSubscribed ? 'Subscribed' : 'Subscribe'}
+              >
+                {isSubscribed ? 'Subscribed' : 'Subscribe'}
               </Button>
             </form>
           </div>
         </div>
-        {/* Payment Methods and Trust Badges */}
-        <div className="mb-12">
-          <h2 className="text-white text-xl font-semibold mb-4">Secure Payment Methods</h2>
-          <span className="logos--paypal"></span>
-        </div>
+
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-8 flex flex-col sm:flex-row justify-between items-center">
-          <p className="text-sm mb-4 sm:mb-0">&copy; {new Date().getFullYear()} Studio Universal. All rights reserved.</p>
+          <p className="text-sm mb-4 sm:mb-0">
+            &copy; {new Date().getFullYear()} Studio Universal. All rights reserved.
+          </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/privacy" className="text-sm hover:text-white transition-colors duration-200">
+            <Link
+              href="/privacy"
+              className="text-sm hover:text-white transition-colors duration-200"
+            >
               Privacy Policy
             </Link>
-            <Link href="/terms" className="text-sm hover:text-white transition-colors duration-200">
+            <Link
+              href="/terms"
+              className="text-sm hover:text-white transition-colors duration-200"
+            >
               Terms of Service
             </Link>
           </div>
         </div>
       </div>
     </footer>
-  )
+  );
 }

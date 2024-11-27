@@ -293,7 +293,7 @@ function Checkout() {
 
         <PayPalButtons 
         
-        className='rounded-full'
+      className='rounded-full'
        style={{ 
         layout: "vertical",
         color: "gold",
@@ -328,13 +328,7 @@ function Checkout() {
 export default Checkout;
 
 
-// once only all the feilds are filled allow paypal button to be cliked 
-// tosat all the error feild properly
-// once paypal captures the order ID 
-// take the order id , cartitems , form data .. use the woocommerce create order api endpoint 
-// once order is confirmed get the woocommerce order id 
-// clear the cart 
-// thank you page redirection 
+
 
 
 
