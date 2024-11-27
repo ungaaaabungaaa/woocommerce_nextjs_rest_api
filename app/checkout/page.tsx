@@ -1,12 +1,11 @@
 'use client'
+
 import React, { useState, ChangeEvent } from 'react';
 import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PayPalButtons } from "@paypal/react-paypal-js"
-
-
 
 interface FormData {
   email: string;
@@ -33,14 +32,12 @@ function Checkout() {
     phoneNumber: ""
   });
 
- 
+  const [isPaid, setIsPaid] = useState(false);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prevState => ({ ...prevState, [name]: value }));
   };
-
-
 
   const handleSubmit = () => {
     const requiredFields: Record<keyof FormData, string> = {
@@ -67,7 +64,7 @@ function Checkout() {
       toast.error(errorMessage, {
         position: "top-center",
         theme: "dark",
-        autoClose: 5000, // Optional: Automatically close after 5 seconds
+        autoClose: 5000,
       });
   
       return;
@@ -81,255 +78,207 @@ function Checkout() {
   
     console.log("Form submitted successfully!", formData);
   };
-  
-
-  const [isPaid, setIsPaid] = useState(false)
 
   const handleApprove = (orderId: string) => {
-    // Call your backend to process the order
-    setIsPaid(true)
-  }
+    setIsPaid(true);
+  };
 
   if (isPaid) {
-    return <div>Thank you for your purchase!</div>
+    return <div>Thank you for your purchase!</div>;
   }
 
   return (
     <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">
       <ToastContainer />
       <div className="w-full h-auto lg:order-2 p-6 lg:p-12 flex align-middle justify-start flex-col">
-        <h1 className="text-3xl font-bold mb-6">Chekout Form</h1>
-        <h3 className="text-1xl text-gray-400 mb-6">Shipping Information</h3>
+        <h1 className="text-3xl font-bold mb-6">Checkout Form</h1>
+        <h3 className="text-xl text-gray-400 mb-6">Shipping Information</h3>
 
-        <div>
-        <label htmlFor="email" className="block text-sm font-medium text-white">
-          Email address
-        </label>
-        <Input
-          className="mt-1 w-full"
-          id="email"
-          isClearable
-          isRequired
-          name="email"
-          onChange={handleChange}
-          placeholder="Enter your Email"
-          size="lg"
-          type="email"
-          value={formData.email}
-        />
-        </div>
-        <br />
-
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <label className="block text-sm font-medium text-white">
-              First Name
+        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+          <div className="mb-4">
+            <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+              Email address
             </label>
             <Input
-              id="firstName"
-              name="firstName"
-              type="text"
-              isClearable
-              size="lg"
+              id="email"
+              name="email"
+              type="email"
               isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Enter your First Name"
-              value={formData.firstName}
+              placeholder="Enter your Email"
+              value={formData.email}
               onChange={handleChange}
             />
           </div>
 
-          <div className="flex-1">
-            <label htmlFor="lastName" className="block text-sm font-medium text-white">
-              Last Name
-            </label>
-            <Input
-              id="lastName"
-              name="lastName"
-              type="text"
-              isClearable
-              size="lg"
-              isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Enter your Last Name"
-              value={formData.lastName}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <br />
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label htmlFor="firstName" className="block text-sm font-medium text-white mb-1">
+                First Name
+              </label>
+              <Input
+                id="firstName"
+                name="firstName"
+                type="text"
+                isRequired
+                placeholder="Enter your First Name"
+                value={formData.firstName}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <label htmlFor="address" className="block text-sm font-medium text-white">
-              Address
-            </label>
-            <Input
-              id="address"
-              name="address"
-              type="text"
-              isClearable
-              size="lg"
-              isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Lane 1, Street 1"
-              value={formData.address}
-              onChange={handleChange}
-            />
+            <div className="flex-1">
+              <label htmlFor="lastName" className="block text-sm font-medium text-white mb-1">
+                Last Name
+              </label>
+              <Input
+                id="lastName"
+                name="lastName"
+                type="text"
+                isRequired
+                placeholder="Enter your Last Name"
+                value={formData.lastName}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
-          <div className="flex-1">
-            <label htmlFor="apt" className="block text-sm font-medium text-white">
-              Apt, suite, etc.
-            </label>
-            <Input
-              id="apt"
-              name="apt"
-              type="text"
-              isClearable
-              size="lg"
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Apartment, Studio, or floor"
-              value={formData.apt}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <br />
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label htmlFor="address" className="block text-sm font-medium text-white mb-1">
+                Address
+              </label>
+              <Input
+                id="address"
+                name="address"
+                type="text"
+                isRequired
+                placeholder="Lane 1, Street 1"
+                value={formData.address}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <label htmlFor="city" className="block text-sm font-medium text-white">
-              City
-            </label>
-            <Input
-              id="city"
-              name="city"
-              type="text"
-              isClearable
-              size="lg"
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Enter Your City"
-              value={formData.city}
-              onChange={handleChange}
-            />
+            <div className="flex-1">
+              <label htmlFor="apt" className="block text-sm font-medium text-white mb-1">
+                Apt, suite, etc.
+              </label>
+              <Input
+                id="apt"
+                name="apt"
+                type="text"
+                placeholder="Apartment, Studio, or floor"
+                value={formData.apt}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
-          <div className="flex-1">
-            <label htmlFor="country" className="block text-sm font-medium text-white">
-              Country
-            </label>
-            <Input
-              id="country"
-              name="country"
-              type="text"
-              isClearable
-              size="lg"
-              isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="Enter Country"
-              value={formData.country}
-              onChange={handleChange}
-            />
-          </div>
-        </div>
-        <br />
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label htmlFor="city" className="block text-sm font-medium text-white mb-1">
+                City
+              </label>
+              <Input
+                id="city"
+                name="city"
+                type="text"
+                isRequired
+                placeholder="Enter Your City"
+                value={formData.city}
+                onChange={handleChange}
+              />
+            </div>
 
-        <div className="flex flex-col md:flex-row gap-4">
-          <div className="flex-1">
-            <label htmlFor="postCode" className="block text-sm font-medium text-white">
-              PostCode
-            </label>
-            <Input
-              id="postCode"
-              name="postCode"
-              type="text"
-              isClearable
-              size="lg"
-              isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="12345"
-              value={formData.postCode}
-              onChange={handleChange}
-            />
+            <div className="flex-1">
+              <label htmlFor="country" className="block text-sm font-medium text-white mb-1">
+                Country
+              </label>
+              <Input
+                id="country"
+                name="country"
+                type="text"
+                isRequired
+                placeholder="Enter Country"
+                value={formData.country}
+                onChange={handleChange}
+              />
+            </div>
           </div>
 
-          <div className="flex-1">
-            <label htmlFor="phoneNumber" className="block text-sm font-medium text-white">
-              PhoneNumber
-            </label>
-            <Input
-              id="phoneNumber"
-              name="phoneNumber"
-              type="text"
-              isClearable
-              size="lg"
-              isRequired
-              className="mt-1 w-full bg-black text-white"
-              placeholder="+1 (5555) 5555-5555"
-              value={formData.phoneNumber}
-              onChange={handleChange}
-            />
+          <div className="flex flex-col md:flex-row gap-4 mb-4">
+            <div className="flex-1">
+              <label htmlFor="postCode" className="block text-sm font-medium text-white mb-1">
+                PostCode
+              </label>
+              <Input
+                id="postCode"
+                name="postCode"
+                type="text"
+                isRequired
+                placeholder="12345"
+                value={formData.postCode}
+                onChange={handleChange}
+              />
+            </div>
+
+            <div className="flex-1">
+              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white mb-1">
+                Phone Number
+              </label>
+              <Input
+                id="phoneNumber"
+                name="phoneNumber"
+                type="tel"
+                isRequired
+                placeholder="+1 (555) 555-5555"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+              />
+            </div>
           </div>
-        </div>
-        <br />
-        
 
-
-       
+          <button
+            type="submit"
+            className="bg-white text-black px-4 py-2 rounded-full mt-4"
+          >
+            Checkout
+          </button>
+        </form>
       </div>
+
       <div className="w-full h-auto lg:order-1 p-6 lg:p-12 flex align-middle justify-center flex-col">
-      <h1 className="text-2xl font-bold mb-6">Cart Items</h1>
-       <MiniCart></MiniCart>
-        <br></br>
-        <button
-          type="button"
-          className="bg-white text-black px-4 py-2 rounded-full"
-          onClick={handleSubmit}
-        >
-          Checkout
-        </button>
-        <br></br>
+        <h2 className="text-2xl font-bold mb-6">Cart Items</h2>
+        <MiniCart />
+        <br />
 
         <PayPalButtons 
-        
-      className='rounded-full'
-       style={{ 
-        layout: "vertical",
-        color: "gold",
-        shape: "pill",
-        label: "pay",
-       }}
-        createOrder={(data, actions) => {
-          return actions.order.create({
-            purchase_units: [
-              {
-                amount: {
-                  value: "10.00", // The amount to charge
+          className='rounded-full'
+          style={{ 
+            layout: "vertical",
+            color: "gold",
+            shape: "pill",
+            label: "pay",
+          }}
+          createOrder={(data, actions) => {
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: "10.00", // The amount to charge
+                  },
                 },
-              },
-            ],
-          });
-        }}
-        onApprove={async (data, actions) => {
-          const order = await actions.order?.capture();
-          handleApprove(data.orderID);
-        }}
-      />
-
-        
+              ],
+            });
+          }}
+          onApprove={async (data, actions) => {
+            const order = await actions.order?.capture();
+            handleApprove(data.orderID);
+          }}
+        />
       </div>
     </div>
   );
 }
 
-
-
 export default Checkout;
-
-
-
-
-
-
 
