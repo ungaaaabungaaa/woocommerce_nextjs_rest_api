@@ -251,7 +251,7 @@ function Checkout() {
         <MiniCart />
         <br />
 
-        <PayPalButtons 
+        {/* <PayPalButtons 
           className='rounded-full'
           style={{ 
             layout: "vertical",
@@ -274,7 +274,7 @@ function Checkout() {
             const order = await actions.order?.capture();
             handleApprove(data.orderID);
           }}
-        />
+        /> */}
       </div>
     </div>
   );
