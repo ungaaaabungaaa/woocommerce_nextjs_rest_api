@@ -20,8 +20,6 @@ export default function Home() {
       <WobbleCardDemo></WobbleCardDemo>
       <br></br>
       <ProductCarousel></ProductCarousel>
-      <br></br>
-      <br></br>
      <InstagramGallery></InstagramGallery>
       <br></br>
     </section>

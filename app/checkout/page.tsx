@@ -251,30 +251,32 @@ function Checkout() {
         <MiniCart />
         <br />
 
-        {/* <PayPalButtons 
+        <PayPalButtons 
           className='rounded-full'
           style={{ 
-            layout: "vertical",
-            color: "gold",
-            shape: "pill",
-            label: "pay",
+              layout: "vertical",
+              color: "gold",
+              shape: "pill",
+              label: "pay",
           }}
           createOrder={(data, actions) => {
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: "10.00", // The amount to charge
-                  },
-                },
-              ],
-            });
+              const amountValue = "10.00"; // Ensure this is formatted correctly
+              console.log("Creating order with amount:", amountValue);
+              return actions.order.create({
+                  purchase_units: [
+                      {
+                          amount: {
+                              value: 10.00,
+                          },
+                      },
+                  ],
+              });
           }}
           onApprove={async (data, actions) => {
-            const order = await actions.order?.capture();
-            handleApprove(data.orderID);
+              const order = await actions.order?.capture();
+              handleApprove(data.orderID);
           }}
-        /> */}
+      />
       </div>
     </div>
   );
