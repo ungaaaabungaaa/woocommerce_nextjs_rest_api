@@ -3,6 +3,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { PayPalButtons } from "@paypal/react-paypal-js"
 
 
@@ -53,21 +54,34 @@ function Checkout() {
       phoneNumber: "PhoneNumber",
       city: "City"
     };
-
+  
     const missingFields = Object.keys(requiredFields).filter(
       (key) => !formData[key as keyof FormData]?.trim()
     );
-
+  
     if (missingFields.length > 0) {
-      console.log(
-        "Missing fields:",
-        missingFields.map((key) => requiredFields[key as keyof FormData]).join(", ")
-      );
+      const errorMessage = `Missing fields: ${missingFields
+        .map((key) => requiredFields[key as keyof FormData])
+        .join(", ")}`;
+  
+      toast.error(errorMessage, {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000, // Optional: Automatically close after 5 seconds
+      });
+  
       return;
     }
-
+  
+    toast.success("Form submitted successfully!", {
+      position: "top-center",
+      theme: "dark",
+      autoClose: 5000,
+    });
+  
     console.log("Form submitted successfully!", formData);
   };
+  
 
   const [isPaid, setIsPaid] = useState(false)
 
@@ -82,6 +96,7 @@ function Checkout() {
 
   return (
     <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">
+      <ToastContainer />
       <div className="w-full h-auto lg:order-2 p-6 lg:p-12 flex align-middle justify-start flex-col">
         <h1 className="text-3xl font-bold mb-6">Chekout Form</h1>
         <h3 className="text-1xl text-gray-400 mb-6">Shipping Information</h3>
