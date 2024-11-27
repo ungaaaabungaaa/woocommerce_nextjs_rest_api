@@ -102,21 +102,21 @@ function Checkout() {
         <h3 className="text-1xl text-gray-400 mb-6">Shipping Information</h3>
 
         <div>
-          <label htmlFor="email" className="block text-sm font-medium text-white">
-            Email address
-          </label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            isClearable
-            size="lg"
-            isRequired
-            className="mt-1 w-full"
-            placeholder="Enter your Email"
-            value={formData.email}
-            onChange={handleChange}
-          />
+        <label htmlFor="email" className="block text-sm font-medium text-white">
+          Email address
+        </label>
+        <Input
+          className="mt-1 w-full"
+          id="email"
+          isClearable
+          isRequired
+          name="email"
+          onChange={handleChange}
+          placeholder="Enter your Email"
+          size="lg"
+          type="email"
+          value={formData.email}
+        />
         </div>
         <br />
 
