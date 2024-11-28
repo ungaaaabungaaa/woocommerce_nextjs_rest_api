@@ -18,6 +18,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'nextui.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.w3.org',
+      },
     ],
   },
   async headers() {

@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Truck } from "lucide-react";
+import { Search, ShoppingBag, Truck ,Instagram } from "lucide-react";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import { Badge } from "@nextui-org/badge";
 import React from "react";
@@ -67,7 +67,7 @@ export default function Nav_bar() {
   return (
     <>
       <div className="bg-white w-full text-small text-black p-3 flex items-center justify-center">
-        FREE EXPRESS SHIPPING OVER $100 USD
+        BLACK FRIDAY SALE!
       </div>
       <Navbar className="bg-black text-white" onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent>
@@ -126,8 +126,10 @@ export default function Nav_bar() {
           >
             <ShoppingBag onClick={handleCartClick} className="h-5 cursor-pointer" />
           </Badge>
+          <Instagram  className="h-5 cursor-pointer" />
           <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
           <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
+          
         </NavbarContent>
 
         <NavbarMenu className="bg-black text-white">

@@ -263,13 +263,15 @@ function Checkout() {
               const amountValue = "10.00"; // Ensure this is formatted correctly
               console.log("Creating order with amount:", amountValue);
               return actions.order.create({
-                  purchase_units: [
-                      {
-                          amount: {
-                              value: 10.00,
-                          },
-                      },
-                  ],
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: 'USD',
+                      value: '20.00',
+                    },
+                  },
+                ],
+                intent: 'CAPTURE'
               });
           }}
           onApprove={async (data, actions) => {
