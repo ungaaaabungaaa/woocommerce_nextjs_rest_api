@@ -1,5 +1,5 @@
-"use client";
-import { useState, useEffect } from "react";
+'use client'
+import React, { useState } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -12,24 +12,21 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Truck ,Instagram } from "lucide-react";
-import SiteLogo from "../../public/sitelogo.jpeg";
+import { Search, ShoppingBag, Truck, Instagram } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
-import React from "react";
-import { useCart } from '../../context/cartcontext';
-
+import SiteLogo from "../../public/sitelogo.jpeg";
+import { useCart } from "../../context/cartcontext";
+import { MensMegaMenu } from "./mens-mega-menu";
+import { WomensMegaMenu } from "./womens-mega-menu";
+import { AccessoriesMegaMenu } from "./accessories-mega-menu";
+import { FootWearMegaMenu } from "./footwear-mega-menu";
+import { KidsMegaMenu } from "./kids-mega-menu";
 
 export default function Nav_bar() {
- 
-
   const router = useRouter();
-  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartCount } = useCart();
-  console.log(cartCount)
-
-
-
-
+  const [visibleMegaMenu, setVisibleMegaMenu] = useState("");
 
   const handleSearchClick = () => {
     router.push("/search");
@@ -59,9 +56,9 @@ export default function Nav_bar() {
     { label: "Terms & Condition", route: "/terms" },
   ];
 
-  const handleMenuItemClick = (route: any) => {
+  const handleMenuItemClick = (route:any) => {
     router.push(route);
-    setIsMenuOpen(false); // Close the menu after clicking
+    setIsMenuOpen(false);
   };
 
   return (
@@ -89,47 +86,56 @@ export default function Nav_bar() {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem className="text-white hover:font-bold">
-            <Link color="foreground" href="#">
-              Men&apos;s
-            </Link>
+          <NavbarItem
+            className="text-white hover:font-bold"
+            onMouseEnter={() => setVisibleMegaMenu("Men")}
+            onMouseLeave={() => setVisibleMegaMenu("")}
+          >
+            <Link href="#">Men&apos;s</Link>
           </NavbarItem>
-          <NavbarItem className="text-white hover:font-bold">
-            <Link href="#" aria-current="page">
-              Women&apos;s
-            </Link>
+          <NavbarItem
+            className="text-white hover:font-bold"
+            onMouseEnter={() => setVisibleMegaMenu("Women")}
+            onMouseLeave={() => setVisibleMegaMenu("")}
+          >
+            <Link href="#">Women&apos;s</Link>
           </NavbarItem>
-          <NavbarItem className="text-white hover:font-bold">
-            <Link color="foreground" href="#">
-              Accessories
-            </Link>
+          <NavbarItem
+            className="text-white hover:font-bold"
+            onMouseEnter={() => setVisibleMegaMenu("Accessories")}
+            onMouseLeave={() => setVisibleMegaMenu("")}
+          >
+            <Link href="#">Accessories</Link>
           </NavbarItem>
-          <NavbarItem className="text-white hover:font-bold">
-            <Link color="foreground" href="#">
-              Kid&apos;s
-            </Link>
+          <NavbarItem
+            className="text-white hover:font-bold"
+            onMouseEnter={() => setVisibleMegaMenu("Kids")}
+            onMouseLeave={() => setVisibleMegaMenu("")}
+          >
+            <Link href="#">Kid&apos;s</Link>
           </NavbarItem>
-          <NavbarItem className="text-white hover:font-bold">
-            <Link color="foreground" href="#">
-              FootWare
-            </Link>
+          <NavbarItem
+            className="text-white hover:font-bold"
+            onMouseEnter={() => setVisibleMegaMenu("Footwear")}
+            onMouseLeave={() => setVisibleMegaMenu("")}
+          >
+            <Link href="#">Footwear</Link>
           </NavbarItem>
         </NavbarContent>
 
         <NavbarContent justify="end" className="gap-4">
           <Badge
             onClick={handleCartClick}
-            content={cartCount} // Use the state variable here
+            content={cartCount}
             className="border-none"
             shape="circle"
             color="danger"
           >
-            <ShoppingBag onClick={handleCartClick} className="h-5 cursor-pointer" />
+            <ShoppingBag className="h-5 cursor-pointer" />
           </Badge>
-          <Instagram  className="h-5 cursor-pointer" />
+          <Instagram className="h-5 cursor-pointer" />
           <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
           <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
-          
         </NavbarContent>
 
         <NavbarMenu className="bg-black text-white">
@@ -148,6 +154,53 @@ export default function Nav_bar() {
           ))}
         </NavbarMenu>
       </Navbar>
+
+      {/* Render mega menus based on the visibleMegaMenu state */}
+      {visibleMegaMenu === "Men" && (
+        <div
+          onMouseEnter={() => setVisibleMegaMenu("Men")}
+          onMouseLeave={() => setVisibleMegaMenu("")}
+          className="mega-menu sticky top-16 bg-white shadow-lg z-50"
+        >
+          <MensMegaMenu />
+        </div>
+      )}
+      {visibleMegaMenu === "Women" && (
+        <div
+          onMouseEnter={() => setVisibleMegaMenu("Women")}
+          onMouseLeave={() => setVisibleMegaMenu("")}
+          className="mega-menu sticky top-16 bg-white shadow-lg z-50"
+        >
+          <WomensMegaMenu />
+        </div>
+      )}
+      {visibleMegaMenu === "Accessories" && (
+        <div
+          onMouseEnter={() => setVisibleMegaMenu("Accessories")}
+          onMouseLeave={() => setVisibleMegaMenu("")}
+          className="mega-menu sticky top-16 bg-white shadow-lg z-50"
+        >
+          <AccessoriesMegaMenu />
+        </div>
+      )}
+      {visibleMegaMenu === "Kids" && (
+        <div
+          onMouseEnter={() => setVisibleMegaMenu("Kids")}
+          onMouseLeave={() => setVisibleMegaMenu("")}
+          className="mega-menu sticky top-16 bg-white shadow-lg z-50"
+        >
+          <KidsMegaMenu />
+        </div>
+      )}
+      {visibleMegaMenu === "Footwear" && (
+        <div
+          onMouseEnter={() => setVisibleMegaMenu("Footwear")}
+          onMouseLeave={() => setVisibleMegaMenu("")}
+          className="mega-menu sticky top-16 bg-white shadow-lg z-50"
+        >
+          <FootWearMegaMenu />
+        </div>
+      )}
     </>
   );
 }

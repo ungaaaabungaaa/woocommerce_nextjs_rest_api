@@ -2,10 +2,17 @@ import { AppleCardsCarouselDemo } from "./component/apple-cards-carousel";
 import { ImagesSliderDemo } from "./component/ImagesSliderDemo";
 import FeaturedProducts from "./component/featuredproducts";
 import { WobbleCardDemo } from "./component/wobble-card";
-import { TabsDemo } from "./component/tabs";
 import ProductCarousel from "./component/ ProductCarousel";
-import PromoBar from "./component/promo-bar";
 import InstagramGallery from "./component/instagram-gallery";
+
+
+// Nav Bar Mega Menu
+// Homepage More Project Cards 
+// ShopPage Categories with Simple Sorthing Filters 
+// View Product Page Single 
+// view Vairation Product 
+// Add cart Vairation Product 
+
 
 
 export default function Home() {
