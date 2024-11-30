@@ -89,35 +89,35 @@ export default function Nav_bar() {
           <NavbarItem
             className="text-white hover:font-bold"
             onMouseEnter={() => setVisibleMegaMenu("Men")}
-            onMouseLeave={() => setVisibleMegaMenu("")}
+            onClick={() => setVisibleMegaMenu("")}
           >
             <Link href="#">Men&apos;s</Link>
           </NavbarItem>
           <NavbarItem
             className="text-white hover:font-bold"
             onMouseEnter={() => setVisibleMegaMenu("Women")}
-            onMouseLeave={() => setVisibleMegaMenu("")}
+            onClick={() => setVisibleMegaMenu("")}
           >
             <Link href="#">Women&apos;s</Link>
           </NavbarItem>
           <NavbarItem
             className="text-white hover:font-bold"
             onMouseEnter={() => setVisibleMegaMenu("Accessories")}
-            onMouseLeave={() => setVisibleMegaMenu("")}
+            onClick={() => setVisibleMegaMenu("")}
           >
             <Link href="#">Accessories</Link>
           </NavbarItem>
           <NavbarItem
             className="text-white hover:font-bold"
             onMouseEnter={() => setVisibleMegaMenu("Kids")}
-            onMouseLeave={() => setVisibleMegaMenu("")}
+            onClick={() => setVisibleMegaMenu("")}
           >
             <Link href="#">Kid&apos;s</Link>
           </NavbarItem>
           <NavbarItem
             className="text-white hover:font-bold"
             onMouseEnter={() => setVisibleMegaMenu("Footwear")}
-            onMouseLeave={() => setVisibleMegaMenu("")}
+            onClick={() => setVisibleMegaMenu("")}
           >
             <Link href="#">Footwear</Link>
           </NavbarItem>
