@@ -10,11 +10,13 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
-// Checkout -> Thank you 
-// ShopPage Categories with Simple Sorthing Filters 
-// View Product Page Single 
-// view Vairation Product 
-// Add cart Vairation Product 
+
+// authentication login & Register 
+// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
+// Store - Fitlers , Categories , Search Data , 
+// ProductView - Handle Variations | Add To Cart 
+
+// Extras 
 
 
 export default function Home() {
