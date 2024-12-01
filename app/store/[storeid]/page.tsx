@@ -56,9 +56,15 @@ function StoreId({ params }: { params: Params }) {
           </div>
         ) : (
           <div>
-            {/* Render your products */}
+            
             <FullScreenStoreBanner title="Welcome to Studio Store" subtitle={params.storeid} />
              <br />
+             {/* 
+             
+             Filtering / With Variations
+             product Display With Cart / View Product  
+             
+             */}
             
 
           </div>

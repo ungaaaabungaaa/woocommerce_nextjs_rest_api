@@ -23,13 +23,13 @@ export default function ContactPage() {
         <br></br>
         <h2 className="text-2xl font-semibold mb-4">Follow Us</h2>
         <div className="flex justify-center space-x-4">
-          <a href="#" className="text-muted-foreground ">
+          <a href="/" className="text-muted-foreground ">
             <Facebook className="h-6 w-6" />
           </a>
-          <a href="#" className="text-muted-foreground ">
+          <a href="/" className="text-muted-foreground ">
             <Twitter className="h-6 w-6" />
           </a>
-          <a href="#" className="text-muted-foreground ">
+          <a href="/" className="text-muted-foreground ">
             <Instagram className="h-6 w-6" />
           </a>
         </div>

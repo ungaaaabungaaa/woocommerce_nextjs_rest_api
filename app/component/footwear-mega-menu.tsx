@@ -6,7 +6,7 @@ export function FootWearMegaMenu() {
         <div className="grid grid-cols-5 gap-8">
           {/* Home Column */}
           <div>
-            <h2 className="font-semibold text-lg mb-4">Men's Footwear</h2>
+            <h2 className="font-semibold text-lg mb-4">Men&apos;s Footwear</h2>
             <ul className="space-y-2">
               <li><Link href="#" className="text-white hover:font-bold">Casual Shoes</Link></li>
               <li><Link href="#" className="text-white hover:font-bold">Formal Shoes</Link></li>
@@ -18,7 +18,7 @@ export function FootWearMegaMenu() {
 
           {/* Away Column */}
           <div>
-            <h2 className="font-semibold text-lg mb-4">Women's </h2>
+            <h2 className="font-semibold text-lg mb-4">Women&apos;s </h2>
             <ul className="space-y-2">
               <li><Link href="#" className="text-white hover:font-bold">Flats</Link></li>
               <li><Link href="#" className="text-white hover:font-bold">Heels</Link></li>
@@ -31,7 +31,7 @@ export function FootWearMegaMenu() {
 
           {/* Third Column */}
           <div>
-            <h2 className="font-semibold text-lg mb-4">Kids' </h2>
+            <h2 className="font-semibold text-lg mb-4">Kids&apos; </h2>
             <ul className="space-y-2">
               <li><Link href="#" className="text-white hover:font-bold">Casual Shoes</Link></li>
               <li><Link href="#" className="text-white hover:font-bold">Sports Shoes</Link></li>
