@@ -42,12 +42,15 @@ export default function Home() {
       </div>
       <ProductCarouselCategories category="accessories" ></ProductCarouselCategories>
       <br></br>
+      <ProductCarouselCategories category="core" ></ProductCarouselCategories>
       <br></br>
       <WobbleCardDemo></WobbleCardDemo>
       <br></br>
       <ProductCarousel></ProductCarousel>      
       <br></br>
       <InstagramGallery></InstagramGallery>
+      <br></br>
+      <ProductCarouselCategories category="best-sellers" ></ProductCarouselCategories>
       <br></br>
       <HeroBanner></HeroBanner>
     </section>
