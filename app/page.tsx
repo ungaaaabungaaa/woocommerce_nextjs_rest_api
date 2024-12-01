@@ -10,7 +10,7 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
-// Homepage More Project Cards 
+// Checkout -> Thank you 
 // ShopPage Categories with Simple Sorthing Filters 
 // View Product Page Single 
 // view Vairation Product 
