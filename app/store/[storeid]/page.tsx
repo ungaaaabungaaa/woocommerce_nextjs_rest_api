@@ -29,12 +29,11 @@ function StoreId({ params }: { params: Params }) {
         setError("😭😭😭 No Prodcuts Exist!!!");
       });
   }, [params.storeid]);
+  
 
   return (
     <>
       <div>
-        
-
         {error ? (
           <div style={{ textAlign: "center" }}>
              <br></br>
@@ -65,6 +64,7 @@ function StoreId({ params }: { params: Params }) {
           </div>
         )}
       </div>
+
     </>
   );
 }

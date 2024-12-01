@@ -7,18 +7,18 @@ const api = new WooCommerceRestApi({
   consumerKey: process.env.WC_CONSUMER_KEY,
   consumerSecret: process.env.WC_CONSUMER_SECRET,
   version: 'wc/v3',
-  queryStringAuth: true // Force Basic Authentication
+  queryStringAuth: true
 });
 
 // Define the response data structure
 interface ResponseData {
   success: boolean;
-  products: any[]; 
+  products: any[];
   error?: string;
   debugInfo?: any;
 }
 
-// GET handler for fetching products by category
+// GET handler for fetching products by category and name
 export async function GET(req: NextRequest) {
   const responseData: ResponseData = {
     success: false,
@@ -26,52 +26,52 @@ export async function GET(req: NextRequest) {
   };
 
   const url = new URL(req.url);
-  const categorySlug = url.searchParams.get('category');
+  const searchTerm = url.searchParams.get('category'); // We'll use this as a general search term
   const perPage = url.searchParams.get('perPage') || 50;
 
-  if (!categorySlug) {
-    responseData.error = 'Category slug is required';
+  if (!searchTerm) {
+    responseData.error = 'Search term is required';
     return NextResponse.json(responseData, { status: 400 });
   }
 
   try {
     // First, fetch the category to get its ID
     const categoriesResponse = await api.get('products/categories', {
-      slug: categorySlug,
+      slug: searchTerm,
     });
 
-    // Debug: Log the category search results
-    console.log('Category Search Results:', categoriesResponse.data);
+    let allProducts: any[] = [];
+    let categoryId = null;
 
-    // Check if category exists
-    if (categoriesResponse.data.length === 0) {
-      responseData.error = `No category found with slug: ${categorySlug}`;
-      responseData.debugInfo = {
-        message: 'Category not found',
-        attemptedSlug: categorySlug
-      };
-      return NextResponse.json(responseData, { status: 404 });
+    // If category exists, get products from that category
+    if (categoriesResponse.data.length > 0) {
+      categoryId = categoriesResponse.data[0].id;
+      const categoryProductsResponse = await api.get('products', {
+        per_page: parseInt(perPage as string),
+        category: categoryId,
+      });
+      allProducts = [...categoryProductsResponse.data];
     }
 
-    // Get the category ID
-    const categoryId = categoriesResponse.data[0].id;
-
-    // Fetch products filtered by category ID
-    const productsResponse = await api.get('products', {
+    // Search for products by name
+    const nameSearchResponse = await api.get('products', {
       per_page: parseInt(perPage as string),
-      category: categoryId, // Use category ID for filtering
+      search: searchTerm, // This will search product names and descriptions
     });
 
-    // Debug: Log the products
-    console.log('Products Found:', productsResponse.data);
+    // Combine products from both searches and remove duplicates
+    const combinedProducts = [...allProducts, ...nameSearchResponse.data];
+    const uniqueProducts = Array.from(new Map(combinedProducts.map(item => [item.id, item])).values());
 
     // Prepare the response
     responseData.success = true;
-    responseData.products = productsResponse.data;
+    responseData.products = uniqueProducts;
     responseData.debugInfo = {
       categoryId: categoryId,
-      categorySlug: categorySlug,
-      productsCount: productsResponse.data.length
+      searchTerm: searchTerm,
+      totalProductsFound: uniqueProducts.length,
+      categoryMatchCount: allProducts.length,
+      nameMatchCount: nameSearchResponse.data.length
     };
 
     // Send response
@@ -80,14 +80,12 @@ export async function GET(req: NextRequest) {
     // Handle errors
     console.error('Error fetching products:', error);
 
-    responseData.error = error.message || 'Failed to fetch products by category';
+    responseData.error = error.message || 'Failed to fetch products';
     responseData.debugInfo = {
       errorDetails: error.response ? error.response.data : error.toString(),
-      categorySlug: categorySlug
+      searchTerm: searchTerm
     };
 
     return NextResponse.json(responseData, { status: 500 });
   }
 }
-
-// test url  http://localhost:3000/api/getproductscategories?category=Women's Clothing
