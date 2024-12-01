@@ -1,6 +1,5 @@
 import ContactForm from './contact-form'
 import ContactInfo from './contact-info'
-import Map from './map'
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 
 export default function ContactPage() {
@@ -15,7 +14,6 @@ export default function ContactPage() {
         </div>
         <div>
           <ContactInfo />
-          <Map />
         </div>
       </div>
       <div className="mt-8 text-center">
