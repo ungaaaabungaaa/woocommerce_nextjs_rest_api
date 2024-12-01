@@ -7,6 +7,7 @@ import InstagramGallery from "./component/instagram-gallery";
 import PromoCard from "./component/promocard";
 import { ProductPromoCard } from "./component/productpromocard";
 import HeroBanner from "./component/hero-banner";
+import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
 // Homepage More Project Cards 
@@ -39,6 +40,8 @@ export default function Home() {
           imageUrl="https://images.unsplash.com/photo-1575396565848-e8031f12ce2a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhZHdlYXJ8ZW58MHwwfDB8fHww"
         />
       </div>
+      <ProductCarouselCategories category="accessories" ></ProductCarouselCategories>
+      <br></br>
       <br></br>
       <WobbleCardDemo></WobbleCardDemo>
       <br></br>

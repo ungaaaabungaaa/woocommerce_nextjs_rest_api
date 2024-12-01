@@ -67,7 +67,7 @@ function FeaturedProducts() {
   };
 
   // Fallback to sample products if products is empty
-  const limitedProducts = (products.length > 0 ? products : sampleProducts).slice(0, 12);
+  const limitedProducts = (products.length > 0 ? products : sampleProducts).slice(0, 8);
 
   return (
     <div className="w-full h-full py-5">
