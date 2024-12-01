@@ -5,7 +5,17 @@ import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { PayPalButtons } from "@paypal/react-paypal-js"
+import { PayPalButtons } from "@paypal/react-paypal-js";
+
+
+// get all the cart line items 
+// validate all the form details 
+// show paypal button 
+// one paypal catpures the payment 
+//  then use the form data , paypal order id and line items cart to call woocommerce rest api create order
+// then send the oder id to thank you page 
+// disable the back to this page 
+
 
 interface FormData {
   email: string;

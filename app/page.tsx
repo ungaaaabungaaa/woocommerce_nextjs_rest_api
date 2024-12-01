@@ -10,12 +10,14 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
-
-// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
 // Store - Fitlers , Categories , Search Data , 
+// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
 // ProductView - Handle Variations | Add To Cart 
 
+// Dark Mode After Payment - full enabling 
+
 // Extras 
+// | ChatBot | Code Documentation | Login & Register | SEO | 
 
 
 export default function Home() {
