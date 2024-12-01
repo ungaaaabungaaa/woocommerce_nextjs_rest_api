@@ -15,22 +15,22 @@ const footerLinks = [
   {
     title: 'Top Categories',
     links: [
-      { name: 'Accessories', url: '/categories/accessories' },
-      { name: 'Footwear', url: '/categories/footwear' },
-      { name: 'Kids Clothing', url: '/categories/kids-clothing' },
-      { name: 'Mens Clothing', url: '/categories/mens-clothing' },
-      { name: 'Uncategorized', url: '/categories/uncategorized' },
-      { name: 'Womens Clothing', url: '/categories/womens-clothing' }
+      { name: 'Accessories', url: '/store/accessories' },
+      { name: 'Footwear', url: '/store/footwear' },
+      { name: 'Kids Clothing', url: '/store/kids-clothing' },
+      { name: 'Mens Clothing', url: '/store/mens-clothing' },
+      { name: 'Uncategorized', url: '/store/uncategorized' },
+      { name: 'Womens Clothing', url: '/store/womens-clothing' }
     ],
   },
   {
     title: 'More Categories',
     links: [
-      { name: 'Running', url: '/categories/running' },
-      { name: 'Football', url: '/categories/football' },
-      { name: 'Basketball', url: '/categories/basketball' },
-      { name: 'Tennis', url: '/categories/tennis' },
-      { name: 'Outdoor', url: '/categories/outdoor' }
+      { name: 'Running', url: '/store/running' },
+      { name: 'Football', url: '/store/football' },
+      { name: 'Basketball', url: '/store/basketball' },
+      { name: 'Tennis', url: '/store/tennis' },
+      { name: 'Outdoor', url: '/store/outdoor' }
     ],
   },
   {

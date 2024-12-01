@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import axios from 'axios';
+import { useRouter } from "next/navigation";
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState('');
+  const router = useRouter();
   const [selectedChips, setSelectedChips] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
 
@@ -30,12 +32,15 @@ export default function ProductSearch() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Search Term:', searchTerm);
+    // Use template literals to construct the path
+    router.push(`/store/${searchTerm}`);
     // Trigger API or other logic for search term
   };
 
   // Handle chip selection
   const handleChipClick = (category: string) => {
     console.log('Selected Chip:', category);
+    router.push(`/store/${category}`);
     setSelectedChips((prev) =>
       prev.includes(category) ? prev.filter((chip) => chip !== category) : [...prev, category]
     );
