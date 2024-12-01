@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, createContext, useContext } from "react";
+import React, { useEffect, useState, createContext, useContext } from "react";
 import {
   IconArrowNarrowLeft,
   IconArrowNarrowRight,
@@ -8,6 +8,7 @@ import {
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import Image, { ImageProps } from "next/image";
+import { useRouter } from "next/navigation";
 
 interface CarouselProps {
   items: JSX.Element[];
@@ -34,6 +35,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -155,9 +157,12 @@ export const Card = ({
   layout?: boolean;
 }) => {
   const { onCardClose } = useContext(CarouselContext);
+  const router = useRouter();
+
 
   const handleCardClick = () => {
     console.log('Card category:', card.category); // Added this line to log the category
+    router.push(`/store/${card.category}`);
     onCardClose(index);
   };
 

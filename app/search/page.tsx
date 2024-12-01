@@ -75,8 +75,8 @@ export default function ProductSearch() {
                   onClick={() => handleChipClick(category)}
                   className={`py-1 px-3 rounded-full text-sm ${
                     selectedChips.includes(category)
-                      ? 'bg-white text-black'
-                      : 'bg-black text-white'
+                      ? 'bg-white text-black hover:text-white hover:bg-black'
+                      : 'bg-black text-white hover:bg-white hover:text-black'
                   }`}
                 >
                   {category}

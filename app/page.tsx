@@ -11,7 +11,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
 
-// authentication login & Register 
 // Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
 // Store - Fitlers , Categories , Search Data , 
 // ProductView - Handle Variations | Add To Cart 

@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
+
 // Fallback data
 const fallbackData = [
   {
@@ -39,6 +40,7 @@ const fallbackData = [
 
 export function AppleCardsCarouselDemo() {
   const [categories, setCategories] = useState(fallbackData);
+  
 
   useEffect(() => {
     const fetchCategories = async () => {
