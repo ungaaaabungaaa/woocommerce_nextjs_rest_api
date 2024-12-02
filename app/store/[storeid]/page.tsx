@@ -6,13 +6,17 @@ import FullScreenStoreBanner from "@/app/component/FullScreenStoreBanner";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import Image from 'next/image';
+import { useCartKey } from '../../../hooks/useCartKey';
+import { useCart } from '../../../context/cartcontext';
 
 interface Params {
   storeid: string;
 }
 
 interface Product {
-  id: number;
+  id: any;
+  type:any;
   name: string;
   price: string;
   regular_price: string;
@@ -21,6 +25,7 @@ interface Product {
   featured?: boolean;
   images: { src: string }[];
   categories: { name: string }[];
+  short_description: string;  // Change from { name: string }[] to string
 }
 
 function StoreId({ params }: { params: Params }) {
@@ -29,12 +34,53 @@ function StoreId({ params }: { params: Params }) {
   const [error, setError] = useState<string | null>(null);
   const [sortOption, setSortOption] = useState("featured");
 
+  const { cartKey, loading, error: cartKeyError } = useCartKey();
+  const { fetchCartDetails } = useCart();
+
+
+  const addToCart = async (productId: string, prodQuantity: number = 1) => {
+      
+    if (loading) {
+        console.log('Cart key is still loading...');
+        return;
+    }
+    if (cartKeyError) {
+        console.error('Error with cart key:', cartKeyError);
+        return;
+    }
+    const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+    try {
+        const response = await axios.post(
+          endpoint,
+          new URLSearchParams({
+            id: productId,
+            quantity: prodQuantity.toString(),
+          }),
+          {
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+          }
+        );
+        console.log('Item added to cart:', response.data);
+        await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      } catch (error: any) {
+        console.error('Error adding item to cart:', error.response?.data || error.message);
+      }
+    };
+
+
+
+
+
+
   useEffect(() => {
     axios
       .get(`/api/getproductscategories`, { params: { category: params.storeid } })
       .then((response) => {
         if (response.data && response.data.products && response.data.products.length > 0) {
           setProducts(response.data.products);
+          console.log(response.data.products);
           setFilteredProducts(response.data.products);
           setError(null);
         } else {
@@ -114,40 +160,66 @@ function StoreId({ params }: { params: Params }) {
               </div>
             </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredProducts.map((product) => (
-                  <Card key={product.id} className="overflow-hidden">
-                    <CardHeader className="p-0">
-                      <img
-                        src={product.images[0]?.src || '/placeholder.svg'}
-                        alt={product.name}
-                        className="w-full h-48 object-cover"
-                      />
-                    </CardHeader>
-                    <CardBody className="p-4">
-                      <h3 className="text-lg font-semibold mb-2">{product.name}</h3>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {product.categories.map(cat => cat.name).join(', ')}
-                      </p>
-                      <p className="font-bold">
-                        ${product.sale_price || product.regular_price}
-                        {product.sale_price && (
-                          <span className="text-sm text-gray-500 line-through ml-2">
-                            ${product.regular_price}
-                          </span>
-                        )}
-                      </p>
-                    </CardBody>
-                    <CardFooter>
-                      <Button
-                        fullWidth
-                        color="primary"
-                        onClick={() => console.log(`Product ID: ${product.id}`)}
+              {filteredProducts.map((product) => (
+                <Card 
+                  key={product.id} 
+                  className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
+                >    
+                  <CardHeader className="line-clamp-1 text-2xl text-white">
+                    {product.name}
+                  </CardHeader>
+                  <CardBody>
+                    <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+                      {product.images[0]?.src && (
+                        <>
+                          <Image
+                            src={product.images[0].src}
+                            alt={product.name}
+                            fill
+                            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+                          />
+                          {/* If you want a hover image, you'd need to add a second image */}
+                          {/* This is just a placeholder - you may want to handle this differently */}
+                          {product.images[1]?.src && (
+                            <Image
+                              src={product.images[1].src}
+                              alt={`${product.name} hover`}
+                              fill
+                              className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                            />
+                          )}
+                        </>
+                      )}
+                    </div>
+                   <p className="text-sm text-white mt-2">
+                      {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
+                    </p>
+                    <div className="mt-2 flex justify-between items-center">
+                      <span className="text-white font-bold">
+                        ${product.price}
+                      </span>
+                    </div>
+                    <br />
+                    {product.type === "simple" && (
+                    <Button 
+                        size="md"
+                        className="w-full bg-white text-black"
+                        onClick={() => addToCart(product.id, 1)}
                       >
-                        Add to Cart
-                      </Button>
-                    </CardFooter>
-                  </Card>
-                ))}
+                      Add to cart
+                    </Button>
+                    )}
+                    <br />
+                    <Button 
+                      size="md"
+                      className="w-full bg-black text-white"
+                      onClick={() => console.log(`View Product: ${product.id}`)}
+                    >
+                      View Product
+                    </Button>
+                  </CardBody>
+                </Card>
+              ))}
               </div>
             </div>
           </div>
