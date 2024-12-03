@@ -1,52 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server';
-const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
+const WooCommerceRestApi = require('@woocommerce/woocommerce-rest-api').default;
 
 // Initialize the WooCommerce API
 const api = new WooCommerceRestApi({
-  url: process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL || '',
-  consumerKey: process.env.WC_CONSUMER_KEY || '',
-  consumerSecret: process.env.WC_CONSUMER_SECRET || '',
-  version: 'wc/v3',
-  queryStringAuth: true
+    url: process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
+    consumerKey: process.env.WC_CONSUMER_KEY,
+    consumerSecret: process.env.WC_CONSUMER_SECRET,
+    version: 'wc/v3',
+    queryStringAuth: true, // Use Basic Authentication with query string
 });
 
-export async function GET(
-  request: NextRequest, 
-  { params }: { params: { productId: string } }
-) {
-  try {
-    // Extract product ID from the route parameters
-    const productId = params.productId;
+// GET handler for fetching product details
+export async function GET(request: NextRequest) {
+    try {
+        // Extract product ID from the query parameters
+        const url = new URL(request.url);
+        const productId = url.searchParams.get('id'); // Example: ?id=794
 
-    // Validate product ID
-    if (!productId) {
-      return NextResponse.json({
-        success: false,
-        error: 'Product ID is required'
-      }, { status: 400 });
+        if (!productId) {
+            return NextResponse.json(
+                { error: 'Product ID is required in the query string.' },
+                { status: 400 }
+            );
+        }
+
+        // Fetch product details from WooCommerce
+        const response = await api.get(`products/${productId}`);
+
+        // Return product data
+        return NextResponse.json(response.data, { status: 200 });
+    } catch (error: any) {
+        console.error('WooCommerce API Error:', error.response?.data || error.message);
+
+        // Return error response
+        return NextResponse.json(
+            { error: error.response?.data || error.message },
+            { status: error.response?.status || 500 }
+        );
     }
-
-    // Fetch the entire product object from WooCommerce
-    const response = await api.get(`products/${productId}`);
-
-    // Return the entire product data
-    return NextResponse.json(response.data, { status: 200 });
-
-  } catch (error: any) {
-    console.error('Error fetching WooCommerce product:', error);
-
-    // Handle specific WooCommerce API errors
-    if (error.response) {
-      return NextResponse.json({
-        success: false,
-        error: error.response.data.message || 'Failed to fetch product'
-      }, { status: error.response.status || 500 });
-    }
-
-    // Generic error handling
-    return NextResponse.json({
-      success: false,
-      error: 'An unexpected error occurred'
-    }, { status: 500 });
-  }
 }
+
+// test url 
+// http://localhost:3000//api/getproductdetails?id=104
