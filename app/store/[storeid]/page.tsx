@@ -67,11 +67,7 @@ function StoreId({ params }: { params: Params }) {
       } catch (error: any) {
         console.error('Error adding item to cart:', error.response?.data || error.message);
       }
-    };
-
-
-
-
+  };
 
 
   useEffect(() => {
@@ -119,6 +115,7 @@ function StoreId({ params }: { params: Params }) {
     setFilteredProducts(result);
   }, [products, sortOption]);
 
+
   return (
     <>
       <div>
@@ -136,6 +133,7 @@ function StoreId({ params }: { params: Params }) {
           <div>
             <br></br>
             <FullScreenStoreBanner 
+
                 title={params.storeid} 
                 subtitle="Studio Universal Store" 
                 backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
