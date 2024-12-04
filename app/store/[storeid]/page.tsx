@@ -122,7 +122,6 @@ function StoreId({ params }: { params: Params }) {
   }, [products, sortOption]);
 
   const router = useRouter();
- 
   function ViewProduct(id: any): void {
     console.log(id);
     router.push(`/product/${id}`); 
