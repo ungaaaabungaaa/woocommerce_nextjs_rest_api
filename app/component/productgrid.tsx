@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
+import { useRouter } from 'next/navigation';
 
 interface Product {
   id: number;
@@ -24,6 +25,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
   // Always call hooks at the top of the component
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+  const router = useRouter();
 
   // Ensure products is always an array
   const safeProducts = products || [];
@@ -65,10 +67,9 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     }
   };
 
-  // Function to view product (you can add a route or further logic here)
+ 
   const ViewProduct = async (productId: string) => {
-    console.log('View Product:', productId);
-    // Implement logic to navigate to product details page or show a modal, etc.
+    router.push(`/product/${productId}`);
   };
 
   return (
@@ -99,6 +100,12 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                 <p className="text-sm text-white mt-2">
                   {product.description}
                 </p>
+                <p className="text-sm text-white">
+                  <span className="text-white font-bold">{product.price}</span>
+                  
+                </p>
+
+
               </CardBody>
 
               <CardFooter className="grid grid-cols-2 gap-2">

@@ -6,6 +6,7 @@ import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
+import { useRouter } from 'next/navigation';
 
 interface Product {
   id: string;
@@ -28,9 +29,11 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+  const router = useRouter();
 
   const ViewProduct = async (productId: string) => {
     console.log(productId);
+    router.push(`/product/${productId}`);
   };
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
