@@ -77,7 +77,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white bg-black">
           {safeProducts.map((product) => (
-            <Card key={product.id} className="group relative bg-card border-muted">
+            <Card  key={product.id} className="group relative bg-card border-muted">
               <CardHeader className="line-clamp-1 text-2xl text-white">
                 {product.title}
               </CardHeader>
