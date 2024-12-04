@@ -9,6 +9,7 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import Image from 'next/image';
 import { useCartKey } from '../../../hooks/useCartKey';
 import { useCart } from '../../../context/cartcontext';
+import { useRouter } from 'next/navigation';
 
 interface Params {
   storeid: string;
@@ -36,9 +37,14 @@ function StoreId({ params }: { params: Params }) {
 
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+  
 
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
+   
+
+
+  
       
     if (loading) {
         console.log('Cart key is still loading...');
@@ -115,6 +121,12 @@ function StoreId({ params }: { params: Params }) {
     setFilteredProducts(result);
   }, [products, sortOption]);
 
+  const router = useRouter();
+ 
+  function ViewProduct(id: any): void {
+    console.log(id);
+    router.push(`/product/${id}`); 
+  }
 
   return (
     <>
@@ -211,7 +223,7 @@ function StoreId({ params }: { params: Params }) {
                     <Button 
                       size="md"
                       className="w-full bg-black text-white"
-                      onClick={() => console.log(`View Product: ${product.id}`)}
+                      onClick={() => ViewProduct(product.id)}
                     >
                       View Product
                     </Button>

@@ -5,10 +5,11 @@ import axios from "axios";
 import FullScreenStoreBanner from "@/app/component/FullScreenStoreBanner";
 import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Card, CardHeader, CardBody } from "@nextui-org/card";
 import Image from 'next/image';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
+import { useRouter } from 'next/navigation';
 
 interface Product {
   id: any;
@@ -32,6 +33,15 @@ function StorePage() {
 
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+
+  const router = useRouter();
+
+
+  const ViewProduct = async (productId: string) => {
+    console.log(productId);
+    router.push(`/product/${productId}`);
+  };
+    
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
     if (loading) {
@@ -200,7 +210,7 @@ function StorePage() {
                       <Button
                         size="md"
                         className="w-full bg-black text-white"
-                        onClick={() => console.log(`View Product: ${product.id}`)}
+                        onClick={()=> ViewProduct(product.id)}
                       >
                         View Product
                       </Button>
