@@ -205,9 +205,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
     };
 
     const addToCartApiCallVariation = async (id: string, quantity: string, variation: Record<string, string>) => {
-      console.log(`Variable product added - ID: ${id}, Quantity: ${quantity}, Variation:`, variation);
-      // Your API call logic here
-
+      
       if (loading) {
         console.log('Cart key is still loading...');
         return;
@@ -216,10 +214,23 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         console.error('Error with cart key:', cartKeyError);
         return;
       }
-
+    
       const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
-
-
+    
+      // Structuring the data as per your required format
+      const data = {
+        id: id,
+        quantity: quantity,
+        variation: variation, // Send variation as an object
+      };
+    
+      try {
+        const response = await axios.post(endpoint, data);
+        console.log('Item added to cart:', response.data);
+        await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      } catch (error: any) {
+        console.error('Error adding item to cart:', error.response?.data || error.message);
+      }
 
     };
 
