@@ -237,10 +237,90 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             </p>    
             </AccordionItem>
             <AccordionItem key="2" subtitle="Please size down if you are between sizes" aria-label="SIZE GUIDE" title="SIZE GUIDE">
+
+            <div className="bg-black text-white p-4 rounded">
+              <table className="w-full text-left text-sm">
+                <thead>
+                  <tr>
+                    <th className="py-2">Height (cm)</th>
+                    <th className="py-2">Weight (kg)</th>
+                    <th className="py-2">Pants Size</th>
+                    <th className="py-2">Top Size</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="py-1">160-170</td>
+                    <td className="py-1">50-55</td>
+                    <td className="py-1">26/28</td>
+                    <td className="py-1">S/M</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">165-175</td>
+                    <td className="py-1">55-65</td>
+                    <td className="py-1">30</td>
+                    <td className="py-1">S/M</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">170-180</td>
+                    <td className="py-1">65-75</td>
+                    <td className="py-1">30/32</td>
+                    <td className="py-1">M/L</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">185-190</td>
+                    <td className="py-1">75-85</td>
+                    <td className="py-1">34</td>
+                    <td className="py-1">L/XL</td>
+                  </tr>
+                  <tr>
+                    <td className="py-1">185-190</td>
+                    <td className="py-1">80-90</td>
+                    <td className="py-1">36</td>
+                    <td className="py-1">XL</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
              
             </AccordionItem>
             <AccordionItem key="3" subtitle="Free Shipping on all orders over $100 USD" aria-label="SHIPPING" title="SHIPPING">
-              
+              <div className="bg-black text-white p-4 rounded">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr>
+                        <th className="py-2">Location</th>
+                        <th className="py-2">Cost</th>
+                        <th className="py-2">Delivery</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="py-1">US / Canada</td>
+                        <td className="py-1">$5</td>
+                        <td className="py-1">1 - 3 working days</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1">UK / EU Countries</td>
+                        <td className="py-1">$5</td>
+                        <td className="py-1">1 - 3 working days</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1">Australia</td>
+                        <td className="py-1">$5</td>
+                        <td className="py-1">1 - 3 working days</td>
+                      </tr>
+                      <tr>
+                        <td className="py-1">International</td>
+                        <td className="py-1">$15</td>
+                        <td className="py-1">2 - 4 working days</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <p className="text-sm mt-4">
+                    *Each order requires 24 hours for processing and handling. This does not include weekends or holidays.
+                  </p>
+              </div>
             </AccordionItem>
           </Accordion>
           </div>
