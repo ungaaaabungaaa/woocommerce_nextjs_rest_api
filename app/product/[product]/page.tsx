@@ -6,6 +6,9 @@ import { ShoppingCart } from 'lucide-react'
 import { Button } from '@nextui-org/button'
 import { Chip } from "@nextui-org/chip"
 import { Accordion, AccordionItem } from '@nextui-org/accordion'
+import axios from 'axios';
+import { useCartKey } from '../../../hooks/useCartKey';
+import { useCart } from '../../../context/cartcontext';
 
 interface Attribute {
   id: number
@@ -73,6 +76,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({})
   const [quantity, setQuantity] = useState(1)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
+  const { cartKey, loading, error: cartKeyError } = useCartKey();
+  const { fetchCartDetails } = useCart();
+  
 
   useEffect(() => {
     // Fetch product data
@@ -132,10 +138,15 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
   const handleAddToCart = () => {
     if (product?.type === 'simple') {
-      console.log({
-        id: product.id.toString(),
-        quantity: quantity.toString(),
-      })
+        
+        // console.log({
+        //   id: product.id.toString(),
+        //   quantity: quantity.toString(),
+        // })
+
+      // Call the API function for simple products
+      addToCartApiCallSimple(product.id.toString(), quantity.toString());
+     
     } else if (selectedVariation) {
       const variationData: Record<string, string> = {}
       product?.attributes.forEach(attr => {
@@ -143,13 +154,83 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         variationData[key] = selectedOptions[attr.name]
       })
       
-      console.log({
-        id: selectedVariation.id.toString(),
-        quantity: quantity.toString(),
-        variation: variationData,
-      })
+      // console.log({
+      //   id: selectedVariation.id.toString(),
+      //   quantity: quantity.toString(),
+      //   variation: variationData,
+      // })
+
+      // Call the API function for variable products
+      addToCartApiCallVariation(
+        selectedVariation.id.toString(),
+        quantity.toString(),
+        variationData
+      );
+
     }
   }
+
+   // doing the api call to add to cart here
+
+    // API Call Functions
+    const addToCartApiCallSimple = async (id: string, quantity: string) => {
+
+      if (loading) {
+        console.log('Cart key is still loading...');
+        return;
+      }
+      if (cartKeyError) {
+        console.error('Error with cart key:', cartKeyError);
+        return;
+      }
+       const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+          try {
+            const response = await axios.post(
+              endpoint,
+              new URLSearchParams({
+                id: id,
+                quantity: quantity.toString(),
+              }),
+              {
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+              }
+            );
+            console.log('Item added to cart:', response.data);
+            await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+          } catch (error: any) {
+            console.error('Error adding item to cart:', error.response?.data || error.message);
+        }
+    };
+
+    const addToCartApiCallVariation = async (id: string, quantity: string, variation: Record<string, string>) => {
+      console.log(`Variable product added - ID: ${id}, Quantity: ${quantity}, Variation:`, variation);
+      // Your API call logic here
+
+      if (loading) {
+        console.log('Cart key is still loading...');
+        return;
+      }
+      if (cartKeyError) {
+        console.error('Error with cart key:', cartKeyError);
+        return;
+      }
+
+      const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+
+
+
+    };
+
+
+
+
+
+
+
+
+
 
   if (!product) return <div>Loading...</div>
 
