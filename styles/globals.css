@@ -137,5 +137,5 @@ input::placeholder {
   padding: 1rem; /* Optional padding */
   background-color: black; /* Match your design */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
-  z-index: 50; /* Ensure it appears above other elements */
+  z-index: 99; /* Ensure it appears above other elements */
 }

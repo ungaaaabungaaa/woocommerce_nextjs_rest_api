@@ -1,21 +1,13 @@
 'use client'
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, useEffect } from 'react';
 import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PayPalButtons } from "@paypal/react-paypal-js";
-
-
-// get all the cart line items 
-// validate all the form details 
-// show paypal button 
-// one paypal catpures the payment 
-//  then use the form data , paypal order id and line items cart to call woocommerce rest api create order
-// then send the oder id to thank you page 
-// disable the back to this page 
-
+import axios from 'axios';
+import { useCartKey } from '../../hooks/useCartKey';
 
 interface FormData {
   email: string;
@@ -29,9 +21,78 @@ interface FormData {
   phoneNumber: string;
 }
 
-function Checkout() {
+interface CartData {
+  items: CartItem[];
+  totals: { 
+    subtotal: string;
+    total: string;
+  };
+}
 
+interface CartItem {
+  item_key: string;
+  id: number;
+  name: string;
+  price: string;
+  quantity: { value: number };
+  featured_image: string;
   
+}
+
+
+function Checkout() {
+  
+  const { cartKey, loading, error } = useCartKey();
+  const [cartData, setCartData] = useState<CartData | null>(null);
+  const [cartTotal, setCartTotal] = useState<string>("0.00");
+  const [lineItems, setLineItems] = useState<{ product_id: number; quantity: number }[]>([]);
+
+
+  const [isFormValid, setIsFormValid] = useState(false);
+
+
+  const createOrderWoocommerce = async (formData: FormData, formattedTotal: string, lineItems: any[]) => {
+    console.log('Form Data:', formData);
+    console.log('Total:', formattedTotal);
+    console.log('Line Items:', lineItems);
+  };
+
+
+
+
+
+
+
+  useEffect(() => {
+    if (cartKey) {
+      fetchCartDetails();
+    }
+  }, [cartKey]);
+
+  const formatLineItems = (cartItems: CartItem[]) => {
+    return cartItems.map((item) => ({
+      product_id: item.id,
+      quantity: item.quantity.value
+    }));
+  };
+
+  const fetchCartDetails = async () => {
+    try 
+    {
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`;
+      const response = await axios.get(url, { params: { cart_key: cartKey } });
+      setCartData(response.data);
+      const rawTotal = response.data.totals.total;
+      const cleanedTotal = (typeof rawTotal === 'number' ? rawTotal : parseFloat(rawTotal)) / 100;
+      const formattedTotal = cleanedTotal.toFixed(2);
+      const formattedLineItems = formatLineItems(response.data.items);
+      setLineItems(formattedLineItems); // Store lineItems in state
+      setCartTotal(formattedTotal);
+    } catch (err) {
+      console.error('Error fetching cart details:', err);
+    }
+  };
+
   const [formData, setFormData] = useState<FormData>({
     email: "",
     firstName: "",
@@ -48,10 +109,22 @@ function Checkout() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prevState => ({ ...prevState, [name]: value }));
+    const updatedFormData = { ...formData, [name]: value };
+    setFormData(updatedFormData);
+
+    // Check form validity
+    const requiredFields: (keyof FormData)[] = [
+      'email', 'firstName', 'lastName', 'address', 
+      'city', 'country', 'postCode', 'phoneNumber'
+    ];
+    const allFieldsFilled = requiredFields.every(field => 
+      updatedFormData[field]?.trim() !== ""
+    );
+    setIsFormValid(allFieldsFilled);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     const requiredFields: Record<keyof FormData, string> = {
       email: "Email address",
       firstName: "First Name",
@@ -106,7 +179,7 @@ function Checkout() {
         <h1 className="text-3xl font-bold mb-6">Checkout Form</h1>
         <h3 className="text-xl text-gray-400 mb-6">Shipping Information</h3>
 
-        <form onSubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+        <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
               Email address
@@ -248,13 +321,6 @@ function Checkout() {
               />
             </div>
           </div>
-
-          <button
-            type="submit"
-            className="bg-white text-black px-4 py-2 rounded-full mt-4"
-          >
-            Checkout
-          </button>
         </form>
       </div>
 
@@ -263,38 +329,58 @@ function Checkout() {
         <MiniCart />
         <br />
 
-        <PayPalButtons 
-          className='rounded-full'
-          style={{ 
-              layout: "vertical",
-              color: "gold",
-              shape: "pill",
-              label: "pay",
+        {isFormValid && (
+        <PayPalButtons
+          className="rounded-full"
+          style={{
+            layout: "vertical",
+            color: "gold",
+            shape: "pill",
+            label: "pay",
           }}
           createOrder={(data, actions) => {
-              const amountValue = "10.00"; // Ensure this is formatted correctly
-              console.log("Creating order with amount:", amountValue);
-              return actions.order.create({
-                purchase_units: [
-                  {
-                    amount: {
-                      currency_code: 'USD',
-                      value: '20.00',
-                    },
+            const formattedTotal = parseFloat(cartTotal).toFixed(2);
+            console.log("Creating order with amount:", formattedTotal);
+            createOrderWoocommerce(formData, formattedTotal, lineItems);
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    currency_code: "USD",
+                    value: formattedTotal,
                   },
-                ],
-                intent: 'CAPTURE'
-              });
+                },
+              ],
+              intent: "CAPTURE",
+            });
           }}
           onApprove={async (data, actions) => {
+            try {
               const order = await actions.order?.capture();
+              console.log("Order captured successfully:", order);
               handleApprove(data.orderID);
+            } catch (error) {
+              console.error("Error capturing order:", error);
+              toast.error("Payment failed. Please try again.", {
+                position: "top-center",
+                theme: "dark",
+                autoClose: 5000,
+              });
+            }
           }}
-      />
+          onError={(err) => {
+            console.error("PayPal Button Error:", err);
+            toast.error("An error occurred with PayPal. Please try again.", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+            });
+          }}
+        />
+      )}
       </div>
     </div>
   );
 }
 
 export default Checkout;
-

@@ -16,7 +16,7 @@ export const metadata = {
 };
 
 const initialOptions = {
-  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AaMWJxShAuaNSFi30bJSDmVbAwy1LqZgWYyvvFNkkPZEts0uqTh80r2UitF8O32p5odfqFUhzF1Jy0Wq",
   currency: "USD",
   intent: "capture",
 };

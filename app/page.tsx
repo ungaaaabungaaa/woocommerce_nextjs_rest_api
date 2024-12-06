@@ -10,17 +10,19 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
-// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
-// ProductView - Handle Variations | Add To Cart 
 
-// Login & Register 
-// Dark Mode After Payment - full enabling 
+// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
+// Dark Mode
 
 
 
 
 
 export default function Home() {
+  
+  
+  
+  
   return (
     <section className="flex flex-col items-center justify-center">
       <ImagesSliderDemo></ImagesSliderDemo>
