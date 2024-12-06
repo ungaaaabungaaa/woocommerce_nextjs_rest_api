@@ -47,6 +47,7 @@ function Checkout() {
   const [cartData, setCartData] = useState<CartData | null>(null);
   const [cartTotal, setCartTotal] = useState<string>("0.00");
   const [lineItems, setLineItems] = useState<{ product_id: number; quantity: number }[]>([]);
+  const [orderId, setOrderId] = useState<string | null>(null);
 
 
   const [isFormValid, setIsFormValid] = useState(false);
@@ -96,8 +97,7 @@ function Checkout() {
   
       // Make the API call
       const response = await axios.post('/api/placeorder', orderData);
-      // Log the order ID from the response
-      console.log('Order created successfully! Order ID:', response.data.id);
+      setOrderId(response.data.id); // Store the order ID in state
       return response.data;
 
     } catch (error) {
@@ -105,8 +105,6 @@ function Checkout() {
       throw error;
     }
   };
-
-
 
   useEffect(() => {
     if (cartKey) {
@@ -427,7 +425,9 @@ function Checkout() {
               const order = await actions.order?.capture();
               console.log("Order captured successfully:", order);
               handleApprove(data.orderID);
-            } catch (error) {
+            } 
+            catch (error) 
+            {
               console.error("Error capturing order:", error);
               toast.error("Payment failed. Please try again.", {
                 position: "top-center",
