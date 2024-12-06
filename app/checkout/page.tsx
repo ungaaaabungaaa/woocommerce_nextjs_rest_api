@@ -9,6 +9,7 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 
+
 interface FormData {
   email: string;
   firstName: string;
@@ -51,15 +52,59 @@ function Checkout() {
   const [isFormValid, setIsFormValid] = useState(false);
 
 
-  const createOrderWoocommerce = async (formData: FormData, formattedTotal: string, lineItems: any[]) => {
-    console.log('Form Data:', formData);
-    console.log('Total:', formattedTotal);
-    console.log('Line Items:', lineItems);
+
+  const createOrderWoocommerce = async (formData: any, formattedTotal: string, lineItems: any[]) => {
+    
+    try {
+      // Prepare the order data
+      const orderData = {
+        payment: {
+          method: 'Paypal',
+          title: 'PayPal Payment',
+          transactionID: '',
+        },
+        billing: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          address_1: formData.address,
+          address_2: formData.apt || "",
+          city: formData.city,
+          postcode: formData.postCode,
+          country: formData.country,
+          email: formData.email,
+          phone: formData.phoneNumber,
+        },
+        shipping: {
+          first_name: formData.firstName,
+          last_name: formData.lastName,
+          address_1: formData.address,
+          address_2: formData.apt || "",
+          city: formData.city,
+          postcode: formData.postCode,
+          country: formData.country,
+          phone: formData.phoneNumber,
+        },
+        line_items: lineItems,
+        shipping_lines: [
+          {
+            method_id: 'flat_rate',
+            method_title: 'Flat Rate',
+            total: '0'
+          }
+        ]
+      };
+  
+      // Make the API call
+      const response = await axios.post('/api/placeorder', orderData);
+      // Log the order ID from the response
+      console.log('Order created successfully! Order ID:', response.data.id);
+      return response.data;
+
+    } catch (error) {
+      console.error('Error creating order:', error);
+      throw error;
+    }
   };
-
-
-
-
 
 
 
@@ -338,22 +383,45 @@ function Checkout() {
             shape: "pill",
             label: "pay",
           }}
-          createOrder={(data, actions) => {
-            const formattedTotal = parseFloat(cartTotal).toFixed(2);
-            console.log("Creating order with amount:", formattedTotal);
-            createOrderWoocommerce(formData, formattedTotal, lineItems);
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    currency_code: "USD",
-                    value: formattedTotal,
+
+
+          createOrder={async (data, actions) => {
+            try {
+              const formattedTotal = parseFloat(cartTotal).toFixed(2);
+              
+              // Create WooCommerce order first
+              const wooCommerceOrder = await createOrderWoocommerce(
+                formData, 
+                formattedTotal, 
+                lineItems
+              );
+              
+              // Proceed with PayPal order creation
+              return actions.order.create({
+                purchase_units: [
+                  {
+                    amount: {
+                      currency_code: "USD",
+                      value: formattedTotal,
+                    },
                   },
-                },
-              ],
-              intent: "CAPTURE",
-            });
+                ],
+                intent: "CAPTURE",
+              });
+            } catch (error) {
+              console.error("Error creating order:", error);
+              toast.error(
+                "Error creating order. Please try again.", 
+                {
+                  position: "top-center",
+                  theme: "dark",
+                  autoClose: 5000,
+                }
+              );
+              throw error; // This will prevent PayPal from proceeding
+            }
           }}
+
           onApprove={async (data, actions) => {
             try {
               const order = await actions.order?.capture();
