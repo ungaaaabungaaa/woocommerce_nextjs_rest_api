@@ -11,11 +11,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 
 
-// Checkout - Paypal Test | Form Data | Cart Data | Paypal Data | Woocommerce Checkout Endpoint | Thank You Page
-// Dark Mode
-
-
-
 
 
 export default function Home() {

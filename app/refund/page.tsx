@@ -7,6 +7,8 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card"
 import { Divider } from "@nextui-org/divider"
 import { ArrowLeftCircle, HelpCircle, RefreshCcw, ShieldCheck } from 'lucide-react'
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 // API function to request refund (using POST request)
 const requestrefund = async (orderId: string, reason: string) => {
@@ -39,9 +41,23 @@ export default function RefundPage() {
       // Handle the response from the API
       setStatus('success')
       setMessage('Your refund request has been submitted successfully. We will process it within 3-5 business days.')
+      toast.success("our refund request has been submitted successfully. We will process it within 3-5 business days.", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
+
+
+
+
     } catch (error: any) {
       setStatus('error')
       setMessage(error.message || 'An unexpected error occurred. Please try again later.')
+      toast.error( "An unexpected error occurred. Please try again later.", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   }
 
@@ -50,6 +66,7 @@ export default function RefundPage() {
       <br />
       <br />
       <div className="min-h-screen bg-black text-white">
+        <ToastContainer />
         <main className="container mx-auto px-4 py-8">
           <Card className="bg-black text-white max-w-2xl mx-auto">
             <CardHeader className="flex flex-col items-center space-y-4">

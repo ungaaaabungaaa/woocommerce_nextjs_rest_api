@@ -9,6 +9,8 @@ import { Accordion, AccordionItem } from '@nextui-org/accordion'
 import axios from 'axios';
 import { useCartKey } from '../../../hooks/useCartKey';
 import { useCart } from '../../../context/cartcontext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Attribute {
   id: number
@@ -181,6 +183,11 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       }
       if (cartKeyError) {
         console.error('Error with cart key:', cartKeyError);
+        toast.error("Error with cart key", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
         return;
       }
        const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
@@ -198,9 +205,21 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
               }
             );
             console.log('Item added to cart:', response.data);
+            toast.success("'Item added to cart", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+            });
             await fetchCartDetails(cartKey); // Refresh cart data after adding an item
           } catch (error: any) {
             console.error('Error adding item to cart:', error.response?.data || error.message);
+            toast.error("Error adding item to cart", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+            });
+            return;
+            
         }
     };
 
@@ -212,6 +231,12 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       }
       if (cartKeyError) {
         console.error('Error with cart key:', cartKeyError);
+        toast.error("Error with cart key", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+        
         return;
       }
     
@@ -227,26 +252,28 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       try {
         const response = await axios.post(endpoint, data);
         console.log('Item added to cart:', response.data);
+        toast.success("'Item added to cart", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
         await fetchCartDetails(cartKey); // Refresh cart data after adding an item
       } catch (error: any) {
         console.error('Error adding item to cart:', error.response?.data || error.message);
+        toast.error("EError adding item to cart", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });   
       }
-
     };
-
-
-
-
-
-
-
-
 
 
   if (!product) return <div>Loading...</div>
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <ToastContainer />
       <div className="grid md:grid-cols-2 gap-8">
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-lg">
@@ -290,13 +317,13 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           </div>
           <div className="flex items-center space-x-2">
             <h1 className="text-2xl font-bold">Price : </h1>
-
+  
             {product.on_sale && (
               <span className="text-lg text-muted-foreground line-through">
                 ${product.regular_price}
               </span>
             )}
-
+  
             <span className="text-2xl font-bold">
               ${selectedVariation ? selectedVariation.price : product.price}
             </span>
@@ -340,11 +367,11 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
               ))}
             </div>
           )}
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center bg-white rounded-full border border-white overflow-hidden">
+          <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+            <div className="w-full md:w-auto flex items-center bg-white rounded-full border border-white overflow-hidden">
               <Button
                 size="lg"
-                className="bg-white rounded-full p-4 h-12 w-8 flex items-center justify-center"
+                className="bg-white rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
               >
                 -
@@ -354,16 +381,16 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
               </span>
               <Button
                 size="lg"
-                className="bg-white rounded-full p-4 h-12 w-8 flex items-center justify-center"
+                className="bg-white rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
                 onClick={() => setQuantity(quantity + 1)}
               >
                 +
               </Button>
             </div>
-
+  
             <Button 
               onClick={handleAddToCart} 
-              className="flex-1 bg-white rounded-full h-12 flex items-center justify-center"
+              className="w-full md:flex-1 bg-white rounded-full h-12 flex items-center justify-center"
             >
               <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
             </Button>

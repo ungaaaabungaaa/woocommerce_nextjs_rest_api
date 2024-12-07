@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import axios from 'axios';
 import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -15,13 +17,16 @@ export default function ProductSearch() {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // add in site url here process.env.NEXT_PUBLIC_SITE_URL
-        // const response = await axios.get('http://localhost:3000/api/getcategories'); // Update this endpoint
         const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/getcategories`);
         const categoryNames = response.data.map((category: { name: string }) => category.name);
         setCategories(categoryNames);
       } catch (error:any) {
         console.error('Error fetching categories:', error.response?.data || error.message);
+        toast.error( "Error fetching categories", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
       }
     };
 
@@ -48,6 +53,7 @@ export default function ProductSearch() {
 
   return (
     <div className="h-screen flex items-center justify-center bg-black">
+      <ToastContainer />
       <div className="w-full max-w-2xl p-2 bg-black flex items-center justify-center rounded-lg">
         <div className="space-y-4 w-full">
           {/* Search Form */}

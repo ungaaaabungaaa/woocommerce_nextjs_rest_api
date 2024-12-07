@@ -8,6 +8,9 @@ import { Button } from '@nextui-org/button';
 import { Minus, Plus, Trash2 } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import { useCart } from '../../context/cartcontext';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 interface CartItem {
@@ -58,7 +61,13 @@ export default function Cart() {
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
       
     } catch (err) {
-      console.error('Error fetching cart details:', err)
+      console.error('Error fetching cart details:', err);
+      toast.error("Error fetching cart details", {
+                    position: "top-center",
+                    theme: "dark",
+                    autoClose: 5000,
+      });
+      
     }
   }
 
@@ -74,10 +83,22 @@ export default function Cart() {
       });
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
       fetch_Cart_Details();
-     
+      toast.success("Cart Updated", {
+                position: "top-center",
+                theme: "dark",
+                autoClose: 5000,
+      });
+
+
       return response.data;
     } catch (err: any) {
       console.error("Error:", err.response?.data);
+      toast.error("Failed To Update Cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
+      
       throw err;
     }
   };
@@ -89,9 +110,19 @@ export default function Cart() {
       await axios.delete(url, { params: { cart_key: cartKey } })
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
       fetch_Cart_Details()
+      toast.success("Cart Item Removed", {
+                position: "top-center",
+                theme: "dark",
+                autoClose: 5000,
+      });
       
     } catch (err) {
       console.error('Error removing item:', err)
+      toast.error("Error removing item", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   }
 
@@ -101,8 +132,18 @@ export default function Cart() {
       await axios.post(url, {}, { params: { cart_key: cartKey } })
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
       fetch_Cart_Details()
+      toast.error("Cleared Cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     } catch (err) {
       console.error('Error clearing cart:', err)
+      toast.error("Error clearing cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   }
 
@@ -124,6 +165,7 @@ export default function Cart() {
 
   return (
     <div className="min-h-screen bg-black">
+      <ToastContainer />
       <div className="container max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">
           Your Cart ({cartData?.items.length || 0})

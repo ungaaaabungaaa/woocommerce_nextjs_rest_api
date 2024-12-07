@@ -7,6 +7,8 @@ import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
 import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react';
 import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function TrackOrder() {
@@ -23,8 +25,12 @@ export default function TrackOrder() {
       return response.data; // Adjust this based on the actual response structure
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch order details"
-      );
+        error.response?.data?.message || "Failed to fetch order details");
+        toast.error("Failed to fetch order details", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
     }
   };
 
@@ -39,6 +45,11 @@ export default function TrackOrder() {
       setOrderDetails(details);
     } catch (err: any) {
       setError(err.message || "Failed to fetch order details. Please try again.");
+      toast.error("Failed to fetch order details. Please try again", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     } finally {
       setLoading(false);
     }
@@ -48,6 +59,7 @@ export default function TrackOrder() {
     <>
       <br />
       <br />
+      <ToastContainer />
       <div className="h-3/4 bg-black text-white">
         <main className="container mx-auto px-4 py-8">
           <Card className=" bg-black text-white max-w-2xl mx-auto">

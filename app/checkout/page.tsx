@@ -9,7 +9,6 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useRouter } from "next/navigation";
-import { useCart } from '../../context/cartcontext';
 
 
 interface FormData {
@@ -43,8 +42,6 @@ interface CartItem {
 }
 
 
-// on capture make the api with the trascation details & Paypal Details 
-// then route the thank you page & Clear the cart
 
 
 function Checkout() {
@@ -111,6 +108,11 @@ function Checkout() {
 
     } catch (error) {
       console.error('Error creating order:', error);
+      toast.error("Error creating order Please Contact Us!", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       throw error;
     }
   };
@@ -142,6 +144,12 @@ function Checkout() {
       setCartTotal(formattedTotal);
     } catch (err) {
       console.error('Error fetching cart details:', err);
+      toast.error("Error fetching cart details:", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
+      
     }
   };
 
@@ -213,17 +221,9 @@ function Checkout() {
         theme: "dark",
         autoClose: 5000,
       });
-  
       return;
     }
   
-    toast.success("Form submitted successfully!", {
-      position: "top-center",
-      theme: "dark",
-      autoClose: 5000,
-    });
-  
-    console.log("Form submitted successfully!", formData);
   };
 
  
@@ -295,11 +295,6 @@ function Checkout() {
 
 
   
-
-
-
-
-
 
   return (
     <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">

@@ -10,6 +10,8 @@ import Image from 'next/image';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Product {
   id: any;
@@ -50,6 +52,11 @@ function StorePage() {
     }
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
+      toast.error( "Error with cart key", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       return;
     }
     const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
@@ -67,9 +74,20 @@ function StorePage() {
         }
       );
       console.log('Item added to cart:', response.data);
+      toast.success("Item added to cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       await fetchCartDetails(cartKey);
     } catch (error: any) {
       console.error('Error adding item to cart:', error.response?.data || error.message);
+      toast.error( "Error adding item to cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
+      
     }
   };
 
@@ -84,11 +102,21 @@ function StorePage() {
           setError(null);
         } else {
           setError("No products found.");
+          toast.error( "No products found", {
+            position: "top-center",
+            theme: "dark",
+            autoClose: 5000,
+          });
         }
       })
       .catch((err) => {
         console.error("Error fetching products:", err);
         setError("😭😭😭 No Products Exist!!!");
+        toast.error( "No Products Exist!!!", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
       });
   }, []);
 
@@ -123,6 +151,7 @@ function StorePage() {
       <div>
         {error ? (
           <div className="flex flex-col items-center justify-center min-h-screen">
+            <ToastContainer />
             <p className="mb-4 text-white text-3xl sm:text-4xl md:text-6xl font-bold text-center">{error}</p>
             <Button
               onClick={() => (window.location.href = "/")}
@@ -139,6 +168,7 @@ function StorePage() {
               subtitle="Studio Universal Store"
               backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D"
             />
+            <ToastContainer />
             <div className="container mx-auto px-4 py-8">
               <div className="w-full flex justify-end">
                 <div className="w-full md:w-1/4 px-4 mb-4 flex align-middle justify-end ">

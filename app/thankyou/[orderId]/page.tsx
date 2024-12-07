@@ -11,6 +11,9 @@ import axios from 'axios'
 import { useCart } from '../../../context/cartcontext';
 import { useCartKey } from '../../../hooks/useCartKey';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 // test url : http://localhost:3000/thankyou/114
 
 export default function ThankYouPage() {
@@ -42,6 +45,11 @@ export default function ThankYouPage() {
       fetch_Cart_Details()
     } catch (err) {
       console.error('Error clearing cart:', err)
+      toast.error("Error clearing cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   }
 
@@ -64,6 +72,11 @@ export default function ThankYouPage() {
         }
       } catch (error) {
         console.error('Error fetching order details:', error)
+        toast.error("Error fetching order details", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
         router.push('/')
       } finally {
         setLoading(false)
@@ -85,6 +98,7 @@ export default function ThankYouPage() {
 
   return (
     <div className="min-h-screen text-white bg-black flex items-center justify-center p-4 relative z-10">
+      <ToastContainer />
       <Card className="w-full max-w-4xl bg-black text-white shadow-xl">
         <CardHeader className="text-center flex flex-col items-center justify-center p-6  rounded-t-xl">
           <div className="mx-auto mb-4 w-60 h-60 flex items-center justify-center">
