@@ -8,6 +8,9 @@ import { Divider } from '@nextui-org/divider'
 import LottieAnimation from '../../component/LottieAnimation'
 import axios from 'axios'
 
+import { useCart } from '../../../context/cartcontext';
+import { useCartKey } from '../../../hooks/useCartKey';
+
 // test url : http://localhost:3000/thankyou/114
 
 export default function ThankYouPage() {
@@ -16,6 +19,31 @@ export default function ThankYouPage() {
   const orderId = params.orderId as string
   const [orderDetails, setOrderDetails] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const { cartKey } = useCartKey()
+  const { fetchCartDetails } = useCart()
+
+  // Function to fetch cart details
+  const fetch_Cart_Details = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`
+      const response = await axios.get(url, { params: { cart_key: cartKey } })
+      await fetchCartDetails(cartKey) // Refresh cart data after adding an item
+    } catch (err) {
+      console.error('Error fetching cart details:', err)
+    }
+  }
+
+  // Function to clear cart
+  const clearCart = async () => {
+    try {
+      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`
+      await axios.post(url, {}, { params: { cart_key: cartKey } })
+      await fetchCartDetails(cartKey) // Refresh cart data after clearing
+      fetch_Cart_Details()
+    } catch (err) {
+      console.error('Error clearing cart:', err)
+    }
+  }
 
   useEffect(() => {
     const validateAndFetchOrder = async () => {
@@ -30,6 +58,7 @@ export default function ThankYouPage() {
         )
         if (response.data) {
           setOrderDetails(response.data)
+          await clearCart()
         } else {
           router.push('/')
         }
@@ -113,7 +142,7 @@ export default function ThankYouPage() {
             <Button 
               as="a" 
               href="/" 
-              className="bg-white text-black   px-6 py-2 rounded-full"
+              className="bg-white text-black px-6 py-2 rounded-full"
             >
               Continue Shopping
             </Button>
@@ -123,4 +152,3 @@ export default function ThankYouPage() {
     </div>
   )
 }
-
