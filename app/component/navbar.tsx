@@ -64,7 +64,7 @@ export default function Nav_bar() {
   return (
     <>
       <div className="bg-white w-full text-small text-black p-3 flex items-center justify-center">
-        BLACK FRIDAY SALE!
+        SALE! SALE! SALE! SALE! SALE! SALE!
       </div>
       <Navbar className="bg-black text-white" onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent>

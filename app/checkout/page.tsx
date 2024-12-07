@@ -9,6 +9,8 @@ import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useRouter } from "next/navigation";
+import { useCart } from '../../context/cartcontext';
+
 
 interface FormData {
   email: string;
@@ -53,7 +55,8 @@ function Checkout() {
   const [lineItems, setLineItems] = useState<{ product_id: number; quantity: number }[]>([]);
   const [isFormValid, setIsFormValid] = useState(false);
   const wooCommerceOrderIdRef = useRef(null);
-    const router = useRouter();
+  const router = useRouter();
+ 
 
   
 
@@ -142,6 +145,16 @@ function Checkout() {
     }
   };
 
+
+   const clearCart = async () => {
+      try {
+        const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`
+        await axios.post(url, {}, { params: { cart_key: cartKey } })
+      } catch (err) {
+        console.error('Error clearing cart:', err)
+      }
+    }
+
   const [formData, setFormData] = useState<FormData>({
     email: "",
     firstName: "",
@@ -214,7 +227,7 @@ function Checkout() {
   };
 
  
-  const handleApprove = async (paypalOrderId: string, woocommerceOrderId: string) => {
+  const handleApprove = async (paypalOrderId: any, woocommerceOrderId: any) => {
     console.log("PayPal Order ID:", paypalOrderId);
     console.log("WooCommerce Order ID:", woocommerceOrderId);
   
@@ -234,6 +247,8 @@ function Checkout() {
           theme: "dark",
           autoClose: 5000,
         });
+
+        clearCart();
 
         // Dynamically route to the thank you page
       router.push(`/thankyou/${woocommerceOrderId}`);
