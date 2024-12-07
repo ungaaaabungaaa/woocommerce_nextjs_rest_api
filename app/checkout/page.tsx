@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, ChangeEvent, useEffect } from 'react';
+import React, { useState, ChangeEvent, useEffect, useRef } from 'react';
 import { Input } from "@nextui-org/input";
 import MiniCart from '../component/minicart';
 import { ToastContainer, toast } from 'react-toastify';
@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
-
+import { useRouter } from "next/navigation";
 
 interface FormData {
   email: string;
@@ -41,17 +41,21 @@ interface CartItem {
 }
 
 
+// on capture make the api with the trascation details & Paypal Details 
+// then route the thank you page & Clear the cart
+
+
 function Checkout() {
   
-  const { cartKey, loading, error } = useCartKey();
+  const { cartKey } = useCartKey();
   const [cartData, setCartData] = useState<CartData | null>(null);
   const [cartTotal, setCartTotal] = useState<string>("0.00");
   const [lineItems, setLineItems] = useState<{ product_id: number; quantity: number }[]>([]);
-  const [orderId, setOrderId] = useState<string | null>(null);
-
-
   const [isFormValid, setIsFormValid] = useState(false);
+  const wooCommerceOrderIdRef = useRef(null);
+    const router = useRouter();
 
+  
 
 
   const createOrderWoocommerce = async (formData: any, formattedTotal: string, lineItems: any[]) => {
@@ -97,7 +101,9 @@ function Checkout() {
   
       // Make the API call
       const response = await axios.post('/api/placeorder', orderData);
-      setOrderId(response.data.id); // Store the order ID in state
+      // Log the order ID from the response
+      console.log('Order created successfully! Order ID:', response.data.id);
+      wooCommerceOrderIdRef.current = response.data.id;
       return response.data;
 
     } catch (error) {
@@ -148,7 +154,7 @@ function Checkout() {
     phoneNumber: ""
   });
 
-  const [isPaid, setIsPaid] = useState(false);
+
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -207,13 +213,78 @@ function Checkout() {
     console.log("Form submitted successfully!", formData);
   };
 
-  const handleApprove = (orderId: string) => {
-    setIsPaid(true);
+ 
+  const handleApprove = async (paypalOrderId: string, woocommerceOrderId: string) => {
+    console.log("PayPal Order ID:", paypalOrderId);
+    console.log("WooCommerce Order ID:", woocommerceOrderId);
+  
+    try {
+      // Construct the API URL
+      const apiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/paymentcompleted?orderId=${woocommerceOrderId}&transactionId=${paypalOrderId}`;
+      
+      // Make the API call using axios.put instead of axios.get
+      const response = await axios.put(apiUrl);
+  
+      // Check if the response is successful
+      if (response.status === 200) {
+
+        // Display a success toast
+        toast.success("Payment processed successfully!", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+
+        // Dynamically route to the thank you page
+      router.push(`/thankyou/${woocommerceOrderId}`);
+
+
+      } else {
+        // Handle non-200 status responses
+        toast.error("Payment processed, but there was an issue!", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+      }
+    } catch (error) {
+      // Handle API call errors
+      console.error("Error during API call:", error);
+      
+      // More detailed error handling
+      if (axios.isAxiosError(error)) {
+        const serverError = error.response;
+        if (serverError) {
+          toast.error(`Payment error: ${serverError.data.error}`, {
+            position: "top-center",
+            theme: "dark",
+            autoClose: 5000,
+          });
+        } else {
+          toast.error("Network error. Please try again later.", {
+            position: "top-center",
+            theme: "dark",
+            autoClose: 5000,
+          });
+        }
+      } else {
+        toast.error("Failed to process payment. Please try again later.", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+      }
+    }
   };
 
-  if (isPaid) {
-    return <div>Thank you for your purchase!</div>;
-  }
+
+
+  
+
+
+
+
+
 
   return (
     <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">
@@ -373,7 +444,8 @@ function Checkout() {
         <br />
 
         {isFormValid && (
-        <PayPalButtons
+       
+       <PayPalButtons
           className="rounded-full"
           style={{
             layout: "vertical",
@@ -381,59 +453,58 @@ function Checkout() {
             shape: "pill",
             label: "pay",
           }}
-
-
           createOrder={async (data, actions) => {
+            const formattedTotal = parseFloat(cartTotal).toFixed(2);
+            
             try {
-              const formattedTotal = parseFloat(cartTotal).toFixed(2);
-              
               // Create WooCommerce order first
-              const wooCommerceOrder = await createOrderWoocommerce(
-                formData, 
-                formattedTotal, 
-                lineItems
-              );
-              
-              // Proceed with PayPal order creation
+              const wooCommerceOrder = await createOrderWoocommerce(formData, formattedTotal, lineItems);
+         
+              // Then create PayPal order
               return actions.order.create({
+                
                 purchase_units: [
                   {
                     amount: {
                       currency_code: "USD",
                       value: formattedTotal,
                     },
+                    custom_id: wooCommerceOrder.id, // Passing WooCommerce order ID as custom_id
                   },
                 ],
                 intent: "CAPTURE",
               });
             } catch (error) {
-              console.error("Error creating order:", error);
+              console.error("Error creating orders:", error);
+              toast.error("Error creating order. Please try again.", {
+                position: "top-center",
+                theme: "dark",
+                autoClose: 5000,
+              });
+              throw error;
+            }
+          }}
+          
+          onApprove={async (data, actions) => {
+            if (!actions.order) {
+              throw new Error("PayPal order actions not available");
+            }
+        
+            try {
+              const order = await actions.order.capture();
+              // Call handleSubmit with the captured order ID and WooCommerce Order ID
+              handleApprove(order.id, wooCommerceOrderIdRef.current);
+  
+            } catch (error) {
+              console.error("Error capturing order:", error);
               toast.error(
-                "Error creating order. Please try again.", 
+                error instanceof Error ? error.message : "Payment failed. Please try again.", 
                 {
                   position: "top-center",
                   theme: "dark",
                   autoClose: 5000,
                 }
               );
-              throw error; // This will prevent PayPal from proceeding
-            }
-          }}
-
-          onApprove={async (data, actions) => {
-            try {
-              const order = await actions.order?.capture();
-              console.log("Order captured successfully:", order);
-              handleApprove(data.orderID);
-            } 
-            catch (error) 
-            {
-              console.error("Error capturing order:", error);
-              toast.error("Payment failed. Please try again.", {
-                position: "top-center",
-                theme: "dark",
-                autoClose: 5000,
-              });
             }
           }}
           onError={(err) => {
