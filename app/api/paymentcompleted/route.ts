@@ -1,24 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 const WooCommerceRestApi = require('@woocommerce/woocommerce-rest-api').default;
 
-// Initialize the WooCommerce API
 const api = new WooCommerceRestApi({
     url: process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL!,
     consumerKey: process.env.WC_CONSUMER_KEY!,
     consumerSecret: process.env.WC_CONSUMER_SECRET!,
     version: 'wc/v3',
-    queryStringAuth: true, // Use Basic Authentication with query string
+    queryStringAuth: true,
 });
 
-// PUT handler for Updating order using WooCommerce REST API
 export async function PUT(request: NextRequest) {
     try {
-        // Parse the request body
-        const body = await request.json();
-        
-        // Extract order ID from the request 
+        // Extract parameters from the URL
         const { searchParams } = new URL(request.url);
         const orderId = searchParams.get('orderId');
+        const transactionId = searchParams.get('transactionId');
 
         // Validate order ID
         if (!orderId) {
@@ -28,24 +24,30 @@ export async function PUT(request: NextRequest) {
             );
         }
 
-        // Validate request body
-        if (!body || Object.keys(body).length === 0) {
+        // Validate transaction ID
+        if (!transactionId) {
             return NextResponse.json(
-                { error: 'Update data is required' }, 
+                { error: 'Transaction ID is required' }, 
                 { status: 400 }
             );
         }
 
+        // Prepare the update data with hardcoded payment method and dynamic transaction ID
+        const updateData = {
+            status: "completed",
+            payment_method: "Pay Pal",
+            payment_method_title: "PayPal",
+            transaction_id: transactionId,
+        };
+
         // Update order using WooCommerce API
-        const response = await api.put(`orders/${orderId}`, body);
+        const response = await api.put(`orders/${orderId}`, updateData);
 
         // Return success response
         return NextResponse.json(response.data, { status: 200 });
     } catch (error: any) {
-        // Handle API errors
         console.error('WooCommerce Order Update Error:', error);
 
-        // Check if it's an Axios error with response
         if (error.response) {
             return NextResponse.json(
                 { 
@@ -56,12 +58,9 @@ export async function PUT(request: NextRequest) {
             );
         }
 
-        // Generic error handling
         return NextResponse.json(
             { error: 'Internal server error' }, 
             { status: 500 }
         );
     }
 }
-
-// test url http://localhost:3000/api/paymentcompleted?orderId=114
