@@ -9,10 +9,6 @@ import { ProductPromoCard } from "./component/productpromocard";
 import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
-
-
-
-
 export default function Home() {
   
   
@@ -49,8 +45,6 @@ export default function Home() {
       <ProductCarousel></ProductCarousel>      
       <br></br>
       <InstagramGallery></InstagramGallery>
-      <br></br>
-      <ProductCarouselCategories category="best-sellers" ></ProductCarouselCategories>
       <br></br>
       <HeroBanner></HeroBanner>
     </section>

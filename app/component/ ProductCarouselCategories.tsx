@@ -7,6 +7,10 @@ import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 interface Product {
   id: string;
@@ -43,6 +47,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
+       toast.error( "Error with cart key", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+            });
       return;
     }
     const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
@@ -60,9 +69,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
         }
       );
       console.log('Item added to cart:', response.data);
+       toast.success("Item added to cart", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+        });
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
     } catch (error: any) {
       console.error('Error adding item to cart:', error.response?.data || error.message);
+      toast.error( "Error adding item to cart", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   };
 
@@ -173,6 +192,7 @@ const ProductCarouselCategories = ({ category }: ProductCarouselCategoriesProps)
 
   return (
     <div className="w-full h-full py-4">
+      <ToastContainer />
       <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
         {category}
       </h2>

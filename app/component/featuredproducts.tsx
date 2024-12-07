@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import ProductGrid from '../component/productgrid'; // Ensure the correct import path
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Product {
   id: number;
@@ -55,6 +57,12 @@ function FeaturedProducts() {
     } catch (error: any) {
       setError(error.message);
       console.error('Error fetching products:', error);
+      toast.error( "Error fetching products", {
+                    position: "top-center",
+                    theme: "dark",
+                    autoClose: 5000,
+                  });
+      return;
     }
   };
 
@@ -71,6 +79,7 @@ function FeaturedProducts() {
 
   return (
     <div className="w-full h-full py-5">
+      <ToastContainer />
       <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
         Featured Products.
       </h2>

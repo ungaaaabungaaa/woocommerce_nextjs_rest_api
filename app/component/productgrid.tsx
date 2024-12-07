@@ -7,6 +7,8 @@ import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 interface Product {
   id: number;
@@ -43,6 +45,12 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     }
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
+      toast.error( "Error with cart key", {
+                          position: "top-center",
+                          theme: "dark",
+                          autoClose: 5000,
+      });
+      
       return;
     }
 
@@ -74,6 +82,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
 
   return (
     <div className="bg-black text-white min-h-screen p-6">
+      <ToastContainer />
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white bg-black">
           {safeProducts.map((product) => (
