@@ -1,52 +1,53 @@
+import { ThemeProvider } from "@/app/component/theme-provider";
 import "@/styles/globals.css";
-import Footer from "./component/footer";
-import Navbar from "./component/navbar";
-import Head from "next/head";
-import { CartProvider } from '../context/cartcontext';
+import Footer from "@/app/component/footer";
+import Navbar from "@/app/component/navbar";
+import { CartProvider } from '@/context/cartcontext';
 import PayPalProvider from "@/context/PayPalProvider";
-
-
 
 export const metadata = {
   title: "Studio Universal",
   description: "High-quality products and excellent customer service",
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
   },
-};
-
-const initialOptions = {
-  "client-id": process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "AaMWJxShAuaNSFi30bJSDmVbAwy1LqZgWYyvvFNkkPZEts0uqTh80r2UitF8O32p5odfqFUhzF1Jy0Wq",
-  currency: "USD",
-  intent: "capture",
+  manifest: "/site.webmanifest",
+  appleWebApp: {
+    title: "Studio",
+  },
 };
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <Head>
-        <title>Studio Universal</title>
-        <meta name="description" content="High-quality products and excellent customer service" />
-        <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="shortcut icon" href="/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-title" content="Studio" />
-        <link rel="manifest" href="/site.webmanifest" />
-      </Head>
+    <html lang="en" suppressHydrationWarning>
       <body className="min-h-screen">
-      <PayPalProvider>
-      <CartProvider>
-        <Navbar />
-        {children}
-        <Footer />
-      </CartProvider>
-      </PayPalProvider>  
+      <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+          <PayPalProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+              <Footer />
+            </CartProvider>
+          </PayPalProvider>
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
+

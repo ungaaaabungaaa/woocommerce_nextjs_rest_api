@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Truck, Instagram } from "lucide-react";
+import { Search, ShoppingBag, Truck, Moon, Sun } from 'lucide-react';
 import { Badge } from "@nextui-org/badge";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import { useCart } from "../../context/cartcontext";
@@ -21,12 +21,19 @@ import { WomensMegaMenu } from "./womens-mega-menu";
 import { AccessoriesMegaMenu } from "./accessories-mega-menu";
 import { FootWearMegaMenu } from "./footwear-mega-menu";
 import { KidsMegaMenu } from "./kids-mega-menu";
+import { useTheme } from "next-themes";
 
 export default function Nav_bar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cartCount } = useCart();
   const [visibleMegaMenu, setVisibleMegaMenu] = useState("");
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSearchClick = () => {
     router.push("/search");
@@ -42,6 +49,10 @@ export default function Nav_bar() {
 
   const handleLogoClick = () => {
     router.push("/");
+  };
+
+  const toggleTheme = () => {
+    setTheme(theme === 'dark' ? 'light' : 'dark');
   };
 
   const menuItems = [
@@ -63,7 +74,7 @@ export default function Nav_bar() {
 
   return (
     <>
-      <div className="bg-white w-full text-small text-black p-3 flex items-center justify-center">
+      <div className="bg-white dark:bg-gray-800 w-full text-small text-black dark:text-white p-3 flex items-center justify-center">
         SALE! SALE! SALE! SALE! SALE! SALE!
       </div>
       <Navbar className="bg-black text-white" onMenuOpenChange={setIsMenuOpen}>
@@ -133,7 +144,15 @@ export default function Nav_bar() {
           >
             <ShoppingBag className="h-5 cursor-pointer" />
           </Badge>
-          <Instagram className="h-5 cursor-pointer" />
+          {mounted && (
+            <button onClick={toggleTheme} className="focus:outline-none">
+              {theme === 'dark' ? (
+                <Sun className="h-5 cursor-pointer" />
+              ) : (
+                <Moon className="h-5 cursor-pointer" />
+              )}
+            </button>
+          )}
           <Search onClick={handleSearchClick} className="h-5 cursor-pointer" />
           <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer" />
         </NavbarContent>
@@ -204,3 +223,4 @@ export default function Nav_bar() {
     </>
   );
 }
+
