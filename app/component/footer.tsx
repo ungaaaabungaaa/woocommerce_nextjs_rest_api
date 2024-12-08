@@ -10,6 +10,8 @@ import NextImage from "next/image";
 import PromoBar from './promo-bar'
 import { ScrollBasedVelocityDemo } from './ScrollBasedVelocityDemo'
 import { AnimatedTestimonialsDemo } from './AnimatedTestimonialsDemo'
+import { useTheme } from "next-themes";
+import SiteLogoDark from "../../public/sitelogodark.jpg";
 
 const footerLinks = [
   {
@@ -69,15 +71,18 @@ const itemClasses = {
 
 const Footer = () => {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const handleLogoClick = () => {
     router.push("/");
   };
+
+ 
 
   return (
     <>
       <PromoBar></PromoBar>
       <br></br>
-      <div className="hidden md:block">
+      <div className="hidden md:block bg-black dark:bg-white">
         <ScrollBasedVelocityDemo />
       </div>
 
@@ -87,7 +92,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <footer className="bg-black text-white">
+      <footer className="bg-black text-white dark:bg-white dark:text-black">
         <div className="container mx-auto px-4 py-8">
           <div className="hidden md:flex md:flex-wrap md:-mx-4 mb-8">
             {footerLinks.map((column, index) => (
@@ -106,10 +111,10 @@ const Footer = () => {
             <div className="md:w-1/6 px-4 mb-8">
             <h3 className="font-bold mb-4">Connect</h3>
             <div className="flex space-x-4 mb-4">
-              <Link href="#" className="text-white "><Facebook size={24} /></Link>
-              <Link href="#" className="text-white "><Twitter size={24} /></Link>
-              <Link href="#" className="text-white "><Instagram size={24} /></Link>
-              <Link href="#" className="text-white "><Youtube size={24} /></Link>
+              <Link href="#" className="text-white dark:text-black "><Facebook size={24} /></Link>
+              <Link href="#" className="text-white dark:text-black "><Twitter size={24} /></Link>
+              <Link href="#" className="text-white dark:text-black "><Instagram size={24} /></Link>
+              <Link href="#" className="text-white dark:text-black "><Youtube size={24} /></Link>
             </div>
             <div className=" space-x-2">
             <h3 className="font-bold mb-4">Secure Payment Methos</h3>
@@ -146,7 +151,20 @@ const Footer = () => {
 
           <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              <NextImage
+
+
+            {theme === 'dark' ? (
+                <NextImage
+                onClick={handleLogoClick}
+                src={SiteLogoDark}
+                alt="Site Logo"
+                width={120}
+                height={40}
+                priority
+                className="cursor-pointer"
+                />               
+              ) : (                
+                <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogo}
                 alt="Site Logo"
@@ -154,7 +172,8 @@ const Footer = () => {
                 height={40}
                 priority
                 className="cursor-pointer"
-              />
+                />           
+              )}
             </div>
             <div className="flex space-x-4 text-sm">
               <Link href="/terms" className="">Terms of Service</Link>
