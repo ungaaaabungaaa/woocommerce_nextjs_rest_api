@@ -15,7 +15,7 @@ export default function Home() {
   
   
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
       <br></br>
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>

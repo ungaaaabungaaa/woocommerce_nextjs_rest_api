@@ -10,6 +10,14 @@ body {
   color: white;
 }
 
+html {
+  @apply bg-black dark:bg-white;
+}
+
+body {
+  @apply text-white dark:text-black;
+}
+
 /* For Chrome, Edge, and Safari */
 * {
   -ms-overflow-style: none; /* Internet Explorer 10+ */

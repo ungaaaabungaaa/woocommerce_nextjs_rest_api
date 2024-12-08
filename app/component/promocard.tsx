@@ -4,8 +4,8 @@ import Image from "next/image"
 export default function PromoCard() {
   return (
     <>
-    <div className="w-full max-w-6xl mx-auto">
-      <div className="relative overflow-hidden rounded-xl bg-black">
+    <div className="w-full max-w-6xl mx-auto bg-black dark:bg-white ">
+      <div className="relative overflow-hidden rounded-xl bg-black dark:bg-white ">
         <div className="grid lg:grid-cols-2 gap-4">
           {/* Image Section */}
           <div className="relative aspect-[4/3] lg:aspect-auto">
@@ -21,22 +21,22 @@ export default function PromoCard() {
 
           {/* Content Section */}
           <div className="relative p-6 lg:p-12 flex flex-col justify-center">
-            <h1 className="text-3xl lg:text-5xl  text-white mb-6 tracking-tight">
+            <h1 className="text-3xl lg:text-5xl  text-white dark:text-black  mb-6 tracking-tight">
                NEW Winter Collection{" "}
               <span className="block">Classic Linen Shirt - Sky Blue</span>
             </h1>
             
             <div className="flex items-baseline gap-3 mb-8">
-              <span className="text-zinc-400 line-through text-lg">
+              <span className="text-zinc-400  dark:text-gray-800 line-through text-lg">
                 RRP $53.00
               </span>
-              <span className="text-white text-2xl font-medium">
+              <span className="text-white  dark:text-black  text-2xl font-medium">
                 Now $35.00
               </span>
             </div>
 
             <Button 
-              className="bg-white  text-black w-fit px-8 rounded-full"
+              className="bg-white text-black dark:bg-black dark:text-white w-fit px-8 rounded-full"
               size="lg"
             >
               SHOP NOW
