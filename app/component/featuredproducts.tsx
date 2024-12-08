@@ -80,7 +80,7 @@ function FeaturedProducts() {
   return (
     <div className="w-full h-full py-5">
       <ToastContainer />
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
+      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
         Featured Products.
       </h2>
       {error ? (

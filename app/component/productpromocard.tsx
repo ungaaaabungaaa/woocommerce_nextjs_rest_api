@@ -18,7 +18,7 @@ export function ProductPromoCard({
   return (
     <div
       className={cn(
-        "group relative overflow-hidden rounded-lg  bg-black p-2",
+        "group relative overflow-hidden rounded-lg  bg-black dark:bg-white p-2",
         className
       )}
       {...props}

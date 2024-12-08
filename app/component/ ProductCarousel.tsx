@@ -85,8 +85,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <Card className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4">    
-      <CardHeader className="line-clamp-1 text-2xl text-white">
+    <Card shadow="none" className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4">    
+      <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
         {product.title}
       </CardHeader>
       <CardBody>
@@ -104,20 +104,20 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
         </div>
-        <p className="text-sm text-white mt-2">
+        <p className="text-sm text-white dark:text-black mt-2">
           {product.description}
         </p>
         <div className="mt-2 flex justify-between items-center">
-          <span className="text-white font-bold">{product.price}</span>
+          <span className="text-white dark:text-black font-bold">{product.price}</span>
           {product.isNew && (
-            <span className=" text-white text-xs px-2 py-1 rounded-full">New</span>
+            <span className=" text-white dark:text-black text-xs px-2 py-1 rounded-full">New</span>
           )}
         </div>
         <br />
         {product.type === "simple" && (
           <Button 
             size="md"
-            className="w-full bg-white text-black"
+            className="w-full bg-white text-black dark:bg-black dark:text-white"
             onClick={() => addToCart(product.id, 1)}
           >
             Add to cart
@@ -126,7 +126,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <br></br>
         <Button 
           size="md"
-          className="w-full bg-black text-white"
+          className="w-full bg-black text-white dark:bg-white dark:text-black"
           onClick={() => ViewProduct(product.id)}
         >
           View Product
@@ -194,10 +194,10 @@ const ProductCarousel = () => {
   return (
     <div className="w-full h-full py-4">
       <ToastContainer />
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
+      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
         Newest Products 
       </h2>
-      <div className="w-full overflow-hidden bg-black p-4">
+      <div className="w-full overflow-hidden  p-4">
         <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />

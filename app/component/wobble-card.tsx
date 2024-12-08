@@ -7,7 +7,7 @@ export function WobbleCardDemo() {
   return (
     <>
      <div className="w-full h-full py-5 hidden lg:block">
-        <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 font-sans">
+        <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
             Shop FootWare!.
          </h2>
         <br></br>

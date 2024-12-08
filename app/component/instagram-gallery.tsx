@@ -51,13 +51,13 @@ export default function InstagramGallery() {
             sizes="(min-width: 1024px) 25vw, (min-width: 768px) 50vw, 100vw"
           />
           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/50">
-            <Instagram className="w-8 h-8 text-white" />
+            <Instagram className="w-8 h-8 text-white dark:text-black" />
           </div>
         </a>
       ))}
     </div>
     <div className="flex justify-center mt-8">
-      <Button className="bg-white text-black rounded-full ">
+      <Button className="bg-white text-black dark:text-white dark:bg-black rounded-full ">
         SHOP INSTAGRAM
       </Button>
     </div>
