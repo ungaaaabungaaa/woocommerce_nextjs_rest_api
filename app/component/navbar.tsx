@@ -78,7 +78,7 @@ export default function Nav_bar() {
       <div className="bg-white text-black dark:bg-black w-full text-small  dark:text-white p-3 flex items-center justify-center">
         SALE! SALE! SALE! SALE! SALE! SALE!
       </div>
-      <Navbar className="bg-black text-white  dark:bg-white text-black" onMenuOpenChange={setIsMenuOpen}>
+      <Navbar className="bg-black text-white  dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
@@ -171,15 +171,15 @@ export default function Nav_bar() {
           <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer text-white dark:text-black" />
         </NavbarContent>
 
-        <NavbarMenu className="bg-black text-white">
+        <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">
           {menuItems.map((item, index) => (
             <NavbarMenuItem
               key={`${item.label}-${index}`}
-              className="bg-black text-white hover:bg-gray-800"
+              className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800"
             >
               <button
                 onClick={() => handleMenuItemClick(item.route)}
-                className="w-full text-left py-2 px-4 text-white hover:text-gray-300"
+                className="w-full text-left py-2 px-4 text-white  hover:text-gray-300 dark:text-black "
               >
                 {item.label}
               </button>
