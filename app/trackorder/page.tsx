@@ -57,16 +57,14 @@ export default function TrackOrder() {
 
   return (
     <>
-      <br />
-      <br />
       <ToastContainer />
-      <div className="h-3/4 bg-black text-white">
+      <div className="h-3/4 bg-black text-white dark:bg-white dark:text-black">
         <main className="container mx-auto px-4 py-8">
-          <Card className=" bg-black text-white max-w-2xl mx-auto">
+          <Card  shadow='none' className=" bg-black text-white dark:bg-white dark:text-black  max-w-2xl mx-auto">
             <CardHeader className="flex flex-col items-center space-y-4">
-              <Package size={48} className="text-white" />
+              <Package size={48} className="text-white dark:text-black" />
               <h1 className="text-3xl font-bold">Track Your Order</h1>
-              <p className="text-center text-white">
+              <p className="text-center text-white dark:text-black">
                 Enter your order number to see the details and status of your order.
               </p>
             </CardHeader>
@@ -76,7 +74,7 @@ export default function TrackOrder() {
             <CardBody>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="order-number" className="block text-sm font-medium text-white">
+                  <label htmlFor="order-number" className="block text-sm font-medium text-white dark:text-black">
                     Order Number
                   </label>
                   <Input
@@ -86,7 +84,7 @@ export default function TrackOrder() {
                     isClearable
                     size="lg"
                     isRequired
-                    className="mt-1 w-full bg-black text-white"
+                    className="mt-1 w-full bg-black text-white dark:bg-white dark:text-black"
                     placeholder="Enter your Order Number"
                     value={orderNumber}
                     onChange={(e) => setOrderNumber(e.target.value)}
@@ -95,7 +93,7 @@ export default function TrackOrder() {
 
                 <Button
                   type="submit"
-                  className="w-2/4 lg:w-1/4 bg-white text-black py-2 px-4 rounded-full hover:bg-black hover:text-white"
+                  className="w-2/4 lg:w-1/4 bg-white text-black  dark:bg-black dark:text-white py-2 px-4 rounded-full e"
                   disabled={loading}
                 >
                   {loading ? "Loading..." : "Track Order"}
@@ -148,7 +146,7 @@ export default function TrackOrder() {
                     <h3 className="text-xl font-semibold mb-2">Items</h3>
                     <ul className="space-y-2">
                       {orderDetails.line_items.map((item: any, index: number) => (
-                        <li key={index} className="bg-white text-black p-3 rounded-lg flex justify-between">
+                        <li key={index} className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between">
                           <span>{item.name}</span>
                           <span>Qty: {item.quantity} - ${item.total}</span>
                         </li>
@@ -158,7 +156,7 @@ export default function TrackOrder() {
 
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Shipping Address</h3>
-                    <p className="bg-white text-black p-3 rounded-lg">
+                    <p className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg">
                       {orderDetails.billing.first_name} {orderDetails.billing.last_name}<br />
                       {orderDetails.billing.address_1}<br />
                       {orderDetails.billing.city}, {orderDetails.billing.state} {orderDetails.billing.postcode}<br />
@@ -166,7 +164,7 @@ export default function TrackOrder() {
                     </p>
                   </div>
 
-                  <div className="bg-white text-black p-3 rounded-lg flex justify-between items-center">
+                  <div className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between items-center">
                     <span className="font-semibold">Shipping Total</span>
                     <span>${orderDetails.shipping_total}</span>
                   </div>
@@ -177,12 +175,12 @@ export default function TrackOrder() {
             <CardFooter>
               <div className="w-full space-y-4">
                 <div className="flex items-center">
-                  <ShieldCheck className="text-white mr-2" />
-                  <p className="text-sm text-gray-300">Your order information is secure and protected.</p>
+                  <ShieldCheck className="text-white dark:text-black mr-2" />
+                  <p className="text-sm text-gray-300 dark:text-black">Your order information is secure and protected.</p>
                 </div>
                 <div className="flex items-center">
-                  <HelpCircle className="text-white mr-2" />
-                  <p className="text-sm text-gray-300">
+                  <HelpCircle className="text-white dark:text-black mr-2" />
+                  <p className="text-sm dark:text-black text-gray-300">
                     Need help? Contact our support team at{' '}
                     <a href="mailto:support@example.com" className="underline">
                       support@example.com
