@@ -150,9 +150,9 @@ function StorePage() {
     <>
       <div>
         {error ? (
-          <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
             <ToastContainer />
-            <p className="mb-4 text-white text-3xl sm:text-4xl md:text-6xl font-bold text-center">{error}</p>
+            <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">{error}</p>
             <Button
               onClick={() => (window.location.href = "/")}
               color="default"
@@ -161,92 +161,95 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div>
-            <br />
-            <FullScreenStoreBanner
-              title="Store Products"
-              subtitle="Studio Universal Store"
-              backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D"
-            />
+          <div className="bg-black dark:bg-white">
+            <br></br>
             <ToastContainer />
-            <div className="container mx-auto px-4 py-8">
-              <div className="w-full flex justify-end">
-                <div className="w-full md:w-1/4 px-4 mb-4 flex align-middle justify-end ">
-                  <Select
-                    label="Sort by"
-                    selectedKeys={[sortOption]}
-                    className="bg-white text-black rounded-xl"
-                    onSelectionChange={(keys) => {
-                      const selectedValue = Array.from(keys)[0] as string;
-                      setSortOption(selectedValue);
-                    }}
-                  >
-                    <SelectItem className="bg-white text-black" key="newest">Newest</SelectItem>
-                    <SelectItem className="bg-white text-black" key="featured">Featured</SelectItem>
-                    <SelectItem className="bg-white text-black" key="low-high">Price: Low to High</SelectItem>
-                    <SelectItem className="bg-white text-black" key="high-low">Price: High to Low</SelectItem>
-                  </Select>
-                </div>
+            <FullScreenStoreBanner 
+                title={"Welcome"} 
+                subtitle="Studio Universal Store" 
+                backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
+              />
+            <div className="container mx-auto px-4 py-8 ">
+            <div className="w-full flex justify-end">
+              <div className="w-full md:w-1/4 px-4 mb-4 flex align-middle justify-end ">
+                <Select
+                  label="Sort by"
+                  selectedKeys={[sortOption]}
+                  className="bg-white text-black dark:bg-white rounded-xl"
+                  onSelectionChange={(keys) => {
+                    const selectedValue = Array.from(keys)[0] as string;
+                    setSortOption(selectedValue);
+                  }}
+                >
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="newest">Newest</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="featured">Featured</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="low-high">Price: Low to High</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="high-low">Price: High to Low</SelectItem>
+                </Select>
               </div>
+            </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {filteredProducts.map((product) => (
-                  <Card
-                    key={product.id}
-                    className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
-                  >
-                    <CardHeader className="line-clamp-1 text-2xl text-white">
-                      {product.name}
-                    </CardHeader>
-                    <CardBody>
-                      <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
-                        {product.images[0]?.src && (
-                          <>
+              {filteredProducts.map((product) => (
+                <Card  
+                  shadow="none"
+                  key={product.id} 
+                  className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
+                >    
+                  <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
+                    {product.name}
+                  </CardHeader>
+                  <CardBody>
+                    <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+                      {product.images[0]?.src && (
+                        <>
+                          <Image
+                            src={product.images[0].src}
+                            alt={product.name}
+                            fill
+                            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+                          />
+                          {/* If you want a hover image, you'd need to add a second image */}
+                          {/* This is just a placeholder - you may want to handle this differently */}
+                          {product.images[1]?.src && (
                             <Image
-                              src={product.images[0].src}
-                              alt={product.name}
+                              src={product.images[1].src}
+                              alt={`${product.name} hover`}
                               fill
-                              className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+                              className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                             />
-                            {product.images[1]?.src && (
-                              <Image
-                                src={product.images[1].src}
-                                alt={`${product.name} hover`}
-                                fill
-                                className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                              />
-                            )}
-                          </>
-                        )}
-                      </div>
-                      <p className="text-sm text-white mt-2">
-                        {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
-                      </p>
-                      <div className="mt-2 flex justify-between items-center">
-                        <span className="text-white font-bold">
-                          ${product.price}
-                        </span>
-                      </div>
-                      <br />
-                      {product.type === "simple" && (
-                        <Button
-                          size="md"
-                          className="w-full bg-white text-black"
-                          onClick={() => addToCart(product.id, 1)}
-                        >
-                          Add to cart
-                        </Button>
+                          )}
+                        </>
                       )}
-                      <br />
-                      <Button
+                    </div>
+                   <p className="text-sm text-white dark:text-black mt-2">
+                      {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
+                    </p>
+                    <div className="mt-2 flex justify-between items-center">
+                      <span className="text-white dark:text-black font-bold">
+                        ${product.price}
+                      </span>
+                    </div>
+                    <br />
+                    {product.type === "simple" && (
+                    <Button 
                         size="md"
-                        className="w-full bg-black text-white"
-                        onClick={()=> ViewProduct(product.id)}
+                        className="w-full bg-white text-black dark:text-white dark:bg-black"
+                        onClick={() => addToCart(product.id, 1)}
                       >
-                        View Product
-                      </Button>
-                    </CardBody>
-                  </Card>
-                ))}
+                      Add to cart
+                    </Button>
+                    )}
+                    <br />
+                    <Button 
+                      size="md"
+                      className="w-full bg-black text-white dark:bg-white dark:text-black"
+                      onClick={() => ViewProduct(product.id)}
+                    >
+                      View Product
+                    </Button>
+                  </CardBody>
+                </Card>
+              ))}
               </div>
             </div>
           </div>

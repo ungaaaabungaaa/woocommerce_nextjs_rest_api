@@ -200,11 +200,12 @@ function StoreId({ params }: { params: Params }) {
             </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
-                <Card 
+                <Card  
+                  shadow="none"
                   key={product.id} 
                   className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
                 >    
-                  <CardHeader className="line-clamp-1 text-2xl text-white">
+                  <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
                     {product.name}
                   </CardHeader>
                   <CardBody>
@@ -230,11 +231,11 @@ function StoreId({ params }: { params: Params }) {
                         </>
                       )}
                     </div>
-                   <p className="text-sm text-white mt-2">
+                   <p className="text-sm text-white dark:text-black mt-2">
                       {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
                     </p>
                     <div className="mt-2 flex justify-between items-center">
-                      <span className="text-white font-bold">
+                      <span className="text-white dark:text-black font-bold">
                         ${product.price}
                       </span>
                     </div>
@@ -242,7 +243,7 @@ function StoreId({ params }: { params: Params }) {
                     {product.type === "simple" && (
                     <Button 
                         size="md"
-                        className="w-full bg-white text-black"
+                        className="w-full bg-white text-black dark:text-white dark:bg-black"
                         onClick={() => addToCart(product.id, 1)}
                       >
                       Add to cart
@@ -251,7 +252,7 @@ function StoreId({ params }: { params: Params }) {
                     <br />
                     <Button 
                       size="md"
-                      className="w-full bg-black text-white"
+                      className="w-full bg-black text-white dark:bg-white dark:text-black"
                       onClick={() => ViewProduct(product.id)}
                     >
                       View Product
