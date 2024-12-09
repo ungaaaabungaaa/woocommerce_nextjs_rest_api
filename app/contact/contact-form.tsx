@@ -20,10 +20,7 @@ export default function ContactForm() {
     const email = formData.get("email");
     const reason = formData.get("message");
 
-    try {
-      // Send data to WordPress REST API
-      // do like this 
-      //  
+    try { 
       const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/contact-form/v1/submit`, {
         method: 'POST',
         headers: {
@@ -67,13 +64,13 @@ export default function ContactForm() {
   };
 
   return (
-    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
+    <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 bg-black dark:bg-white">
       <ToastContainer />
       <h1 className="text-4xl font-bold text-center mb-8">Contact Us</h1>
-      <Input name="name" type="text" placeholder="Your Name" required />
+      <Input name="name" className='bg-black text-white dark:bg-white dark:text-black' type="text" placeholder="Your Name" required />
       <Input name="email" type="email" placeholder="Your Email" required />
       <Textarea name="message" placeholder="Your Message" rows={12} required />
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <Button type="submit" className="w-full bg-white text-black dark:bg-black dark:text-white" disabled={isSubmitting}>
         {isSubmitting ? 'Sending...' : 'Send Message'}
       </Button>
     </form>

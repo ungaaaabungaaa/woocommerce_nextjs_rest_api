@@ -1,9 +1,27 @@
 'use client'
 
 import React from 'react'
-import { Accordion, AccordionItem } from "@nextui-org/accordion"
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { useTheme } from "next-themes";
 
 const FAQPage = () => {
+  const { theme, setTheme } = useTheme(); // Access current theme and theme setter
+
+  // Define itemClasses based on the current theme
+  const itemClasses = theme === 'dark'
+    ? {
+        base: "text-white",
+        title: "text-white",
+        content: "text-white",
+        trigger: "text-white",
+      }
+    : {
+        base: "text-black",
+        title: "text-black",
+        content: "text-black",
+        trigger: "text-black",
+      };
+
   const faqItems = [
     { question: "How do I place an order?", answer: "To place an order, simply add items to your cart and proceed to checkout." },
     { question: "What payment methods do you accept?", answer: "We accept credit cards, PayPal, and bank transfers." },
@@ -15,46 +33,43 @@ const FAQPage = () => {
     { question: "Do you have a physical store?", answer: "We are an online-only store at the moment." },
     { question: "How do I contact customer support?", answer: "You can reach us via email or phone listed on our Contact page." },
     { question: "Do you offer gift wrapping?", answer: "Yes, gift wrapping is available for a small additional fee." },
-  ]
-
-  const itemClasses = {
-    base: "text-white",
-    title: "text-white",
-    content: "text-white",
-    trigger: "text-white"
-  };
+  ];
 
   return (
-    <div className="min-h-screen bg-black text-white flex items-center">
+    <div className={`min-h-screen flex items-center ${theme === 'dark' ? "bg-black" : "bg-white"}`}>
       <div className="container mx-auto px-4">
+        <div className="flex justify-between mb-6">
+          <h1 className={`text-4xl font-bold ${theme === 'dark' ? "text-white" : "text-black"}`}>
+            Frequently Asked Questions
+          </h1>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1">
-            <h1 className="text-4xl font-bold mb-4">Frequently Asked Questions</h1>
-            <p className="text-lg">Find answers to our most commonly asked questions below.</p>
-          </div>
-          <div className="col-span-1 text-white bg-black">
-          <Accordion 
-            itemClasses={itemClasses}
-            className="text-white"
-          >
-            {faqItems.slice(0, 5).map((item, index) => (
-              <AccordionItem 
-                key={index} 
-                aria-label={item.question} 
-                title={item.question}
-              >
-                {item.answer}
-              </AccordionItem>
-            ))}
-          </Accordion>
+            <p className={`text-lg ${theme === 'dark' ? "text-white" : "text-black"}`}>
+              Find answers to our most commonly asked questions below.
+            </p>
           </div>
           <div className="col-span-1">
-            <Accordion
-              itemClasses={itemClasses}
-              className="text-white"
-            >
+            <Accordion itemClasses={itemClasses}>
+              {faqItems.slice(0, 5).map((item, index) => (
+                <AccordionItem
+                  key={index}
+                  aria-label={item.question}
+                  title={item.question}
+                >
+                  {item.answer}
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+          <div className="col-span-1">
+            <Accordion itemClasses={itemClasses}>
               {faqItems.slice(5, 10).map((item, index) => (
-                <AccordionItem key={index + 5} aria-label={item.question} title={item.question}>
+                <AccordionItem
+                  key={index + 5}
+                  aria-label={item.question}
+                  title={item.question}
+                >
                   {item.answer}
                 </AccordionItem>
               ))}
@@ -63,8 +78,7 @@ const FAQPage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default FAQPage
-
+export default FAQPage;
