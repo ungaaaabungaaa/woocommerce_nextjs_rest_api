@@ -87,7 +87,7 @@ export default function ThankYouPage() {
   }, [orderId, router])
 
   if (loading) {
-    return <div className="flex items-center justify-center min-h-screen text-center text-white bg-black">Loading...</div>
+    return <div className="flex items-center justify-center min-h-screen text-center text-white bg-black dark:text-black dark:bg-white">Loading...</div>
   }
 
   if (!orderDetails) {
@@ -97,15 +97,15 @@ export default function ThankYouPage() {
   const { billing, line_items, total, payment_method, date_created } = orderDetails
 
   return (
-    <div className="min-h-screen text-white bg-black flex items-center justify-center p-4 relative z-10">
+    <div className="min-h-screen text-white bg-black dark:text-black dark:bg-white flex items-center justify-center p-4 relative z-10">
       <ToastContainer />
-      <Card className="w-full max-w-4xl bg-black text-white shadow-xl">
+      <Card shadow='none' className="w-full max-w-4xl bg-black text-white dark:bg-white dark:text-black">
         <CardHeader className="text-center flex flex-col items-center justify-center p-6  rounded-t-xl">
           <div className="mx-auto mb-4 w-60 h-60 flex items-center justify-center">
             <LottieAnimation />
           </div>
-          <h2 className="text-3xl font-bold mb-2 text-white">Thank You for Your Order!</h2>
-          <p className="text-gray-400">
+          <h2 className="text-3xl font-bold mb-2 text-white dark:text-black">Thank You for Your Order!</h2>
+          <p className="text-gray-400 dark:text-black">
             Your payment has been confirmed and your order is now being processed.
           </p>
         </CardHeader>
@@ -156,7 +156,7 @@ export default function ThankYouPage() {
             <Button 
               as="a" 
               href="/" 
-              className="bg-white text-black px-6 py-2 rounded-full"
+              className="bg-white text-black dark:bg-black dark:text-white px-6 py-2 rounded-full"
             >
               Continue Shopping
             </Button>
