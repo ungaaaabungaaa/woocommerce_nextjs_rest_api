@@ -13,6 +13,8 @@ import { AnimatedTestimonialsDemo } from './AnimatedTestimonialsDemo'
 import { useTheme } from "next-themes";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
 
+
+
 const footerLinks = [
   {
     title: 'Top Categories',
@@ -62,12 +64,9 @@ const footerLinks = [
 ];
 
 
-const itemClasses = {
-  base: "text-white",
-  title: "text-white",
-  content: "text-white",
-  trigger: "text-white"
-};
+
+
+
 
 const Footer = () => {
   const router = useRouter();
@@ -75,6 +74,22 @@ const Footer = () => {
   const handleLogoClick = () => {
     router.push("/");
   };
+
+  // Define itemClasses based on the current theme
+  const itemClasses = theme === 'dark'
+    ? {
+        base: "text-black",
+        title: "text-black",
+        content: "text-black",
+        trigger: "text-black",
+      }
+    : {
+      
+        base: "text-white",
+        title: "text-white",
+        content: "text-white",
+        trigger: "text-white",
+    };
 
  
 
