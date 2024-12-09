@@ -23,6 +23,7 @@ import { AccessoriesMegaMenu } from "./accessories-mega-menu";
 import { FootWearMegaMenu } from "./footwear-mega-menu";
 import { KidsMegaMenu } from "./kids-mega-menu";
 import { useTheme } from "next-themes";
+import { SiteHeader } from "./site-header";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -68,25 +69,25 @@ export default function Nav_bar() {
     { label: "Terms & Condition", route: "/terms" },
   ];
 
-  const handleMenuItemClick = (route:any) => {
+  const handleMenuItemClick = (route: any) => {
     router.push(route);
     setIsMenuOpen(false);
   };
 
   return (
     <>
-      <div className="bg-white text-black dark:bg-black w-full text-small  dark:text-white p-3 flex items-center justify-center">
-        SALE! SALE! SALE! SALE! SALE! SALE!
+      <div className="bg-white text-black dark:bg-black w-full text-small dark:text-white p-3 flex items-center justify-center">
+        <SiteHeader></SiteHeader>
       </div>
-      <Navbar className="bg-black text-white  dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
-        <NavbarContent>
+      <Navbar maxWidth="xl" className="bg-black text-white dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
+        <NavbarContent className="sm:flex gap-4" justify="start">
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
             className="sm:hidden"
           />
-          <NavbarBrand>
-              {theme === 'dark' ? (
-                <NextImage
+          <NavbarBrand className="pr-4">
+            {theme === 'dark' ? (
+              <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogoDark}
                 alt="Site Logo"
@@ -94,9 +95,9 @@ export default function Nav_bar() {
                 height={40}
                 priority
                 className="cursor-pointer"
-                />               
-              ) : (                
-                <NextImage
+              />               
+            ) : (                
+              <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogo}
                 alt="Site Logo"
@@ -104,48 +105,47 @@ export default function Nav_bar() {
                 height={40}
                 priority
                 className="cursor-pointer"
-                />           
-              )}
-
+              />           
+            )}
           </NavbarBrand>
-        </NavbarContent>
-
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          <NavbarItem
-            className="text-white hover:font-bold dark:text-black"
-            onMouseEnter={() => setVisibleMegaMenu("Men")}
-            onClick={() => setVisibleMegaMenu("")}
-          >
-            <Link href="#">Men&apos;s</Link>
-          </NavbarItem>
-          <NavbarItem
-            className="text-white hover:font-bold dark:text-black"
-            onMouseEnter={() => setVisibleMegaMenu("Women")}
-            onClick={() => setVisibleMegaMenu("")}
-          >
-            <Link href="#">Women&apos;s</Link>
-          </NavbarItem>
-          <NavbarItem
-            className="text-white hover:font-bold dark:text-black"
-            onMouseEnter={() => setVisibleMegaMenu("Accessories")}
-            onClick={() => setVisibleMegaMenu("")}
-          >
-            <Link href="#">Accessories</Link>
-          </NavbarItem>
-          <NavbarItem
-            className="text-white hover:font-bold dark:text-black"
-            onMouseEnter={() => setVisibleMegaMenu("Kids")}
-            onClick={() => setVisibleMegaMenu("")}
-          >
-            <Link href="#">Kid&apos;s</Link>
-          </NavbarItem>
-          <NavbarItem
-            className="text-white hover:font-bold dark:text-black"
-            onMouseEnter={() => setVisibleMegaMenu("Footwear")}
-            onClick={() => setVisibleMegaMenu("")}
-          >
-            <Link href="#">Footwear</Link>
-          </NavbarItem>
+          
+          <NavbarContent className="hidden sm:flex gap-8" justify="start">
+            <NavbarItem
+              className="text-white hover:font-bold dark:text-black"
+              onMouseEnter={() => setVisibleMegaMenu("Men")}
+              onClick={() => setVisibleMegaMenu("")}
+            >
+              <Link href="#">Men&apos;s</Link>
+            </NavbarItem>
+            <NavbarItem
+              className="text-white hover:font-bold dark:text-black"
+              onMouseEnter={() => setVisibleMegaMenu("Women")}
+              onClick={() => setVisibleMegaMenu("")}
+            >
+              <Link href="#">Women&apos;s</Link>
+            </NavbarItem>
+            <NavbarItem
+              className="text-white hover:font-bold dark:text-black"
+              onMouseEnter={() => setVisibleMegaMenu("Accessories")}
+              onClick={() => setVisibleMegaMenu("")}
+            >
+              <Link href="#">Accessories</Link>
+            </NavbarItem>
+            <NavbarItem
+              className="text-white hover:font-bold dark:text-black"
+              onMouseEnter={() => setVisibleMegaMenu("Kids")}
+              onClick={() => setVisibleMegaMenu("")}
+            >
+              <Link href="#">Kid&apos;s</Link>
+            </NavbarItem>
+            <NavbarItem
+              className="text-white hover:font-bold dark:text-black"
+              onMouseEnter={() => setVisibleMegaMenu("Footwear")}
+              onClick={() => setVisibleMegaMenu("")}
+            >
+              <Link href="#">Footwear</Link>
+            </NavbarItem>
+          </NavbarContent>
         </NavbarContent>
 
         <NavbarContent justify="end" className="gap-4">
@@ -179,7 +179,7 @@ export default function Nav_bar() {
             >
               <button
                 onClick={() => handleMenuItemClick(item.route)}
-                className="w-full text-left py-2 px-4 text-white  hover:text-gray-300 dark:text-black "
+                className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black"
               >
                 {item.label}
               </button>
@@ -193,7 +193,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Men")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 bg-black dark:bg-white  z-50"
+          className="mega-menu sticky top-16 bg-black dark:bg-white z-50"
         >
           <MensMegaMenu />
         </div>
@@ -202,7 +202,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Women")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white  z-50"
+          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white z-50"
         >
           <WomensMegaMenu />
         </div>
@@ -211,7 +211,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Accessories")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white  z-50"
+          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white z-50"
         >
           <AccessoriesMegaMenu />
         </div>
@@ -220,7 +220,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Kids")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white  z-50"
+          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white z-50"
         >
           <KidsMegaMenu />
         </div>
@@ -229,7 +229,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Footwear")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white  z-50"
+          className="mega-menu sticky top-16 shadow-lg bg-black dark:bg-white z-50"
         >
           <FootWearMegaMenu />
         </div>
@@ -237,4 +237,3 @@ export default function Nav_bar() {
     </>
   );
 }
-
