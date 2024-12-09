@@ -34,7 +34,7 @@ export default function RootLayout({
       <body className="min-h-screen">
       <ThemeProvider
             attribute="class"
-            defaultTheme="system"
+            defaultTheme="light"
             enableSystem
             disableTransitionOnChange
           >

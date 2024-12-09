@@ -160,9 +160,9 @@ function StoreId({ params }: { params: Params }) {
     <>
       <div>
         {error ? (
-          <div className="flex flex-col items-center justify-center min-h-screen">
+          <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
             <ToastContainer />
-            <p className="mb-4 text-white text-3xl sm:text-4xl md:text-6xl font-bold text-center">{error}</p>
+            <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">{error}</p>
             <Button
               onClick={() => (window.location.href = "/")}
               color="default"
@@ -171,7 +171,7 @@ function StoreId({ params }: { params: Params }) {
             </Button>
           </div>
         ) : (
-          <div>
+          <div className="bg-black dark:bg-white">
             <br></br>
             <ToastContainer />
             <FullScreenStoreBanner 
@@ -179,22 +179,22 @@ function StoreId({ params }: { params: Params }) {
                 subtitle="Studio Universal Store" 
                 backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
               />
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-8 ">
             <div className="w-full flex justify-end">
               <div className="w-full md:w-1/4 px-4 mb-4 flex align-middle justify-end ">
                 <Select
                   label="Sort by"
                   selectedKeys={[sortOption]}
-                  className="bg-white text-black rounded-xl"
+                  className="bg-white text-black dark:bg-white rounded-xl"
                   onSelectionChange={(keys) => {
                     const selectedValue = Array.from(keys)[0] as string;
                     setSortOption(selectedValue);
                   }}
                 >
-                  <SelectItem className="bg-white text-black" key="newest">Newest</SelectItem>
-                  <SelectItem className="bg-white text-black" key="featured">Featured</SelectItem>
-                  <SelectItem className="bg-white text-black" key="low-high">Price: Low to High</SelectItem>
-                  <SelectItem className="bg-white text-black" key="high-low">Price: High to Low</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="newest">Newest</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="featured">Featured</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="low-high">Price: Low to High</SelectItem>
+                  <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="high-low">Price: High to Low</SelectItem>
                 </Select>
               </div>
             </div>

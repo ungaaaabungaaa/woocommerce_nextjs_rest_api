@@ -52,22 +52,22 @@ export default function ProductSearch() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-black">
+    <div className="h-screen flex items-center justify-center bg-black dark:bg-white">
       <ToastContainer />
-      <div className="w-full max-w-2xl p-2 bg-black flex items-center justify-center rounded-lg">
+      <div className="w-full max-w-2xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg">
         <div className="space-y-4 w-full">
           {/* Search Form */}
-          <form onSubmit={handleSearch} className="flex items-center border-b border-gray-300">
+          <form onSubmit={handleSearch} className="flex items-center border-b border-gray-300 ">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search products..."
-              className="flex-grow py-2 px-4 text-white bg-black focus:outline-none"
+              className="flex-grow py-2 px-4 text-white bg-black focus:outline-none dark:text-black dark:bg-white"
               aria-label="Search products"
             />
             <button type="submit" className="p-2" aria-label="Submit search">
-              <Search className="w-5 h-5 text-white bg-black" />
+              <Search className="w-5 h-5 text-white bg-black dark:text-black dark:bg-white" />
             </button>
           </form>
 
@@ -81,8 +81,8 @@ export default function ProductSearch() {
                   onClick={() => handleChipClick(category)}
                   className={`py-1 px-3 rounded-full text-sm ${
                     selectedChips.includes(category)
-                      ? 'bg-white text-black hover:text-white hover:bg-black'
-                      : 'bg-black text-white hover:bg-white hover:text-black'
+                      ? 'bg-white text-black hover:text-white hover:bg-black  dark:bg-black dark:text-white dark:hover:text-black dark:hover:bg-white'
+                      : 'bg-black text-white hover:bg-white hover:text-black dark:bg-white dark:text-black dark:hover:bg-black dark:hover:text-white'
                   }`}
                 >
                   {category}
