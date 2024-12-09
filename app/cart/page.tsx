@@ -164,10 +164,10 @@ export default function Cart() {
   }
 
   return (
-    <div className="min-h-screen bg-black">
+    <div className="min-h-screen bg-black dark:bg-white">
       <ToastContainer />
       <div className="container max-w-4xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">
+        <h1 className="text-3xl font-bold mb-6 text-white dark:text-black">
           Your Cart ({cartData?.items.length || 0})
         </h1>
         
@@ -245,14 +245,14 @@ export default function Cart() {
                 <span>${(parseFloat(cartData.totals.total) / 100 + 10).toFixed(2)}</span>
               </div>
 
-              <Button onClick={handleCheckoutClick} className="w-full rounded-full bg-white text-black" size="lg">
+              <Button onClick={handleCheckoutClick} className="w-full rounded-full bg-white text-black dark:bg-black dark:text-white" size="lg">
                 Checkout
               </Button>
             </div>
 
             {/* Actions */}
             <div className="flex flex-col sm:flex-row justify-between gap-4">
-              <Button  onClick={() => window.history.back()} className="w-full sm:w-auto bg-black text-white">
+              <Button  onClick={() => window.history.back()} className="w-full sm:w-auto bg-white text-black dark:bg-black dark:text-white">
                 Continue Shopping
               </Button>
               <Button  onClick={clearCart} className="w-full rounded-full bg-red text-white sm:w-auto">
@@ -263,7 +263,7 @@ export default function Cart() {
         ) : (
           <div className="text-center py-12">
             <p className="text-muted-foreground mb-4">Your cart is empty</p>
-            <Button onClick={() => window.history.back()}>
+            <Button className='bg-white text-black dark:bg-black dark:text-white' onClick={() => window.history.back()}>
               Continue Shopping
             </Button>
           </div>
