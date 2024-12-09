@@ -51,7 +51,7 @@ export default function MiniCart() {
   }
 
   return (
-    <div className="bg-black text-white rounded-lg shadow-md p-4">
+    <div className="bg-black dark:bg-white text-white dark:text-black rounded-lg  p-4">
       {cartData && cartData.items.length > 0 ? (
         <div>
           {cartData.items.map((item) => (
@@ -66,7 +66,7 @@ export default function MiniCart() {
               </div>
               <div className="flex-grow">
                 <h3 className="font-medium">{item.name}</h3>
-                <p className="text-sm text-white">
+                <p className="text-sm ">
                   Qty: {item.quantity.value} x ${parseFloat(item.price) / 100}
                 </p>
               </div>

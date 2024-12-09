@@ -297,15 +297,15 @@ function Checkout() {
   
 
   return (
-    <div className="flex flex-col lg:flex-row-reverse lg:space-x-4">
+    <div className="flex flex-col lg:flex-row-reverse lg:space-x-4 bg-black dark:bg-white">
       <ToastContainer />
       <div className="w-full h-auto lg:order-2 p-6 lg:p-12 flex align-middle justify-start flex-col">
-        <h1 className="text-3xl font-bold mb-6">Checkout Form</h1>
-        <h3 className="text-xl text-gray-400 mb-6">Shipping Information</h3>
+        <h1 className="text-3xl text-white dark:text-black font-bold mb-6">Checkout Form</h1>
+        <h3 className="text-xl text-white dark:text-black mb-6">Shipping Information</h3>
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="email" className="block text-sm font-medium text-white mb-1">
+            <label htmlFor="email" className="block text-sm font-medium text-white dark:text-black mb-1">
               Email address
             </label>
             <Input
@@ -321,7 +321,7 @@ function Checkout() {
 
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label htmlFor="firstName" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="firstName" className="block text-sm font-medium text-white dark:text-black mb-1">
                 First Name
               </label>
               <Input
@@ -336,7 +336,7 @@ function Checkout() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="lastName" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="lastName" className="block text-sm font-medium text-white dark:text-black mb-1">
                 Last Name
               </label>
               <Input
@@ -353,7 +353,7 @@ function Checkout() {
 
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label htmlFor="address" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="address" className="block text-sm font-medium text-white dark:text-black mb-1">
                 Address
               </label>
               <Input
@@ -368,7 +368,7 @@ function Checkout() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="apt" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="apt" className="block text-sm font-medium text-white dark:text-black mb-1">
                 Apt, suite, etc.
               </label>
               <Input
@@ -384,7 +384,7 @@ function Checkout() {
 
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label htmlFor="city" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="city" className="block text-sm font-medium text-white dark:text-black mb-1">
                 City
               </label>
               <Input
@@ -392,6 +392,7 @@ function Checkout() {
                 name="city"
                 type="text"
                 isRequired
+                className='bg-white text-black'
                 placeholder="Enter Your City"
                 value={formData.city}
                 onChange={handleChange}
@@ -399,7 +400,7 @@ function Checkout() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="country" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="country" className="block text-sm font-medium text-white dark:text-black mb-1">
                 Country
               </label>
               <Input
@@ -416,7 +417,7 @@ function Checkout() {
 
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
-              <label htmlFor="postCode" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="postCode" className="block text-sm font-medium text-white dark:text-black mb-1">
                 PostCode
               </label>
               <Input
@@ -431,7 +432,7 @@ function Checkout() {
             </div>
 
             <div className="flex-1">
-              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white mb-1">
+              <label htmlFor="phoneNumber" className="block text-sm font-medium text-white dark:text-black mb-1">
                 Phone Number
               </label>
               <Input
