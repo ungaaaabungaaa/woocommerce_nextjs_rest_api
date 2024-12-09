@@ -11,6 +11,7 @@ import { useCartKey } from '../../../hooks/useCartKey';
 import { useCart } from '../../../context/cartcontext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useTheme } from "next-themes";
 
 interface Attribute {
   id: number
@@ -37,12 +38,7 @@ interface Category {
   slug: string
 }
 
-const itemClasses = {
-  base: "text-white",
-  title: "text-white",
-  content: "text-white",
-  trigger: "text-white"
-};
+
 
 interface Product {
   id: number
@@ -80,6 +76,22 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+  const { theme, setTheme } = useTheme(); // Access current theme and theme setter
+
+
+   const itemClasses = theme === 'dark'
+    ? {
+      base: "text-black",
+      title: "text-black",
+      content: "text-black",
+      trigger: "text-black",
+      }
+    : {
+      base: "text-white",
+      title: "text-white",
+      content: "text-white",
+      trigger: "text-white",
+      };
   
 
   useEffect(() => {
@@ -272,9 +284,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   if (!product) return <div>Loading...</div>
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
       <ToastContainer />
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8 w-full">
         <div className="space-y-4">
           <div className="relative aspect-square overflow-hidden rounded-lg">
             <Image
@@ -368,20 +380,20 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             </div>
           )}
           <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-            <div className="w-full md:w-auto flex items-center bg-white rounded-full border border-white overflow-hidden">
+            <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
               <Button
                 size="lg"
-                className="bg-white rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
               >
                 -
               </Button>
-              <span className="px-3 text-sm text-black">
+              <span className="px-3 text-sm text-black dark:text-white">
                 {quantity}
               </span>
               <Button
                 size="lg"
-                className="bg-white rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
                 onClick={() => setQuantity(quantity + 1)}
               >
                 +
@@ -390,16 +402,16 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   
             <Button 
               onClick={handleAddToCart} 
-              className="w-full md:flex-1 bg-white rounded-full h-12 flex items-center justify-center"
+              className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center"
             >
               <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
             </Button>
           </div>
-          <div className="flex space-x-4">
+          <div className="flex space-x-4 text-white dark:text-black">
             <Accordion
               itemClasses={itemClasses}
             >
-              <AccordionItem subtitle="Product Dimensions" key="1" aria-label="ABOUT" title="ABOUT">
+              <AccordionItem  subtitle="Product Dimensions" key="1" aria-label="ABOUT" title="ABOUT">
                 <p>
                   <strong>Weight:</strong> {product.weight || 'Not specified'} kg
                 </p>
@@ -412,8 +424,10 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                   )}
                 </p>    
               </AccordionItem>
-              <AccordionItem key="2" subtitle="Please size down if you are between sizes" aria-label="SIZE GUIDE" title="SIZE GUIDE">
-                <div className="bg-black text-white p-4 rounded">
+              <AccordionItem
+              
+              key="2" subtitle="Please size down if you are between sizes" aria-label="SIZE GUIDE" title="SIZE GUIDE">
+                <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr>
@@ -459,7 +473,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 </div>
               </AccordionItem>
               <AccordionItem key="3" subtitle="Free Shipping on all orders over $100 USD" aria-label="SHIPPING" title="SHIPPING">
-                <div className="bg-black text-white p-4 rounded">
+                <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
                   <table className="w-full text-left text-sm">
                     <thead>
                       <tr>
