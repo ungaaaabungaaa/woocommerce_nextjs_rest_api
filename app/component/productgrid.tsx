@@ -46,9 +46,9 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
       toast.error( "Error with cart key", {
-                          position: "top-center",
-                          theme: "dark",
-                          autoClose: 5000,
+      position: "top-center",
+      theme: "dark",
+      autoClose: 5000,
       });
       
       return;

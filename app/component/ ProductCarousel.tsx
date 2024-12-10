@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Image from "next/image"
 import { Button } from "@nextui-org/button"
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import { Card, CardBody } from "@nextui-org/card";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
 import { useCart } from '../../context/cartcontext';
@@ -22,7 +22,7 @@ interface Product {
   regular_price:string;
   slug: string;
   date_created: string;
-  type: string; // e.g., "simple" or other types
+  type: string; 
 }
 
 interface ProductCardProps {
@@ -35,24 +35,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
 
   const ViewProduct = async (productId: string) => {
-    console.log(productId);
     router.push(`/product/${productId}`);
   };
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
-    
     if (loading) {
       console.log('Cart key is still loading...');
       return;
     }
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
-      toast.error( "Error with cart key", {
+      toast.error("Error with cart key", {
         position: "top-center",
         theme: "dark",
         autoClose: 5000,
       });
-
       return;
     }
     const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
@@ -75,10 +72,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
         theme: "dark",
         autoClose: 5000,
       });
-      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      await fetchCartDetails(cartKey);
     } catch (error: any) {
       console.error('Error adding item to cart:', error.response?.data || error.message);
-      toast.error( "Error adding item to cart", {
+      toast.error("Error adding item to cart", {
         position: "top-center",
         theme: "dark",
         autoClose: 5000,
@@ -86,35 +83,52 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, action: () => void) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      action();
+    }
+  };
+
   return (
-    <Card onClick={() => ViewProduct(product.id)} shadow="none" className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"> 
-      <CardBody onClick={() => ViewProduct(product.id)}>
-        <div onClick={() => ViewProduct(product.id)} className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+    <Card 
+      role="button" 
+      tabIndex={0} 
+      aria-label={`View product: ${product.title}`}
+      onClick={() => ViewProduct(product.id)}
+      onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
+      shadow="none" 
+      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer focus:outline-2 focus:outline-blue-500"
+    > 
+      <CardBody>
+        <div 
+          role="img" 
+          aria-label={`Image of ${product.title}`}
+          className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
+        >
           <Image
-            onClick={() => ViewProduct(product.id)}
             src={product.image}
             alt={product.title}
             fill
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
-            onClick={() => ViewProduct(product.id)}
             src={product.hoverimage}
             alt={`${product.title} hover`}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-           <div className="absolute right-2 top-2 z-10">
-           {product.isNew && (
-            <span onClick={() => ViewProduct(product.id)} className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
-              New
-            </span>
-           )}
-           </div>
+          {product.isNew && (
+            <div 
+              className="absolute right-2 top-2 z-10"
+              role="status"
+            >
+              <span className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
+                New
+              </span>
+            </div>
+          )}
         </div>
-       
-    
 
         <div className="flex justify-between items-center">
           {product.sale_price && product.regular_price ? (
@@ -135,27 +149,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
               {product.price}
             </span>
           ) : null}
+          
+          <Button 
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent triggering card's onClick
+              addToCart(product.id);
+            }}
+            aria-label={`Add ${product.title} to cart`}
+            className="ml-2"
+          >
+            Add to Cart
+          </Button>
         </div>
         <p className="text-white dark:text-black">
           {product.title}
         </p>
-        {/* {product.type === "simple" && (
-          <Button 
-            size="md"
-            className="w-full bg-white text-black dark:bg-black dark:text-white"
-            onClick={() => addToCart(product.id, 1)}
-          >
-            Add to cart
-          </Button>
-        )}
-        <br></br>
-        <Button 
-          size="md"
-          className="w-full bg-black text-white dark:bg-white dark:text-black"
-          onClick={() => ViewProduct(product.id)}
-        >
-          View Product
-        </Button> */}
       </CardBody>
     </Card>
   );
@@ -165,7 +173,6 @@ const ProductCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
   
-
   // HTML sanitization function
   const sanitizeHTML = (html: string) => {
     // Remove HTML tags and decode HTML entities
@@ -205,7 +212,6 @@ const ProductCarousel = () => {
     }
   };
   
-
   useEffect(() => {
     fetchProducts();
   }, []);
