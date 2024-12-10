@@ -38,12 +38,10 @@ function StorePage() {
 
   const router = useRouter();
 
-
   const ViewProduct = async (productId: string) => {
     console.log(productId);
     router.push(`/product/${productId}`);
   };
-    
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
     if (loading) {
@@ -87,7 +85,6 @@ function StorePage() {
         theme: "dark",
         autoClose: 5000,
       });
-      
     }
   };
 
@@ -152,7 +149,6 @@ function StorePage() {
     setFilteredProducts(result);
   }, [products, sortOption]);
 
-
   return (
     <>
       <div>
@@ -195,92 +191,81 @@ function StorePage() {
                 </Select>
               </div>
             </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
-               
-                 <Card 
-                      role="button" 
-                      tabIndex={0} 
-                      key={product.id} 
-                      aria-label={`View product: ${product.name}`}
-                      onClick={() => ViewProduct(product.id)}
-                     
-                      shadow="none" 
-                      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
-                    > 
-                      <CardBody
-                       onClick={() => ViewProduct(product.id)}
+                <Card 
+                  role="button" 
+                  tabIndex={0} 
+                  key={product.id} 
+                  aria-label={`View product: ${product.name}`}
+                  onClick={() => ViewProduct(product.id)}
+                  shadow="none" 
+                  className="group relative bg-card border-muted min-w-[150px] rounded-lg flex flex-col cursor-pointer"
+                > 
+                  <CardBody
+                   onClick={() => ViewProduct(product.id)}
+                  >
+                    <div
+                      role="img" 
+                      aria-label={`Image of ${product.name}`}
+                      className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
+                    >
+                      <Image
+                        src={product.images[0].src}
+                        alt={product.name}
+                        fill
+                        className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+                      />
+                      <Image
+                        src={product.images[1].src}
+                        alt={`${product.name} hover`}
+                        fill
+                        className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                      />
+                    </div>
+            
+                    <p className="text-white dark:text-black text-left text-balance text-sm md:text-base lg:text-2xl font-semibold tracking-[-0.015em]">
+                      {product.name}
+                    </p>
+            
+                    <div className="flex justify-between items-center">
+                      {product.sale_price && product.regular_price ? (
+                        <div className="flex items-center">
+                          <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
+                            ${product.regular_price}
+                          </span>
+                          <span className="text-white dark:text-black font-bold text-1xl">
+                            ${product.sale_price}
+                          </span>
+                        </div>
+                      ) : product.regular_price ? (
+                        <span className="text-white dark:text-black font-bold">
+                          ${product.regular_price}
+                        </span>
+                      ) : product.type === "variable" ? (
+                        <span className="text-white dark:text-black font-bold">
+                          {product.price}
+                        </span>
+                      ) : null}
+            
+                      <Button 
+                        onClick={(e) => {
+                          e.stopPropagation(); // Prevent triggering card's onClick
+                          addToCart(product.id);
+                        }}
+                        aria-label={`Add ${product.name} to cart`}
+                        className="ml-2"
                       >
-                        <div
-                          role="img" 
-                          aria-label={`Image of ${product.name}`}
-                          className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
-                        >
-                          <Image
-                            src={product.images[0].src}
-                            alt={product.name}
-                            fill
-                            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-                          />
-                          <Image
-                            src={product.images[1].src}
-                            alt={`${product.name} hover`}
-                            fill
-                            className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                          />
-                        </div>
-                
-                      
-                        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
-                          {product.name}
-                        </p>
-                
-                        <div className="flex justify-between items-center">
-                          {product.sale_price && product.regular_price ? (
-                            <div className="flex items-center">
-                              <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
-                                ${product.regular_price}
-                              </span>
-                              <span className="text-white dark:text-black font-bold text-1xl">
-                                ${product.sale_price}
-                              </span>
-                            </div>
-                          ) : product.regular_price ? (
-                            <span className="text-white dark:text-black font-bold">
-                              ${product.regular_price}
-                            </span>
-                          ) : product.type === "variable" ? (
-                            <span className="text-white dark:text-black font-bold">
-                              {product.price}
-                            </span>
-                          ) : null}
-                
-                       
-                          
-                          <Button 
-                            onClick={(e) => {
-                              e.stopPropagation(); // Prevent triggering card's onClick
-                              addToCart(product.id);
-                            }}
-                            aria-label={`Add ${product.name} to cart`}
-                            className="ml-2"
-                          >
-                            Add to Cart
-                          </Button>
-                        </div>
-                
-                        <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
-                          {sanitizeHTML(product.short_description)}
-                        </p>
-                       
-                      </CardBody>
-                 </Card>
-
-
-
-
-
-
+                        Add to Cart
+                      </Button>
+                    </div>
+            
+                    <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
+                      {sanitizeHTML(product.short_description)}
+                    </p>
+                   
+                  </CardBody>
+                </Card>
               ))}
               </div>
             </div>
