@@ -169,6 +169,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Add to Cart
           </Button>
         </div>
+
+        <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
+          {product.description}
+        </p>
        
       </CardBody>
     </Card>
