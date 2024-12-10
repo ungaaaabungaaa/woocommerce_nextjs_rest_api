@@ -14,6 +14,8 @@ interface Product {
   hoverimage: string;
   isNew?: boolean;
   price: string;
+  sale_price:string;
+  regular_price:string;
   slug: string;
   type: string;
 }
@@ -28,8 +30,11 @@ const sampleProducts: Product[] = [
     hoverimage: "https://images.unsplash.com/photo-1535083252457-6080fe29be45?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
     isNew: true,
     price: "$129.99",
+    sale_price:"29$",
+    regular_price:"29$",
     slug: "training-shoes",
     type: "simple"
+    
   },
   // ... other sample products
 ];
@@ -50,6 +55,8 @@ function FeaturedProducts() {
         hoverimage: product.images?.[1]?.src || product.images?.[0]?.src || 'https://via.placeholder.com/800',
         isNew: product.featured,
         price: `$${product.price}`,
+        regular_price: product.regular_price,
+        sale_price: product.sale_price,
         slug: product.slug,
         type: product.type || 'simple',
       }));

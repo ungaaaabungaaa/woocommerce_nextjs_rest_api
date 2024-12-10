@@ -9,6 +9,7 @@ import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import React from 'react';
 
 interface Product {
   id: number;
@@ -19,6 +20,8 @@ interface Product {
   isNew?: boolean;
   price: string;
   slug: string;
+  sale_price:string;
+  regular_price:string;
   productId: string;
   type: string;
 }
@@ -45,10 +48,10 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     }
     if (cartKeyError) {
       console.error('Error with cart key:', cartKeyError);
-      toast.error( "Error with cart key", {
-      position: "top-center",
-      theme: "dark",
-      autoClose: 5000,
+      toast.error("Error with cart key", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
       });
       
       return;
@@ -75,24 +78,40 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     }
   };
 
- 
-  const ViewProduct = async (productId: string) => {
-    router.push(`/product/${productId}`);
+  // View Product function
+  const ViewProduct = async (productSlug: string) => {
+    router.push(`/product/${productSlug}`);
+  };
+
+  // Handle keyboard interactions
+  const handleKeyDown = (e: React.KeyboardEvent, callback: () => void) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      callback();
+    }
   };
 
   return (
-    <div className="bg-black  text-white dark:bg-white text-black min-h-screen p-6">
+    <div className="bg-black text-white dark:bg-white text-black min-h-screen p-6">
       <ToastContainer />
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white bg-black dark:text-black dark:bg-white">
           {safeProducts.map((product) => (
-            <Card  shadow="none" key={product.id} className="group relative bg-card border-muted">
-              <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
-                {product.title}
-              </CardHeader>
-             
+            <Card 
+              key={product.id}
+              role="button" 
+              tabIndex={0} 
+              aria-label={`View product: ${product.title}`}
+              onClick={() => ViewProduct(product.slug)}
+              onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.slug))}
+              shadow="none" 
+              className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
+            > 
               <CardBody>
-                <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+                <div 
+                  role="img" 
+                  aria-label={`Image of ${product.title}`}
+                  className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
+                >
                   <Image
                     src={product.image}
                     alt={product.title}
@@ -105,37 +124,59 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                     fill
                     className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                   />
+        
+                  {product.isNew && (
+                    <div 
+                      className="absolute right-2 top-2 z-10"
+                      role="status"
+                    >
+                      <span className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
+                        New
+                      </span>
+                    </div>
+                  )}
                 </div>
-                <p className="text-sm text-white dark:text-black mt-2">
+        
+                <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+                  {product.title}
+                </p>
+        
+                <div className="flex justify-between items-center">
+                  {product.sale_price && product.regular_price ? (
+                    <div className="flex items-center">
+                      <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
+                        ${product.regular_price}
+                      </span>
+                      <span className="text-white dark:text-black font-bold text-1xl">
+                        ${product.sale_price}
+                      </span>
+                    </div>
+                  ) : product.regular_price ? (
+                    <span className="text-white dark:text-black font-bold">
+                      ${product.regular_price}
+                    </span>
+                  ) : product.type === "variable" ? (
+                    <span className="text-white dark:text-black font-bold">
+                      {product.price}
+                    </span>
+                  ) : null}
+        
+                  <Button 
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent triggering card's onClick
+                      addToCart(product.id.toString());
+                    }}
+                    aria-label={`Add ${product.title} to cart`}
+                    className="ml-2"
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+        
+                <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
                   {product.description}
                 </p>
-                <p className="text-sm text-white">
-                  <span className="text-white dark:text-black font-bold">{product.price}</span>
-                  
-                </p>
-
-
               </CardBody>
-
-              <CardFooter className="grid grid-cols-2 gap-2">
-                <Button 
-                  size="md"
-                  className="w-full bg-black text-white"
-                  onClick={() => ViewProduct(product.id.toString())}
-                >
-                  View Product
-                </Button>
-
-                {product.type === "simple" && (
-                  <Button 
-                    size="md"
-                    className="w-full bg-white text-black"
-                    onClick={() => addToCart(product.productId, 1)}
-                  >
-                    Add to cart
-                  </Button>
-                )}
-              </CardFooter>
             </Card>
           ))}
         </div>
