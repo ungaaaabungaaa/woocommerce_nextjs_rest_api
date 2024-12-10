@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -30,10 +30,11 @@ export function RecommendedProducts({ products }: RecommendedProductsProps) {
       <br />
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {products.map((product) => (
-          <div
+          <button
             key={product.id}
             onClick={() => handleProductClick(product.url)}
-            className="cursor-pointer bg-gray-800 dark:bg-gray-200 rounded-lg overflow-hidden transition-transform hover:scale-105"
+            className="cursor-pointer bg-gray-800 dark:bg-gray-200 rounded-lg overflow-hidden transition-transform hover:scale-105 text-left p-0 border-none"
+            aria-label={`View ${product.name}`}
           >
             <Image
               src={product.image}
@@ -46,7 +47,7 @@ export function RecommendedProducts({ products }: RecommendedProductsProps) {
               <h3 className="text-sm font-medium text-black dark:text-white truncate">{product.name}</h3>
               <p className="mt-1 text-sm dark:text-gray-300 text-gray-600">${product.price.toFixed(2)}</p>
             </div>
-          </div>
+          </button>
         ))}
       </div>
     </div>
