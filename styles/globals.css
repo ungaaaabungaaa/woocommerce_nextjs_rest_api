@@ -16,6 +16,16 @@ body {
   @apply text-white dark:text-black;
 }
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 /* For Chrome, Edge, and Safari */
 * {
   -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -144,4 +154,32 @@ input::placeholder {
   background-color: black; /* Match your design */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow */
   z-index: 99; /* Ensure it appears above other elements */
+}
+
+.flex {
+  display: flex;
+  overflow-x: auto; /* Horizontal scrolling */
+  gap: 1rem; /* Space between cards */
+  scroll-snap-type: x mandatory; /* Snap to cards */
+}
+
+.flex > div {
+  scroll-snap-align: center; /* Center cards when scrolling */
+  flex-shrink: 0; /* Prevent cards from shrinking */
+}
+
+.scrollbar-hide {
+  /* Hides scrollbar but keeps functionality */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
+
+.aspect-portrait {
+  position: relative;
+  width: 100%;
+  padding-top: 150%; /* 2:3 aspect ratio */
 }
