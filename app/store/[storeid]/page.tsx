@@ -210,7 +210,8 @@ function StoreId({ params }: { params: Params }) {
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
                 <Card 
-                                      role="button" 
+                                      role="button"
+                                      key={product.id} 
                                       tabIndex={0} 
                                       aria-label={`View product: ${product.name}`}
                                       onClick={() => ViewProduct(product.id)}
