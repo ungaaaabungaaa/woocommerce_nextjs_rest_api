@@ -94,7 +94,7 @@ function FeaturedProducts() {
         <p className="text-red-500 text-center">{error}</p>
       ) : (
         <ProductGrid
-          products={limitedProducts.map((product) => ({
+          products={limitedProducts.map((product:any) => ({
             ...product,
             description: sanitizeDescription(product.description),
           }))}

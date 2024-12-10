@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import React from 'react';
 
 interface Product {
-  id: number;
+  id: string;
   title: string;
   description: string;
   image: string;
@@ -79,8 +79,9 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
   };
 
   // View Product function
-  const ViewProduct = async (productSlug: string) => {
-    router.push(`/product/${productSlug}`);
+  const ViewProduct = async (productId: string) => {
+    router.push(`/product/${productId}`);
+    console.log(productId)
   };
 
   // Handle keyboard interactions
@@ -101,14 +102,15 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
               role="button" 
               tabIndex={0} 
               aria-label={`View product: ${product.title}`}
-              onClick={() => ViewProduct(product.slug)}
-              onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.slug))}
+              onClick={() => ViewProduct(product.id)}
+              onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
               shadow="none" 
               className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
             > 
               <CardBody>
                 <div 
                   role="img" 
+                  onClick={() => ViewProduct(product.id)}
                   aria-label={`Image of ${product.title}`}
                   className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
                 >

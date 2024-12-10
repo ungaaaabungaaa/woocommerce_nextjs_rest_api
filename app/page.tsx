@@ -10,10 +10,6 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  
-  
-  
-  
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
@@ -38,7 +34,7 @@ export default function Home() {
       </div>
       <ProductCarouselCategories category="accessories" ></ProductCarouselCategories>
       <br></br>
-      <ProductCarouselCategories category="core" ></ProductCarouselCategories>
+      <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <br></br>
       <WobbleCardDemo></WobbleCardDemo>
       <br></br>
