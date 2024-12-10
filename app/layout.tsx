@@ -4,10 +4,13 @@ import Footer from "@/app/component/footer";
 import Navbar from "@/app/component/navbar";
 import { CartProvider } from '@/context/cartcontext';
 import PayPalProvider from "@/context/PayPalProvider";
+import { Inter } from 'next/font/google';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
   title: "Studio Universal",
-  description: "High-quality products and excellent customer service",
+  description: "High-quality products & excellent customer service",
   icons: {
     icon: [
       { url: "/favicon.ico" },
@@ -30,14 +33,14 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" className={inter.className} suppressHydrationWarning>
       <body className="min-h-screen">
-      <ThemeProvider
-            attribute="class"
-            defaultTheme="light"
-            enableSystem
-            disableTransitionOnChange
-          >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
           <PayPalProvider>
             <CartProvider>
               <Navbar />
@@ -48,6 +51,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
-
