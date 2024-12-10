@@ -156,7 +156,7 @@ export default function Nav_bar() {
             shape="circle"
             color="danger"
           >
-            <ShoppingBag className="h-5 cursor-pointer text-white dark:text-black" />
+            <ShoppingBag onClick={handleCartClick} className="h-5 cursor-pointer text-white dark:text-black" />
           </Badge>
           {mounted && (
             <button onClick={toggleTheme} className="focus:outline-none">
