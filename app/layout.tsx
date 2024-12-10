@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={inter.className} suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={inter.className}>
       <body className="min-h-screen">
         <ThemeProvider
           attribute="class"
@@ -53,3 +53,4 @@ export default function RootLayout({
     </html>
   );
 }
+
