@@ -132,6 +132,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
 
+        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+          {product.title}
+        </p>
+
         <div className="flex justify-between items-center">
           {product.sale_price && product.regular_price ? (
             <div className="flex items-center">
@@ -151,6 +155,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
               {product.price}
             </span>
           ) : null}
+
+       
           
           <Button 
             onClick={(e) => {
@@ -163,9 +169,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             Add to Cart
           </Button>
         </div>
-        <p className="text-white dark:text-black">
-          {product.title}
-        </p>
+       
       </CardBody>
     </Card>
   );
