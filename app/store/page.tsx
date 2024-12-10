@@ -91,6 +91,12 @@ function StorePage() {
     }
   };
 
+  const sanitizeHTML = (html: string) => {
+    // Remove HTML tags and decode HTML entities
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+  };
+
   useEffect(() => {
     axios
       .get(`/api/getproduct`)
@@ -146,6 +152,13 @@ function StorePage() {
     setFilteredProducts(result);
   }, [products, sortOption]);
 
+
+   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, action: () => void) => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        action();
+      }
+    };
+
   return (
     <>
       <div>
@@ -190,65 +203,152 @@ function StorePage() {
             </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
-                <Card  
-                  shadow="none"
-                  key={product.id} 
-                  className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
-                >    
-                  <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
-                    {product.name}
-                  </CardHeader>
-                  <CardBody>
-                    <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
-                      {product.images[0]?.src && (
-                        <>
+                // <Card  
+                //   shadow="none"
+                //   key={product.id} 
+                //   className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
+                // >    
+                //   <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
+                //     {product.name}
+                //   </CardHeader>
+                //   <CardBody>
+                //     <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+                //       {product.images[0]?.src && (
+                //         <>
+                //           <Image
+                //             src={product.images[0].src}
+                //             alt={product.name}
+                //             fill
+                //             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+                //           />
+                //           {/* If you want a hover image, you'd need to add a second image */}
+                //           {/* This is just a placeholder - you may want to handle this differently */}
+                //           {product.images[1]?.src && (
+                //             <Image
+                //               src={product.images[1].src}
+                //               alt={`${product.name} hover`}
+                //               fill
+                //               className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                //             />
+                //           )}
+                //         </>
+                //       )}
+                //     </div>
+                //    <p className="text-sm text-white dark:text-black mt-2">
+                //       {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
+                //     </p>
+                //     <div className="mt-2 flex justify-between items-center">
+                //       <span className="text-white dark:text-black font-bold">
+                //         ${product.price}
+                //       </span>
+                //     </div>
+                //     <br />
+                //     {product.type === "simple" && (
+                //     <Button 
+                //         size="md"
+                //         className="w-full bg-white text-black dark:text-white dark:bg-black"
+                //         onClick={() => addToCart(product.id, 1)}
+                //       >
+                //       Add to cart
+                //     </Button>
+                //     )}
+                //     <br />
+                //     <Button 
+                //       size="md"
+                //       className="w-full bg-black text-white dark:bg-white dark:text-black"
+                //       onClick={() => ViewProduct(product.id)}
+                //     >
+                //       View Product
+                //     </Button>
+                //   </CardBody>
+                // </Card>
+
+
+
+
+
+                 <Card 
+                      role="button" 
+                      tabIndex={0} 
+                      aria-label={`View product: ${product.name}`}
+                      onClick={() => ViewProduct(product.id)}
+                      onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
+                      shadow="none" 
+                      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
+                    > 
+                      <CardBody
+                       onClick={() => ViewProduct(product.id)}
+                      >
+                        <div
+                          role="img" 
+                          aria-label={`Image of ${product.name}`}
+                          className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
+                        >
                           <Image
                             src={product.images[0].src}
                             alt={product.name}
                             fill
                             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
                           />
-                          {/* If you want a hover image, you'd need to add a second image */}
-                          {/* This is just a placeholder - you may want to handle this differently */}
-                          {product.images[1]?.src && (
-                            <Image
-                              src={product.images[1].src}
-                              alt={`${product.name} hover`}
-                              fill
-                              className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                            />
-                          )}
-                        </>
-                      )}
-                    </div>
-                   <p className="text-sm text-white dark:text-black mt-2">
-                      {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
-                    </p>
-                    <div className="mt-2 flex justify-between items-center">
-                      <span className="text-white dark:text-black font-bold">
-                        ${product.price}
-                      </span>
-                    </div>
-                    <br />
-                    {product.type === "simple" && (
-                    <Button 
-                        size="md"
-                        className="w-full bg-white text-black dark:text-white dark:bg-black"
-                        onClick={() => addToCart(product.id, 1)}
-                      >
-                      Add to cart
-                    </Button>
-                    )}
-                    <br />
-                    <Button 
-                      size="md"
-                      className="w-full bg-black text-white dark:bg-white dark:text-black"
-                      onClick={() => ViewProduct(product.id)}
-                    >
-                      View Product
-                    </Button>
-                  </CardBody>
-                </Card>
+                          <Image
+                            src={product.images[1].src}
+                            alt={`${product.name} hover`}
+                            fill
+                            className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                          />
+                        </div>
+                
+                      
+                        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+                          {product.name}
+                        </p>
+                
+                        <div className="flex justify-between items-center">
+                          {product.sale_price && product.regular_price ? (
+                            <div className="flex items-center">
+                              <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
+                                ${product.regular_price}
+                              </span>
+                              <span className="text-white dark:text-black font-bold text-1xl">
+                                ${product.sale_price}
+                              </span>
+                            </div>
+                          ) : product.regular_price ? (
+                            <span className="text-white dark:text-black font-bold">
+                              ${product.regular_price}
+                            </span>
+                          ) : product.type === "variable" ? (
+                            <span className="text-white dark:text-black font-bold">
+                              {product.price}
+                            </span>
+                          ) : null}
+                
+                       
+                          
+                          <Button 
+                            onClick={(e) => {
+                              e.stopPropagation(); // Prevent triggering card's onClick
+                              addToCart(product.id);
+                            }}
+                            aria-label={`Add ${product.name} to cart`}
+                            className="ml-2"
+                          >
+                            Add to Cart
+                          </Button>
+                        </div>
+                
+                        <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
+                          {sanitizeHTML(product.short_description)}
+                        </p>
+                       
+                      </CardBody>
+                 </Card>
+
+
+
+
+
+
               ))}
               </div>
             </div>
