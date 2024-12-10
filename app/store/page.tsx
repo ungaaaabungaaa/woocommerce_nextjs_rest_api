@@ -59,7 +59,7 @@ function StorePage() {
       });
       return;
     }
-    const endpoint = `http://13.235.113.210/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+    const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
     try {
       const response = await axios.post(
         endpoint,

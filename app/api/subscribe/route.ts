@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(request: NextRequest) {
     const { email } = await request.json();
+    
+
 
     try {
-        const response = await fetch('http://13.235.113.210/wp-json/newsletter/v1/subscribe', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/newsletter/v1/subscribe`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
