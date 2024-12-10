@@ -153,12 +153,6 @@ function StorePage() {
   }, [products, sortOption]);
 
 
-   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, action: () => void) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        action();
-      }
-    };
-
   return (
     <>
       <div>
@@ -203,76 +197,13 @@ function StorePage() {
             </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
               {filteredProducts.map((product) => (
-                // <Card  
-                //   shadow="none"
-                //   key={product.id} 
-                //   className="group relative bg-card border-muted min-w-[280px] p-4 rounded-lg flex flex-col gap-4"
-                // >    
-                //   <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
-                //     {product.name}
-                //   </CardHeader>
-                //   <CardBody>
-                //     <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
-                //       {product.images[0]?.src && (
-                //         <>
-                //           <Image
-                //             src={product.images[0].src}
-                //             alt={product.name}
-                //             fill
-                //             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-                //           />
-                //           {/* If you want a hover image, you'd need to add a second image */}
-                //           {/* This is just a placeholder - you may want to handle this differently */}
-                //           {product.images[1]?.src && (
-                //             <Image
-                //               src={product.images[1].src}
-                //               alt={`${product.name} hover`}
-                //               fill
-                //               className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                //             />
-                //           )}
-                //         </>
-                //       )}
-                //     </div>
-                //    <p className="text-sm text-white dark:text-black mt-2">
-                //       {product.short_description.replace(/<\/?[^>]+(>|$)/g, "")}
-                //     </p>
-                //     <div className="mt-2 flex justify-between items-center">
-                //       <span className="text-white dark:text-black font-bold">
-                //         ${product.price}
-                //       </span>
-                //     </div>
-                //     <br />
-                //     {product.type === "simple" && (
-                //     <Button 
-                //         size="md"
-                //         className="w-full bg-white text-black dark:text-white dark:bg-black"
-                //         onClick={() => addToCart(product.id, 1)}
-                //       >
-                //       Add to cart
-                //     </Button>
-                //     )}
-                //     <br />
-                //     <Button 
-                //       size="md"
-                //       className="w-full bg-black text-white dark:bg-white dark:text-black"
-                //       onClick={() => ViewProduct(product.id)}
-                //     >
-                //       View Product
-                //     </Button>
-                //   </CardBody>
-                // </Card>
-
-
-
-
-
+               
                  <Card 
                       role="button" 
                       tabIndex={0} 
                       aria-label={`View product: ${product.name}`}
                       onClick={() => ViewProduct(product.id)}
-                      onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
+                     
                       shadow="none" 
                       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
                     > 

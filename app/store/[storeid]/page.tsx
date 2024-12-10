@@ -162,11 +162,7 @@ function StoreId({ params }: { params: Params }) {
     return doc.body.textContent || "";
   };
 
-   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>, action: () => void) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-          action();
-        }
-      };
+ 
   
 
   return (
@@ -218,7 +214,7 @@ function StoreId({ params }: { params: Params }) {
                                       tabIndex={0} 
                                       aria-label={`View product: ${product.name}`}
                                       onClick={() => ViewProduct(product.id)}
-                                      onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
+                
                                       shadow="none" 
                                       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
                                     > 
