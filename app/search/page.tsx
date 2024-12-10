@@ -6,12 +6,47 @@ import axios from 'axios';
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { RecommendedProducts } from '../component/RecommendedProducts';
+
+// Static data for recommended products
+const staticRecommendedProducts = [
+  {
+    id: '1',
+    name: 'Wireless Earbuds',
+    image: 'https://images.unsplash.com/photo-1483119871437-a04216682227?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmV8ZW58MHx8MHx8fDA%3D',
+    price: 79.99,
+    url: '#'
+  },
+  {
+    id: '2',
+    name: 'Smart Watch',
+    image: 'https://images.unsplash.com/photo-1517420879524-86d64ac2f339?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c21hcnQlMjB3YXRjaHxlbnwwfHwwfHx8MA%3D%3D',
+    price: 199.99,
+    url: '#'
+  },
+  {
+    id: '3',
+    name: 'Portable Charger',
+    image: 'https://images.unsplash.com/photo-1619489646924-b4fce76b1db5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UG9ydGFibGUlMjBDaGFyZ2VyfGVufDB8fDB8fHww',
+    price: 49.99,
+    url: '#'
+  },
+  {
+    id: '4',
+    name: 'Bluetooth Speaker',
+    image: 'https://images.unsplash.com/photo-1518671678551-911467efe539?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Qmx1ZXRvb3RoJTIwU3BlYWtlcnxlbnwwfHwwfHx8MA%3D%3D',
+    price: 89.99,
+    url: '#'
+  }
+];
+
 
 export default function ProductSearch() {
   const [searchTerm, setSearchTerm] = useState('');
   const router = useRouter();
   const [selectedChips, setSelectedChips] = useState<string[]>([]);
   const [categories, setCategories] = useState<string[]>([]);
+  const [recommendedProducts, setRecommendedProducts] = useState(staticRecommendedProducts);
 
   // Fetch categories from the API
   useEffect(() => {
@@ -37,9 +72,7 @@ export default function ProductSearch() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Search Term:', searchTerm);
-    // Use template literals to construct the path
     router.push(`/store/${searchTerm}`);
-    // Trigger API or other logic for search term
   };
 
   // Handle chip selection
@@ -52,7 +85,7 @@ export default function ProductSearch() {
   };
 
   return (
-    <div className="h-screen flex items-center justify-center bg-black dark:bg-white">
+    <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-black dark:bg-white">
       <ToastContainer />
       <div className="w-full max-w-2xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg">
         <div className="space-y-4 w-full">
@@ -89,11 +122,15 @@ export default function ProductSearch() {
                 </button>
               ))
             ) : (
-              <p className="text-white">Loading categories...</p>
+              <p className="text-white dark:text-black">Loading categories...</p>
             )}
           </div>
+          <br></br>
+          {/* Recommended Products */}
+          <RecommendedProducts products={recommendedProducts} />
         </div>
       </div>
     </div>
   );
 }
+
