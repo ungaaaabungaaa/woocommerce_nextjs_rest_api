@@ -201,6 +201,7 @@ function StorePage() {
                  <Card 
                       role="button" 
                       tabIndex={0} 
+                      key={product.id} 
                       aria-label={`View product: ${product.name}`}
                       onClick={() => ViewProduct(product.id)}
                      
