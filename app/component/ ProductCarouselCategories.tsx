@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Image from "next/image"
 import { Button } from "@nextui-org/button"
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
@@ -9,6 +9,7 @@ import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 
 interface Product {
   id: string;
@@ -183,6 +184,7 @@ interface ProductCarouselCategoriesProps {
 const ProductCarouselCategories = ({ category }: ProductCarouselCategoriesProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   
   // HTML sanitization function
   const sanitizeHTML = (html: string) => {
@@ -219,6 +221,16 @@ const ProductCarouselCategories = ({ category }: ProductCarouselCategoriesProps)
     }
   };
 
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      carouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, [category]);
@@ -234,18 +246,31 @@ const ProductCarouselCategories = ({ category }: ProductCarouselCategoriesProps)
   return (
     <div className="w-full h-full py-4">
       <ToastContainer />
-      <h2 
-        className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans"
-        aria-label={`Products in ${category} category`}
-      >
-        {category}
-      </h2>
-      <div 
-        className="w-full overflow-hidden bg-black dark:bg-white p-4"
-        role="region" 
-        aria-label={`Scrollable list of ${category} products`}
-      >
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
+        <h2 
+          className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans"
+          aria-label={`Products in ${category} category`}
+        >
+          {category}
+        </h2>
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={() => scrollCarousel('left')} 
+            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+          >
+            <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
+          </button>
+          <button 
+            onClick={() => scrollCarousel('right')} 
+            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+          >
+            <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+          </button>
+        </div>
+      </div>
+      <div className="w-full overflow-hidden bg-black dark:bg-white p-4">
         <div 
+          ref={carouselRef}
           className="flex overflow-x-auto pb-4 scrollbar-hide bg-black dark:bg-white"
           role="list"
         >
