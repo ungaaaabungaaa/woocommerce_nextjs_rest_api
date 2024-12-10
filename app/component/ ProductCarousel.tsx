@@ -97,9 +97,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
       onClick={() => ViewProduct(product.id)}
       onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
       shadow="none" 
-      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer focus:outline-2 focus:outline-blue-500"
+      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     > 
-      <CardBody>
+      <CardBody
+       onClick={() => ViewProduct(product.id)}
+      >
         <div 
           role="img" 
           aria-label={`Image of ${product.title}`}
