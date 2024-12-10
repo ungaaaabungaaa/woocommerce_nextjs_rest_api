@@ -22,6 +22,8 @@ interface Product {
   price: string;
   slug: string;
   date_created: string;
+  sale_price:string;
+  regular_price:string;
   type: string; // e.g., "simple" or other types
   categories: { id: number; name: string; slug: string }[]; // Added categories
 }
@@ -86,54 +88,128 @@ const ProductCard = ({ product }: ProductCardProps) => {
   };
 
   return (
-    <Card shadow="none" className="group relative border-muted min-w-[280px] p-4 rounded-lg flex flex-col  bg-black dark:bg-white">    
-      <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
-        {product.title}
-      </CardHeader>
-      <CardBody>
-        <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
-          <Image
-            src={product.image}
-            alt={product.title}
-            fill
-            className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-          />
-          <Image
-            src={product.hoverimage}
-            alt={`${product.title} hover`}
-            fill
-            className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-          />
-        </div>
-        <p className="text-sm text-white dark:text-black mt-2">
-          {product.description}
-        </p>
-        <div className="mt-2 flex justify-between items-center">
-          <span className="text-white dark:text-black font-bold">{product.price}</span>
-          {product.isNew && (
-            <span className=" text-white dark:text-black text-xs px-2 py-1 rounded-full">New</span>
-          )}
-        </div>
-        <br />
-        {product.type === "simple" && (
-          <Button 
-            size="md"
-            className="w-full bg-white text-black dark:bg-black dark:text-white"
-            onClick={() => addToCart(product.id, 1)}
-          >
-            Add to cart
-          </Button>
-        )}
-        <br />
-        <Button 
-          size="md"
-          className="w-full bg-black text-white dark:bg-white dark:text-black"
-          onClick={() => ViewProduct(product.id)}
-        >
-          View Product
-        </Button>
-      </CardBody>
-    </Card>
+    // <Card shadow="none" className="group relative border-muted min-w-[280px] p-4 rounded-lg flex flex-col  bg-black dark:bg-white">    
+    //   <CardHeader className="line-clamp-1 text-2xl text-white dark:text-black">
+    //     {product.title}
+    //   </CardHeader>
+    //   <CardBody>
+    //     <div className="aspect-square relative overflow-hidden rounded-lg bg-muted group">
+    //       <Image
+    //         src={product.image}
+    //         alt={product.title}
+    //         fill
+    //         className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+    //       />
+    //       <Image
+    //         src={product.hoverimage}
+    //         alt={`${product.title} hover`}
+    //         fill
+    //         className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+    //       />
+    //     </div>
+    //     <p className="text-sm text-white dark:text-black mt-2">
+    //       {product.description}
+    //     </p>
+    //     <div className="mt-2 flex justify-between items-center">
+    //       <span className="text-white dark:text-black font-bold">{product.price}</span>
+    //       {product.isNew && (
+    //         <span className=" text-white dark:text-black text-xs px-2 py-1 rounded-full">New</span>
+    //       )}
+    //     </div>
+    //     <br />
+    //     {product.type === "simple" && (
+    //       <Button 
+    //         size="md"
+    //         className="w-full bg-white text-black dark:bg-black dark:text-white"
+    //         onClick={() => addToCart(product.id, 1)}
+    //       >
+    //         Add to cart
+    //       </Button>
+    //     )}
+    //     <br />
+    //     <Button 
+    //       size="md"
+    //       className="w-full bg-black text-white dark:bg-white dark:text-black"
+    //       onClick={() => ViewProduct(product.id)}
+    //     >
+    //       View Product
+    //     </Button>
+    //   </CardBody>
+    // </Card>
+
+    <Card onClick={() => ViewProduct(product.id)} shadow="none" className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"> 
+          <CardBody onClick={() => ViewProduct(product.id)}>
+            <div onClick={() => ViewProduct(product.id)} className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+              <Image
+                onClick={() => ViewProduct(product.id)}
+                src={product.image}
+                alt={product.title}
+                fill
+                className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+              />
+              <Image
+                onClick={() => ViewProduct(product.id)}
+                src={product.hoverimage}
+                alt={`${product.title} hover`}
+                fill
+                className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              />
+    
+               <div className="absolute right-2 top-2 z-10">
+               {product.isNew && (
+                <span onClick={() => ViewProduct(product.id)} className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
+                  New
+                </span>
+               )}
+               </div>
+            </div>
+           
+        
+    
+            <div className="flex justify-between items-center">
+              {product.sale_price && product.regular_price ? (
+                <div className="flex items-center">
+                  <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
+                    ${product.regular_price}
+                  </span>
+                  <span className="text-white dark:text-black font-bold text-1xl">
+                    ${product.sale_price}
+                  </span>
+                </div>
+              ) : product.regular_price ? (
+                <span className="text-white dark:text-black font-bold">
+                  ${product.regular_price}
+                </span>
+              ) : product.type === "variable" ? (
+                <span className="text-white dark:text-black font-bold">
+                  {product.price}
+                </span>
+              ) : null}
+            </div>
+            <p className="text-white dark:text-black">
+              {product.title}
+            </p>
+            {/* {product.type === "simple" && (
+              <Button 
+                size="md"
+                className="w-full bg-white text-black dark:bg-black dark:text-white"
+                onClick={() => addToCart(product.id, 1)}
+              >
+                Add to cart
+              </Button>
+            )}
+            <br></br>
+            <Button 
+              size="md"
+              className="w-full bg-black text-white dark:bg-white dark:text-black"
+              onClick={() => ViewProduct(product.id)}
+            >
+              View Product
+            </Button> */}
+          </CardBody>
+        </Card>
+
+
   );
 };
 
@@ -164,6 +240,8 @@ const ProductCarouselCategories = ({ category }: ProductCarouselCategoriesProps)
           image: product.images?.[0]?.src || 'https://via.placeholder.com/800',
           hoverimage: product.images?.[1]?.src || product.images?.[0]?.src || 'https://via.placeholder.com/800',
           isNew: product.featured,
+          regular_price: product.regular_price,
+          sale_price: product.sale_price,
           price: `$${product.price}`,
           slug: product.slug,
           date_created: product.date_created,
