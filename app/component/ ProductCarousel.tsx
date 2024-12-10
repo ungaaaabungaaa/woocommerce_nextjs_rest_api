@@ -1,7 +1,7 @@
-'use client'
-import React, { useEffect, useState } from 'react';
-import Image from "next/image"
-import { Button } from "@nextui-org/button"
+'use client';
+import React, { useEffect, useState, useRef } from 'react';
+import Image from "next/image";
+import { Button } from "@nextui-org/button";
 import { Card, CardBody } from "@nextui-org/card";
 import axios from 'axios';
 import { useCartKey } from '../../hooks/useCartKey';
@@ -9,6 +9,7 @@ import { useCart } from '../../context/cartcontext';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 
 interface Product {
   id: string;
@@ -18,8 +19,8 @@ interface Product {
   hoverimage: string;
   isNew: boolean;
   price: string;
-  sale_price:string;
-  regular_price:string;
+  sale_price: string;
+  regular_price: string;
   slug: string;
   date_created: string;
   type: string; 
@@ -100,9 +101,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       shadow="none" 
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     > 
-      <CardBody
-       onClick={() => ViewProduct(product.id)}
-      >
+      <CardBody>
         <div 
           role="img" 
           aria-label={`Image of ${product.title}`}
@@ -157,8 +156,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </span>
           ) : null}
 
-       
-          
           <Button 
             onClick={(e) => {
               e.stopPropagation(); // Prevent triggering card's onClick
@@ -183,10 +180,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
 const ProductCarousel = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [error, setError] = useState<string | null>(null);
-  
-  // HTML sanitization function
+  const carouselRef = useRef<HTMLDivElement>(null);
+
   const sanitizeHTML = (html: string) => {
-    // Remove HTML tags and decode HTML entities
     const doc = new DOMParser().parseFromString(html, 'text/html');
     return doc.body.textContent || "";
   };
@@ -195,7 +191,6 @@ const ProductCarousel = () => {
     try {
       const response = await axios.get(`${process.env.NEXT_PUBLIC_SITE_URL}/api/getproduct`);
       const fetchedProducts = response.data.products
-        // Filter to only include featured products
         .filter((product: any) => product.featured)
         .map((product: any) => ({
           id: product.id,
@@ -209,9 +204,8 @@ const ProductCarousel = () => {
           sale_price: product.sale_price,
           slug: product.slug,
           date_created: product.date_created,
-          type: product.type || "simple", // Default to "simple" if not provided
+          type: product.type || "simple",
         }))
-        // Sort by date_created in descending order (newest first)
         .sort((a: Product, b: Product) => {
           return new Date(b.date_created).getTime() - new Date(a.date_created).getTime();
         });
@@ -222,7 +216,17 @@ const ProductCarousel = () => {
       console.error('Error fetching products:', error);
     }
   };
-  
+
+  const scrollCarousel = (direction: 'left' | 'right') => {
+    if (carouselRef.current) {
+      const scrollAmount = direction === 'left' ? -300 : 300;
+      carouselRef.current.scrollBy({
+        left: scrollAmount,
+        behavior: 'smooth',
+      });
+    }
+  };
+
   useEffect(() => {
     fetchProducts();
   }, []);
@@ -236,20 +240,40 @@ const ProductCarousel = () => {
   }
 
   return (
+
     <div className="w-full h-full py-4">
       <ToastContainer />
-      <h2 className="max-w-7xl pl-4 mx-auto text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
-        Newest Products 
-      </h2>
-      <br></br>
-      <div className="w-full overflow-hidden gap-0.5  p-4">
-        <div className="flex overflow-x-auto scrollbar-hide">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
+        <h2 className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
+          Newest Products
+        </h2>
+        <div className="flex items-center space-x-2">
+          <button 
+            onClick={() => scrollCarousel('left')} 
+            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+          >
+            <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
+          </button>
+          <button 
+            onClick={() => scrollCarousel('right')} 
+            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+          >
+            <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+          </button>
+        </div>
+      </div>
+      <div className="w-full relative">
+        <div 
+          ref={carouselRef} 
+          className="flex overflow-x-auto scrollbar-hide gap-0.5 p-4"
+        >
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
-    </div>    
+    </div>
+    
   );
 };
 
