@@ -100,13 +100,6 @@ const Footer = () => {
       <div className="hidden md:block bg-black dark:bg-white">
         <ScrollBasedVelocityDemo />
       </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="hidden md:block">
-          <AnimatedTestimonialsDemo />
-        </div>
-      </div>
-
       <footer className="bg-black text-white dark:bg-white dark:text-black">
         <div className="container mx-auto px-4 py-8">
           <div className="hidden md:flex md:flex-wrap md:-mx-4 mb-8">
