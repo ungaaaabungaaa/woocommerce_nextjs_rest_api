@@ -82,6 +82,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
           {safeProducts.map((product) => (
             <Card 
               key={product.id}
+              shadow="none"
               className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col"
             > 
               <CardBody>
@@ -146,7 +147,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                   </Button>
                 </div>
           
-                <p className="max-w-[26rem] text-left text-base/6 text-neutral-200 mt-2">
+                <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">
                   {product.description}
                 </p>
               </CardBody>

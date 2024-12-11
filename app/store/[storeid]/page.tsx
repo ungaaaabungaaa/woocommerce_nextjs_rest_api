@@ -265,7 +265,7 @@ function StoreId({ params }: { params: Params }) {
                       </Button>
                     </div>
             
-                    <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
+                    <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black">
                       {sanitizeHTML(product.short_description)}
                     </p>
                    
