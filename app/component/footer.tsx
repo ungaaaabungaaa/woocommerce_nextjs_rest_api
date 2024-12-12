@@ -9,7 +9,6 @@ import PayPalLogo from "../../public/paypal.png";
 import NextImage from "next/image";
 import PromoBar from './promo-bar'
 import { ScrollBasedVelocityDemo } from './ScrollBasedVelocityDemo'
-import { AnimatedTestimonialsDemo } from './AnimatedTestimonialsDemo'
 import { useTheme } from "next-themes";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
 
