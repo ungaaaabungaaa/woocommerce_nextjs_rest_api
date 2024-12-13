@@ -167,7 +167,6 @@ useEffect(() => {
     );
   }
 
-  // Apply Size Filter (this will depend on how sizes are stored in your products)
   // You might need to adjust this based on your exact product data structure
   if (selectedSize) {
     // This is a placeholder. You'll need to adapt this to match how sizes are represented in your product data
