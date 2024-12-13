@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 interface CarouselProps {
   items: JSX.Element[];
   initialScroll?: number;
+  title?: string;
 }
 
 type Card = {
@@ -30,12 +31,11 @@ export const CarouselContext = createContext<{
   currentIndex: 0,
 });
 
-export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
+export const Carousel = ({ items, initialScroll = 0, title = "Featured" }: CarouselProps) => {
   const carouselRef = React.useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = React.useState(false);
   const [canScrollRight, setCanScrollRight] = React.useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-
 
   useEffect(() => {
     if (carouselRef.current) {
@@ -85,68 +85,70 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     <CarouselContext.Provider
       value={{ onCardClose: handleCardClose, currentIndex }}
     >
-      <div className="relative w-full">
-        <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-20 scroll-smooth [scrollbar-width:none]"
-          ref={carouselRef}
-          onScroll={checkScrollability}
-        >
-          <div
-            className={cn(
-              "absolute right-0 z-[1000] h-auto w-[5%] overflow-hidden bg-gradient-to-l"
-            )}
-          ></div>
-
-          <div
-            className={cn(
-              "flex flex-row justify-start gap-4 pl-4",
-              "max-w-7xl mx-auto"
-            )}
-          >
-            {items.map((item, index) => (
-              <motion.div
-                initial={{
-                  opacity: 0,
-                  y: 20,
-                }}
-                animate={{
-                  opacity: 1,
-                  y: 0,
-                  transition: {
-                    duration: 0.5,
-                    delay: 0.2 * index,
-                    ease: "easeOut",
-                  },
-                }}
-                key={"card" + index}
-                className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
-              >
-                {item}
-              </motion.div>
-            ))}
+      <div className="w-full h-full py-4">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
+          <h2 className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans mr-auto">
+            {title}
+          </h2>
+          <div className="flex items-center space-x-2 shrink-0">
+            <button 
+              onClick={scrollLeft} 
+              disabled={!canScrollLeft}
+              className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+            >
+              <IconArrowNarrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
+            </button>
+            <button 
+              onClick={scrollRight} 
+              disabled={!canScrollRight}
+              className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+            >
+              <IconArrowNarrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+            </button>
           </div>
         </div>
-        <div className="flex justify-end gap-2 mr-10">
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollLeft}
-            disabled={!canScrollLeft}
+        <div className="relative w-full">
+          <div
+            ref={carouselRef}
+            className="flex overflow-x-auto scrollbar-hide gap-0.5 p-4"
+            onScroll={checkScrollability}
           >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-500" />
-          </button>
-          <button
-            className="relative z-40 h-10 w-10 rounded-full bg-gray-100 flex items-center justify-center disabled:opacity-50"
-            onClick={scrollRight}
-            disabled={!canScrollRight}
-          >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-500" />
-          </button>
+            <div
+              className={cn(
+                "flex flex-row justify-start gap-4 pl-4",
+                "max-w-7xl mx-auto"
+              )}
+            >
+              {items.map((item, index) => (
+                <motion.div
+                  initial={{
+                    opacity: 0,
+                    y: 20,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.5,
+                      delay: 0.2 * index,
+                      ease: "easeOut",
+                    },
+                  }}
+                  key={"card" + index}
+                  className="last:pr-[5%] md:last:pr-[33%] rounded-3xl"
+                >
+                  {item}
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </CarouselContext.Provider>
   );
 };
 
+// The rest of the code remains the same (Card and BlurImage components)
 export const Card = ({
   card,
   index,
@@ -159,9 +161,8 @@ export const Card = ({
   const { onCardClose } = useContext(CarouselContext);
   const router = useRouter();
 
-
   const handleCardClick = () => {
-    console.log('Card category:', card.category); // Added this line to log the category
+    console.log('Card category:', card.category);
     router.push(`/store/${card.category}`);
     onCardClose(index);
   };

@@ -210,15 +210,11 @@ return (
       <br></br>
       <ToastContainer />
       <FullScreenStoreBanner 
-                title={"Welcome"} 
-                subtitle="Studio Universal Store" 
-                backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
+        title={"Welcome"} 
+        subtitle="Studio Universal Store" 
+        backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
       />
-
-    
       <div className="container mx-auto px-4 py-8">
-
-
       <div className="w-full flex align-middle justify-end">
       <div className="w-full lg:w-1/2 flex flex-col align-middle justify-end sm:flex-row gap-4 mb-4">
           <div className="w-full sm:w-1/2">
