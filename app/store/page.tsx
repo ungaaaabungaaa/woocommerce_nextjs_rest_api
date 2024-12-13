@@ -32,6 +32,7 @@ interface Product {
   attributes?: { name: string, options: string[] }[];
 }
 
+
 function StorePage() {
 
   const [products, setProducts] = useState<Product[]>([]);
@@ -167,9 +168,8 @@ useEffect(() => {
     );
   }
 
-  // You might need to adjust this based on your exact product data structure
+  // Apply Size Filter
   if (selectedSize) {
-    // This is a placeholder. You'll need to adapt this to match how sizes are represented in your product data
     result = result.filter(product => 
       product.attributes?.some(attr => 
         attr.name.toLowerCase() === 'size' && 
@@ -214,89 +214,65 @@ return (
                 subtitle="Studio Universal Store" 
                 backgroundImageUrl="https://images.unsplash.com/photo-1558898452-e5c989f41b27?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8c2hvcGluZ3xlbnwwfHwwfHx8MA%3D%3D" 
       />
+
+    
       <div className="container mx-auto px-4 py-8">
-        <div className="w-full flex justify-between">
-          <div className="w-full md:w-1/4 px-4 mb-4 flex align-middle justify-end">
+
+
+      <div className="w-full flex align-middle justify-end">
+      <div className="w-full lg:w-1/2 flex flex-col align-middle justify-end sm:flex-row gap-4 mb-4">
+          <div className="w-full sm:w-1/2">
+            <Select
+              label="Filters"
+              className= "w-full bg-white text-black dark:bg-white rounded-xl"
+              selectionMode="multiple"
+              onSelectionChange={(keys) => {
+                const selectedValues = Array.from(keys) as string[];
+                setSelectedGender(selectedValues.find(v => ['mens', 'womens', 'kids'].includes(v)) || null);
+                setSelectedSize(selectedValues.find(v => ['xs', 's', 'm', 'l', 'xl', '2xl', '3xl', '4xl'].includes(v)) || null);
+                setSelectedColor(selectedValues.find(v => ['red', 'green', 'blue', 'yellow', 'black', 'white', 'pink', 'gray'].includes(v)) || null);
+              }}
+            >
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="mens">Men</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="womens">Women</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="kids">Kids</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="xs">XS</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="s">S</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="m">M</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="l">L</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="xl">XL</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="2xl">2XL</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="3xl">3XL</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="4xl">4XL</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="red">Red</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="green">Green</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="blue">Blue</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="yellow">Yellow</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="black">Black</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="white">White</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="pink">Pink</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="gray">Gray</SelectItem>
+            </Select>
+          </div>
+          <div className="w-full sm:w-1/2">
             <Select
               label="Sort by"
+              className= "w-full bg-white text-black dark:bg-white rounded-xl"
               selectedKeys={[sortOption]}
-              className="bg-white text-black dark:bg-white rounded-xl"
               onSelectionChange={(keys) => {
                 const selectedValue = Array.from(keys)[0] as string;
                 setSortOption(selectedValue);
               }}
             >
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="newest">Newest</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="featured">Featured</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="low-high">Price: Low to High</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="high-low">Price: High to Low</SelectItem>
-            </Select>
-          </div>
-
-          {/* Gender Select */}
-          <div className="w-full md:w-1/4 px-4 mb-4">
-            <Select
-              className="bg-white text-black dark:bg-white rounded-xl"
-              label="Gender"
-              selectedKeys={selectedGender ? [selectedGender] : []}
-              onSelectionChange={(keys) => {
-                const selectedValue = Array.from(keys)[0] as string;
-                setSelectedGender(selectedValue);
-              }}
-            >
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="mens">Men</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="womens">Women</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="kids">Kids</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="">Clear Filter</SelectItem>
-            </Select>
-          </div>
-
-          {/* Sizes Select */}
-          <div className="w-full md:w-1/4 px-4 mb-4">
-            <Select
-              className="bg-white text-black dark:bg-white rounded-xl"
-              label="Sizes"
-              selectedKeys={selectedSize ? [selectedSize] : []}
-              onSelectionChange={(keys) => {
-                const selectedValue = Array.from(keys)[0] as string;
-                setSelectedSize(selectedValue);
-              }}
-            >
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="xs">XS</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="s">S</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="m">M</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="l">L</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="xl">XL</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="2xl">2XL</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="3xl">3XL</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="4xl">4XL</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="">Clear Filter</SelectItem>
-            </Select>
-          </div>
-
-          {/* Color Select */}
-          <div className="w-full md:w-1/4 px-4 mb-4">
-            <Select
-              label="Color"
-              className="bg-white text-black dark:bg-white rounded-xl"
-              selectedKeys={selectedColor ? [selectedColor] : []}
-              onSelectionChange={(keys) => {
-                const selectedValue = Array.from(keys)[0] as string;
-                setSelectedColor(selectedValue);
-              }}
-            >
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="red">Red</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="green">Green</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="blue">Blue</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="yellow">Yellow</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="black">Black</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="white">White</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="pink">Pink</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="gray">Gray</SelectItem>
-              <SelectItem className="bg-white text-black dark:bg-black dark:text-white" key="">Clear Filter</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="newest">Newest</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="featured">Featured</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="low-high">Price: Low to High</SelectItem>
+              <SelectItem className="bg-white text-black dark:bg-black dark:text-white"  key="high-low">Price: High to Low</SelectItem>
             </Select>
           </div>
         </div>
+      </div>
+
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
@@ -382,3 +358,5 @@ return (
 }
 
 export default StorePage;
+
+
