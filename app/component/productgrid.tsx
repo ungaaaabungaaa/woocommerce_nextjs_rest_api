@@ -83,7 +83,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
             <Card 
               key={product.id}
               shadow="none"
-              className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col"
+              className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
             > 
               <CardBody>
                 <Link href={`/product/${product.id}`} passHref>

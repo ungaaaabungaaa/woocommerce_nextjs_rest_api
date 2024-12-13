@@ -98,8 +98,8 @@ const ProductCard = ({ product }: ProductCardProps) => {
       aria-label={`View product: ${product.title}`}
       onClick={() => ViewProduct(product.id)}
       onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
-      shadow="none" 
-      className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
+       shadow="none"
+       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     > 
       <CardBody>
         <div 
@@ -132,14 +132,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
 
-        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
           {product.title}
         </p>
 
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center mt-2">
           {product.sale_price && product.regular_price ? (
             <div className="flex items-center">
-              <span className="text-gray-500 dark:text-gray-400 text-1xl line-through">
+              <span className="text-gray-500 dark:text-gray-400 text-1xl line-through mr-2">
                 ${product.regular_price}
               </span>
               <span className="text-white dark:text-black font-bold text-1xl">
@@ -168,7 +168,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Button>
         </div>
 
-        <p className="max-w-[26rem] text-left text-base/6 text-neutral-200">
+        <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">
           {product.description}
         </p>
        
