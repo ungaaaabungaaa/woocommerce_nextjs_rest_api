@@ -76,7 +76,7 @@ export default function Nav_bar() {
 
   return (
     <>
-      <div className="bg-white text-black dark:bg-black w-full text-small dark:text-white p-3 flex items-center justify-center">
+      <div className="bg-white text-black dark:bg-black w-full text-small dark:text-white p-4 flex items-center justify-center">
         <SiteHeader></SiteHeader>
       </div>
       <Navbar maxWidth="xl" className="bg-black text-white dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
