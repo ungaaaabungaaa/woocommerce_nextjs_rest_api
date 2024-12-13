@@ -392,7 +392,6 @@ function Checkout() {
                 name="city"
                 type="text"
                 isRequired
-                className='bg-white text-black'
                 placeholder="Enter Your City"
                 value={formData.city}
                 onChange={handleChange}
