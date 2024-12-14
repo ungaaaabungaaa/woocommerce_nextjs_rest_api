@@ -11,8 +11,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   
-  
-  // fix the http to https 
   // add in escape and search icon escape 
   // replace to the previous header site header with same padding 
   // footer fix 
@@ -28,8 +26,6 @@ export default function Home() {
       <ImagesSliderDemo></ImagesSliderDemo>
       <br></br>
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>
-      <br></br>
-      <PromoCard></PromoCard>
       <br></br>
       <FeaturedProducts></FeaturedProducts>
       <br></br>
