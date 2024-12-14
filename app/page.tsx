@@ -11,13 +11,15 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   
-  // add in escape and search icon escape 
-  // replace to the previous header site header with same padding 
-  // footer fix 
   // search product link 
   // add in links in the dropdown 
-  // store page improvement 
   // fix the flickering icon for the dark mode 
+  // replace to the previous header site header with same padding 
+  // footer fix 
+  // Fix cart context on first load for first users 
+  // store page improvement 
+  // add in loading skeltons for better user experience 
+
   // login & register 
   // try adding wishlist as well 
 

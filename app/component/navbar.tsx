@@ -24,6 +24,7 @@ import { FootWearMegaMenu } from "./footwear-mega-menu";
 import { KidsMegaMenu } from "./kids-mega-menu";
 import { useTheme } from "next-themes";
 import { SiteHeader } from "./site-header";
+import { usePathname } from "next/navigation";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function Nav_bar() {
   const { cartCount } = useCart();
   const [visibleMegaMenu, setVisibleMegaMenu] = useState("");
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -38,7 +40,11 @@ export default function Nav_bar() {
   }, []);
 
   const handleSearchClick = () => {
-    router.push("/search");
+    if (pathname === "/search") {
+      router.back(); 
+    } else {
+      router.push("/search");
+    }
   };
 
   const handleTrackOrderClick = () => {
