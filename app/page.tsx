@@ -11,8 +11,7 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   
-  // search product link 
-  // add in links in the dropdown 
+  
   // fix the flickering icon for the dark mode 
   // replace to the previous header site header with same padding 
   // footer fix 
