@@ -13,6 +13,10 @@ module.exports = {
         protocol: 'http',
         hostname: '13.235.113.210',
       },
+      {
+        protocol: 'https',
+        hostname: 'clothvillage.com',
+      },
       // Add more patterns here
       {
         protocol: 'https',

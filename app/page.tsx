@@ -10,6 +10,19 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
+  
+  
+  // fix the http to https 
+  // add in escape and search icon escape 
+  // replace to the previous header site header with same padding 
+  // footer fix 
+  // search product link 
+  // add in links in the dropdown 
+  // store page improvement 
+  // fix the flickering icon for the dark mode 
+  // login & register 
+  // try adding wishlist as well 
+
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
