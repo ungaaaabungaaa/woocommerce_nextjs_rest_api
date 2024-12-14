@@ -110,12 +110,16 @@ const Footer = () => {
       <div className="hidden md:block bg-black dark:bg-white">
         <ScrollBasedVelocityDemo />
       </div>
+      <br></br>
+      <br></br>
+      <br></br>
+      <br></br>
       <footer className="bg-black text-white dark:bg-white dark:text-black">
         <div className="container mx-auto px-4 py-8">
           <div className="hidden md:flex md:flex-wrap md:-mx-4 mb-8">
             {footerLinks.map((column, index) => (
               <div key={index} className="md:w-1/6 px-4 mb-8">
-                <h3 className="font-bold text-2xl mb-4">{column.title}</h3>
+                <h3 className="font-bold text-md mb-4">{column.title}</h3>
                 <ul>
                   {column.links.map((link, linkIndex) => (
                     <li key={linkIndex} className="mb-2">

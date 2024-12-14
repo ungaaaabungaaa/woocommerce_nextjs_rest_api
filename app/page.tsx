@@ -4,7 +4,6 @@ import FeaturedProducts from "./component/featuredproducts";
 import { WobbleCardDemo } from "./component/wobble-card";
 import ProductCarousel from "./component/ ProductCarousel";
 import InstagramGallery from "./component/instagram-gallery";
-import PromoCard from "./component/promocard";
 import { ProductPromoCard } from "./component/productpromocard";
 import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
@@ -12,15 +11,15 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
   
-  // fix the flickering icon for the dark mode 
   // replace to the previous header site header with same padding 
   // footer fix 
-  // Fix cart context on first load for first users 
   // store page improvement 
   // add in loading skeltons for better user experience 
+  // Fix cart context on first load for first users // add in full page fresh once no worroies 
 
   // login & register 
   // try adding wishlist as well 
+
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
