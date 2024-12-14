@@ -92,7 +92,7 @@ export default function Nav_bar() {
             className="sm:hidden"
           />
           <NavbarBrand className="pr-4">
-            {theme === 'dark' ? (
+            {/* {theme === 'dark' ? (
               <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogoDark}
@@ -112,7 +112,33 @@ export default function Nav_bar() {
                 priority
                 className="cursor-pointer"
               />           
+            )} */}
+            {mounted && theme === 'dark' ? (
+              <NextImage
+                onClick={handleLogoClick}
+                src={SiteLogoDark}
+                alt="Site Logo"
+                width={120}
+                height={40}
+                priority
+                className="cursor-pointer"
+              />
+            ) : mounted ? (
+              <NextImage
+                onClick={handleLogoClick}
+                src={SiteLogo}
+                alt="Site Logo"
+                width={120}
+                height={40}
+                priority
+                className="cursor-pointer"
+              />
+            ) : (
+              // Optional: A placeholder to avoid layout shift
+              <div style={{ width: 120, height: 40 }} className="cursor-pointer" />
             )}
+
+
           </NavbarBrand>
           
           <NavbarContent className="hidden sm:flex gap-8" justify="start">

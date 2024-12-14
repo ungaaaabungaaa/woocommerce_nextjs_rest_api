@@ -1,14 +1,15 @@
 'use client'
 
-import Link from 'next/link'
-import { Accordion, AccordionItem } from "@nextui-org/accordion"
-import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
+import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { Accordion, AccordionItem } from "@nextui-org/accordion";
+import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import PayPalLogo from "../../public/paypal.png";
 import NextImage from "next/image";
-import PromoBar from './promo-bar'
-import { ScrollBasedVelocityDemo } from './ScrollBasedVelocityDemo'
+import PromoBar from './promo-bar';
+import { ScrollBasedVelocityDemo } from './ScrollBasedVelocityDemo';
 import { useTheme } from "next-themes";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
 
@@ -70,6 +71,16 @@ const footerLinks = [
 const Footer = () => {
   const router = useRouter();
   const { theme, setTheme } = useTheme();
+   // Define mounted state
+   const [mounted, setMounted] = useState(false);
+
+  // Ensure mounted is set to true after component mounts
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+
+
   const handleLogoClick = () => {
     router.push("/");
   };
@@ -154,14 +165,10 @@ const Footer = () => {
           </div>
 
          
-  
-
           <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-
-
-            {theme === 'dark' ? (
-                <NextImage
+            {mounted && theme === 'dark' ? (
+              <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogoDark}
                 alt="Site Logo"
@@ -169,9 +176,9 @@ const Footer = () => {
                 height={40}
                 priority
                 className="cursor-pointer"
-                />               
-              ) : (                
-                <NextImage
+              />
+            ) : mounted ? (
+              <NextImage
                 onClick={handleLogoClick}
                 src={SiteLogo}
                 alt="Site Logo"
@@ -179,8 +186,12 @@ const Footer = () => {
                 height={40}
                 priority
                 className="cursor-pointer"
-                />           
-              )}
+              />
+            ) : (
+              // Optional: A placeholder to avoid layout shift
+              <div style={{ width: 120, height: 40 }} className="cursor-pointer" />
+            )}
+
             </div>
             <div className="flex space-x-4 text-sm">
               <Link href="/terms" className="">Terms of Service</Link>
