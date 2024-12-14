@@ -91,14 +91,14 @@ export default function ProductSearch() {
         <div className="space-y-4 w-full">
           {/* Search Form */}
           <form onSubmit={handleSearch} className="flex items-center border-b border-gray-300 ">
-            <input
-              type="text"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              placeholder="Search products..."
-              className="flex-grow py-2 px-4 text-white bg-black focus:outline-none dark:text-black dark:bg-white"
-              aria-label="Search products"
-            />
+          <input
+            type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            placeholder="Search products..."
+            className="flex-grow py-2 px-4 text-white bg-black focus:outline-none dark:text-black dark:bg-white placeholder-gray-500 dark:placeholder-black"
+            aria-label="Search products"
+          />
             <button type="submit" className="p-2" aria-label="Submit search">
               <Search className="w-5 h-5 text-white bg-black dark:text-black dark:bg-white" />
             </button>
