@@ -12,31 +12,31 @@ import { RecommendedProducts } from '../component/RecommendedProducts';
 const staticRecommendedProducts = [
   {
     id: '1',
-    name: 'Wireless Earbuds',
-    image: 'https://images.unsplash.com/photo-1483119871437-a04216682227?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZWFycGhvbmV8ZW58MHx8MHx8fDA%3D',
-    price: 79.99,
-    url: '#'
+    name: 'Polo',
+    image: 'https://clothvillage.com/wp-content/uploads/2024/11/polo-scaled.jpg',
+    price: 20.00,
+    url: 'product/90'
   },
   {
     id: '2',
-    name: 'Smart Watch',
-    image: 'https://images.unsplash.com/photo-1517420879524-86d64ac2f339?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8c21hcnQlMjB3YXRjaHxlbnwwfHwwfHx8MA%3D%3D',
-    price: 199.99,
-    url: '#'
+    name: 'Hoodie',
+    image: 'https://clothvillage.com/wp-content/uploads/2024/11/redicul-pict-ggcJKGpx3pI-unsplash-scaled.jpg',
+    price: 10.00,
+    url: 'product/68'
   },
   {
     id: '3',
-    name: 'Portable Charger',
-    image: 'https://images.unsplash.com/photo-1619489646924-b4fce76b1db5?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8UG9ydGFibGUlMjBDaGFyZ2VyfGVufDB8fDB8fHww',
-    price: 49.99,
-    url: '#'
+    name: 'T-Shirt',
+    image: 'https://clothvillage.com/wp-content/uploads/2024/11/T-Shirt2-scaled.jpg',
+    price: 92.00,
+    url: 'product/74'
   },
   {
     id: '4',
-    name: 'Bluetooth Speaker',
-    image: 'https://images.unsplash.com/photo-1518671678551-911467efe539?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8Qmx1ZXRvb3RoJTIwU3BlYWtlcnxlbnwwfHwwfHx8MA%3D%3D',
-    price: 89.99,
-    url: '#'
+    name: 'Sunglasses',
+    image: 'https://clothvillage.com/wp-content/uploads/2024/11/Sunglasses2-scaled.jpg',
+    price: 90.00,
+    url: 'product/82'
   }
 ];
 
@@ -96,7 +96,7 @@ export default function ProductSearch() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search products..."
-            className="flex-grow py-2 px-4 text-white bg-black focus:outline-none dark:text-black dark:bg-white placeholder-gray-500 dark:placeholder-black"
+            className="flex-grow py-2 px-4 text-white bg-black focus:outline-none dark:text-black dark:bg-white placeholder-white dark:placeholder-black"
             aria-label="Search products"
           />
             <button type="submit" className="p-2" aria-label="Submit search">
