@@ -11,14 +11,15 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
   
-  // replace to the previous header site header with same padding 
-  // footer fix 
-  // store page improvement 
+  // replace to the previous header site header with same spacings
+  // mega menu rendering push down
+  // store page improvement
   // add in loading skeltons for better user experience 
-  // Fix cart context on first load for first users // add in full page fresh once no worroies 
+  // Fix cart context on first load for first users 
+  // avoid Reloads when back button is clicked 
+  // improve the product page
+  // Fix Loading Times 
 
-  // login & register 
-  // try adding wishlist as well 
 
 
   return (

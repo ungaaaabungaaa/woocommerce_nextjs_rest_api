@@ -12,7 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Truck, Moon, Sun } from 'lucide-react';
+import { Search, ShoppingBag, Truck, Moon, Sun, ChevronLeft } from 'lucide-react';
 import { Badge } from "@nextui-org/badge";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
@@ -82,9 +82,67 @@ export default function Nav_bar() {
 
   return (
     <>
-      <div className="bg-white text-black dark:bg-black w-full text-small dark:text-white p-4 flex items-center justify-center">
-        <SiteHeader></SiteHeader>
-      </div>
+  
+
+    <Navbar maxWidth="xl" className="bg-white text-black dark:bg-black dark:text-white h-10">
+      <NavbarContent className="sm:flex gap-4" justify="start">
+        <NavbarBrand className="pr-4 hidden sm:flex">
+          <div className="flex items-center gap-2">
+            <ChevronLeft className="h-3 w-3" />
+            <span className="text-xs">StudioUniversal.com</span>
+          </div>              
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="flex absolute left-1/2 transform -translate-x-1/2" justify="center">
+        <p className="text-xs font-medium">Official Universal Studio Store</p>
+      </NavbarContent>
+
+      <NavbarContent justify="end" className="gap-4">
+        <nav className="hidden gap-4 md:flex">
+          <Link 
+            href="/contact" 
+            className="text-xs text-muted-foreground  hover:font-bold cursor-pointer"
+          >
+            Help
+          </Link>
+          <Link 
+            href="/trackorder" 
+            className="text-xs text-muted-foreground  hover:font-bold cursor-pointer"
+          >
+            Orders & Returns
+          </Link>
+        </nav>            
+      </NavbarContent>
+    </Navbar>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
       <Navbar maxWidth="xl" className="bg-black text-white dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
         <NavbarContent className="sm:flex gap-4" justify="start">
           <NavbarMenuToggle
@@ -92,27 +150,7 @@ export default function Nav_bar() {
             className="sm:hidden"
           />
           <NavbarBrand className="pr-4">
-            {/* {theme === 'dark' ? (
-              <NextImage
-                onClick={handleLogoClick}
-                src={SiteLogoDark}
-                alt="Site Logo"
-                width={120}
-                height={40}
-                priority
-                className="cursor-pointer"
-              />               
-            ) : (                
-              <NextImage
-                onClick={handleLogoClick}
-                src={SiteLogo}
-                alt="Site Logo"
-                width={120}
-                height={40}
-                priority
-                className="cursor-pointer"
-              />           
-            )} */}
+            
             {mounted && theme === 'dark' ? (
               <NextImage
                 onClick={handleLogoClick}
