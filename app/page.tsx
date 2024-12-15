@@ -11,7 +11,8 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
 
- 
+  // fix store spacing as well 
+  // fix the cart button on variration display 
   // store page improvement
   // add in loading skeltons for better user experience 
   // Fix cart context on first load for first users 
