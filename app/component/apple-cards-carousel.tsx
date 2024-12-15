@@ -79,7 +79,7 @@ export function AppleCardsCarouselDemo() {
   ));
 
   return (
-    <div className="w-full h-full py-20 dark:bg-white dark:text-black">
+    <div className="w-full h-full py-4 dark:bg-white dark:text-black">
       <Carousel items={cards}
        title="Shop By Categories"  />
     </div>

@@ -10,8 +10,7 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   
-  
-  // replace to the previous header site header with same spacings
+
   // mega menu rendering push down
   // store page improvement
   // add in loading skeltons for better user experience 
@@ -25,12 +24,10 @@ export default function Home() {
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
-      <br></br>
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>
-      <br></br>
       <FeaturedProducts></FeaturedProducts>
       <br></br>
-        <div className="container mx-auto grid gap-6 p-6 md:grid-cols-2">
+        <div className="container mx-auto grid gap-6 py-4 md:grid-cols-2">
         <ProductPromoCard
           title="Heritage"
           discount="22"
@@ -43,13 +40,10 @@ export default function Home() {
         />
       </div>
       <ProductCarouselCategories category="accessories" ></ProductCarouselCategories>
-      <br></br>
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
-      <br></br>
       <WobbleCardDemo></WobbleCardDemo>
-      <br></br>
       <ProductCarousel></ProductCarousel>      
-      <br></br>
+
       <InstagramGallery></InstagramGallery>
       <br></br>
       <HeroBanner></HeroBanner>
