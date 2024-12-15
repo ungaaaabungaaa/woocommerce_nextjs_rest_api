@@ -325,16 +325,19 @@ return (
                     </span>
                   ) : null}
 
-                  <Button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent triggering card's onClick
-                      addToCart(product.id);
-                    }}
-                    aria-label={`Add ${product.name} to cart`}
-                    className="ml-2"
+                 
+                  {product.type === "simple" && (
+                   <Button 
+                   onClick={(e) => {
+                   e.stopPropagation(); // Prevent triggering card's onClick
+                   addToCart(product.id);
+                   }}
+                                                       
+                  className="ml-2"
                   >
-                    Add to Cart
+                  Add to Cart
                   </Button>
+                )}
                 </div>
 
                 <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">

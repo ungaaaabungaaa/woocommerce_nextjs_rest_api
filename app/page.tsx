@@ -11,15 +11,15 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
 
-  // fix store spacing as well 
   // fix the cart button on variration display 
-  // store page improvement
-  // add in loading skeltons for better user experience 
-  // Fix cart context on first load for first users 
-  // avoid Reloads when back button is clicked 
-  // improve the product page
-  // Fix Loading Times 
+  // add in loading skeltons for better user experience & Fix Loading Times
+  // avoid Reloads when back button is clicked
   // mega menu rendering push down
+  // store page improvement
+  // Fix cart context on first load for first users 
+  // improve the product page
+  
+
 
 
 
@@ -41,7 +41,7 @@ export default function Home() {
           imageUrl="https://images.unsplash.com/photo-1575396565848-e8031f12ce2a?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8aGVhZHdlYXJ8ZW58MHwwfDB8fHww"
         />
       </div>
-      <ProductCarouselCategories category="accessories" ></ProductCarouselCategories>
+      <ProductCarouselCategories category="accessories"></ProductCarouselCategories>
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <WobbleCardDemo></WobbleCardDemo>
       <ProductCarousel></ProductCarousel>      

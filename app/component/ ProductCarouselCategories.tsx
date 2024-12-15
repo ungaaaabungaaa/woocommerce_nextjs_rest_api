@@ -150,16 +150,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
             </span>
           ) : null}
           
-          <Button 
-            onClick={(e) => {
+          {product.type === "simple" && (
+            <Button 
+              onClick={(e) => {
               e.stopPropagation(); // Prevent triggering card's onClick
               addToCart(product.id);
-            }}
-            aria-label={`Add ${product.title} to cart`}
+              }}
+             aria-label={`Add ${product.title} to cart`}
             className="ml-2"
-          >
+            >
             Add to Cart
-          </Button>
+            </Button>
+          )}
         </div>
 
         <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">
