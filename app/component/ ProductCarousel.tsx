@@ -69,11 +69,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
         }
       );
       console.log('Item added to cart:', response.data);
-      toast.success("Item added to cart", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
+      
       await fetchCartDetails(cartKey);
     } catch (error: any) {
       console.error('Error adding item to cart:', error.response?.data || error.message);

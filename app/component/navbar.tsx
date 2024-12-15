@@ -263,7 +263,7 @@ export default function Nav_bar() {
         <div
           onMouseEnter={() => setVisibleMegaMenu("Men")}
           onMouseLeave={() => setVisibleMegaMenu("")}
-          className="mega-menu sticky top-16 bg-black dark:bg-white z-50"
+          className="mega-menu"
         >
           <MensMegaMenu />
         </div>

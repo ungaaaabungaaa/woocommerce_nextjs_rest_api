@@ -11,13 +11,14 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
 
-  // mega menu rendering push down
+ 
   // store page improvement
   // add in loading skeltons for better user experience 
   // Fix cart context on first load for first users 
   // avoid Reloads when back button is clicked 
   // improve the product page
   // Fix Loading Times 
+  // mega menu rendering push down
 
 
 
