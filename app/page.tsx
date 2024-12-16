@@ -44,7 +44,6 @@ export default function Home() {
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <WobbleCardDemo></WobbleCardDemo>
       <ProductCarousel></ProductCarousel>      
-
       <InstagramGallery></InstagramGallery>
       <br></br>
       <HeroBanner></HeroBanner>

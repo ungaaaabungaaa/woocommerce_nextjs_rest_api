@@ -1,6 +1,8 @@
 "use client"
 import { useState, useEffect, ReactNode } from 'react';
 import { fetchCartKey } from '../utils/api';
+import NextImage from "next/image";
+import SiteLogo from "../public/sitelogo.jpeg";
 
 // Custom Hook
 export function useCartKey() {
@@ -37,8 +39,21 @@ export function useCartKey() {
 export function CartKeyProvider({ children }: { children: ReactNode }) {
   const { cartKey, loading, error } = useCartKey();
 
+  const [fadeOut, setFadeOut] = useState(false);
+
+  useEffect(() => {
+    if (!loading) {
+      // Start the fade-out effect after loading is complete
+      setFadeOut(true);
+    }
+  }, [loading]);
+
   if (loading) {
-    return <div>Loading...</div>; // You can replace with a custom loading component
+    return (
+      <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
+        <NextImage src={SiteLogo} alt="Site Logo" width={150} height={150} />
+      </div>
+    );
   }
 
   if (error) {
