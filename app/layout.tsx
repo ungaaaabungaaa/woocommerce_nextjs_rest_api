@@ -5,6 +5,7 @@ import Navbar from "@/app/component/navbar";
 import { CartProvider } from '@/context/cartcontext';
 import PayPalProvider from "@/context/PayPalProvider";
 import { Inter } from 'next/font/google';
+import { CartKeyProvider } from '@/hooks/useCartKey';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -42,11 +43,13 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <PayPalProvider>
-            <CartProvider>
-              <Navbar />
-              {children}
-              <Footer />
-            </CartProvider>
+            <CartKeyProvider>
+              <CartProvider>
+                <Navbar />
+                {children}
+                <Footer />
+              </CartProvider>
+            </CartKeyProvider>
           </PayPalProvider>
         </ThemeProvider>
       </body>

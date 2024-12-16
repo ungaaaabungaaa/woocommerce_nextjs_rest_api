@@ -11,12 +11,11 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   
 
-  // fix the cart button on variration display 
+
   // add in loading skeltons for better user experience & Fix Loading Times
-  // avoid Reloads when back button is clicked
   // mega menu rendering push down
   // store page improvement
-  // Fix cart context on first load for first users 
+  // add in loading splash for the cart provider so it looks cool 
   // improve the product page
   
 

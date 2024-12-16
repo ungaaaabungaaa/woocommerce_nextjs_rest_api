@@ -10,14 +10,13 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { cartKey} = useCartKey()
-
+  const { cartKey, loading: cartKeyLoading, error: cartKeyError } = useCartKey();
 
   useEffect(() => {
-      if (cartKey) {
-        fetchCartDetails()
-      }
-    }, [cartKey])
+    if (!cartKeyLoading && cartKey) {
+      fetchCartDetails();
+    }
+  }, [cartKey, cartKeyLoading]);
 
   const fetchCartDetails = async () => {
     try {
@@ -39,8 +38,8 @@ export const CartProvider = ({ children }) => {
       value={{
         cartData,
         cartCount,
-        loading,
-        error,
+        loading: loading || cartKeyLoading,
+        error: error || cartKeyError,
         fetchCartDetails,
       }}
     >

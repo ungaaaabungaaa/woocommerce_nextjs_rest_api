@@ -1,6 +1,8 @@
-import { useState, useEffect } from 'react';
+"use client"
+import { useState, useEffect, ReactNode } from 'react';
 import { fetchCartKey } from '../utils/api';
 
+// Custom Hook
 export function useCartKey() {
   const [cartKey, setCartKey] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -9,13 +11,10 @@ export function useCartKey() {
   useEffect(() => {
     async function initializeCartKey() {
       try {
-        // Check if cart_key exists in localStorage
         let storedCartKey = localStorage.getItem('cart_key');
 
         if (!storedCartKey) {
-          // If not, fetch a new cart_key
           storedCartKey = await fetchCartKey();
-          // Store the new cart_key in localStorage
           localStorage.setItem('cart_key', storedCartKey);
         }
 
@@ -32,4 +31,23 @@ export function useCartKey() {
   }, []);
 
   return { cartKey, loading, error };
+}
+
+// CartKeyProvider Component
+export function CartKeyProvider({ children }: { children: ReactNode }) {
+  const { cartKey, loading, error } = useCartKey();
+
+  if (loading) {
+    return <div>Loading...</div>; // You can replace with a custom loading component
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>; // You can replace with a custom error component
+  }
+
+  if (!cartKey) {
+    return <div>Unable to initialize cart. Please try refreshing the page.</div>;
+  }
+
+  return <>{children}</>;
 }
