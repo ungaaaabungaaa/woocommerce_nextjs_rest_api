@@ -7,7 +7,7 @@ import { Button } from "@nextui-org/button";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Card, CardBody, } from "@nextui-org/card";
 import Image from 'next/image';
-import { useCartKey } from '../../../hooks/useCartKey';
+import { useCartKey } from '@/hooks/useCartKey';
 import { useCart } from '../../../context/cartcontext';
 import { useRouter } from 'next/navigation';
 import { ToastContainer, toast } from 'react-toastify';
@@ -55,7 +55,7 @@ function StoreId({ params }: { params: Params }) {
     }
     if (cartKeyError) {
         console.error('Error with cart key:', cartKeyError);
-        toast.error( "Error with cart key", {
+        toast.error("Error with cart key", {
                 position: "top-center",
                 theme: "dark",
                 autoClose: 5000,
@@ -283,24 +283,28 @@ function StoreId({ params }: { params: Params }) {
                 className="group relative bg-card border-muted min-w-[150px] rounded-lg flex flex-col cursor-pointer"
               >
                 <CardBody onClick={() => ViewProduct(product.id)}>
-                  <div
-                    role="img"
-                    aria-label={`Image of ${product.name}`}
-                    className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
-                  >
-                    <Image
-                      src={product.images[0].src}
-                      alt={product.name}
-                      fill
-                      className="object-cover transition-opacity duration-300 group-hover:opacity-0"
-                    />
-                    <Image
-                      src={product.images[1].src}
-                      alt={`${product.name} hover`}
-                      fill
-                      className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
-                    />
-                  </div>
+                  {product.images && product.images.length > 0 ? (
+  <>
+    <Image
+      src={product.images[0].src}
+      alt={product.name}
+      fill
+      className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+    />
+    {product.images.length > 1 && (
+      <Image
+        src={product.images[1].src}
+        alt={`${product.name} hover`}
+        fill
+        className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+      />
+    )}
+  </>
+) : (
+  <div className="w-full h-full bg-gray-200 flex items-center justify-center">
+    <span className="text-gray-500">No image available</span>
+  </div>
+)}
 
                   <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
                     {product.name}
@@ -357,5 +361,4 @@ function StoreId({ params }: { params: Params }) {
 }
 
 export default StoreId;
-
 

@@ -12,11 +12,26 @@ export default function Home() {
   
 
 
-  // add in loading skeltons for better user experience & Fix Loading Times
-  // mega menu rendering push down
-  // store page improvement
-  // add in loading splash for the cart provider so it looks cool 
-  // improve the product page
+  // 1.add in loading skeltons for better user experience & Fix Loading Times - Friday
+  // 2.mega menu rendering push down - Firday
+  // 3.Recommended products in cart - Friday 
+  // 4.store page - Firday
+  // 5.Store Categories Chip  - Firday
+  // 6.Store Filers  - Firday
+  // 7.Store Side Fillters - Fireday
+
+  // 8.add in loading splash for the cart provider so it looks cool - Firday
+  // 9.improve the product page - Firday
+
+  // 10.Check Page Imporovement - Monday
+  // 11.all the alignments fix withdth and height  - Monday
+  // 12.cart page imporment  - Monday
+  // 13.Side Cart  - Monday
+  // 14.Pop Up Cart - Monday 
+  
+
+
+
   
 
 
