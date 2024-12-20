@@ -12,30 +12,18 @@ export default function Home() {
   
 
 
-  // 1.add in loading skeltons for better user experience & Fix Loading Times - Friday
-  // 2.mega menu rendering push down - Firday
-  // 3.Recommended products in cart - Friday 
-  // 4.store page - Firday
-  // 5.Store Categories Chip  - Firday
-  // 6.Store Filers  - Firday
-  // 7.Store Side Fillters - Fireday
-
-  // 8.add in loading splash for the cart provider so it looks cool - Firday
-  // 9.improve the product page - Firday
-
-  // 10.Check Page Imporovement - Monday
-  // 11.all the alignments fix withdth and height  - Monday
-  // 12.cart page imporment  - Monday
-  // 13.Side Cart  - Monday
-  // 14.Pop Up Cart - Monday 
+  // add in loading skeltons for better user experience & Fix Loading Times
+  // mega menu rendering push down 
+  // store page
+  // Store Categories Chip  
+  // Store Filters 
+  // improve the product page
+  // Checkout Page Imporovement 
+  // all the alignments fix withdth and height  
+  // cart page imporment
+  // Side Cart
+  // Pop Up Cart
   
-
-
-
-  
-
-
-
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
