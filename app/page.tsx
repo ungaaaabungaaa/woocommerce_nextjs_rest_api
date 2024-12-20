@@ -18,7 +18,6 @@ export default function Home() {
   // Store Filters 
   // Side Cart
   // Pop Up Cart
-  // improve the product page
   // Checkout Page Imporovement 
   // cart page imporment
   // all the alignments fix withdth and height  

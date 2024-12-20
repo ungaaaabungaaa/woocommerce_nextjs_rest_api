@@ -330,7 +330,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             <div className="flex items-center space-x-2">
   
             {product.on_sale && (
-              <span className="text-3xl font-bold text-muted-foreground line-through">
+              <span className="text-2xl font-bold text-muted-foreground line-through">
                 ${product.regular_price}
               </span>
             )}
@@ -411,9 +411,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             </Button>
           </div>
           <div className="flex space-x-4 text-white dark:text-black">
-            <Accordion
-              itemClasses={itemClasses}
-            >
+            <Accordion defaultExpandedKeys={["1"]}
+              itemClasses={itemClasses}>
+              
               <AccordionItem  subtitle="Product Description & Dimensions" key="1" aria-label="ABOUT" title="Description & Dimensions">
 
 
@@ -519,6 +519,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                   </p>
                 </div>
               </AccordionItem>
+            
             </Accordion>
           </div>
         </div>
