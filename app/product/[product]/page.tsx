@@ -341,6 +341,10 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
            </div>
             <br />
             <Chip size="lg">{product.stock_status}</Chip>
+            <br></br>
+            <br></br>
+            <div dangerouslySetInnerHTML={{ __html: product.short_description}} />
+            <br></br>
           </div>
         
           
@@ -418,7 +422,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
 
 
-              <div dangerouslySetInnerHTML={{ __html: product.short_description}} />
+   
               <div dangerouslySetInnerHTML={{ __html: product.description }} />
               <br></br>
                 <p>
