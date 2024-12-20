@@ -9,24 +9,16 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  
-
-
   // add in loading skeltons for better user experience & Fix Loading Times
   // store page
-  // Store Categories Chip  
-  // Store Filters 
+  // Store Categories Chip
+  // Store Filters
   // Side Cart
   // Pop Up Cart
-  // Checkout Page Imporovement 
-  // cart page imporment
-  // all the alignments fix withdth and height  
-  // Wish List 
-  // Login & Register 
-
-
- 
-  
+  // Checkout Page Imporovement
+  // all the alignments fix withdth and height
+  // Wish List
+  // Login & Register
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
@@ -34,7 +26,7 @@ export default function Home() {
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>
       <FeaturedProducts></FeaturedProducts>
       <br></br>
-        <div className="container mx-auto grid gap-6 py-4 md:grid-cols-2">
+      <div className="container mx-auto grid gap-6 py-4 md:grid-cols-2">
         <ProductPromoCard
           title="Heritage"
           discount="22"
@@ -49,7 +41,7 @@ export default function Home() {
       <ProductCarouselCategories category="accessories"></ProductCarouselCategories>
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <WobbleCardDemo></WobbleCardDemo>
-      <ProductCarousel></ProductCarousel>      
+      <ProductCarousel></ProductCarousel>
       <InstagramGallery></InstagramGallery>
       <br></br>
       <HeroBanner></HeroBanner>

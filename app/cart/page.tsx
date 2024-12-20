@@ -155,7 +155,7 @@ export default function Cart() {
             {cartData && cartData.items.length > 0 ? (
               <div className="space-y-6">
                 {cartData.items.map((item) => (
-                  <div className=" py-4 lg:py-8 cart-card">
+                  <div key={item.item_key} className=" py-4 lg:py-8 cart-card">
                     <div className="cart-card-1">
                       {/* Image */}
                       <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
