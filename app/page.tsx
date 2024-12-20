@@ -13,16 +13,20 @@ export default function Home() {
 
 
   // add in loading skeltons for better user experience & Fix Loading Times
-  // mega menu rendering push down 
   // store page
   // Store Categories Chip  
   // Store Filters 
-  // improve the product page
-  // Checkout Page Imporovement 
-  // all the alignments fix withdth and height  
-  // cart page imporment
   // Side Cart
   // Pop Up Cart
+  // improve the product page
+  // Checkout Page Imporovement 
+  // cart page imporment
+  // all the alignments fix withdth and height  
+  // Wish List 
+  // Login & Register 
+
+
+ 
   
 
   return (

@@ -12,6 +12,7 @@ import { useCart } from '../../../context/cartcontext';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useTheme } from "next-themes";
+import {Breadcrumbs, BreadcrumbItem} from "@nextui-org/breadcrumbs";
 
 interface Attribute {
   id: number
@@ -152,15 +153,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
   const handleAddToCart = () => {
     if (product?.type === 'simple') {
-        
-        // console.log({
-        //   id: product.id.toString(),
-        //   quantity: quantity.toString(),
-        // })
-
-      // Call the API function for simple products
       addToCartApiCallSimple(product.id.toString(), quantity.toString());
-     
     } else if (selectedVariation) {
       const variationData: Record<string, string> = {}
       product?.attributes.forEach(attr => {
@@ -168,12 +161,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         variationData[key] = selectedOptions[attr.name]
       })
       
-      // console.log({
-      //   id: selectedVariation.id.toString(),
-      //   quantity: quantity.toString(),
-      //   variation: variationData,
-      // })
-
       // Call the API function for variable products
       addToCartApiCallVariation(
         selectedVariation.id.toString(),
@@ -183,8 +170,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
     }
   }
-
-   // doing the api call to add to cart here
 
     // API Call Functions
     const addToCartApiCallSimple = async (id: string, quantity: string) => {
@@ -280,6 +265,8 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       }
     };
 
+    console.log(product?.categories);
+
 
   if (!product) return <div>Loading...</div>
 
@@ -315,31 +302,47 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             ))}
           </div>
         </div>
+
+
         <div className="space-y-6">
           <div>
+          <Breadcrumbs
+            itemClasses={{
+              item: "text-white/60 dark:text-black data-[current=true]:text-white",
+              separator: "text-white/40 dark:text-black/40",
+            }}
+          >
+            <BreadcrumbItem href='/' className="text-white dark:text-black hover:font-bold">Home</BreadcrumbItem>
+            <BreadcrumbItem href='/store' className="text-white dark:text-black">Store</BreadcrumbItem>
+            {product.categories && product.categories.length > 0 && (
+              <BreadcrumbItem itemScope
+                href={`/store/${encodeURIComponent(product.categories[0].name)}`}
+                className="text-white dark:text-black"
+              >
+                {product.categories[0].name}
+              </BreadcrumbItem>
+            )}
+            <BreadcrumbItem>{product.name}</BreadcrumbItem>
+          </Breadcrumbs>
+          <br></br>
+
             <h1 className="text-3xl font-bold">{product.name}</h1>
-            <div dangerouslySetInnerHTML={{ __html: product.short_description}} />
-           
-            <br />
-            <Chip size="lg">{product.stock_status}</Chip>
-            <br />
-            <br />
-            <div dangerouslySetInnerHTML={{ __html: product.description }} />
-           
-          </div>
-          <div className="flex items-center space-x-2">
-            <h1 className="text-2xl font-bold">Price : </h1>
+            <div className="flex items-center space-x-2">
   
             {product.on_sale && (
-              <span className="text-lg text-muted-foreground line-through">
+              <span className="text-3xl font-bold text-muted-foreground line-through">
                 ${product.regular_price}
               </span>
             )}
   
-            <span className="text-2xl font-bold">
+            <span className="text-3xl font-bold">
               ${selectedVariation ? selectedVariation.price : product.price}
             </span>
+           </div>
+            <br />
+            <Chip size="lg">{product.stock_status}</Chip>
           </div>
+        
           
           {product.type === 'variable' && product.attributes && (
             <div className="space-y-4">
@@ -411,7 +414,13 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             <Accordion
               itemClasses={itemClasses}
             >
-              <AccordionItem  subtitle="Product Dimensions" key="1" aria-label="ABOUT" title="ABOUT">
+              <AccordionItem  subtitle="Product Description & Dimensions" key="1" aria-label="ABOUT" title="Description & Dimensions">
+
+
+
+              <div dangerouslySetInnerHTML={{ __html: product.short_description}} />
+              <div dangerouslySetInnerHTML={{ __html: product.description }} />
+              <br></br>
                 <p>
                   <strong>Weight:</strong> {product.weight || 'Not specified'} kg
                 </p>
