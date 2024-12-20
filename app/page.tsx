@@ -10,15 +10,17 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // add in loading skeltons for better user experience & Fix Loading Times
+
   // store page
   // Store Categories Chip
   // Store Filters
+
   // Side Cart
   // Pop Up Cart
+
   // Checkout Page Imporovement
+
   // all the alignments fix withdth and height
-  // Wish List
-  // Login & Register
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
