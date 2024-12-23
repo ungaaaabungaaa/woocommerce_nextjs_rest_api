@@ -116,7 +116,7 @@ function StorePage() {
               </h2>
               <br></br>
               <ChipsChategoriesFilter
-                notDisplay={["ALL"]}
+                notDisplay={["CORE"]}
                 highlight="FOOTWARE"
               />
             </div>
