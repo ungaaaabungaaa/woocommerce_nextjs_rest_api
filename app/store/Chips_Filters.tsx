@@ -115,7 +115,7 @@ export default function ChipsChategoriesFilter({
                 ${
                   selectedCategory === category.name ||
                   category.name === highlight
-                    ? "bg-white hover:bg-gray-100 border border-gray-200 text-black"
+                    ? "bg-white border border-gray-200 text-black"
                     : "bg-black text-white hover:bg-white hover:text-black"
                 }`}
                   >
@@ -198,3 +198,8 @@ export default function ChipsChategoriesFilter({
     </div>
   );
 }
+
+// add the filters for mobile
+// add the filters for the pc
+// fix the visiblibty thing and add in the id filtering as well
+// cosole log this in the store page what filters where selected
