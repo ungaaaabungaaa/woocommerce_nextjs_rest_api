@@ -130,7 +130,7 @@ export default function ChipsChategoriesFilter({
           {/* Count and Buttons */}
           <div className="flex items-center space-x-4 md:flex-shrink-0 pb-2">
             {/* Count */}
-            <div className="text-white whitespace-nowrap hidden md:block">
+            <div className="text-white dark:text-black whitespace-nowrap hidden md:block pl-4 ">
               {totalProducts} Products
             </div>
 
@@ -142,7 +142,10 @@ export default function ChipsChategoriesFilter({
               }
             >
               <SheetTrigger asChild>
-                <Button size="sm" className="w-[120px]">
+                <Button
+                  size="sm"
+                  className="w-[120px] bg-black dark:bg-white text-white dark:text-black"
+                >
                   <SlidersHorizontal className="w-4 h-4 mr-2" />
                   Filter
                 </Button>
@@ -170,9 +173,12 @@ export default function ChipsChategoriesFilter({
               }
             >
               <SheetTrigger asChild>
-                <Button size="sm" className="w-[120px]">
-                  <ArrowUpDown className="w-4 h-4 mr-2" />
-                  Recommended
+                <Button
+                  size="sm"
+                  className="w-[120px] bg-black dark:bg-white text-white dark:text-black"
+                >
+                  <ArrowUpDown className="w-4 h-4 mr-2   " />
+                  Sort
                 </Button>
               </SheetTrigger>
               <SheetContent
