@@ -12,15 +12,18 @@ interface Params {
   storeid: string;
 }
 
-// bread crubms
 // load in the chips & Filter count
-// on click filter show the side panels
-// display the filtered item
+// on click filter show the side panels & Mobile the Panels Appears Download
+
+// display the filtered item and apply useeffect on the filtters and console log the json
+
 // jsx Part
 // side panel filtering static buttons
 // side panel 2 static fillering with the function
 // close the panel when clicked
+
 // on chip click take them to that categories
+
 // colors fitlers good looking
 // add in price range as well
 
@@ -120,6 +123,11 @@ function StoreId({ params }: { params: Params }) {
                   {decodeURIComponent(params.storeid)}
                 </BreadcrumbItem>
               </Breadcrumbs>
+              <br></br>
+              <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
+                {decodeURIComponent(params.storeid)}
+              </h2>
+              <br></br>
             </div>
           </div>
         )}

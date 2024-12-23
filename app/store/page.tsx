@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { filterProducts } from "./productFilters";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
+import ChipsChategoriesFilter from "./Chips_Filters";
 
 interface Product {
   id: string;
@@ -109,6 +110,12 @@ function StorePage() {
                 </BreadcrumbItem>
                 <BreadcrumbItem>Studio Store</BreadcrumbItem>
               </Breadcrumbs>
+              <br></br>
+              <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
+                Studio Store
+              </h2>
+              <br></br>
+              <ChipsChategoriesFilter></ChipsChategoriesFilter>
             </div>
           </div>
         )}
