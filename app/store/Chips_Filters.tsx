@@ -19,6 +19,14 @@ interface ChipsCategoriesFilterProps {
   highlight?: string;
 }
 
+type SortOption =
+  | "RECOMMENDED"
+  | "BESTSELLERS"
+  | "NEWEST"
+  | "LOW - HIGH"
+  | "HIGH - LOW"
+  | "SALE";
+
 // Helper functions
 const filterCategories = (categories: any[]) => {
   return categories.filter(
@@ -47,9 +55,17 @@ export default function ChipsChategoriesFilter({
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
   >(null);
+  const [selectedSort, setSelectedSort] = useState<SortOption>("RECOMMENDED");
   const [isMobile, setIsMobile] = useState(false);
   const [totalProducts, setTotalProducts] = useState(0);
   const router = useRouter();
+
+  const sortOptions: SortOption[] = [
+    "NEWEST",
+    "LOW - HIGH",
+    "HIGH - LOW",
+    "SALE",
+  ];
 
   useEffect(() => {
     const checkMobile = () => {
@@ -77,7 +93,6 @@ export default function ChipsChategoriesFilter({
             count: category.count || 0,
           }));
 
-        // Rearrange to bring the highlight category to the front, if present
         const rearrangedCategories = highlight
           ? [
               ...apiCategories.filter(
@@ -93,7 +108,6 @@ export default function ChipsChategoriesFilter({
         setTotalProducts(total);
         setCategories(rearrangedCategories);
 
-        // Set initial selected category to the first available category
         if (rearrangedCategories.length > 0) {
           setSelectedCategory(rearrangedCategories[0].name);
         }
@@ -116,6 +130,13 @@ export default function ChipsChategoriesFilter({
   const categoriesSelected = (category: string) => {
     console.log("Selected category:", category);
     router.push(`/store/${category}`);
+  };
+
+  const handleSortChange = (option: SortOption) => {
+    setSelectedSort(option);
+    console.log("Sort option selected:", option);
+    // Here you can add your sorting logic
+    closeSheet();
   };
 
   const openSheet = (sheet: "filter" | "recommended") => {
@@ -196,7 +217,7 @@ export default function ChipsChategoriesFilter({
               </SheetContent>
             </Sheet>
 
-            {/* Recommended Button */}
+            {/* Sort Button */}
             <Sheet
               open={activeSheet === "recommended"}
               onOpenChange={() =>
@@ -221,8 +242,22 @@ export default function ChipsChategoriesFilter({
                 <SheetHeader>
                   <SheetTitle>Sort By</SheetTitle>
                 </SheetHeader>
-                <div className="py-4 text-black dark:text-white">
-                  <p>Sorting options will be displayed</p>
+                <div className="py-4 text-black dark:text-white flex align-top justify-center flex-col">
+                  <div className="flex flex-col gap-2 w-full max-w-[400px] mx-auto mt-4">
+                    {sortOptions.map((option) => (
+                      <Button
+                        key={option}
+                        className={`w-full transition-colors ${
+                          selectedSort === option
+                            ? "bg-black text-white hover:bg-gray-800"
+                            : "bg-white text-black border border-gray-200 hover:bg-gray-100"
+                        }`}
+                        onClick={() => handleSortChange(option)}
+                      >
+                        {option}
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>
@@ -232,7 +267,3 @@ export default function ChipsChategoriesFilter({
     </div>
   );
 }
-
-// add in filters and console log them
-// keep them selected or removed
-// get the data in the store page
