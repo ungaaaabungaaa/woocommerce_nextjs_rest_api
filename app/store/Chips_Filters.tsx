@@ -18,12 +18,30 @@ interface ChipsCategoriesFilterProps {
   highlight?: string;
 }
 
+// Helper functions
+const filterCategories = (categories: any[]) => {
+  return categories.filter(
+    (category) =>
+      category.name.toUpperCase() !== "UNCATEGORIZED" &&
+      category.name.toUpperCase() !== "ALL"
+  );
+};
+
+const calculateTotalProducts = (categories: any[]) => {
+  return categories.reduce(
+    (sum: number, cat: any) => sum + (cat.count || 0),
+    0
+  );
+};
+
 export default function ChipsChategoriesFilter({
   notDisplay = [],
   highlight = "",
 }: ChipsCategoriesFilterProps) {
-  const [categories, setCategories] = useState([{ name: "ALL", count: 0 }]);
-  const [selectedCategory, setSelectedCategory] = useState("ALL");
+  const [categories, setCategories] = useState<
+    Array<{ name: string; count: number }>
+  >([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
   >(null);
@@ -46,7 +64,8 @@ export default function ChipsChategoriesFilter({
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_SITE_URL}/api/getcategories`
         );
-        const apiCategories = response.data
+
+        const apiCategories = filterCategories(response.data)
           .filter(
             (category: any) => !notDisplay.includes(category.name.toUpperCase())
           )
@@ -55,19 +74,14 @@ export default function ChipsChategoriesFilter({
             count: category.count || 0,
           }));
 
-        const totalCount = apiCategories.reduce(
-          (sum: number, cat: any) => sum + cat.count,
-          0
-        );
+        const total = calculateTotalProducts(apiCategories);
+        setTotalProducts(total);
+        setCategories(apiCategories);
 
-        setTotalProducts(totalCount);
-        setCategories([
-          {
-            name: "ALL",
-            count: totalCount,
-          },
-          ...apiCategories,
-        ]);
+        // Set initial selected category to the first available category
+        if (apiCategories.length > 0) {
+          setSelectedCategory(apiCategories[0].name);
+        }
       } catch (error: any) {
         console.error(
           "Error fetching categories:",
@@ -83,6 +97,11 @@ export default function ChipsChategoriesFilter({
 
     fetchCategories();
   }, [notDisplay]);
+
+  const categoriesSelected = (category: string) => {
+    console.log("Selected category:", category);
+    setSelectedCategory(category);
+  };
 
   const openSheet = (sheet: "filter" | "recommended") => {
     setActiveSheet(sheet);
@@ -199,7 +218,5 @@ export default function ChipsChategoriesFilter({
   );
 }
 
-// add the filters for mobile
-// add the filters for the pc
-// fix the visiblibty thing and add in the id filtering as well
-// cosole log this in the store page what filters where selected
+// first filter out the uncategorized from the response
+// remove the all as well
