@@ -97,7 +97,7 @@ export default function ChipsChategoriesFilter({
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0">
           {/* Categories Scroll */}
-          <div className="w-full md:flex-1">
+          <div className="w-full md:max-w-[72%] md:flex-1">
             <div
               className="overflow-x-auto hide-scrollbar"
               style={{
@@ -112,12 +112,12 @@ export default function ChipsChategoriesFilter({
                     key={category.name}
                     onClick={() => setSelectedCategory(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-                    ${
-                      selectedCategory === category.name ||
-                      category.name === highlight
-                        ? "bg-white hover:bg-gray-100 border border-gray-200 text-black"
-                        : "bg-black text-white"
-                    }`}
+                ${
+                  selectedCategory === category.name ||
+                  category.name === highlight
+                    ? "bg-white hover:bg-gray-100 border border-gray-200 text-black"
+                    : "bg-black text-white"
+                }`}
                   >
                     {category.name}{" "}
                     {category.count > 0 ? `(${category.count})` : ""}
@@ -130,7 +130,7 @@ export default function ChipsChategoriesFilter({
           {/* Count and Buttons */}
           <div className="flex items-center space-x-4 md:flex-shrink-0 pb-2">
             {/* Count */}
-            <div className="text-white dark:text-black whitespace-nowrap hidden md:block pl-4 ">
+            <div className="text-white dark:text-black whitespace-nowrap pl-4 hidden md:block">
               {totalProducts} Products
             </div>
 
@@ -177,7 +177,7 @@ export default function ChipsChategoriesFilter({
                   size="sm"
                   className="w-[120px] bg-black dark:bg-white text-white dark:text-black"
                 >
-                  <ArrowUpDown className="w-4 h-4 mr-2   " />
+                  <ArrowUpDown className="w-4 h-4 mr-2" />
                   Sort
                 </Button>
               </SheetTrigger>

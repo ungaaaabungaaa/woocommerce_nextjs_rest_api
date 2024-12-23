@@ -87,7 +87,7 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div className="bg-black dark:bg-white">
+          <div className="bg-black dark:bg-white overflow-hidden">
             <br />
             <ToastContainer />
             <br />
