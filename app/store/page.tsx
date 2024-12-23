@@ -125,3 +125,7 @@ function StorePage() {
 }
 
 export default StorePage;
+
+// from the context api get the filters
+// then filter it
+// handle view products

@@ -267,3 +267,7 @@ export default function ChipsChategoriesFilter({
     </div>
   );
 }
+
+// make the remaning filter
+// make a context api to get the data everywhere
+// get in the store
