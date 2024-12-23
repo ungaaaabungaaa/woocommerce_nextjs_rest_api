@@ -116,11 +116,10 @@ export default function ChipsChategoriesFilter({
                   selectedCategory === category.name ||
                   category.name === highlight
                     ? "bg-white hover:bg-gray-100 border border-gray-200 text-black"
-                    : "bg-black text-white"
+                    : "bg-black text-white hover:bg-white hover:text-black"
                 }`}
                   >
-                    {category.name}{" "}
-                    {category.count > 0 ? `(${category.count})` : ""}
+                    {category.name}
                   </button>
                 ))}
               </div>
