@@ -115,7 +115,10 @@ function StorePage() {
                 Studio Store
               </h2>
               <br></br>
-              <ChipsChategoriesFilter></ChipsChategoriesFilter>
+              <ChipsChategoriesFilter
+                notDisplay={["ALL"]}
+                highlight="FOOTWEAR"
+              />
             </div>
           </div>
         )}
