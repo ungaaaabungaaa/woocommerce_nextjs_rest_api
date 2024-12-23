@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
+import ChipsChategoriesFilter from "../Chips_Filters";
 
 interface Params {
   storeid: string;
@@ -128,6 +129,9 @@ function StoreId({ params }: { params: Params }) {
                 {decodeURIComponent(params.storeid)}
               </h2>
               <br></br>
+              <ChipsChategoriesFilter
+                highlight={decodeURIComponent(params.storeid).toUpperCase()}
+              />
             </div>
           </div>
         )}

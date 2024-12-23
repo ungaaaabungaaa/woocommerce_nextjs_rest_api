@@ -12,6 +12,7 @@ import {
 import { SlidersHorizontal, ArrowUpDown } from "lucide-react";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 interface ChipsCategoriesFilterProps {
   notDisplay?: string[];
@@ -41,12 +42,14 @@ export default function ChipsChategoriesFilter({
   const [categories, setCategories] = useState<
     Array<{ name: string; count: number }>
   >([]);
+
   const [selectedCategory, setSelectedCategory] = useState("");
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
   >(null);
   const [isMobile, setIsMobile] = useState(false);
   const [totalProducts, setTotalProducts] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const checkMobile = () => {
@@ -74,13 +77,25 @@ export default function ChipsChategoriesFilter({
             count: category.count || 0,
           }));
 
-        const total = calculateTotalProducts(apiCategories);
+        // Rearrange to bring the highlight category to the front, if present
+        const rearrangedCategories = highlight
+          ? [
+              ...apiCategories.filter(
+                (category) => category.name === highlight.toUpperCase()
+              ),
+              ...apiCategories.filter(
+                (category) => category.name !== highlight.toUpperCase()
+              ),
+            ]
+          : apiCategories;
+
+        const total = calculateTotalProducts(rearrangedCategories);
         setTotalProducts(total);
-        setCategories(apiCategories);
+        setCategories(rearrangedCategories);
 
         // Set initial selected category to the first available category
-        if (apiCategories.length > 0) {
-          setSelectedCategory(apiCategories[0].name);
+        if (rearrangedCategories.length > 0) {
+          setSelectedCategory(rearrangedCategories[0].name);
         }
       } catch (error: any) {
         console.error(
@@ -96,11 +111,11 @@ export default function ChipsChategoriesFilter({
     };
 
     fetchCategories();
-  }, [notDisplay]);
+  }, [notDisplay, highlight]);
 
   const categoriesSelected = (category: string) => {
     console.log("Selected category:", category);
-    setSelectedCategory(category);
+    router.push(`/store/${category}`);
   };
 
   const openSheet = (sheet: "filter" | "recommended") => {
@@ -129,7 +144,7 @@ export default function ChipsChategoriesFilter({
                 {categories.map((category) => (
                   <button
                     key={category.name}
-                    onClick={() => setSelectedCategory(category.name)}
+                    onClick={() => categoriesSelected(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
                 ${
                   selectedCategory === category.name ||
