@@ -185,13 +185,13 @@ export default function ChipsChategoriesFilter({
               </SheetTrigger>
               <SheetContent
                 side={isMobile ? "bottom" : "right"}
-                className={`w-full h-[75vh] md:w-[400px] md:h-full`}
+                className={`w-full h-[75vh] md:w-[400px] md:h-full text-black dark:text-white`}
               >
                 <SheetHeader>
                   <SheetTitle>Filters</SheetTitle>
                 </SheetHeader>
-                <div className="py-4">
-                  <p>Filter options will be displayed here.</p>
+                <div className="py-4 text-black dark:text-white">
+                  <p>Filter options will be displayed </p>
                 </div>
               </SheetContent>
             </Sheet>
@@ -221,8 +221,8 @@ export default function ChipsChategoriesFilter({
                 <SheetHeader>
                   <SheetTitle>Sort By</SheetTitle>
                 </SheetHeader>
-                <div className="py-4">
-                  <p>Sorting options will be displayed here.</p>
+                <div className="py-4 text-black dark:text-white">
+                  <p>Sorting options will be displayed</p>
                 </div>
               </SheetContent>
             </Sheet>
@@ -233,5 +233,6 @@ export default function ChipsChategoriesFilter({
   );
 }
 
-// first filter out the uncategorized from the response
-// remove the all as well
+// add in filters and console log them
+// keep them selected or removed
+// get the data in the store page

@@ -13,20 +13,8 @@ interface Params {
   storeid: string;
 }
 
-// load in the chips & Filter count
-// on click filter show the side panels & Mobile the Panels Appears Download
-
-// display the filtered item and apply useeffect on the filtters and console log the json
-
-// jsx Part
-// side panel filtering static buttons
-// side panel 2 static fillering with the function
-// close the panel when clicked
-
-// on chip click take them to that categories
-
-// colors fitlers good looking
-// add in price range as well
+// Filters
+// Product Display
 
 function StoreId({ params }: { params: Params }) {
   const [error, setError] = useState<string | null>(null);
