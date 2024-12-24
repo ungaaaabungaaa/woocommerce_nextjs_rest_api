@@ -70,6 +70,14 @@ function StorePage() {
     return doc.body.textContent || "";
   };
 
+  const categories = [
+    { name: "T-SHIRTS", count: 150 },
+    { name: "HOODIES", count: 75 },
+    { name: "ACCESSORIES", count: 50 },
+    { name: "PANTS", count: 45 },
+    { name: "SHOES", count: 80 },
+  ];
+
   return (
     <>
       <div>
@@ -115,7 +123,18 @@ function StorePage() {
                 Studio Store
               </h2>
               <br></br>
-              <ChipsChategoriesFilter />
+              <ChipsChategoriesFilter
+                categories={categories}
+                highlight="HOODIES" // Optional: Category to highlight
+                onFilterChange={(filters) => {
+                  console.log("Fuck bro ", filters);
+                  // Handle filter changes here
+                }}
+                onSortChange={(sortOption) => {
+                  console.log("Dude WTF", sortOption);
+                  // Handle sort changes here
+                }}
+              />
             </div>
           </div>
         )}

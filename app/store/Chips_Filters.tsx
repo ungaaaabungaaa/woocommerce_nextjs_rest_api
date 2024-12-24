@@ -13,12 +13,25 @@ import { SlidersHorizontal, ArrowUpDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
 import { Slider } from "@nextui-org/slider";
-import { toast } from "react-toastify";
-import axios from "axios";
+
+interface Category {
+  name: string;
+  count: number;
+}
 
 interface ChipsCategoriesFilterProps {
+  categories: Category[];
   notDisplay?: string[];
   highlight?: string;
+  onFilterChange?: (filters: FilterState) => void;
+  onSortChange?: (sort: SortOption) => void;
+}
+
+interface FilterState {
+  gender: string[];
+  sizes: string[];
+  colors: string[];
+  priceRange: number;
 }
 
 type SortOption =
@@ -29,28 +42,33 @@ type SortOption =
   | "HIGH - LOW"
   | "SALE";
 
-const filterCategories = (categories: any[]) => {
+const filterCategories = (categories: Array<Category>): Category[] => {
+  if (!Array.isArray(categories)) return [];
+
   return categories.filter(
-    (category) =>
-      category.name.toUpperCase() !== "UNCATEGORIZED" &&
-      category.name.toUpperCase() !== "ALL"
+    (category: Category) =>
+      category?.name?.toUpperCase() !== "UNCATEGORIZED" &&
+      category?.name?.toUpperCase() !== "ALL"
   );
 };
 
-const calculateTotalProducts = (categories: any[]) => {
+const calculateTotalProducts = (categories: Array<Category>): number => {
+  if (!Array.isArray(categories)) return 0;
+
   return categories.reduce(
-    (sum: number, cat: any) => sum + (cat.count || 0),
+    (sum: number, cat: Category) => sum + (cat.count || 0),
     0
   );
 };
 
 export default function ChipsChategoriesFilter({
+  categories: initialCategories = [],
   notDisplay = [],
   highlight = "",
+  onFilterChange,
+  onSortChange,
 }: ChipsCategoriesFilterProps) {
-  const [categories, setCategories] = useState<
-    Array<{ name: string; count: number }>
-  >([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
@@ -75,6 +93,34 @@ export default function ChipsChategoriesFilter({
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    const filteredCategories = filterCategories(initialCategories)
+      .filter((category) => !notDisplay.includes(category.name.toUpperCase()))
+      .map((category) => ({
+        name: category.name.toUpperCase(),
+        count: category.count || 0,
+      }));
+
+    const rearrangedCategories = highlight
+      ? [
+          ...filteredCategories.filter(
+            (category) => category.name === highlight.toUpperCase()
+          ),
+          ...filteredCategories.filter(
+            (category) => category.name !== highlight.toUpperCase()
+          ),
+        ]
+      : filteredCategories;
+
+    const total = calculateTotalProducts(rearrangedCategories);
+    setTotalProducts(total);
+    setCategories(rearrangedCategories);
+
+    if (rearrangedCategories.length > 0) {
+      setSelectedCategory(rearrangedCategories[0].name);
+    }
+  }, [initialCategories, notDisplay, highlight]);
 
   const genderOptions = [
     "MENS",
@@ -112,16 +158,18 @@ export default function ChipsChategoriesFilter({
 
   const handleSortChange = (option: SortOption) => {
     setSelectedSort(option);
+    onSortChange?.(option);
     closeSheet();
   };
 
   const applyFilters = () => {
-    console.log({
+    const filters: FilterState = {
       gender: selectedGender,
       sizes: selectedSizes,
       colors: selectedColors,
-      priceRange: `$${priceRange}`,
-    });
+      priceRange: priceRange,
+    };
+    onFilterChange?.(filters);
     closeSheet();
   };
 
@@ -130,6 +178,12 @@ export default function ChipsChategoriesFilter({
     setSelectedSizes([]);
     setSelectedColors([]);
     setPriceRange(25);
+    onFilterChange?.({
+      gender: [],
+      sizes: [],
+      colors: [],
+      priceRange: 25,
+    });
   };
 
   const openSheet = (sheet: "filter" | "recommended") => {
@@ -140,58 +194,7 @@ export default function ChipsChategoriesFilter({
     setActiveSheet(null);
   };
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_SITE_URL}/api/getcategories`
-        );
-
-        const apiCategories = filterCategories(response.data)
-          .filter(
-            (category: any) => !notDisplay.includes(category.name.toUpperCase())
-          )
-          .map((category: any) => ({
-            name: category.name.toUpperCase(),
-            count: category.count || 0,
-          }));
-
-        const rearrangedCategories = highlight
-          ? [
-              ...apiCategories.filter(
-                (category) => category.name === highlight.toUpperCase()
-              ),
-              ...apiCategories.filter(
-                (category) => category.name !== highlight.toUpperCase()
-              ),
-            ]
-          : apiCategories;
-
-        const total = calculateTotalProducts(rearrangedCategories);
-        setTotalProducts(total);
-        setCategories(rearrangedCategories);
-
-        if (rearrangedCategories.length > 0) {
-          setSelectedCategory(rearrangedCategories[0].name);
-        }
-      } catch (error: any) {
-        console.error(
-          "Error fetching categories:",
-          error.response?.data || error.message
-        );
-        toast.error("Error fetching categories", {
-          position: "top-center",
-          theme: "dark",
-          autoClose: 5000,
-        });
-      }
-    };
-
-    fetchCategories();
-  }, [notDisplay, highlight]);
-
   const categoriesSelected = (category: string) => {
-    console.log("Selected category:", category);
     router.push(`/store/${category}`);
   };
 
@@ -215,12 +218,12 @@ export default function ChipsChategoriesFilter({
                     key={category.name}
                     onClick={() => categoriesSelected(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-                ${
-                  selectedCategory === category.name ||
-                  category.name === highlight
-                    ? "bg-white border border-gray-200 text-black"
-                    : "bg-black text-white hover:bg-white hover:text-black"
-                }`}
+                    ${
+                      selectedCategory === category.name ||
+                      category.name === highlight
+                        ? "bg-white border border-gray-200 text-black"
+                        : "bg-black text-white hover:bg-white hover:text-black"
+                    }`}
                   >
                     {category.name}
                   </button>
