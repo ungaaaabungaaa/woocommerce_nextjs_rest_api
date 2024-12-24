@@ -409,7 +409,7 @@ export default function ChipsChategoriesFilter({
                 </SheetHeader>
                 <div className="py-4 text-black dark:text-white flex align-top justify-center flex-col">
                   <div className="flex flex-col gap-2 w-full max-w-[400px] mx-auto mt-4">
-                    {["NEWEST", "LOW - HIGH", "HIGH - LOW", "SALE"].map(
+                    {["NEWEST", "LOW - HIGH", "HIGH - LOW", "FEATURED"].map(
                       (option) => (
                         <Button
                           key={option}
