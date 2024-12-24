@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
+import StoreCards from "./storecards";
 
 interface Product {
   id: string;
@@ -104,6 +105,21 @@ function StorePage() {
     { name: "Women's Clothing", count: 11 },
   ];
 
+  interface Product {
+    id: string;
+    title: string;
+    description: string;
+    image: string;
+    hoverimage: string;
+    isNew?: boolean;
+    price: string;
+    slug: string;
+    sale_price: string;
+    regular_price: string;
+    productId: string;
+    type: string;
+  }
+
   return (
     <>
       <div>
@@ -161,6 +177,7 @@ function StorePage() {
                   // Handle sort changes here
                 }}
               />
+              <StoreCards products={products}></StoreCards>
             </div>
           </div>
         )}

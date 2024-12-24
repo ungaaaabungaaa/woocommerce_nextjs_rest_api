@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
-import { Card, CardHeader, CardBody} from "@nextui-org/card";
-import axios from 'axios';
-import { useCartKey } from '../../hooks/useCartKey';
-import { useCart } from '../../context/cartcontext';
-import { useRouter } from 'next/navigation';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import React from 'react';
+import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import axios from "axios";
+import { useCartKey } from "../../hooks/useCartKey";
+import { useCart } from "../../context/cartcontext";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import React from "react";
 
 interface Product {
   id: string;
@@ -27,24 +27,28 @@ interface Product {
   type: string;
 }
 
-export default function ProductGrid({ products = [] }: { products?: Product[] }) {
+export default function ProductGrid({
+  products = [],
+}: {
+  products?: Product[];
+}) {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
-  const router = useRouter();
-
   const safeProducts = products || [];
 
   if (safeProducts.length === 0) {
-    return <div className="text-white text-center p-4">No products available</div>;
+    return (
+      <div className="text-white text-center p-4">No products available</div>
+    );
   }
 
   const addToCart = async (productId: string, prodQuantity: number = 1) => {
     if (loading) {
-      console.log('Cart key is still loading...');
+      console.log("Cart key is still loading...");
       return;
     }
     if (cartKeyError) {
-      console.error('Error with cart key:', cartKeyError);
+      console.error("Error with cart key:", cartKeyError);
       toast.error("Error with cart key", {
         position: "top-center",
         theme: "dark",
@@ -63,14 +67,17 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
         }),
         {
           headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
+            "Content-Type": "application/x-www-form-urlencoded",
           },
         }
       );
-      console.log('Item added to cart:', response.data);
+      console.log("Item added to cart:", response.data);
       await fetchCartDetails(cartKey);
     } catch (error: any) {
-      console.error('Error adding item to cart:', error.response?.data || error.message);
+      console.error(
+        "Error adding item to cart:",
+        error.response?.data || error.message
+      );
     }
   };
 
@@ -80,11 +87,11 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 text-white bg-black dark:text-black dark:bg-white">
           {safeProducts.map((product) => (
-            <Card 
+            <Card
               key={product.id}
               shadow="none"
               className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
-            > 
+            >
               <CardBody>
                 <Link href={`/product/${product.id}`} passHref>
                   <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
@@ -100,9 +107,9 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                       fill
                       className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                     />
-          
+
                     {product.isNew && (
-                      <div 
+                      <div
                         className="absolute right-2 top-2 z-10"
                         aria-label="New product"
                       >
@@ -113,11 +120,11 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                     )}
                   </div>
                 </Link>
-          
+
                 <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
                   {product.title}
                 </h2>
-          
+
                 <div className="flex justify-between items-center mt-2">
                   {product.sale_price && product.regular_price ? (
                     <div className="flex items-center">
@@ -137,8 +144,8 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                       {product.price}
                     </span>
                   ) : null}
-          
-                  <Button 
+
+                  <Button
                     onClick={() => addToCart(product.id.toString())}
                     aria-label={`Add ${product.title} to cart`}
                     className="ml-2"
@@ -146,7 +153,7 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
                     Add to Cart
                   </Button>
                 </div>
-          
+
                 <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">
                   {product.description}
                 </p>
@@ -158,4 +165,3 @@ export default function ProductGrid({ products = [] }: { products?: Product[] })
     </div>
   );
 }
-
