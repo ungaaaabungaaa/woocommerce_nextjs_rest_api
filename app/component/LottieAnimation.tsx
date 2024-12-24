@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import React from "react";
 import { useLottie } from "lottie-react";
@@ -8,7 +8,7 @@ const LottieAnimation = () => {
   const options = {
     animationData: groovyWalkAnimation,
     loop: true,
-    height: 80
+    height: 80,
   };
   const { View } = useLottie(options);
   return <>{View}</>;

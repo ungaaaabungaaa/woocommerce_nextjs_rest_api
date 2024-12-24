@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 const WooCommerceRestApi = require("@woocommerce/woocommerce-rest-api").default;
 
 // Initialize the WooCommerce API
@@ -6,8 +6,8 @@ const api = new WooCommerceRestApi({
   url: process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL,
   consumerKey: process.env.WC_CONSUMER_KEY,
   consumerSecret: process.env.WC_CONSUMER_SECRET,
-  version: 'wc/v3',
-  queryStringAuth: true
+  version: "wc/v3",
+  queryStringAuth: true,
 });
 
 // Define the response data structure
@@ -26,17 +26,17 @@ export async function GET(req: NextRequest) {
   };
 
   const url = new URL(req.url);
-  const searchTerm = url.searchParams.get('category'); // We'll use this as a general search term
-  const perPage = url.searchParams.get('perPage') || 50;
+  const searchTerm = url.searchParams.get("category"); // We'll use this as a general search term
+  const perPage = url.searchParams.get("perPage") || 50;
 
   if (!searchTerm) {
-    responseData.error = 'Search term is required';
+    responseData.error = "Search term is required";
     return NextResponse.json(responseData, { status: 400 });
   }
 
   try {
     // First, fetch the category to get its ID
-    const categoriesResponse = await api.get('products/categories', {
+    const categoriesResponse = await api.get("products/categories", {
       slug: searchTerm,
     });
 
@@ -46,7 +46,7 @@ export async function GET(req: NextRequest) {
     // If category exists, get products from that category
     if (categoriesResponse.data.length > 0) {
       categoryId = categoriesResponse.data[0].id;
-      const categoryProductsResponse = await api.get('products', {
+      const categoryProductsResponse = await api.get("products", {
         per_page: parseInt(perPage as string),
         category: categoryId,
       });
@@ -54,14 +54,16 @@ export async function GET(req: NextRequest) {
     }
 
     // Search for products by name
-    const nameSearchResponse = await api.get('products', {
+    const nameSearchResponse = await api.get("products", {
       per_page: parseInt(perPage as string),
       search: searchTerm, // This will search product names and descriptions
     });
 
     // Combine products from both searches and remove duplicates
     const combinedProducts = [...allProducts, ...nameSearchResponse.data];
-    const uniqueProducts = Array.from(new Map(combinedProducts.map(item => [item.id, item])).values());
+    const uniqueProducts = Array.from(
+      new Map(combinedProducts.map((item) => [item.id, item])).values()
+    );
 
     // Prepare the response
     responseData.success = true;
@@ -71,19 +73,19 @@ export async function GET(req: NextRequest) {
       searchTerm: searchTerm,
       totalProductsFound: uniqueProducts.length,
       categoryMatchCount: allProducts.length,
-      nameMatchCount: nameSearchResponse.data.length
+      nameMatchCount: nameSearchResponse.data.length,
     };
 
     // Send response
     return NextResponse.json(responseData);
   } catch (error: any) {
     // Handle errors
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error);
 
-    responseData.error = error.message || 'Failed to fetch products';
+    responseData.error = error.message || "Failed to fetch products";
     responseData.debugInfo = {
       errorDetails: error.response ? error.response.data : error.toString(),
-      searchTerm: searchTerm
+      searchTerm: searchTerm,
     };
 
     return NextResponse.json(responseData, { status: 500 });

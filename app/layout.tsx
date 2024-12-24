@@ -2,12 +2,12 @@ import { ThemeProvider } from "@/app/component/theme-provider";
 import "@/styles/globals.css";
 import Footer from "@/app/component/footer";
 import Navbar from "@/app/component/navbar";
-import { CartProvider } from '@/context/cartcontext';
+import { CartProvider } from "@/context/cartcontext";
 import PayPalProvider from "@/context/PayPalProvider";
-import { Inter } from 'next/font/google';
-import { CartKeyProvider } from '@/hooks/useCartKey';
+import { Inter } from "next/font/google";
+import { CartKeyProvider } from "@/hooks/useCartKey";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Studio Universal",
@@ -31,7 +31,7 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning className={inter.className}>
@@ -56,4 +56,3 @@ export default function RootLayout({
     </html>
   );
 }
-

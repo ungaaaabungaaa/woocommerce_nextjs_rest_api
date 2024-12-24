@@ -22,13 +22,6 @@ interface Product {
 
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
-  const router = useRouter();
-
-  function ViewProduct(id: string): void {
-    console.log(id);
-    router.push(`/product/${id}`);
-  }
-
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
       {safeProducts.map((product) => (

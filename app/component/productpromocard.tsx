@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@nextui-org/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@nextui-org/button";
 
 interface ProductPromoCard extends React.HTMLAttributes<HTMLDivElement> {
-  title: string
-  discount: string
-  imageUrl: string
-  className?: string
+  title: string;
+  discount: string;
+  imageUrl: string;
+  className?: string;
 }
 
 export function ProductPromoCard({
@@ -36,15 +36,10 @@ export function ProductPromoCard({
             <p className="mb-4 text-lg font-semibold text-white md:text-xl">
               Up to {discount}% Off
             </p>
-            <Button
-              className="bg-white text-black"
-            >
-              SHOP NOW
-            </Button>
+            <Button className="bg-white text-black">SHOP NOW</Button>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
-

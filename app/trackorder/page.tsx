@@ -1,15 +1,21 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import { Divider } from "@nextui-org/divider";
-import { Package, Truck, Clock, DollarSign, HelpCircle, ShieldCheck } from 'lucide-react';
+import {
+  Package,
+  Truck,
+  Clock,
+  DollarSign,
+  HelpCircle,
+  ShieldCheck,
+} from "lucide-react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function TrackOrder() {
   const [orderNumber, setOrderNumber] = useState("");
@@ -25,12 +31,13 @@ export default function TrackOrder() {
       return response.data; // Adjust this based on the actual response structure
     } catch (error: any) {
       throw new Error(
-        error.response?.data?.message || "Failed to fetch order details");
-        toast.error("Failed to fetch order details", {
-          position: "top-center",
-          theme: "dark",
-          autoClose: 5000,
-        });
+        error.response?.data?.message || "Failed to fetch order details"
+      );
+      toast.error("Failed to fetch order details", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     }
   };
 
@@ -44,7 +51,9 @@ export default function TrackOrder() {
       const details = await fetchOrderDetails(orderNumber);
       setOrderDetails(details);
     } catch (err: any) {
-      setError(err.message || "Failed to fetch order details. Please try again.");
+      setError(
+        err.message || "Failed to fetch order details. Please try again."
+      );
       toast.error("Failed to fetch order details. Please try again", {
         position: "top-center",
         theme: "dark",
@@ -60,12 +69,16 @@ export default function TrackOrder() {
       <ToastContainer />
       <div className="h-3/4 bg-black text-white dark:bg-white dark:text-black">
         <main className="container mx-auto px-4 py-8">
-          <Card  shadow='none' className=" bg-black text-white dark:bg-white dark:text-black  max-w-2xl mx-auto">
+          <Card
+            shadow="none"
+            className=" bg-black text-white dark:bg-white dark:text-black  max-w-2xl mx-auto"
+          >
             <CardHeader className="flex flex-col items-center space-y-4">
               <Package size={48} className="text-white dark:text-black" />
               <h1 className="text-3xl font-bold">Track Your Order</h1>
               <p className="text-center text-white dark:text-black">
-                Enter your order number to see the details and status of your order.
+                Enter your order number to see the details and status of your
+                order.
               </p>
             </CardHeader>
 
@@ -74,7 +87,10 @@ export default function TrackOrder() {
             <CardBody>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="order-number" className="block text-sm font-medium text-white dark:text-black">
+                  <label
+                    htmlFor="order-number"
+                    className="block text-sm font-medium text-white dark:text-black"
+                  >
                     Order Number
                   </label>
                   <Input
@@ -101,9 +117,7 @@ export default function TrackOrder() {
               </form>
 
               {error && (
-                <div className="mt-4 p-4 rounded bg-red-800">
-                  {error}
-                </div>
+                <div className="mt-4 p-4 rounded bg-red-800">{error}</div>
               )}
 
               {orderDetails && (
@@ -122,7 +136,9 @@ export default function TrackOrder() {
                       <div>
                         <p className="text-gray-400">Order Date</p>
                         <p className="font-semibold">
-                          {new Date(orderDetails.date_created).toLocaleDateString()}
+                          {new Date(
+                            orderDetails.date_created
+                          ).toLocaleDateString()}
                         </p>
                       </div>
                     </div>
@@ -130,7 +146,9 @@ export default function TrackOrder() {
                       <Truck className="w-6 h-6" />
                       <div>
                         <p className="text-gray-400">Status</p>
-                        <p className="font-semibold capitalize">{orderDetails.status}</p>
+                        <p className="font-semibold capitalize">
+                          {orderDetails.status}
+                        </p>
                       </div>
                     </div>
                     <div className="flex items-center space-x-2">
@@ -145,21 +163,35 @@ export default function TrackOrder() {
                   <div>
                     <h3 className="text-xl font-semibold mb-2">Items</h3>
                     <ul className="space-y-2">
-                      {orderDetails.line_items.map((item: any, index: number) => (
-                        <li key={index} className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between">
-                          <span>{item.name}</span>
-                          <span>Qty: {item.quantity} - ${item.total}</span>
-                        </li>
-                      ))}
+                      {orderDetails.line_items.map(
+                        (item: any, index: number) => (
+                          <li
+                            key={index}
+                            className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between"
+                          >
+                            <span>{item.name}</span>
+                            <span>
+                              Qty: {item.quantity} - ${item.total}
+                            </span>
+                          </li>
+                        )
+                      )}
                     </ul>
                   </div>
 
                   <div>
-                    <h3 className="text-xl font-semibold mb-2">Shipping Address</h3>
+                    <h3 className="text-xl font-semibold mb-2">
+                      Shipping Address
+                    </h3>
                     <p className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg">
-                      {orderDetails.billing.first_name} {orderDetails.billing.last_name}<br />
-                      {orderDetails.billing.address_1}<br />
-                      {orderDetails.billing.city}, {orderDetails.billing.state} {orderDetails.billing.postcode}<br />
+                      {orderDetails.billing.first_name}{" "}
+                      {orderDetails.billing.last_name}
+                      <br />
+                      {orderDetails.billing.address_1}
+                      <br />
+                      {orderDetails.billing.city}, {orderDetails.billing.state}{" "}
+                      {orderDetails.billing.postcode}
+                      <br />
                       {orderDetails.billing.country}
                     </p>
                   </div>
@@ -176,12 +208,14 @@ export default function TrackOrder() {
               <div className="w-full space-y-4">
                 <div className="flex items-center">
                   <ShieldCheck className="text-white dark:text-black mr-2" />
-                  <p className="text-sm text-gray-300 dark:text-black">Your order information is secure and protected.</p>
+                  <p className="text-sm text-gray-300 dark:text-black">
+                    Your order information is secure and protected.
+                  </p>
                 </div>
                 <div className="flex items-center">
                   <HelpCircle className="text-white dark:text-black mr-2" />
                   <p className="text-sm dark:text-black text-gray-300">
-                    Need help? Contact our support team at{' '}
+                    Need help? Contact our support team at{" "}
                     <a href="mailto:support@example.com" className="underline">
                       support@example.com
                     </a>
@@ -189,11 +223,8 @@ export default function TrackOrder() {
                 </div>
               </div>
             </CardFooter>
-            
           </Card>
-          
         </main>
-        
       </div>
       <br />
       <br />

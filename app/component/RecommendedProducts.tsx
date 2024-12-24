@@ -44,8 +44,12 @@ export function RecommendedProducts({ products }: RecommendedProductsProps) {
               className="w-full h-40 object-cover"
             />
             <div className="p-4 bg-white dark:bg-black">
-              <h3 className="text-sm font-medium text-black dark:text-white truncate">{product.name}</h3>
-              <p className="mt-1 text-sm dark:text-gray-300 text-gray-600">${product.price.toFixed(2)}</p>
+              <h3 className="text-sm font-medium text-black dark:text-white truncate">
+                {product.name}
+              </h3>
+              <p className="mt-1 text-sm dark:text-gray-300 text-gray-600">
+                ${product.price.toFixed(2)}
+              </p>
             </div>
           </button>
         ))}

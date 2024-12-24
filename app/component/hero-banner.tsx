@@ -1,8 +1,8 @@
-"use client"
+"use client";
 
-import Image from "next/image"
-import { Button } from "@nextui-org/button"
-import { motion } from "framer-motion"
+import Image from "next/image";
+import { Button } from "@nextui-org/button";
+import { motion } from "framer-motion";
 
 export default function HeroBanner() {
   return (
@@ -35,20 +35,15 @@ export default function HeroBanner() {
             SALE SALE SALE
           </h1>
           <div className="flex flex-wrap gap-4 pt-6">
-            <Button
-              className="bg-transparent text-white border-white"
-            >
+            <Button className="bg-transparent text-white border-white">
               SHOP ALL
             </Button>
-            <Button
-              className="bg-white text-black hover:bg-white/90 transition-colors"
-            >
+            <Button className="bg-white text-black hover:bg-white/90 transition-colors">
               BUY NOW
             </Button>
           </div>
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
-

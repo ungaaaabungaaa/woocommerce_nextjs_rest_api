@@ -1,6 +1,6 @@
-"use client"
-import { useState, useEffect, ReactNode } from 'react';
-import { fetchCartKey } from '../utils/api';
+"use client";
+import { useState, useEffect, ReactNode } from "react";
+import { fetchCartKey } from "../utils/api";
 import NextImage from "next/image";
 import SiteLogo from "../public/sitelogo.jpeg";
 
@@ -13,17 +13,19 @@ export function useCartKey() {
   useEffect(() => {
     async function initializeCartKey() {
       try {
-        let storedCartKey = localStorage.getItem('cart_key');
+        let storedCartKey = localStorage.getItem("cart_key");
 
         if (!storedCartKey) {
           storedCartKey = await fetchCartKey();
-          localStorage.setItem('cart_key', storedCartKey);
+          localStorage.setItem("cart_key", storedCartKey);
         }
 
         setCartKey(storedCartKey);
       } catch (err) {
-        console.error('Error initializing cart key:', err);
-        setError(err instanceof Error ? err : new Error('An unknown error occurred'));
+        console.error("Error initializing cart key:", err);
+        setError(
+          err instanceof Error ? err : new Error("An unknown error occurred")
+        );
       } finally {
         setLoading(false);
       }
@@ -50,7 +52,7 @@ export function CartKeyProvider({ children }: { children: ReactNode }) {
 
   if (loading) {
     return (
-      <div className={`loading-overlay ${fadeOut ? 'fade-out' : ''}`}>
+      <div className={`loading-overlay ${fadeOut ? "fade-out" : ""}`}>
         <NextImage src={SiteLogo} alt="Site Logo" width={150} height={150} />
       </div>
     );
@@ -61,7 +63,9 @@ export function CartKeyProvider({ children }: { children: ReactNode }) {
   }
 
   if (!cartKey) {
-    return <div>Unable to initialize cart. Please try refreshing the page.</div>;
+    return (
+      <div>Unable to initialize cart. Please try refreshing the page.</div>
+    );
   }
 
   return <>{children}</>;

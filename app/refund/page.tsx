@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
-import { useState } from 'react'
-import { Button } from '@nextui-org/button'
-import { Input, Textarea } from '@nextui-org/input'
-import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card"
-import { Divider } from "@nextui-org/divider"
-import { HelpCircle, RefreshCcw, ShieldCheck } from 'lucide-react'
-import axios from 'axios'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { useState } from "react";
+import { Button } from "@nextui-org/button";
+import { Input, Textarea } from "@nextui-org/input";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
+import { Divider } from "@nextui-org/divider";
+import { HelpCircle, RefreshCcw, ShieldCheck } from "lucide-react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // API function to request refund (using POST request)
 const requestrefund = async (orderId: string, reason: string) => {
@@ -19,59 +19,69 @@ const requestrefund = async (orderId: string, reason: string) => {
     return response.data; // Adjust this based on the actual response structure
   } catch (error: any) {
     throw new Error(
-      error.response?.data?.message || "Refund Not Avaible On Cash On Delivery Orders"
+      error.response?.data?.message ||
+        "Refund Not Avaible On Cash On Delivery Orders"
     );
   }
 };
 
 export default function RefundPage() {
-  const [orderId, setOrderId] = useState('')
-  const [reason, setReason] = useState('')
-  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
-  const [message, setMessage] = useState('')
+  const [orderId, setOrderId] = useState("");
+  const [reason, setReason] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
+  const [message, setMessage] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setStatus('loading')
+    e.preventDefault();
+    setStatus("loading");
 
     try {
       // Call the real API instead of the simulation
       const response = await requestrefund(orderId, reason);
-      
+
       // Handle the response from the API
-      setStatus('success')
-      setMessage('Your refund request has been submitted successfully. We will process it within 3-5 business days.')
-      toast.success("our refund request has been submitted successfully. We will process it within 3-5 business days.", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
-
-
-
-
+      setStatus("success");
+      setMessage(
+        "Your refund request has been submitted successfully. We will process it within 3-5 business days."
+      );
+      toast.success(
+        "our refund request has been submitted successfully. We will process it within 3-5 business days.",
+        {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        }
+      );
     } catch (error: any) {
-      setStatus('error')
-      setMessage(error.message || 'An unexpected error occurred. Please try again later.')
-      toast.error( "An unexpected error occurred. Please try again later.", {
+      setStatus("error");
+      setMessage(
+        error.message || "An unexpected error occurred. Please try again later."
+      );
+      toast.error("An unexpected error occurred. Please try again later.", {
         position: "top-center",
         theme: "dark",
         autoClose: 5000,
       });
     }
-  }
+  };
 
   return (
     <>
       <div className="min-h-screen bg-black text-white dark:bg-white dark:text-black">
         <ToastContainer />
         <main className="container mx-auto px-4 py-8">
-          <Card shadow="none" className="bg-black text-white max-w-2xl mx-auto dark:bg-white dark:text-black">
+          <Card
+            shadow="none"
+            className="bg-black text-white max-w-2xl mx-auto dark:bg-white dark:text-black"
+          >
             <CardHeader className="flex flex-col items-center space-y-4">
               <RefreshCcw size={48} className="text-white dark:text-black" />
               <h1 className="text-3xl font-bold">Request a Refund</h1>
               <p className="text-center text-white dark:text-black">
-                We&apos;re sorry you&apos;re not satisfied with your purchase. Please fill out the form below to request a refund.
+                We&apos;re sorry you&apos;re not satisfied with your purchase.
+                Please fill out the form below to request a refund.
               </p>
             </CardHeader>
 
@@ -80,7 +90,10 @@ export default function RefundPage() {
             <CardBody>
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="order-id" className="block text-sm font-medium text-white dark:text-black">
+                  <label
+                    htmlFor="order-id"
+                    className="block text-sm font-medium text-white dark:text-black"
+                  >
                     Order ID
                   </label>
                   <Input
@@ -98,7 +111,10 @@ export default function RefundPage() {
                 </div>
 
                 <div>
-                  <label htmlFor="reason" className="block text-sm font-medium text-white dark:text-black">
+                  <label
+                    htmlFor="reason"
+                    className="block text-sm font-medium text-white dark:text-black"
+                  >
                     Reason for Refund
                   </label>
                   <Textarea
@@ -115,14 +131,16 @@ export default function RefundPage() {
                 <Button
                   type="submit"
                   className="w-2/4 lg:w-1/4 bg-white text-black py-2 px-4 rounded-full dark:bg-black dark:text-white"
-                  disabled={status === 'loading'}
+                  disabled={status === "loading"}
                 >
-                  {status === 'loading' ? 'Processing...' : 'Request Refund'}
+                  {status === "loading" ? "Processing..." : "Request Refund"}
                 </Button>
               </form>
 
               {message && (
-                <div className={`mt-4 p-4 rounded ${status === 'success' ? 'bg-green-800' : 'bg-red-800'}`}>
+                <div
+                  className={`mt-4 p-4 rounded ${status === "success" ? "bg-green-800" : "bg-red-800"}`}
+                >
                   {message}
                 </div>
               )}
@@ -132,15 +150,16 @@ export default function RefundPage() {
               <div className="w-full space-y-4">
                 <div className="flex items-center">
                   <ShieldCheck className="text-white dark:text-black mr-2" />
-                  <p className="text-sm text-gray-300 dark:text-black">Your refund request is secure and will be processed promptly.</p>
+                  <p className="text-sm text-gray-300 dark:text-black">
+                    Your refund request is secure and will be processed
+                    promptly.
+                  </p>
                 </div>
                 <div className="flex items-center">
                   <HelpCircle className="text-white dark:text-black mr-2" />
                   <p className="text-sm text-gray-300 dark:text-black">
-                    Need help? Contact our support team at{' '}
-                    <a href="mailto:support@example.com">
-                      support@example.com
-                    </a>
+                    Need help? Contact our support team at{" "}
+                    <a href="mailto:support@example.com">support@example.com</a>
                   </p>
                 </div>
               </div>
@@ -151,5 +170,5 @@ export default function RefundPage() {
       <br />
       <br />
     </>
-  )
+  );
 }

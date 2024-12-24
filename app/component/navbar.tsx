@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useState, useEffect } from "react";
 import {
   Navbar,
@@ -12,7 +12,14 @@ import {
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import NextImage from "next/image";
-import { Search, ShoppingBag, Truck, Moon, Sun, ChevronLeft } from 'lucide-react';
+import {
+  Search,
+  ShoppingBag,
+  Truck,
+  Moon,
+  Sun,
+  ChevronLeft,
+} from "lucide-react";
 import { Badge } from "@nextui-org/badge";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
@@ -41,7 +48,7 @@ export default function Nav_bar() {
 
   const handleSearchClick = () => {
     if (pathname === "/search") {
-      router.back(); 
+      router.back();
     } else {
       router.push("/search");
     }
@@ -60,7 +67,7 @@ export default function Nav_bar() {
   };
 
   const toggleTheme = () => {
-    setTheme(theme === 'dark' ? 'light' : 'dark');
+    setTheme(theme === "dark" ? "light" : "dark");
   };
 
   const menuItems = [
@@ -91,46 +98,58 @@ export default function Nav_bar() {
   return (
     <div className="sticky top-0 z-50">
       <div className="relative">
-        <Navbar maxWidth="xl" className="bg-white text-black dark:bg-black dark:text-white h-10">
+        <Navbar
+          maxWidth="xl"
+          className="bg-white text-black dark:bg-black dark:text-white h-10"
+        >
           <NavbarContent className="sm:flex gap-4" justify="start">
             <NavbarBrand className="pr-4 hidden sm:flex">
               <div className="flex items-center gap-2">
                 <ChevronLeft className="h-3 w-3" />
                 <span className="text-xs">StudioUniversal.com</span>
-              </div>              
+              </div>
             </NavbarBrand>
           </NavbarContent>
 
-          <NavbarContent className="flex absolute left-1/2 transform -translate-x-1/2" justify="center">
-            <p className="text-xs font-medium">Official Universal Studio Store</p>
+          <NavbarContent
+            className="flex absolute left-1/2 transform -translate-x-1/2"
+            justify="center"
+          >
+            <p className="text-xs font-medium">
+              Official Universal Studio Store
+            </p>
           </NavbarContent>
 
           <NavbarContent justify="end" className="gap-4">
             <nav className="hidden gap-4 md:flex">
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
               >
                 Help
               </Link>
-              <Link 
-                href="/trackorder" 
+              <Link
+                href="/trackorder"
                 className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
               >
                 Orders & Returns
               </Link>
-            </nav>            
+            </nav>
           </NavbarContent>
         </Navbar>
-        
-        <Navbar maxWidth="xl" className="bg-black text-white dark:bg-white dark:text-black" onMenuOpenChange={setIsMenuOpen}>
+
+        <Navbar
+          maxWidth="xl"
+          className="bg-black text-white dark:bg-white dark:text-black"
+          onMenuOpenChange={setIsMenuOpen}
+        >
           <NavbarContent className="sm:flex gap-4" justify="start">
             <NavbarMenuToggle
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               className="sm:hidden"
             />
             <NavbarBrand className="pr-4">
-              {mounted && theme === 'dark' ? (
+              {mounted && theme === "dark" ? (
                 <NextImage
                   onClick={handleLogoClick}
                   src={SiteLogoDark}
@@ -151,10 +170,13 @@ export default function Nav_bar() {
                   className="cursor-pointer"
                 />
               ) : (
-                <div style={{ width: 120, height: 40 }} className="cursor-pointer" />
+                <div
+                  style={{ width: 120, height: 40 }}
+                  className="cursor-pointer"
+                />
               )}
             </NavbarBrand>
-            
+
             <NavbarContent className="hidden sm:flex gap-8" justify="start">
               {megaMenus.map((menu) => (
                 <NavbarItem
@@ -177,19 +199,28 @@ export default function Nav_bar() {
               shape="circle"
               color="danger"
             >
-              <ShoppingBag onClick={handleCartClick} className="h-5 cursor-pointer text-white dark:text-black" />
+              <ShoppingBag
+                onClick={handleCartClick}
+                className="h-5 cursor-pointer text-white dark:text-black"
+              />
             </Badge>
             {mounted && (
               <button onClick={toggleTheme} className="focus:outline-none">
-                {theme === 'dark' ? (
+                {theme === "dark" ? (
                   <Sun className="h-5 cursor-pointer text-white dark:text-black" />
                 ) : (
                   <Moon className="h-5 cursor-pointer text-white dark:text-black" />
                 )}
               </button>
             )}
-            <Search onClick={handleSearchClick} className="h-5 cursor-pointer text-white dark:text-black" />
-            <Truck onClick={handleTrackOrderClick} className="h-5 cursor-pointer text-white dark:text-black" />
+            <Search
+              onClick={handleSearchClick}
+              className="h-5 cursor-pointer text-white dark:text-black"
+            />
+            <Truck
+              onClick={handleTrackOrderClick}
+              className="h-5 cursor-pointer text-white dark:text-black"
+            />
           </NavbarContent>
 
           <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">
@@ -215,9 +246,9 @@ export default function Nav_bar() {
             <div
               key={menu.name}
               className={`absolute top-0 left-0 w-full transition-all duration-300 ${
-                visibleMegaMenu === menu.name 
-                  ? 'opacity-100 visible' 
-                  : 'opacity-0 invisible pointer-events-none'
+                visibleMegaMenu === menu.name
+                  ? "opacity-100 visible"
+                  : "opacity-0 invisible pointer-events-none"
               }`}
               onMouseEnter={() => setVisibleMegaMenu(menu.name)}
               onMouseLeave={() => setVisibleMegaMenu("")}

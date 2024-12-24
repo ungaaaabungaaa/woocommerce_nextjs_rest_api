@@ -1,9 +1,9 @@
-'use client'
+"use client";
 
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import Image from 'next/image';
-import { useCartKey } from '../../hooks/useCartKey';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import Image from "next/image";
+import { useCartKey } from "../../hooks/useCartKey";
 
 interface CartItem {
   item_key: string;
@@ -16,7 +16,7 @@ interface CartItem {
 
 interface CartData {
   items: CartItem[];
-  totals: { 
+  totals: {
     subtotal: string;
     total: string;
   };
@@ -38,7 +38,7 @@ export default function MiniCart() {
       const response = await axios.get(url, { params: { cart_key: cartKey } });
       setCartData(response.data);
     } catch (err) {
-      console.error('Error fetching cart details:', err);
+      console.error("Error fetching cart details:", err);
     }
   };
 
@@ -72,7 +72,11 @@ export default function MiniCart() {
               </div>
               <div className="text-right">
                 <p className="font-semibold">
-                  ${(parseFloat(item.price) * item.quantity.value / 100).toFixed(2)}
+                  $
+                  {(
+                    (parseFloat(item.price) * item.quantity.value) /
+                    100
+                  ).toFixed(2)}
                 </p>
               </div>
             </div>
@@ -80,11 +84,15 @@ export default function MiniCart() {
           <div className="mt-4 pt-4">
             <div className="flex justify-between">
               <span className="font-medium">Subtotal</span>
-              <span className="font-semibold">${parseFloat(cartData.totals.subtotal) / 100}</span>
+              <span className="font-semibold">
+                ${parseFloat(cartData.totals.subtotal) / 100}
+              </span>
             </div>
             <div className="flex justify-between mt-2">
               <span className="font-medium">Total</span>
-              <span className="font-semibold">${parseFloat(cartData.totals.total) / 100}</span>
+              <span className="font-semibold">
+                ${parseFloat(cartData.totals.total) / 100}
+              </span>
             </div>
           </div>
         </div>
@@ -94,4 +102,3 @@ export default function MiniCart() {
     </div>
   );
 }
-

@@ -1,7 +1,7 @@
-'use client'
-import { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
-import { useCartKey } from '../hooks/useCartKey';
+"use client";
+import { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
+import { useCartKey } from "../hooks/useCartKey";
 
 const CartContext = createContext();
 
@@ -10,7 +10,11 @@ export const CartProvider = ({ children }) => {
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const { cartKey, loading: cartKeyLoading, error: cartKeyError } = useCartKey();
+  const {
+    cartKey,
+    loading: cartKeyLoading,
+    error: cartKeyError,
+  } = useCartKey();
 
   useEffect(() => {
     if (!cartKeyLoading && cartKey) {
@@ -26,7 +30,7 @@ export const CartProvider = ({ children }) => {
       setCartData(response.data);
       setCartCount(Object.keys(response.data.items || {}).length); // Calculate item count
     } catch (err) {
-      console.error('Error fetching cart details:', err);
+      console.error("Error fetching cart details:", err);
       setError(err);
     } finally {
       setLoading(false);

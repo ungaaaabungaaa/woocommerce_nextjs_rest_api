@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 import { Carousel, Card } from "@/components/ui/apple-cards-carousel";
 
-
 // Fallback data
 const fallbackData = [
   {
@@ -40,7 +39,6 @@ const fallbackData = [
 
 export function AppleCardsCarouselDemo() {
   const [categories, setCategories] = useState(fallbackData);
-  
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -48,13 +46,13 @@ export function AppleCardsCarouselDemo() {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_SITE_URL}/api/getcategories`
         );
-        
+
         if (!response.ok) {
-          throw new Error('Failed to fetch categories');
+          throw new Error("Failed to fetch categories");
         }
 
         const data = await response.json();
-        
+
         // Transform API data to match our card format
         const transformedData = data.map((category: any) => ({
           category: category.name,
@@ -80,8 +78,7 @@ export function AppleCardsCarouselDemo() {
 
   return (
     <div className="w-full h-full py-4 dark:bg-white dark:text-black">
-      <Carousel items={cards}
-       title="Shop By Categories"  />
+      <Carousel items={cards} title="Shop By Categories" />
     </div>
   );
 }

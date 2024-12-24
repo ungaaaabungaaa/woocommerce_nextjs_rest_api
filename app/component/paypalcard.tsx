@@ -1,6 +1,6 @@
 import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/card";
 import Image from "next/image";
-import PaypalImage from '../../public/paypal.png'
+import PaypalImage from "../../public/paypal.png";
 
 export default function PaypalCard() {
   return (

@@ -1,4 +1,4 @@
-import { Package, RefreshCcw, Shield } from 'lucide-react'
+import { Package, RefreshCcw, Shield } from "lucide-react";
 
 export default function PromoBar() {
   return (
@@ -8,7 +8,9 @@ export default function PromoBar() {
           <Package className="h-12 w-12 text-foreground" />
           <div className="flex flex-col">
             <h3 className="font-semibold">FREE SHIPPING</h3>
-            <p className="text-sm text-muted-foreground">Free Express Shipping on orders over $100</p>
+            <p className="text-sm text-muted-foreground">
+              Free Express Shipping on orders over $100
+            </p>
           </div>
         </div>
 
@@ -16,7 +18,9 @@ export default function PromoBar() {
           <RefreshCcw className="h-12 w-12 text-foreground" />
           <div className="flex flex-col">
             <h3 className="font-semibold">EASY RETURNS</h3>
-            <p className="text-sm text-muted-foreground">Orders can be returned in 30 days</p>
+            <p className="text-sm text-muted-foreground">
+              Orders can be returned in 30 days
+            </p>
           </div>
         </div>
 
@@ -24,10 +28,12 @@ export default function PromoBar() {
           <Shield className="h-12 w-12 text-foreground" />
           <div className="flex flex-col">
             <h3 className="font-semibold">SECURE PAYMENT</h3>
-            <p className="text-sm text-muted-foreground">Paypal credit & debit cards accepted</p>
+            <p className="text-sm text-muted-foreground">
+              Paypal credit & debit cards accepted
+            </p>
           </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
