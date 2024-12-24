@@ -76,8 +76,15 @@ export default function ChipsChategoriesFilter({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const genderOptions = ["MENS", "WOMENS", "UNISEX", "YOUTH"];
-  const sizeOptions = ["XS", "S", "M", "L", "XL", "2XL"];
+  const genderOptions = [
+    "MENS",
+    "WOMENS",
+    "UNISEX",
+    "YOUTH",
+    "GAY",
+    "BISEXUAL",
+  ];
+  const sizeOptions = ["XS", "S", "M", "L", "XL", "2XL", "3XL"];
   const colorOptions = [
     { name: "White", value: "white" },
     { name: "Black", value: "black" },
@@ -311,7 +318,7 @@ export default function ChipsChategoriesFilter({
                           {colorOptions.map((color) => (
                             <Button
                               key={color.value}
-                              className={`${
+                              className={`relative ${
                                 selectedColors.includes(color.value)
                                   ? "bg-black text-white"
                                   : "bg-white text-black border border-gray-200"
@@ -324,6 +331,10 @@ export default function ChipsChategoriesFilter({
                                 )
                               }
                             >
+                              <div
+                                className="w-4 h-4 rounded-full mr-2 inline-block border border-gray-200"
+                                style={{ backgroundColor: color.value }}
+                              />
                               {color.name}
                             </Button>
                           ))}
@@ -352,13 +363,13 @@ export default function ChipsChategoriesFilter({
 
                     <div className="flex flex-col gap-2 mt-4 px-2">
                       <Button
-                        className="w-full bg-black text-white hover:bg-gray-800"
+                        className="w-full bg-black text-white dark:bg-white dark:text-black"
                         onClick={applyFilters}
                       >
                         Apply Filters
                       </Button>
                       <Button
-                        className="w-full bg-white text-black border border-gray-200 hover:bg-gray-100"
+                        className="w-full bg-white text-black dark:bg-black dark:text-white"
                         onClick={clearFilters}
                       >
                         Clear All
