@@ -28,6 +28,7 @@ type FilterProductsFunction = (
 function StorePage() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
@@ -38,6 +39,28 @@ function StorePage() {
           response.data.products &&
           response.data.products.length > 0
         ) {
+          const fetchedProducts: Product[] = response.data.products.map(
+            (product: any) => ({
+              id: product.id,
+              productId: product.id.toString(),
+              title: product.name,
+              description: product.short_description || product.description,
+              image:
+                product.images?.[0]?.src || "https://via.placeholder.com/800",
+              hoverimage:
+                product.images?.[1]?.src ||
+                product.images?.[0]?.src ||
+                "https://via.placeholder.com/800",
+              isNew: product.featured,
+              price: `$${product.price}`,
+              regular_price: product.regular_price,
+              sale_price: product.sale_price,
+              slug: product.slug,
+              type: product.type || "simple",
+            })
+          );
+          setProducts(fetchedProducts);
+          console.log(fetchedProducts);
           setError(null);
         } else {
           setError("No products found.");
