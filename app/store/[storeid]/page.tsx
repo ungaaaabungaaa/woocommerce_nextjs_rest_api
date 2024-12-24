@@ -63,6 +63,18 @@ function StoreId({ params }: { params: Params }) {
     return doc.body.textContent || "";
   };
 
+  const categories = [
+    { name: "Accessories", count: 6 },
+    { name: "Core", count: 10 },
+    { name: "Footwear", count: 0 },
+    { name: "Kids' Clothing", count: 9 },
+    { name: "Men's Clothing", count: 11 },
+    { name: "New Arrivals", count: 10 },
+    { name: "Shop By Fit", count: 10 },
+    { name: "T-Shirts", count: 4 },
+    { name: "Women's Clothing", count: 11 },
+  ];
+
   return (
     <>
       <div>
@@ -117,8 +129,18 @@ function StoreId({ params }: { params: Params }) {
                 {decodeURIComponent(params.storeid)}
               </h2>
               <br></br>
+
               <ChipsChategoriesFilter
+                categories={categories}
                 highlight={decodeURIComponent(params.storeid).toUpperCase()}
+                onFilterChange={(filters) => {
+                  console.log("Fuck bro ", filters);
+                  // Handle filter changes here
+                }}
+                onSortChange={(sortOption) => {
+                  console.log("Dude WTF", sortOption);
+                  // Handle sort changes here
+                }}
               />
             </div>
           </div>
