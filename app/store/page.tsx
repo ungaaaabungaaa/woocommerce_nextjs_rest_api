@@ -176,6 +176,9 @@ function StorePage() {
 
 export default StorePage;
 
-// apply filter on the fetched data
-// remap the data into the store cards
-// apply it on the storecards
+// inside the productfilter.TS only do the mapping return data so its easier
+// then usesate to apply the filtered list to the product store
+// then cart popup
+// cart hover on mega menu
+// alignments
+// checkoutpage improvements

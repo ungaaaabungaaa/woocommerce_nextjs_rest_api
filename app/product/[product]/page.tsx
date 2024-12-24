@@ -200,12 +200,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           },
         }
       );
-      console.log("Item added to cart:", response.data);
-      toast.success("'Item added to cart", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
     } catch (error: any) {
       console.error(
@@ -252,12 +246,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
     try {
       const response = await axios.post(endpoint, data);
-      console.log("Item added to cart:", response.data);
-      toast.success("'Item added to cart", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
     } catch (error: any) {
       console.error(
