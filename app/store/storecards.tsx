@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@nextui-org/button";
 import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import { useRouter } from "next/navigation";
 
 interface Product {
   id: string;
@@ -21,10 +22,11 @@ interface Product {
 
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
-  if (safeProducts.length === 0) {
-    return (
-      <div className="text-white text-center p-4">No products available</div>
-    );
+  const router = useRouter();
+
+  function ViewProduct(id: string): void {
+    console.log(id);
+    router.push(`/product/${id}`);
   }
 
   return (

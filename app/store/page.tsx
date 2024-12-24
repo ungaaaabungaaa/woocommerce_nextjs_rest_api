@@ -61,7 +61,6 @@ function StorePage() {
             })
           );
           setProducts(fetchedProducts);
-          console.log(fetchedProducts);
           setError(null);
         } else {
           setError("No products found.");
@@ -82,16 +81,6 @@ function StorePage() {
         });
       });
   }, []);
-
-  function ViewProduct(id: string): void {
-    console.log(id);
-    router.push(`/product/${id}`);
-  }
-
-  const sanitizeHTML = (html: string): string => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  };
 
   const categories = [
     { name: "Accessories", count: 6 },
@@ -167,7 +156,6 @@ function StorePage() {
               <br></br>
               <ChipsChategoriesFilter
                 categories={categories}
-                highlight="HOODIES" // Optional: Category to highlight
                 onFilterChange={(filters) => {
                   console.log("Fuck bro ", filters);
                   // Handle filter changes here
@@ -187,3 +175,7 @@ function StorePage() {
 }
 
 export default StorePage;
+
+// apply filter on the fetched data
+// remap the data into the store cards
+// apply it on the storecards

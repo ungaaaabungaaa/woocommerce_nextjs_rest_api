@@ -144,19 +144,7 @@ export default function ProductGrid({
                       {product.price}
                     </span>
                   ) : null}
-
-                  <Button
-                    onClick={() => addToCart(product.id.toString())}
-                    aria-label={`Add ${product.title} to cart`}
-                    className="ml-2"
-                  >
-                    Add to Cart
-                  </Button>
                 </div>
-
-                <p className="max-w-[26rem] text-left text-base/6 text-white dark:text-black mt-2">
-                  {product.description}
-                </p>
               </CardBody>
             </Card>
           ))}
