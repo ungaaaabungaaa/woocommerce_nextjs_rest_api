@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@nextui-org/button";
 import {
   Sheet,
@@ -68,14 +68,11 @@ export default function ChipsChategoriesFilter({
   onFilterChange,
   onSortChange,
 }: ChipsCategoriesFilterProps) {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
   >(null);
   const [selectedSort, setSelectedSort] = useState<SortOption>("RECOMMENDED");
   const [isMobile, setIsMobile] = useState(false);
-  const [totalProducts, setTotalProducts] = useState(0);
   const [selectedGender, setSelectedGender] = useState<string[]>([]);
   const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
@@ -83,18 +80,8 @@ export default function ChipsChategoriesFilter({
   const [isAccordionDefaultOpen, setIsAccordionDefaultOpen] = useState(true);
   const router = useRouter();
 
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setIsAccordionDefaultOpen(window.innerWidth >= 768);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
-
-  useEffect(() => {
+  // Memoize processed categories
+  const { categories, totalProducts, selectedCategory } = useMemo(() => {
     const filteredCategories = filterCategories(initialCategories)
       .filter((category) => !notDisplay.includes(category.name.toUpperCase()))
       .map((category) => ({
@@ -114,13 +101,27 @@ export default function ChipsChategoriesFilter({
       : filteredCategories;
 
     const total = calculateTotalProducts(rearrangedCategories);
-    setTotalProducts(total);
-    setCategories(rearrangedCategories);
+    const selected =
+      rearrangedCategories.length > 0 ? rearrangedCategories[0].name : "";
 
-    if (rearrangedCategories.length > 0) {
-      setSelectedCategory(rearrangedCategories[0].name);
-    }
+    return {
+      categories: rearrangedCategories,
+      totalProducts: total,
+      selectedCategory: selected,
+    };
   }, [initialCategories, notDisplay, highlight]);
+
+  // Handle window resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+      setIsAccordionDefaultOpen(window.innerWidth >= 768);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const genderOptions = [
     "MENS",
@@ -145,11 +146,10 @@ export default function ChipsChategoriesFilter({
     value: string,
     setter: (value: string[]) => void
   ) => {
-    if (array.includes(value)) {
-      setter(array.filter((item) => item !== value));
-    } else {
-      setter([...array, value]);
-    }
+    const newArray = array.includes(value)
+      ? array.filter((item) => item !== value)
+      : [...array, value];
+    setter(newArray);
   };
 
   const handlePriceChange = (value: number | number[]) => {

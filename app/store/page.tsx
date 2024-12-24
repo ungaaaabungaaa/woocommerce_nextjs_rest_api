@@ -71,11 +71,15 @@ function StorePage() {
   };
 
   const categories = [
-    { name: "T-SHIRTS", count: 150 },
-    { name: "HOODIES", count: 75 },
-    { name: "ACCESSORIES", count: 50 },
-    { name: "PANTS", count: 45 },
-    { name: "SHOES", count: 80 },
+    { name: "Accessories", count: 6 },
+    { name: "Core", count: 10 },
+    { name: "Footwear", count: 0 },
+    { name: "Kids' Clothing", count: 9 },
+    { name: "Men's Clothing", count: 11 },
+    { name: "New Arrivals", count: 10 },
+    { name: "Shop By Fit", count: 10 },
+    { name: "T-Shirts", count: 4 },
+    { name: "Women's Clothing", count: 11 },
   ];
 
   return (
@@ -144,7 +148,3 @@ function StorePage() {
 }
 
 export default StorePage;
-
-// from the context api get the filters
-// then filter it
-// handle view products
