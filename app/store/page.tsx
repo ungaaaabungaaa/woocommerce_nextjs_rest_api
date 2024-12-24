@@ -6,7 +6,6 @@ import { Button } from "@nextui-org/button";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { filterProducts } from "./productFilters";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
 
