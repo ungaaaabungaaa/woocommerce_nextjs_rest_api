@@ -179,6 +179,7 @@ export default StorePage;
 // inside the productfilter.TS only do the mapping return data so its easier
 // then usesate to apply the filtered list to the product store
 // then cart popup
-// cart hover on mega menu
+// rounded edges for the filters
+// align the bottons in the filters mobile 50% 50%
 // alignments
 // checkoutpage improvements

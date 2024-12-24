@@ -6,9 +6,11 @@ interface FilterOptions {
     min: number;
     max: number;
   };
-  isNew?: boolean;
-  isFeatured?: boolean;
-  sortBy?: "price-asc" | "price-desc";
+  isNew?: boolean; // Filter for newest products
+  isFeatured?: boolean; // Filter for featured products
+  sortBy?: "price-asc" | "price-desc"; // Sorting by price
+  filterByFeatured?: boolean; // Additional flag to filter featured products
+  filterByNewest?: boolean; // Additional flag to filter newest products
 }
 
 interface Product {
@@ -17,6 +19,13 @@ interface Product {
   price: string;
   featured: boolean;
   date_created: string;
+  description?: string;
+  short_description?: string;
+  images?: Array<{ src: string }>;
+  regular_price?: string;
+  sale_price?: string;
+  slug: string;
+  type?: string;
   attributes: Array<{
     name: string;
     options: string[];
@@ -64,18 +73,36 @@ export function filterProducts(products: Product[], filters: FilterOptions) {
 
         // Featured products filter
         !filters.isFeatured || product.featured,
+
+        // Filter by featured products (if filterByFeatured is true)
+        !filters.filterByFeatured || product.featured,
+
+        // Filter by newest products (if filterByNewest is true)
+        !filters.filterByNewest ||
+          new Date(product.date_created) >=
+            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Newest products within the last 7 days
       ];
 
       return conditions.every((condition) => condition);
     })
-    .sort((a, b) => {
-      // Sort by price if specified
-      if (filters.sortBy === "price-asc") {
-        return parseFloat(a.price) - parseFloat(b.price);
-      }
-      if (filters.sortBy === "price-desc") {
-        return parseFloat(b.price) - parseFloat(a.price);
-      }
-      return 0;
+    .map((product) => {
+      // Map filtered products to the desired structure
+      return {
+        id: product.id,
+        productId: product.id.toString(),
+        title: product.name,
+        description: product.short_description || product.description,
+        image: product.images?.[0]?.src || "https://via.placeholder.com/800",
+        hoverimage:
+          product.images?.[1]?.src ||
+          product.images?.[0]?.src ||
+          "https://via.placeholder.com/800",
+        isNew: product.featured,
+        price: `$${product.price}`,
+        regular_price: product.regular_price,
+        sale_price: product.sale_price,
+        slug: product.slug,
+        type: product.type || "simple",
+      };
     });
 }
