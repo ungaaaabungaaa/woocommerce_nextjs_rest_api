@@ -10,17 +10,15 @@ import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
 import StoreCards from "./storecards";
 import { filterProducts, processProducts } from "./productFilters";
+import { sortProducts } from "./sortProducts";
 interface Product {
   id: string;
-  // Add other product properties here
 }
 
 interface FilterOptions {
   sortBy: string;
-  // Add other filter options here
 }
 
-// Define the type for the filterProducts function
 type FilterProductsFunction = (
   products: Product[],
   options: FilterOptions
@@ -33,6 +31,8 @@ function StorePage() {
 
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
@@ -63,6 +63,7 @@ function StorePage() {
           );
           setProducts(fetchedProducts);
           setAllProducts(fetchedProducts);
+          setDisplayedProducts(fetchedProducts);
           setError(null);
         } else {
           setError("No products found.");
@@ -159,18 +160,20 @@ function StorePage() {
               <ChipsChategoriesFilter
                 categories={categories}
                 onFilterChange={(filters) => {
-                  console.log("Filtered List ", filters);
                   const processedProducts = processProducts(
                     filteredProducts,
                     filters
                   );
-                  console.log(processedProducts);
+                  setDisplayedProducts(processedProducts);
                 }}
                 onSortChange={(sortOption) => {
-                  console.log("Sorted List", sortOption);
+                  const processedProducts = sortProducts(
+                    filteredProducts,
+                    sortOption.toString()
+                  );
                 }}
               />
-              <StoreCards products={allProducts}></StoreCards>
+              <StoreCards products={displayedProducts}></StoreCards>
             </div>
           </div>
         )}
@@ -180,12 +183,3 @@ function StorePage() {
 }
 
 export default StorePage;
-
-// inside the productfilter.TS only do the mapping return data so its easier
-
-// then usesate to apply the filtered list to the product store
-// then cart popup
-// rounded edges for the filters
-// align the bottons in the filters mobile 50% 50%
-// alignments
-// checkoutpage improvements
