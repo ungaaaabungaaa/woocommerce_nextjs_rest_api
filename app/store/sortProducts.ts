@@ -1,11 +1,29 @@
-import { Product } from "../types/product";
+interface Product {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  hoverimage: string;
+  isNew?: boolean;
+  price: string;
+  slug: string;
+  sale_price: string;
+  regular_price: string;
+  productId: string;
+  type: string;
+  date_created?: string; // Assuming it's a string, if it's a Date object, adjust accordingly
+  featured?: boolean; // Adding this property
+  name?: string; // Adding this property
+  short_description?: string; // Adding this property
+  images?: { src: string }[]; // Adding images array with src property
+}
 
 export type SortOption =
   | "LOW - HIGH"
   | "HIGH - LOW"
   | "NEWEST"
   | "FEATURED"
-  | String;
+  | string;
 
 export function sortProducts(
   products: Product[],

@@ -171,6 +171,7 @@ function StorePage() {
                     filteredProducts,
                     sortOption.toString()
                   );
+                  setDisplayedProducts(processedProducts);
                 }}
               />
               <StoreCards products={displayedProducts}></StoreCards>

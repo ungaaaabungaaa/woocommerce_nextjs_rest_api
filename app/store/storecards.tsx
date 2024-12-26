@@ -19,7 +19,6 @@ interface Product {
   productId: string;
   type: string;
 }
-
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
   return (
