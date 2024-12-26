@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
 import StoreCards from "./storecards";
-import { filterProducts } from "./productFilters";
+import { filterProducts, processProducts } from "./productFilters";
 interface Product {
   id: string;
   // Add other product properties here
@@ -50,18 +50,15 @@ function StorePage() {
               productId: product.id.toString(),
               title: product.name,
               description: product.short_description || product.description,
-              image:
-                product.images?.[0]?.src || "https://via.placeholder.com/800",
+              image: product.images?.[0]?.src || "",
               hoverimage:
-                product.images?.[1]?.src ||
-                product.images?.[0]?.src ||
-                "https://via.placeholder.com/800",
+                product.images?.[1]?.src || product.images?.[0]?.src || "",
               isNew: product.featured,
               price: `$${product.price}`,
               regular_price: product.regular_price,
               sale_price: product.sale_price,
               slug: product.slug,
-              type: product.type || "simple",
+              type: product.type || "",
             })
           );
           setProducts(fetchedProducts);
@@ -163,21 +160,14 @@ function StorePage() {
                 categories={categories}
                 onFilterChange={(filters) => {
                   console.log("Filtered List ", filters);
-                  const filteredProducts_X = filterProducts(
+                  const processedProducts = processProducts(
                     filteredProducts,
                     filters
                   );
-                  console.log(filteredProducts_X);
+                  console.log(processedProducts);
                 }}
                 onSortChange={(sortOption) => {
                   console.log("Sorted List", sortOption);
-                  // sort options are like this
-
-                  // NEWEST
-                  // FEATURED
-                  // LOW-HIGH
-                  // HIGH-LOW
-                  // am not able to just send this string and sort my list
                 }}
               />
               <StoreCards products={allProducts}></StoreCards>

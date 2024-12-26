@@ -15,6 +15,12 @@ export interface Product {
     variation: boolean;
   }>;
   date_created: string;
+  images?: Array<{ src: string }>;
+  featured?: boolean;
+  short_description?: string;
+  description?: string;
+  slug?: string;
+  type?: string;
 }
 
 export const filterProducts = (
@@ -109,10 +115,24 @@ export const processProducts = (
   products: Product[],
   filters: FilterState,
   sortOption?: string
-): Product[] => {
+): any[] => {
   let processedProducts = filterProducts(products, filters);
   if (sortOption) {
     processedProducts = sortProducts(processedProducts, sortOption);
   }
-  return processedProducts;
+
+  return processedProducts.map((product) => ({
+    id: product.id,
+    productId: product.id.toString(),
+    title: product.name,
+    description: product.short_description || product.description,
+    image: product.images?.[0]?.src || "",
+    hoverimage: product.images?.[1]?.src || product.images?.[0]?.src || "",
+    isNew: product.featured,
+    price: `$${product.price}`,
+    regular_price: product.regular_price,
+    sale_price: product.sale_price,
+    slug: product.slug,
+    type: product.type || "",
+  }));
 };
