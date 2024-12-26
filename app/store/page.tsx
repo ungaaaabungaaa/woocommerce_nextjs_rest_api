@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
 import StoreCards from "./storecards";
-
+import { filterProducts } from "./productFilters";
 interface Product {
   id: string;
   // Add other product properties here
@@ -31,6 +31,9 @@ function StorePage() {
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
 
+  const [allProducts, setAllProducts] = useState<any[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+
   useEffect(() => {
     axios
       .get<{ products: Product[] }>(`/api/getproduct`)
@@ -40,6 +43,7 @@ function StorePage() {
           response.data.products &&
           response.data.products.length > 0
         ) {
+          setFilteredProducts(response.data.products);
           const fetchedProducts: Product[] = response.data.products.map(
             (product: any) => ({
               id: product.id,
@@ -61,6 +65,7 @@ function StorePage() {
             })
           );
           setProducts(fetchedProducts);
+          setAllProducts(fetchedProducts);
           setError(null);
         } else {
           setError("No products found.");
@@ -157,15 +162,25 @@ function StorePage() {
               <ChipsChategoriesFilter
                 categories={categories}
                 onFilterChange={(filters) => {
-                  console.log("Fuck bro ", filters);
-                  // Handle filter changes here
+                  console.log("Filtered List ", filters);
+                  const filteredProducts_X = filterProducts(
+                    filteredProducts,
+                    filters
+                  );
+                  console.log(filteredProducts_X);
                 }}
                 onSortChange={(sortOption) => {
-                  console.log("Dude WTF", sortOption);
-                  // Handle sort changes here
+                  console.log("Sorted List", sortOption);
+                  // sort options are like this
+
+                  // NEWEST
+                  // FEATURED
+                  // LOW-HIGH
+                  // HIGH-LOW
+                  // am not able to just send this string and sort my list
                 }}
               />
-              <StoreCards products={products}></StoreCards>
+              <StoreCards products={allProducts}></StoreCards>
             </div>
           </div>
         )}
@@ -177,6 +192,7 @@ function StorePage() {
 export default StorePage;
 
 // inside the productfilter.TS only do the mapping return data so its easier
+
 // then usesate to apply the filtered list to the product store
 // then cart popup
 // rounded edges for the filters

@@ -1,108 +1,118 @@
-interface FilterOptions {
-  color?: string;
-  size?: string;
-  gender?: string;
-  priceRange?: {
-    min: number;
-    max: number;
-  };
-  isNew?: boolean; // Filter for newest products
-  isFeatured?: boolean; // Filter for featured products
-  sortBy?: "price-asc" | "price-desc"; // Sorting by price
-  filterByFeatured?: boolean; // Additional flag to filter featured products
-  filterByNewest?: boolean; // Additional flag to filter newest products
-}
+import { FilterState } from "../types/types";
 
-interface Product {
+export interface Product {
   id: number;
   name: string;
   price: string;
-  featured: boolean;
-  date_created: string;
-  description?: string;
-  short_description?: string;
-  images?: Array<{ src: string }>;
-  regular_price?: string;
-  sale_price?: string;
-  slug: string;
-  type?: string;
+  regular_price: string;
+  sale_price: string;
+  categories: Array<{ id: number; name: string; slug: string }>;
   attributes: Array<{
-    name: string;
-    options: string[];
-  }>;
-  categories: Array<{
+    id: number;
     name: string;
     slug: string;
+    options: string[];
+    variation: boolean;
   }>;
+  date_created: string;
 }
 
-export function filterProducts(products: Product[], filters: FilterOptions) {
-  return products
-    .filter((product) => {
-      // Match all filter conditions
-      const conditions: any[] = [
-        // Color filter
-        !filters.color ||
-          product.attributes.some(
-            (attr) =>
-              attr.name === "Color" && attr.options.includes(filters.color!)
-          ),
+export const filterProducts = (
+  products: Product[],
+  filters: FilterState
+): Product[] => {
+  return products.filter((product) => {
+    if (filters.gender.length > 0) {
+      const genderAttribute = product.attributes.find(
+        (attr) => attr.name === "Gender" || attr.slug === "pa_gender"
+      );
+      if (!genderAttribute?.options.length) return false;
 
-        // Size filter
-        !filters.size ||
-          product.attributes.some(
-            (attr) =>
-              attr.name === "Size" && attr.options.includes(filters.size!)
-          ),
+      const hasMatchingGender = filters.gender.some((gender) =>
+        genderAttribute.options
+          .map((g) => g.toLowerCase())
+          .includes(gender.toLowerCase())
+      );
+      if (!hasMatchingGender) return false;
+    }
 
-        // Gender filter (from categories)
-        !filters.gender ||
-          product.categories.some((cat) =>
-            cat.slug.includes(filters.gender!.toLowerCase())
-          ),
+    if (filters.sizes.length > 0) {
+      const sizeAttribute = product.attributes.find(
+        (attr) => attr.name === "Size" || attr.slug === "pa_size"
+      );
+      if (!sizeAttribute?.options.length) return false;
 
-        // Price range filter
-        !filters.priceRange ||
-          (parseFloat(product.price) >= filters.priceRange.min &&
-            parseFloat(product.price) <= filters.priceRange.max),
+      const hasMatchingSize = filters.sizes.some((size) =>
+        sizeAttribute.options
+          .map((s) => s.toUpperCase())
+          .includes(size.toUpperCase())
+      );
+      if (!hasMatchingSize) return false;
+    }
 
-        // New arrivals filter (within last 30 days)
-        !filters.isNew ||
-          new Date(product.date_created) >=
-            new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    if (filters.colors.length > 0) {
+      const colorAttribute = product.attributes.find(
+        (attr) => attr.name === "Color" || attr.slug === "pa_color"
+      );
+      if (!colorAttribute?.options.length) return false;
 
-        // Featured products filter
-        !filters.isFeatured || product.featured,
+      const hasMatchingColor = filters.colors.some((color) =>
+        colorAttribute.options
+          .map((c) => c.toLowerCase())
+          .includes(color.toLowerCase())
+      );
+      if (!hasMatchingColor) return false;
+    }
 
-        // Filter by featured products (if filterByFeatured is true)
-        !filters.filterByFeatured || product.featured,
+    if (filters.priceRange > 0) {
+      const productPrice = parseFloat(product.price);
+      return !isNaN(productPrice) && productPrice <= filters.priceRange;
+    }
 
-        // Filter by newest products (if filterByNewest is true)
-        !filters.filterByNewest ||
-          new Date(product.date_created) >=
-            new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // Newest products within the last 7 days
-      ];
+    return true;
+  });
+};
 
-      return conditions.every((condition) => condition);
-    })
-    .map((product) => {
-      // Map filtered products to the desired structure
-      return {
-        id: product.id,
-        productId: product.id.toString(),
-        title: product.name,
-        description: product.short_description || product.description,
-        image: product.images?.[0]?.src || "https://via.placeholder.com/800",
-        hoverimage:
-          product.images?.[1]?.src ||
-          product.images?.[0]?.src ||
-          "https://via.placeholder.com/800",
-        isNew: product.featured,
-        price: `$${product.price}`,
-        regular_price: product.regular_price,
-        sale_price: product.sale_price,
-        slug: product.slug,
-        type: product.type || "simple",
-      };
-    });
-}
+export const sortProducts = (
+  products: Product[],
+  sortOption: string
+): Product[] => {
+  const sortedProducts = [...products];
+
+  switch (sortOption) {
+    case "NEWEST":
+      return sortedProducts.sort(
+        (a, b) =>
+          new Date(b.date_created).getTime() -
+          new Date(a.date_created).getTime()
+      );
+
+    case "LOW - HIGH":
+      return sortedProducts.sort(
+        (a, b) => parseFloat(a.price) - parseFloat(b.price)
+      );
+
+    case "HIGH - LOW":
+      return sortedProducts.sort(
+        (a, b) => parseFloat(b.price) - parseFloat(a.price)
+      );
+
+    case "FEATURED":
+      return sortedProducts;
+
+    default:
+      return sortedProducts;
+  }
+};
+
+export const processProducts = (
+  products: Product[],
+  filters: FilterState,
+  sortOption?: string
+): Product[] => {
+  let processedProducts = filterProducts(products, filters);
+  if (sortOption) {
+    processedProducts = sortProducts(processedProducts, sortOption);
+  }
+  return processedProducts;
+};
