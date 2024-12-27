@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "@nextui-org/button";
 import {
   Sheet,
   SheetClose,
@@ -31,23 +30,26 @@ export function PopUpCart() {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent
-        side="right"
-        className="w-full sm:max-w-md h-[80vh] sm:h-full bottom-0 sm:bottom-auto"
-      >
+      <SheetContent side="right" className="w-[400px] sm:w-[540px]">
         <SheetHeader>
           <SheetTitle>Your Cart</SheetTitle>
           <SheetDescription>
             Review your items before checkout.
           </SheetDescription>
         </SheetHeader>
-        <div className="flex-grow overflow-auto py-4">
+
+        <div className="py-6">
           {/* Cart items will go here */}
-          <p>Cart items will be displayed here.</p>
+          <p className="text-muted-foreground">
+            Cart items will be displayed here.
+          </p>
         </div>
+
         <SheetFooter>
           <SheetClose asChild>
-            <Button onClick={closeCart}>Close</Button>
+            <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
+              Close
+            </button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
