@@ -10,8 +10,10 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // add in loading skeltons for better user experience & Fix Loading Times
-  // then cart popup
   // alignments & Font Sizes
+  // fix overflows add ripples loading for making it as loading the ui
+  // make the cart look good
+  // make the filters color look simiar to the manunited
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
