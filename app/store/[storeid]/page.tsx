@@ -9,6 +9,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "../Chips_Filters";
 import StoreCards from "../storecards";
+import { filterProducts, processProducts } from "../productFilters";
+import { sortProducts } from "../sortProducts";
 
 interface Params {
   storeid: string;
@@ -33,6 +35,8 @@ function StoreId({ params }: { params: Params }) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     axios
@@ -166,17 +170,22 @@ function StoreId({ params }: { params: Params }) {
 
               <ChipsChategoriesFilter
                 categories={categories}
-                highlight={decodeURIComponent(params.storeid).toUpperCase()}
                 onFilterChange={(filters) => {
-                  console.log("Fuck bro ", filters);
-                  // Handle filter changes here
+                  const processedProducts = processProducts(
+                    filteredProducts,
+                    filters
+                  );
+                  setDisplayedProducts(processedProducts);
                 }}
                 onSortChange={(sortOption) => {
-                  console.log("Dude WTF", sortOption);
-                  // Handle sort changes here
+                  const processedProducts = sortProducts(
+                    filteredProducts,
+                    sortOption.toString()
+                  );
+                  setDisplayedProducts(processedProducts);
                 }}
               />
-              <StoreCards products={products}></StoreCards>
+              <StoreCards products={displayedProducts}></StoreCards>
             </div>
           </div>
         )}
