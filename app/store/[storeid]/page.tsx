@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "../Chips_Filters";
 import StoreCards from "../storecards";
-import { filterProducts, processProducts } from "../productFilters";
+import { processProducts } from "../productFilters";
 import { sortProducts } from "../sortProducts";
 
 interface Params {
@@ -35,6 +35,7 @@ function StoreId({ params }: { params: Params }) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
+  const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
@@ -49,6 +50,7 @@ function StoreId({ params }: { params: Params }) {
           response.data.products &&
           response.data.products.length > 0
         ) {
+          setFilteredProducts(response.data.products);
           const fetchedProducts: Product[] = response.data.products.map(
             (product: any) => ({
               id: product.id,
@@ -70,6 +72,8 @@ function StoreId({ params }: { params: Params }) {
             })
           );
           setProducts(fetchedProducts);
+          setAllProducts(fetchedProducts);
+          setDisplayedProducts(fetchedProducts);
           setError(null);
         } else {
           setError("No products found for this category.");
@@ -90,16 +94,6 @@ function StoreId({ params }: { params: Params }) {
         });
       });
   }, [params.storeid]);
-
-  function ViewProduct(id: any): void {
-    console.log(id);
-    router.push(`/product/${id}`);
-  }
-
-  const sanitizeHTML = (html: string) => {
-    const doc = new DOMParser().parseFromString(html, "text/html");
-    return doc.body.textContent || "";
-  };
 
   const categories = [
     { name: "Accessories", count: 6 },
