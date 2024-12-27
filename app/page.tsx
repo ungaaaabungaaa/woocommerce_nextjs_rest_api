@@ -11,9 +11,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 export default function Home() {
   // add in loading skeltons for better user experience & Fix Loading Times
   // then cart popup
-  // rounded edges for the filters
-  // align the bottons in the filters mobile 50% 50%
-  // make the filters colors look like the manunited
   // alignments & Font Sizes
 
   return (
