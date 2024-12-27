@@ -13,6 +13,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
+import { PopUpCart } from "@/app/component/popupcart";
 
 interface Attribute {
   id: number;
@@ -201,6 +202,10 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         }
       );
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      // opening the pop Upcart
+      if (typeof window !== "undefined" && (window as any).openCart) {
+        (window as any).openCart();
+      }
     } catch (error: any) {
       console.error(
         "Error adding item to cart:",
@@ -246,6 +251,10 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
     try {
       const response = await axios.post(endpoint, data);
+      // opening the pop Upcart
+      if (typeof window !== "undefined" && (window as any).openCart) {
+        (window as any).openCart();
+      }
       await fetchCartDetails(cartKey); // Refresh cart data after adding an item
     } catch (error: any) {
       console.error(
@@ -551,6 +560,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           </div>
         </div>
       </div>
+      <PopUpCart />
     </div>
   );
 };
