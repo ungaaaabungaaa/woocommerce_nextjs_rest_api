@@ -684,7 +684,3 @@ export default function ChipsChategoriesFilter({
     </div>
   );
 }
-
-// rounded edges for the filters
-// align the bottons in the filters mobile 50% 50%
-// make the filters colors look like the manunited
