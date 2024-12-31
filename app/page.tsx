@@ -15,15 +15,14 @@ export default function Home() {
   // make the Side cart look good & Remove the Quanity From it
   // make the filters color look simiar to the manunited
   // on back cache the result so noo need to make again api cal
-
-  //  5.⁠ ⁠⁠Footer Exactly
-  //  6.⁠ ⁠⁠Header Gaps Same
-  //  7.⁠ ⁠⁠Alignments Match
-  //  8.⁠ ⁠⁠Share Button to be added in product page
-  //  9.⁠ ⁠⁠Gallery Clone
-  // 10.⁠ ⁠⁠recommended product and newest product in the product page
-  // 11.⁠ ⁠⁠text - diffrent
-  // 12.⁠ ⁠⁠make the search grid one single products
+  // ⁠Footer Exactly
+  // ⁠⁠Header Gaps Same
+  // ⁠⁠Alignments Match
+  // ⁠⁠Share Button to be added in product page
+  // ⁠⁠Gallery Clone
+  // ⁠recommended product and newest product in the product page
+  // ⁠text - diffrent
+  // ⁠⁠make the search grid one single products
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
