@@ -10,7 +10,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // 1.  Add in loading skeltons for better user experience & Fix Loading Times
-  // 2.  Change the font
   // 3.  Fix overflows add ripples loading for making it as loading the ui
   // 4.  Make the Side cart look good & Remove the Quanity From it
   // 5.  Make the filters color look simiar to the manunited

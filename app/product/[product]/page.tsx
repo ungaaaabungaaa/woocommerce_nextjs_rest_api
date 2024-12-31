@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Share2 } from "lucide-react";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
@@ -67,6 +67,17 @@ interface Product {
     height: string;
   };
 }
+
+const handleShare = () => {
+  if (typeof window !== "undefined") {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Product link copied to clipboard!", {
+      position: "top-center",
+      theme: "dark",
+      autoClose: 3000,
+    });
+  }
+};
 
 const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -241,6 +252,17 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       return;
     }
 
+    const handleShare = () => {
+      if (typeof window !== "undefined") {
+        navigator.clipboard.writeText(window.location.href);
+        toast.success("Product link copied to clipboard!", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 3000,
+        });
+      }
+    };
+
     const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
 
     // Structuring the data as per your required format
@@ -347,7 +369,15 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
               </Breadcrumbs>
               <br></br>
 
-              <h1 className="text-3xl font-bold">{product.name}</h1>
+              <div className="flex items-center justify-between">
+                <h1 className="text-3xl font-bold">{product.name}</h1>
+                <Button
+                  onClick={handleShare}
+                  className="bg-white dark:bg-black rounded-full h-12 w-12 flex items-center justify-center"
+                >
+                  <Share2 className="h-5 w-5" />
+                </Button>
+              </div>
               <div className="flex items-center space-x-2">
                 {product.on_sale && (
                   <span className="text-2xl font-bold text-muted-foreground line-through">
