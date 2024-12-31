@@ -17,14 +17,12 @@ export default function Home() {
   // on back cache the result so noo need to make again api cal
   // ⁠Footer Exactly
   // ⁠⁠Header Gaps Same
-  // fix the hero banner alignments
   // fix the apple card alignments
   // ⁠⁠Alignments Match
   // ⁠⁠Share Button to be added in product page
   // ⁠⁠Gallery Clone
   // make the cards same sizes as the apple cards
   // ⁠text - diffrent shades for descriotion and hightlights
-
   // ⁠⁠make the search grid one single products
 
   return (
