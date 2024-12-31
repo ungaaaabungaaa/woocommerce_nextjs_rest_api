@@ -10,18 +10,21 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // add in loading skeltons for better user experience & Fix Loading Times
-  // alignments & Font Sizes
+  // change the font
   // fix overflows add ripples loading for making it as loading the ui
   // make the Side cart look good & Remove the Quanity From it
   // make the filters color look simiar to the manunited
   // on back cache the result so noo need to make again api cal
   // ⁠Footer Exactly
   // ⁠⁠Header Gaps Same
+  // fix the hero banner alignments
+  // fix the apple card alignments
   // ⁠⁠Alignments Match
   // ⁠⁠Share Button to be added in product page
   // ⁠⁠Gallery Clone
-  // ⁠recommended product and newest product in the product page
-  // ⁠text - diffrent
+  // make the cards same sizes as the apple cards
+  // ⁠text - diffrent shades for descriotion and hightlights
+
   // ⁠⁠make the search grid one single products
 
   return (
