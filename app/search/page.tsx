@@ -101,7 +101,7 @@ export default function ProductSearch() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-black dark:bg-white">
       <ToastContainer />
-      <div className="w-full max-w-2xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg">
+      <div className="w-full max-w-7xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg">
         <div className="space-y-4 w-full">
           {/* Search Form */}
           <form
@@ -146,7 +146,11 @@ export default function ProductSearch() {
           </div>
           <br></br>
           {/* Recommended Products */}
-          <RecommendedProducts products={recommendedProducts} />
+          <div className="w-full  flex align-middle justify-center">
+            <div className="max-w-2xl">
+              <RecommendedProducts products={recommendedProducts} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
