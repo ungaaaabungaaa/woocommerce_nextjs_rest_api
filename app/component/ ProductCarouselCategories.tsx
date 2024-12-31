@@ -40,48 +40,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     router.push(`/product/${productId}`);
   };
 
-  const addToCart = async (productId: string, prodQuantity: number = 1) => {
-    if (loading) {
-      console.log("Cart key is still loading...");
-      return;
-    }
-    if (cartKeyError) {
-      console.error("Error with cart key:", cartKeyError);
-      toast.error("Error with cart key", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
-      return;
-    }
-    const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
-    try {
-      const response = await axios.post(
-        endpoint,
-        new URLSearchParams({
-          id: productId,
-          quantity: prodQuantity.toString(),
-        }),
-        {
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-        }
-      );
-      await fetchCartDetails(cartKey);
-    } catch (error: any) {
-      console.error(
-        "Error adding item to cart:",
-        error.response?.data || error.message
-      );
-      toast.error("Error adding item to cart", {
-        position: "top-center",
-        theme: "dark",
-        autoClose: 5000,
-      });
-    }
-  };
-
   const handleKeyDown = (
     event: React.KeyboardEvent<HTMLDivElement>,
     action: () => void
@@ -96,7 +54,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       role="button"
       tabIndex={0}
       aria-label={`View product: ${product.title}`}
-      onClick={() => ViewProduct(product.id)}
+      onPress={() => ViewProduct(product.id)}
       onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
       shadow="none"
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
