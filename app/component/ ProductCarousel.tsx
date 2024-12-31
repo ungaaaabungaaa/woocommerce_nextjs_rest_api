@@ -31,11 +31,10 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { cartKey, loading, error: cartKeyError } = useCartKey();
-  const { fetchCartDetails } = useCart();
   const router = useRouter();
 
-  const ViewProduct = async (productId: string) => {
+  const ViewProduct = (productId: string) => {
+    console.log(productId);
     router.push(`/product/${productId}`);
   };
 
@@ -58,7 +57,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       shadow="none"
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     >
-      <CardBody>
+      <CardBody onClick={() => ViewProduct(product.id)}>
         <div
           role="img"
           aria-label={`Image of ${product.title}`}

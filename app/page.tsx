@@ -7,13 +7,12 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // 2.  Make the filters color look simiar to the manunited
-  // 3.  On back cache the result so noo need to make again api cal
-  // ⁠4.  Footer Exactly
-  // ⁠⁠5.  Header Gaps Same
-  // 6.  Fix the apple card alignments
-  // ⁠⁠7. Gallery Clone
-  // 8  make the cards same sizes as the apple cards
+  // 1.  On back cache the result so noo need to make again api cal
+  // ⁠2.  Footer Exactly
+  // ⁠⁠3.  Header Gaps Same
+  // 4.  Fix the apple card alignments
+  // ⁠⁠5.  Gallery Clone
+  // 6.  make the cards same sizes as the apple cards
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
