@@ -3,20 +3,19 @@
 import { useState, useEffect } from "react";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
 import { useCartKey } from "@/hooks/useCartKey";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cartcontext";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 interface CartItem {
   item_key: string;
@@ -42,6 +41,7 @@ export function PopUpCart() {
   const [cartData, setCartData] = useState<CartData | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { fetchCartDetails } = useCart();
+  const router = useRouter();
 
   const openCart = async () => {
     setIsOpen(true);
@@ -60,7 +60,6 @@ export function PopUpCart() {
     };
   }, [cartKey]);
 
-  // Add a new useEffect to fetch cart details when cartKey changes
   useEffect(() => {
     if (cartKey && isOpen) {
       fetch_Cart_Details();
@@ -68,7 +67,7 @@ export function PopUpCart() {
   }, [cartKey, isOpen]);
 
   const fetch_Cart_Details = async () => {
-    if (isLoading) return; // Prevent multiple simultaneous requests
+    if (isLoading) return;
 
     setIsLoading(true);
     try {
@@ -93,7 +92,6 @@ export function PopUpCart() {
         params: { cart_key: cartKey },
       });
 
-      // Optimistically update the UI
       if (cartData) {
         const updatedItems = cartData.items.map((item) =>
           item.item_key === itemKey
@@ -103,11 +101,9 @@ export function PopUpCart() {
         setCartData({ ...cartData, items: updatedItems });
       }
 
-      // Fetch latest data
       await Promise.all([fetchCartDetails(cartKey), fetch_Cart_Details()]);
     } catch (err: any) {
       console.error("Error:", err.response?.data);
-      // Revert optimistic update on error
       await fetch_Cart_Details();
       throw err;
     }
@@ -117,7 +113,6 @@ export function PopUpCart() {
     try {
       const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`;
 
-      // Optimistically update the UI
       if (cartData) {
         const updatedItems = cartData.items.filter(
           (item) => item.item_key !== itemKey
@@ -129,7 +124,6 @@ export function PopUpCart() {
       await Promise.all([fetchCartDetails(cartKey), fetch_Cart_Details()]);
     } catch (err) {
       console.error("Error removing item:", err);
-      // Revert optimistic update on error
       await fetch_Cart_Details();
     }
   };
@@ -150,7 +144,7 @@ export function PopUpCart() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent
         side="right"
-        className="w-[400px] sm:w-[540px] bg-black text-white dark:bg-white dark:text-black"
+        className="w-[400px] sm:w-[540px] bg-black text-white dark:bg-white dark:text-black flex flex-col"
       >
         <SheetHeader>
           <SheetTitle className="text-white dark:text-black">
@@ -161,7 +155,7 @@ export function PopUpCart() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="py-6">
+        <div className="flex-1 flex flex-col min-h-0">
           <div className="flex justify-between items-baseline mb-8">
             <h1 className="text-2xl font-bold">
               Your Bag ({" "}
@@ -170,55 +164,78 @@ export function PopUpCart() {
               </span>
             </h1>
           </div>
+
           {cartData && cartData.items.length > 0 ? (
-            <div className="space-y-6">
-              {cartData.items.map((item) => (
-                <div className="space-y-6">
-                  {cartData.items.map((item) => (
-                    <div
-                      key={item.item_key}
-                      className=" py-4 lg:py-8 cart-card-two"
-                    >
-                      <div className="cart-card-1-two">
-                        {/* Image */}
-                        <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
-                          <Image
-                            //  hello world
-                            src={item.featured_image}
-                            alt={item.name}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        {/* add image here */}
-                      </div>
-                      <div className="my-2 cart-card-2-two">
-                        <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
-                          {item.name}
-                        </h3>
-                        <p className="text-sm text-green-600">
-                          • Available immediately
-                        </p>
-                        <br></br>
-                        <Button
-                          onClick={() => removeItem(item.item_key)}
-                          size="sm"
-                          className="flex items-center gap-2 bg-red text-white"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                          Remove
-                        </Button>
-                      </div>
-                      <div className="cart-card-3-two">
-                        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
-                          ${parseFloat(item.price) / 100}
-                        </p>
+            <>
+              <div className="flex-1 overflow-y-auto space-y-6">
+                {cartData.items.map((item) => (
+                  <div
+                    key={item.item_key}
+                    className="py-4 lg:py-8 cart-card-two"
+                  >
+                    <div className="cart-card-1-two">
+                      <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
+                        <Image
+                          src={item.featured_image}
+                          alt={item.name}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
                     </div>
-                  ))}
+                    <div className="my-2 cart-card-2-two">
+                      <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+                        {item.name}
+                      </h3>
+                      <p className="text-sm text-green-600">
+                        • Available immediately
+                      </p>
+                      <br />
+                      <Button
+                        onClick={() => removeItem(item.item_key)}
+                        size="sm"
+                        className="flex items-center gap-2 bg-red text-white"
+                      >
+                        <Trash2 className="h-4 w-4" />
+                        Remove
+                      </Button>
+                    </div>
+                    <div className="cart-card-3-two">
+                      <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
+                        ${parseFloat(item.price) / 100}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Cart Summary */}
+              <div className="border-t border-gray-700 dark:border-gray-300 mt-6 pt-6 space-y-4">
+                <div className="flex justify-between text-sm">
+                  <span>Subtotal</span>
+                  <span>${parseFloat(cartData.totals.subtotal) / 100}</span>
                 </div>
-              ))}
-            </div>
+                <div className="flex justify-between text-sm">
+                  <span>Shipping</span>
+                  <span>Calculated at checkout</span>
+                </div>
+                <div className="flex justify-between text-lg font-bold">
+                  <span>Total</span>
+                  <span>${parseFloat(cartData.totals.total) / 100}</span>
+                </div>
+              </div>
+
+              {/* Fixed Checkout Button */}
+              <div className="border-t border-gray-700 dark:border-gray-300 pt-4 mt-4">
+                <Button
+                  onClick={() => router.push("/checkout")}
+                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+                  size="lg"
+                >
+                  Proceed to Checkout
+                </Button>
+              </div>
+            </>
           ) : (
             <div className="text-center py-12">
               <p className="text-muted-foreground mb-4">Your cart is empty</p>

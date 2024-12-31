@@ -7,7 +7,6 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // 1.  Make the Side cart look good & Remove the Quanity From it
   // 2.  Make the filters color look simiar to the manunited
   // 3.  On back cache the result so noo need to make again api cal
   // ⁠4.  Footer Exactly
@@ -15,7 +14,6 @@ export default function Home() {
   // 6.  Fix the apple card alignments
   // ⁠⁠7. Gallery Clone
   // 8  make the cards same sizes as the apple cards
-
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
