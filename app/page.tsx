@@ -9,21 +9,21 @@ import HeroBanner from "./component/hero-banner";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // add in loading skeltons for better user experience & Fix Loading Times
-  // change the font
-  // fix overflows add ripples loading for making it as loading the ui
-  // make the Side cart look good & Remove the Quanity From it
-  // make the filters color look simiar to the manunited
-  // on back cache the result so noo need to make again api cal
-  // ⁠Footer Exactly
-  // ⁠⁠Header Gaps Same
-  // fix the apple card alignments
-  // ⁠⁠Alignments Match
-  // ⁠⁠Share Button to be added in product page
-  // ⁠⁠Gallery Clone
-  // make the cards same sizes as the apple cards
-  // ⁠text - diffrent shades for descriotion and hightlights
-  // ⁠⁠make the search grid one single products
+  // 1.  Add in loading skeltons for better user experience & Fix Loading Times
+  // 2.  Change the font
+  // 3.  Fix overflows add ripples loading for making it as loading the ui
+  // 4.  Make the Side cart look good & Remove the Quanity From it
+  // 5.  Make the filters color look simiar to the manunited
+  // 6.  On back cache the result so noo need to make again api cal
+  // ⁠7.  Footer Exactly
+  // ⁠⁠8.  Header Gaps Same
+  // 9.  Fix the apple card alignments
+  // ⁠10.⁠ Alignments Match
+  // ⁠⁠11. Share Button to be added in product page
+  // ⁠⁠12. Gallery Clone
+  // 13. make the cards same sizes as the apple cards
+  // ⁠14. text - diffrent shades for descriotion and hightlights
+  // ⁠⁠15. make the search grid one single products
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">

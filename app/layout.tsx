@@ -4,10 +4,7 @@ import Footer from "@/app/component/footer";
 import Navbar from "@/app/component/navbar";
 import { CartProvider } from "@/context/cartcontext";
 import PayPalProvider from "@/context/PayPalProvider";
-import { Inter } from "next/font/google";
 import { CartKeyProvider } from "@/hooks/useCartKey";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Studio Universal",
@@ -34,8 +31,20 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={inter.className}>
-      <body className="min-h-screen">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-screen font-pt-serif">
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
