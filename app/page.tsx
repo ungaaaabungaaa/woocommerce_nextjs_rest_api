@@ -18,11 +18,10 @@ export default function Home() {
   // ⁠⁠8.  Header Gaps Same
   // 9.  Fix the apple card alignments
   // ⁠10.⁠ Alignments Match
-  // ⁠⁠11. Share Button to be added in product page
-  // ⁠⁠12. Gallery Clone
-  // 13. make the cards same sizes as the apple cards
-  // ⁠14. text - diffrent shades for descriotion and hightlights
-  // ⁠⁠15. make the search grid one single products
+  // ⁠⁠11. Gallery Clone
+  // 12 make the cards same sizes as the apple cards
+  // ⁠13. text - diffrent shades for descriotion and hightlights
+  // ⁠⁠14. make the search grid one single products
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">

@@ -252,17 +252,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       return;
     }
 
-    const handleShare = () => {
-      if (typeof window !== "undefined") {
-        navigator.clipboard.writeText(window.location.href);
-        toast.success("Product link copied to clipboard!", {
-          position: "top-center",
-          theme: "dark",
-          autoClose: 3000,
-        });
-      }
-    };
-
     const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
 
     // Structuring the data as per your required format
@@ -373,9 +362,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 <h1 className="text-3xl font-bold">{product.name}</h1>
                 <Button
                   onClick={handleShare}
-                  className="bg-white dark:bg-black rounded-full h-12 w-12 flex items-center justify-center"
+                  className="h-12 w-12 flex items-center justify-center bg-black text-white dark:bg-white dark:text-black"
                 >
-                  <Share2 className="h-5 w-5" />
+                  <Share2 className="h-5 w-5 text-white dark:text-black" />
                 </Button>
               </div>
               <div className="flex items-center space-x-2">
