@@ -150,11 +150,13 @@ export function PopUpCart() {
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
       <SheetContent
         side="right"
-        className="w-[400px] sm:w-[540px] border-none bg-black text-white dark:bg-white dark:text-black"
+        className="w-[400px] sm:w-[540px] bg-black text-white dark:bg-white dark:text-black"
       >
         <SheetHeader>
-          <SheetTitle>Your Cart</SheetTitle>
-          <SheetDescription>
+          <SheetTitle className="text-white dark:text-black">
+            Your Cart
+          </SheetTitle>
+          <SheetDescription className="text-white dark:text-black">
             Review your items before checkout.
           </SheetDescription>
         </SheetHeader>
@@ -171,74 +173,49 @@ export function PopUpCart() {
           {cartData && cartData.items.length > 0 ? (
             <div className="space-y-6">
               {cartData.items.map((item) => (
-                <div key={item.item_key} className="py-4 lg:py-8 cart-card">
-                  {/* Rest of the cart item rendering remains the same */}
-                  <div className="cart-card-1">
-                    <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
-                      <Image
-                        src={item.featured_image}
-                        alt={item.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div className="cart-card-2 my-2">
-                    <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
-                      {item.name}
-                    </h3>
-                    <p className="text-sm text-green-600">
-                      • Available immediately
-                    </p>
-                    <br></br>
-                    <Button
-                      onClick={() => removeItem(item.item_key)}
-                      size="sm"
-                      className="flex items-center gap-2 bg-red text-white"
+                <div className="space-y-6">
+                  {cartData.items.map((item) => (
+                    <div
+                      key={item.item_key}
+                      className=" py-4 lg:py-8 cart-card-two"
                     >
-                      <Trash2 className="h-4 w-4" />
-                      Remove
-                    </Button>
-                  </div>
-                  <div className="cart-card-3">
-                    <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center rounded-full">
-                          <button
-                            onClick={() =>
-                              updateItemQuantity(
-                                item.item_key,
-                                item.quantity.value - 1
-                              )
-                            }
-                            className="p-2"
-                            disabled={item.quantity.value <= 1}
-                          >
-                            <Minus className="h-4 w-4" />
-                          </button>
-                          <span className="px-4 font-medium">
-                            {item.quantity.value}
-                          </span>
-                          <button
-                            onClick={() =>
-                              updateItemQuantity(
-                                item.item_key,
-                                item.quantity.value + 1
-                              )
-                            }
-                            className="p-2"
-                          >
-                            <Plus className="h-4 w-4" />
-                          </button>
+                      <div className="cart-card-1-two">
+                        {/* Image */}
+                        <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
+                          <Image
+                            //  hello world
+                            src={item.featured_image}
+                            alt={item.name}
+                            fill
+                            className="object-cover"
+                          />
                         </div>
+                        {/* add image here */}
                       </div>
-                    </p>
-                  </div>
-                  <div className="cart-card-4">
-                    <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
-                      ${parseFloat(item.price) / 100}
-                    </p>
-                  </div>
+                      <div className="my-2 cart-card-2-two">
+                        <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+                          {item.name}
+                        </h3>
+                        <p className="text-sm text-green-600">
+                          • Available immediately
+                        </p>
+                        <br></br>
+                        <Button
+                          onClick={() => removeItem(item.item_key)}
+                          size="sm"
+                          className="flex items-center gap-2 bg-red text-white"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                          Remove
+                        </Button>
+                      </div>
+                      <div className="cart-card-3-two">
+                        <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
+                          ${parseFloat(item.price) / 100}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               ))}
             </div>
@@ -251,14 +228,6 @@ export function PopUpCart() {
             </div>
           )}
         </div>
-
-        <SheetFooter>
-          <SheetClose asChild>
-            <button className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50">
-              Close
-            </button>
-          </SheetClose>
-        </SheetFooter>
       </SheetContent>
     </Sheet>
   );
