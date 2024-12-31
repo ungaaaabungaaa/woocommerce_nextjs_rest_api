@@ -210,7 +210,7 @@ export function PopUpCart() {
               </div>
 
               {/* Cart Summary */}
-              <div className="border-t border-gray-700 dark:border-gray-300 mt-6 pt-6 space-y-4">
+              <div className="mt-6 pt-6 space-y-4">
                 <div className="flex justify-between text-sm">
                   <span>Subtotal</span>
                   <span>${parseFloat(cartData.totals.subtotal) / 100}</span>
@@ -229,8 +229,7 @@ export function PopUpCart() {
               <div className="border-t border-gray-700 dark:border-gray-300 pt-4 mt-4">
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
-                  size="lg"
+                  className="w-full bg-white text-black  dark:bg-dark dark:text-white rounded-full"
                 >
                   Proceed to Checkout
                 </Button>
