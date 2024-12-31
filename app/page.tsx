@@ -19,7 +19,6 @@ export default function Home() {
   // ⁠⁠10. Gallery Clone
   // 11  make the cards same sizes as the apple cards
   // ⁠12. text - diffrent shades for descriotion and hightlights
-  // ⁠⁠13. make the search grid one single products
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">

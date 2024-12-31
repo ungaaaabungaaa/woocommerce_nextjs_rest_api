@@ -95,14 +95,9 @@ const Footer = () => {
   return (
     <>
       <PromoBar></PromoBar>
-      <br></br>
       <div className="hidden md:block bg-black dark:bg-white">
         <ScrollBasedVelocityDemo />
       </div>
-      <br></br>
-      <br></br>
-      <br></br>
-      <br></br>
       <footer className="bg-black text-white dark:bg-white dark:text-black">
         <div className="container mx-auto px-4 py-8">
           <div className="hidden md:flex md:flex-wrap md:-mx-4 mb-8">
