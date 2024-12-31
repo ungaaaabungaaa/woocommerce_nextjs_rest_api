@@ -160,6 +160,7 @@ export default function Cart() {
                       {/* Image */}
                       <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
                         <Image
+                          //  hello world
                           src={item.featured_image}
                           alt={item.name}
                           fill

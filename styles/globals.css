@@ -259,3 +259,31 @@ input::placeholder {
   justify-content: flex-start;
   flex-direction: column;
 }
+
+@media screen and (max-width: 768px) {
+  .cart-card {
+    display: grid;
+    grid-template-columns: 32% 38% 30%;
+  }
+
+  .cart-card-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 86%;
+    height: 100%;
+    grid-column-start: 1;
+  }
+
+  .cart-card-3 {
+    grid-column-start: 3;
+    grid-row-start: 1;
+    height: 50%;
+  }
+
+  .cart-card-4 {
+    grid-column-start: 3;
+    grid-row-start: 2;
+    height: 50%;
+  }
+}
