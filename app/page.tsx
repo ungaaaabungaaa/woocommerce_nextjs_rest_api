@@ -12,14 +12,24 @@ export default function Home() {
   // add in loading skeltons for better user experience & Fix Loading Times
   // alignments & Font Sizes
   // fix overflows add ripples loading for making it as loading the ui
-  // make the cart look good
+  // make the Side cart look good & Remove the Quanity From it
   // make the filters color look simiar to the manunited
+  // on back cache the result so noo need to make again api cal
+
+  //  5.⁠ ⁠⁠Footer Exactly
+  //  6.⁠ ⁠⁠Header Gaps Same
+  //  7.⁠ ⁠⁠Alignments Match
+  //  8.⁠ ⁠⁠Share Button to be added in product page
+  //  9.⁠ ⁠⁠Gallery Clone
+  // 10.⁠ ⁠⁠recommended product and newest product in the product page
+  // 11.⁠ ⁠⁠text - diffrent
+  // 12.⁠ ⁠⁠make the search grid one single products
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>
-      <FeaturedProducts></FeaturedProducts>
+      <ProductCarousel></ProductCarousel>
       <br></br>
       <div className="container mx-auto grid gap-6 py-4 md:grid-cols-2">
         <ProductPromoCard
@@ -36,10 +46,10 @@ export default function Home() {
       <ProductCarouselCategories category="accessories"></ProductCarouselCategories>
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <WobbleCardDemo></WobbleCardDemo>
-      <ProductCarousel></ProductCarousel>
+      <ProductCarouselCategories category="footwear"></ProductCarouselCategories>
       <InstagramGallery></InstagramGallery>
       <br></br>
-      <HeroBanner></HeroBanner>
+      {/* <HeroBanner></HeroBanner> */}
     </section>
   );
 }
