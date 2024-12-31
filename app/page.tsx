@@ -7,18 +7,14 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // 1.  Add in loading skeltons for better user experience & Fix Loading Times
-  // 2.  Fix overflows add ripples loading for making it as loading the ui
-  // 3.  Make the Side cart look good & Remove the Quanity From it
-  // 4.  Make the filters color look simiar to the manunited
-  // 5.  On back cache the result so noo need to make again api cal
-  // ⁠6.  Footer Exactly
-  // ⁠⁠7.  Header Gaps Same
-  // 8.  Fix the apple card alignments
-  // ⁠9.⁠  Alignments Match
-  // ⁠⁠10. Gallery Clone
-  // 11  make the cards same sizes as the apple cards
-  // ⁠12. text - diffrent shades for descriotion and hightlights
+  // 1.  Make the Side cart look good & Remove the Quanity From it
+  // 2.  Make the filters color look simiar to the manunited
+  // 3.  On back cache the result so noo need to make again api cal
+  // ⁠4.  Footer Exactly
+  // ⁠⁠5.  Header Gaps Same
+  // 6.  Fix the apple card alignments
+  // ⁠⁠7. Gallery Clone
+  // 8  make the cards same sizes as the apple cards
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
