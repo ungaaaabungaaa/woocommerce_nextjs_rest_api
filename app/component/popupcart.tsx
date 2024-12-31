@@ -190,7 +190,10 @@ export function PopUpCart() {
                       <p className="text-sm text-green-600">
                         • Available immediately
                       </p>
-                      <br />
+                      <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2 mb-2">
+                        ${parseFloat(item.price) / 100}
+                      </p>
+
                       <Button
                         onClick={() => removeItem(item.item_key)}
                         size="sm"
@@ -200,11 +203,7 @@ export function PopUpCart() {
                         Remove
                       </Button>
                     </div>
-                    <div className="cart-card-3-two">
-                      <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2">
-                        ${parseFloat(item.price) / 100}
-                      </p>
-                    </div>
+                    <div className="cart-card-3-two"></div>
                   </div>
                 ))}
               </div>
