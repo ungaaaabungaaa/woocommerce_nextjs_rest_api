@@ -8,13 +8,11 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // all the alignments on the website w-max-7xl
-  // gallery clone on the product page
   // add in authentication
+  // add in the new logo
   // checkout use the authentication details if user logged in
   // try out wishlist
   // fix all the alighments for nav , footer
-  // add in sale badge if the prices are two diffrent things for all the products caresole
-
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
