@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { ChevronLeft } from "lucide-react"; // Import the Lucide React icon
 import { ImageData } from "../../types/imagedata";
 
 interface ProductGalleryProps {
@@ -10,6 +12,7 @@ interface ProductGalleryProps {
 
 export default function ProductGallery({ images }: ProductGalleryProps) {
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const router = useRouter();
 
   return (
     <div className="container mx-auto p-4">
@@ -57,6 +60,16 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 index === 2 ? "aspect-[2/1] col-span-2" : "aspect-square"
               }`}
             >
+              {index === 0 && (
+                <button
+                  onClick={() => router.back()}
+                  className="absolute top-5 left-5 z-10 inline-flex items-center justify-center rounded-full w-9 h-9 bg-black text-white"
+                  aria-label="Go back"
+                >
+                  <ChevronLeft size={20} />{" "}
+                  {/* Use the Lucide ArrowLeft icon */}
+                </button>
+              )}
               <Image
                 src={image.src}
                 alt={image.alt || image.name}
