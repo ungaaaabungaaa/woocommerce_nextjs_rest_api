@@ -15,6 +15,7 @@ import { useTheme } from "next-themes";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import { PopUpCart } from "@/app/component/popupcart";
 import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
+import ProductGallery from "./productGallery";
 
 interface Attribute {
   id: number;
@@ -79,6 +80,13 @@ const handleShare = () => {
   }
 };
 
+interface GalleryImage {
+  id: string; // Added unique identifier
+  src: string;
+  name: string;
+  alt: string;
+}
+
 const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const [product, setProduct] = useState<Product | null>(null);
   const [variations, setVariations] = useState<Variation[]>([]);
@@ -89,10 +97,22 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
     Record<string, string>
   >({});
   const [quantity, setQuantity] = useState(1);
-  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [mappedImages, setMappedImages] = useState<GalleryImage[]>([]);
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
   const { theme, setTheme } = useTheme(); // Access current theme and theme setter
+
+  // Modify the mapProductImages function to include unique IDs
+  function mapProductImages(images: any[]) {
+    return (
+      images?.map((image: any, index: number) => ({
+        id: `${params.product}-image-${index}`,
+        src: image.src,
+        name: image.name || `Product image ${index + 1}`,
+        alt: image.alt || `Product image ${index + 1}`,
+      })) || []
+    );
+  }
 
   const itemClasses =
     theme === "dark"
@@ -115,6 +135,15 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       .then((res) => res.json())
       .then((data: Product) => {
         setProduct(data);
+        if (data.images) {
+          const mapped = data.images.map((image, index) => ({
+            id: `${params.product}-image-${index}`, // Create unique ID using product ID and index
+            src: image.src,
+            name: image.alt || `Product image ${index + 1}`, // Add index to make name unique
+            alt: image.alt || `Product image ${index + 1}`,
+          }));
+          setMappedImages(mapped);
+        }
         if (data.type === "variable") {
           // Fetch variations data
           fetch(`/api/getproductvariations?id=${params.product}`)
@@ -281,8 +310,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
     }
   };
 
-  console.log(product?.categories);
-
   if (product)
     return (
       <>
@@ -290,38 +317,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           <ToastContainer />
           <div className="grid md:grid-cols-2 gap-8 w-full">
             <div className="space-y-4">
-              <div className="relative aspect-square overflow-hidden rounded-lg">
-                <Image
-                  src={
-                    selectedVariation?.image?.src ||
-                    product.images[activeImageIndex].src
-                  }
-                  alt={
-                    selectedVariation?.image?.alt ||
-                    product.images[activeImageIndex].alt
-                  }
-                  fill
-                  className="object-cover"
-                />
-              </div>
-              <div className="grid grid-cols-5 gap-2">
-                {product.images.map((image, index) => (
-                  <button
-                    key={index}
-                    className={`relative aspect-square overflow-hidden rounded-md ${
-                      index === activeImageIndex ? "ring-2 ring-primary" : ""
-                    }`}
-                    onClick={() => setActiveImageIndex(index)}
-                  >
-                    <Image
-                      src={image.src}
-                      alt={image.alt}
-                      fill
-                      className="object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
+              <ProductGallery images={mappedImages} />
             </div>
 
             <div className="space-y-6">
