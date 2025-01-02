@@ -54,6 +54,14 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                     </span>
                   </div>
                 )}
+
+                {product.sale_price && product.regular_price && (
+                  <div className="absolute left-2 bottom-2 z-10" role="status">
+                    <span className="bg-white text-black rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                      Sale
+                    </span>
+                  </div>
+                )}
               </div>
             </Link>
 
