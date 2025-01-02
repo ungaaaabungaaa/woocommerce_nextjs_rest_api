@@ -12,7 +12,6 @@ export default function Home() {
   // add in authentication
   // checkout use the authentication details if user logged in
   // try out wishlist
-  // remake the sidecart mini items
   // fix all the alighments for nav , footer
   // add in sale badge if the prices are two diffrent things for all the products caresole
 

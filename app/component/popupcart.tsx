@@ -180,8 +180,12 @@ export function PopUpCart() {
                       <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
                         {item.name}
                       </h3>
-                      <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2 mb-2">
+                      <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2 mb-1">
                         ${parseFloat(item.price) / 100}
+                      </p>
+                      <p className="text-sm  mb-2 ">
+                        Qty: {item.quantity.value} x $
+                        {parseFloat(item.price) / 100}
                       </p>
 
                       <Button
