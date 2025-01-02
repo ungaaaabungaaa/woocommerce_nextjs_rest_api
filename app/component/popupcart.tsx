@@ -148,26 +148,19 @@ export function PopUpCart() {
       >
         <SheetHeader>
           <SheetTitle className="text-white dark:text-black">
-            Your Cart
-          </SheetTitle>
-          <SheetDescription className="text-white dark:text-black">
-            Review your items before checkout.
-          </SheetDescription>
-        </SheetHeader>
-
-        <div className="flex-1 flex flex-col min-h-0">
-          <div className="flex justify-between items-baseline mb-8">
             <h1 className="text-2xl font-bold">
-              Your Bag ({" "}
+              Add to Bag! ({" "}
               <span className="text-2xl font-bold">
                 {cartData?.items.length || 0} )
               </span>
             </h1>
-          </div>
+          </SheetTitle>
+        </SheetHeader>
 
+        <div className="flex-1 flex flex-col min-h-0">
           {cartData && cartData.items.length > 0 ? (
             <>
-              <div className="flex-1 overflow-y-auto space-y-6">
+              <div className="flex-1 overflow-y-auto">
                 {cartData.items.map((item) => (
                   <div
                     key={item.item_key}
@@ -187,9 +180,6 @@ export function PopUpCart() {
                       <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
                         {item.name}
                       </h3>
-                      <p className="text-sm text-green-600">
-                        • Available immediately
-                      </p>
                       <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2 mb-2">
                         ${parseFloat(item.price) / 100}
                       </p>
@@ -225,12 +215,12 @@ export function PopUpCart() {
               </div>
 
               {/* Fixed Checkout Button */}
-              <div className="border-t border-gray-700 dark:border-gray-300 pt-4 mt-4">
+              <div className="pt-4 mt-4">
                 <Button
                   onClick={() => router.push("/checkout")}
                   className="w-full bg-white text-black  dark:bg-dark dark:text-white rounded-full"
                 >
-                  Proceed to Checkout
+                  Checkout
                 </Button>
               </div>
             </>

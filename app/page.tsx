@@ -7,12 +7,15 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // 1.  On back cache the result so noo need to make again api cal
-  // ⁠2.  Footer Exactly
-  // ⁠⁠3.  Header Gaps Same
-  // 4.  Fix the apple card alignments
-  // ⁠⁠5.  Gallery Clone
-  // 6.  make the cards same sizes as the apple cards
+  // all the alignments on the website w-max-7xl
+  // gallery clone on the product page
+  // add in authentication
+  // checkout use the authentication details if user logged in
+  // try out wishlist
+  // remake the sidecart mini items
+  // fix all the alighments for nav , footer
+  // add in sale badge if the prices are two diffrent things for all the products caresole
+
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
