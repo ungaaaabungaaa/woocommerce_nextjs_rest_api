@@ -54,27 +54,32 @@ class AuthService {
   // Login function
   static async login(email: string, password: string): Promise<boolean> {
     try {
-      const response = await fetch(
-        "https://clothvillage.com/?rest_route=/simple-jwt-login/v1/auth",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
+      // Construct the URL with query parameters
+      const url = new URL(
+        "https://clothvillage.com/?rest_route=/simple-jwt-login/v1/auth"
       );
+      url.searchParams.append("email", email);
+      url.searchParams.append("password", password);
+
+      const response = await fetch(url.toString(), {
+        method: "POST", // POST is required even though it's a query-based request
+        headers: {
+          "Content-Type": "application/json", // Maintain JSON headers for consistency
+        },
+      });
 
       if (!response.ok) {
         throw new Error("Login failed");
       }
 
       const data = await response.json();
-      const token = data.jwt;
+      const token = data.data?.jwt; // Extract token from the response data
+
       if (token) {
         this.setToken(token); // Store token
         return true;
       }
+
       return false;
     } catch (error) {
       console.error("Login error:", error);
