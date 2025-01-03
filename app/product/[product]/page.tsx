@@ -586,9 +586,10 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             </div>
           </div>
           <PopUpCart />
+          <br></br>
+          <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
+          <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
         </div>
-        <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
-        <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
       </>
     );
 };

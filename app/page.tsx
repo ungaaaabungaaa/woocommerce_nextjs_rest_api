@@ -8,11 +8,19 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // all the alignments on the website w-max-7xl
-  // add in authentication
   // add in the new logo
   // checkout use the authentication details if user logged in
   // try out wishlist
   // fix all the alighments for nav , footer
+
+  // authentication
+  // forgot password route setup
+  // login page similar to manunited
+  // register page similar to manunited
+  // nav toggle similar to manunited
+  // profile data similar to man united
+  // order hystery similar to man united
+
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
