@@ -7,7 +7,7 @@ import { Link } from "@nextui-org/link";
 import { Icon } from "@iconify/react";
 import { useAuth } from "../../../context/AuthContext";
 import { useRouter } from "next/navigation";
-import AuthService from "../../../services/authService";
+import AuthService from "../../services/authService";
 
 export default function RegisterComponent() {
   const [isVisible, setIsVisible] = useState(false);
