@@ -1,19 +1,37 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
 import { Icon } from "@iconify/react";
+import { useAuth } from "../../../context/AuthContext";
+import { useRouter } from "next/navigation";
 
-export default function Component() {
+export default function LoginComponent() {
   const [isVisible, setIsVisible] = React.useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const { login } = useAuth();
+  const router = useRouter();
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("handleSubmit");
+    setError("");
+
+    try {
+      const success = await login(email, password);
+      if (success) {
+        router.push("/"); // Redirect to Homepage after successful login
+      } else {
+        setError("Invalid email or password");
+      }
+    } catch (err) {
+      setError("An error occurred during login");
+    }
   };
 
   return (
@@ -25,6 +43,7 @@ export default function Component() {
             👋
           </span>
         </p>
+        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
         <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <Input
             isRequired
@@ -34,6 +53,8 @@ export default function Component() {
             placeholder="Enter your email"
             type="email"
             variant="bordered"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Input
             isRequired
@@ -58,6 +79,8 @@ export default function Component() {
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
             variant="bordered"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <Button className="w-full" color="primary" type="submit">
             Log In

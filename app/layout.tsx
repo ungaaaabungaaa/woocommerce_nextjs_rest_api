@@ -5,6 +5,7 @@ import Navbar from "@/app/component/navbar";
 import { CartProvider } from "@/context/cartcontext";
 import PayPalProvider from "@/context/PayPalProvider";
 import { CartKeyProvider } from "@/hooks/useCartKey";
+import { AuthProvider } from "../context/AuthContext";
 
 export const metadata = {
   title: "Studio Universal",
@@ -51,15 +52,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PayPalProvider>
-            <CartKeyProvider>
-              <CartProvider>
-                <Navbar />
-                {children}
-                <Footer />
-              </CartProvider>
-            </CartKeyProvider>
-          </PayPalProvider>
+          <AuthProvider>
+            <PayPalProvider>
+              <CartKeyProvider>
+                <CartProvider>
+                  <Navbar />
+                  {children}
+                  <Footer />
+                </CartProvider>
+              </CartKeyProvider>
+            </PayPalProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

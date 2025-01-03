@@ -1,16 +1,105 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Link } from "@nextui-org/link";
 import { Icon } from "@iconify/react";
+import { useAuth } from "../../../context/AuthContext";
+import { useRouter } from "next/navigation";
+import AuthService from "../../../services/authService";
 
-export default function Component() {
-  const [isVisible, setIsVisible] = React.useState(false);
-  const [isConfirmVisible, setIsConfirmVisible] = React.useState(false);
+export default function RegisterComponent() {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const { login } = useAuth();
+
   const toggleVisibility = () => setIsVisible(!isVisible);
   const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    if (
+      !formData.username ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      setError("All fields are required");
+      return false;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      setError("Passwords do not match");
+      return false;
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    try {
+      const result = await AuthService.register(
+        formData.email,
+        formData.password,
+        formData.username
+      );
+
+      if (result.success) {
+        // If registration returns JWT, we're already logged in
+        if (result.jwt) {
+          router.push("/");
+        } else {
+          // If no JWT, try to login
+          const loginSuccess = await login(formData.email, formData.password);
+          if (loginSuccess) {
+            router.push("/");
+          } else {
+            router.push("/auth/login");
+          }
+        }
+      } else {
+        setError(result.message);
+      }
+    } catch (err) {
+      setError("An error occurred during registration");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="flex h-full w-full items-center justify-center pt-32 pb-32">
@@ -21,10 +110,8 @@ export default function Component() {
             👋
           </span>
         </p>
-        <form
-          className="flex flex-col gap-4"
-          onSubmit={(e) => e.preventDefault()}
-        >
+        {error && <div className="text-red-500 text-sm mb-4">{error}</div>}
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
           <Input
             isRequired
             label="Username"
@@ -33,6 +120,8 @@ export default function Component() {
             placeholder="Enter your username"
             type="text"
             variant="bordered"
+            value={formData.username}
+            onChange={handleInputChange}
           />
           <Input
             isRequired
@@ -42,6 +131,8 @@ export default function Component() {
             placeholder="Enter your email"
             type="email"
             variant="bordered"
+            value={formData.email}
+            onChange={handleInputChange}
           />
           <Input
             isRequired
@@ -66,6 +157,8 @@ export default function Component() {
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
             variant="bordered"
+            value={formData.password}
+            onChange={handleInputChange}
           />
           <Input
             isRequired
@@ -90,10 +183,12 @@ export default function Component() {
             placeholder="Confirm your password"
             type={isConfirmVisible ? "text" : "password"}
             variant="bordered"
+            value={formData.confirmPassword}
+            onChange={handleInputChange}
           />
 
-          <Button color="primary" type="submit">
-            Sign Up
+          <Button color="primary" type="submit" disabled={isLoading}>
+            {isLoading ? "Signing Up..." : "Sign Up"}
           </Button>
         </form>
         <p className="text-center text-small text-white">
