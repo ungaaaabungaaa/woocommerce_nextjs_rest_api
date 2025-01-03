@@ -72,7 +72,7 @@ export async function PUT(
       },
       { status: 200 }
     );
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error updating customer:", error);
 
     // Handle other errors
@@ -85,16 +85,3 @@ export async function PUT(
     );
   }
 }
-
-// test code
-
-// const updateCustomer = async (id, customerData) => {
-//   const response = await fetch(`/api/customers/${id}`, {
-//     method: 'PUT',
-//     headers: {
-//       'Content-Type': 'application/json',
-//     },
-//     body: JSON.stringify(customerData)
-//   });
-//   return response.json();
-// };
