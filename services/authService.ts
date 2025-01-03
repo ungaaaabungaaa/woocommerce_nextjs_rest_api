@@ -70,9 +70,12 @@ class AuthService {
       }
 
       const data = await response.json();
-      const token = data.jwt; // Adjust based on actual API response
-      this.setToken(token);
-      return true;
+      const token = data.jwt;
+      if (token) {
+        this.setToken(token); // Store token
+        return true;
+      }
+      return false;
     } catch (error) {
       console.error("Login error:", error);
       return false;

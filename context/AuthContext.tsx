@@ -15,11 +15,18 @@ const AuthContext = createContext<AuthContextType>({
 });
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(() =>
+    AuthService.isLoggedIn()
+  );
 
   useEffect(() => {
-    // Check authentication status on mount
-    setIsAuthenticated(AuthService.isLoggedIn());
+    // Listen for changes in localStorage to sync authentication state
+    const handleStorageChange = () => {
+      setIsAuthenticated(AuthService.isLoggedIn());
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   const login = async (email: string, password: string) => {
