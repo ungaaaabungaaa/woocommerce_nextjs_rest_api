@@ -102,7 +102,7 @@ export default function RegisterComponent() {
   };
 
   return (
-    <div className="flex h-full w-full items-center justify-center pt-32 pb-32">
+    <div className="flex min-h-screen w-full items-center justify-center pt-32 pb-32">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large px-8 pb-10 pt-6 text-white dark:text-black">
         <p className="pb-4 text-left text-3xl font-semibold">
           Sign Up
