@@ -8,7 +8,7 @@ import { CartKeyProvider } from "@/hooks/useCartKey";
 import { AuthProvider } from "../context/AuthContext";
 
 export const metadata = {
-  title: "Studio Universal",
+  title: "The Clothes Village",
   description: "High-quality products & excellent customer service",
   icons: {
     icon: [
@@ -22,7 +22,7 @@ export const metadata = {
   },
   manifest: "/site.webmanifest",
   appleWebApp: {
-    title: "Studio",
+    title: "Clothes Village",
   },
 };
 

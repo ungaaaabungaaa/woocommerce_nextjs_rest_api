@@ -11,7 +11,6 @@ export default function Home() {
   // register screen
   // profile edit screen
   // forget password screen
-  // New logo
   // discount badge calculation
   // Alighments
   // Authenticated user checkout
