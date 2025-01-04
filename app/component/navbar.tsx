@@ -25,8 +25,6 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
-import SiteLogo from "../../public/sitelogo.jpeg";
-import SiteLogoDark from "../../public/sitelogodark.jpg";
 
 import SiteLogo2 from "../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../public/blacklogo.svg";
@@ -38,9 +36,7 @@ import { AccessoriesMegaMenu } from "./accessories-mega-menu";
 import { FootWearMegaMenu } from "./footwear-mega-menu";
 import { KidsMegaMenu } from "./kids-mega-menu";
 import { useTheme } from "next-themes";
-import { SiteHeader } from "./site-header";
 import { usePathname } from "next/navigation";
-import { useAuth } from "../../context/AuthContext";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -50,7 +46,6 @@ export default function Nav_bar() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
-  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -62,18 +57,6 @@ export default function Nav_bar() {
     } else {
       router.push("/search");
     }
-  };
-
-  const handleTrackOrderClick = () => {
-    router.push("/trackorder");
-  };
-
-  const handleProfileClick = () => {
-    router.push("/auth/login");
-  };
-
-  const handleAccountClick = () => {
-    router.push("/auth/profile");
   };
 
   const handleCartClick = () => {
@@ -213,17 +196,11 @@ export default function Nav_bar() {
               className="h-5 cursor-pointer text-white dark:text-black"
             />
 
-            {isAuthenticated ? (
-              <UserCircle
-                onClick={handleAccountClick}
-                className="h-5 cursor-pointer text-white dark:text-black"
-              ></UserCircle>
-            ) : (
-              <User
-                onClick={handleProfileClick}
-                className="h-5 cursor-pointer text-white dark:text-black"
-              ></User>
-            )}
+            {/* <UserCircle
+              className="h-5 cursor-pointer text-white dark:text-black"
+            ></UserCircle> */}
+
+            <User className="h-5 cursor-pointer text-white dark:text-black"></User>
 
             <Badge
               content={0}

@@ -8,6 +8,7 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // Login Screen
+  // Add in google authentication as well
   // Register Screen
   // Profile edit screen
   // Forget password screen
