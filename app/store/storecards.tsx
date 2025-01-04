@@ -1,9 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@nextui-org/button";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
-import { useRouter } from "next/navigation";
+import { Card, CardBody } from "@nextui-org/card";
 
 interface Product {
   id: string;
@@ -21,6 +19,12 @@ interface Product {
 }
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
+  const calculateDiscount = (regularPrice: string, salePrice: string) => {
+    const regular = parseFloat(regularPrice);
+    const sale = parseFloat(salePrice);
+    const discount = ((regular - sale) / regular) * 100;
+    return Math.round(discount);
+  };
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
       {safeProducts.map((product) => (
@@ -44,21 +48,16 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                   fill
                   className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                 />
-                {product.isNew && (
-                  <div
-                    className="absolute right-2 top-2 z-10"
-                    aria-label="New product"
-                  >
-                    <span className="bg-white text-black rounded-full p-1 text-sm font-medium flex items-center justify-center w-8 h-8">
-                      New
-                    </span>
-                  </div>
-                )}
 
                 {product.sale_price && product.regular_price && (
                   <div className="absolute left-2 bottom-2 z-10" role="status">
-                    <span className="bg-white text-black rounded-lg p-2 text-sm font-medium flex items-center justify-center">
-                      Sale
+                    <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                      -
+                      {calculateDiscount(
+                        product.regular_price,
+                        product.sale_price
+                      )}
+                      %
                     </span>
                   </div>
                 )}

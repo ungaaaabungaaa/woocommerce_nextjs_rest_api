@@ -106,7 +106,7 @@ export default function ProductGrid({
                       className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                     />
 
-                    {product.isNew && (
+                    {/* {product.isNew && (
                       <div
                         className="absolute right-2 top-2 z-10"
                         aria-label="New product"
@@ -115,7 +115,7 @@ export default function ProductGrid({
                           New
                         </span>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </Link>
 

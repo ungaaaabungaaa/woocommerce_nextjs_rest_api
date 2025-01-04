@@ -49,6 +49,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+  const calculateDiscount = (regularPrice: string, salePrice: string) => {
+    const regular = parseFloat(regularPrice);
+    const sale = parseFloat(salePrice);
+    const discount = ((regular - sale) / regular) * 100;
+    return Math.round(discount);
+  };
+
   return (
     <Card
       role="button"
@@ -78,18 +85,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          {product.isNew && (
+          {/* {product.isNew && (
             <div className="absolute right-2 top-2 z-10" role="status">
               <span className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
                 New
               </span>
             </div>
-          )}
+          )} */}
 
           {product.sale_price && product.regular_price && (
             <div className="absolute left-2 bottom-2 z-10" role="status">
-              <span className="bg-white text-black rounded-lg p-2 text-sm font-medium flex items-center justify-center">
-                Sale
+              <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                -{calculateDiscount(product.regular_price, product.sale_price)}%
               </span>
             </div>
           )}
