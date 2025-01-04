@@ -68,6 +68,14 @@ export default function Nav_bar() {
     router.push("/trackorder");
   };
 
+  const handleProfileClick = () => {
+    router.push("/auth/login");
+  };
+
+  const handleAccountClick = () => {
+    router.push("/auth/profile");
+  };
+
   const handleCartClick = () => {
     router.push("/cart");
   };
@@ -162,8 +170,8 @@ export default function Nav_bar() {
                   onClick={handleLogoClick}
                   src={SiteLogoDark2}
                   alt="Site Logo"
-                  width={160}
-                  height={80}
+                  width={180}
+                  height={100}
                   priority
                   className="cursor-pointer"
                 />
@@ -172,8 +180,8 @@ export default function Nav_bar() {
                   onClick={handleLogoClick}
                   src={SiteLogo2}
                   alt="Site Logo"
-                  width={160}
-                  height={80}
+                  width={180}
+                  height={100}
                   priority
                   className="cursor-pointer"
                 />
@@ -206,9 +214,15 @@ export default function Nav_bar() {
             />
 
             {isAuthenticated ? (
-              <UserCircle className="h-5 cursor-pointer text-white dark:text-black"></UserCircle>
+              <UserCircle
+                onClick={handleAccountClick}
+                className="h-5 cursor-pointer text-white dark:text-black"
+              ></UserCircle>
             ) : (
-              <User className="h-5 cursor-pointer text-white dark:text-black"></User>
+              <User
+                onClick={handleProfileClick}
+                className="h-5 cursor-pointer text-white dark:text-black"
+              ></User>
             )}
 
             <Badge

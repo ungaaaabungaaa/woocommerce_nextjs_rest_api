@@ -7,14 +7,16 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // login screen
-  // register screen
-  // profile edit screen
-  // forget password screen
-  // discount badge calculation
+  // Login Screen
+  // Register Screen
+  // Profile edit screen
+  // Forget password screen
+
   // Alighments
-  // Authenticated user checkout
-  // wishlist Api
+
+  // Pop Up Modals For Cart Login & Wishlist
+  // Authenticated User Checkout
+  // Wishlist API
 
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
