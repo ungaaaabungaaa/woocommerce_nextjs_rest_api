@@ -19,10 +19,18 @@ import {
   Moon,
   Sun,
   ChevronLeft,
+  Heart,
+  User,
+  CircleUser,
+  UserCircle,
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
 import SiteLogo from "../../public/sitelogo.jpeg";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
+
+import SiteLogo2 from "../../public/whitelogo.svg";
+import SiteLogoDark2 from "../../public/blacklogo.svg";
+
 import { useCart } from "../../context/cartcontext";
 import { MensMegaMenu } from "./mens-mega-menu";
 import { WomensMegaMenu } from "./womens-mega-menu";
@@ -32,6 +40,7 @@ import { KidsMegaMenu } from "./kids-mega-menu";
 import { useTheme } from "next-themes";
 import { SiteHeader } from "./site-header";
 import { usePathname } from "next/navigation";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -41,6 +50,7 @@ export default function Nav_bar() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const { isAuthenticated, logout } = useAuth();
 
   useEffect(() => {
     setMounted(true);
@@ -106,7 +116,7 @@ export default function Nav_bar() {
             <NavbarBrand className="pr-4 hidden sm:flex">
               <div className="flex items-center gap-2">
                 <ChevronLeft className="h-3 w-3" />
-                <span className="text-xs">StudioUniversal.com</span>
+                <span className="text-xs">theclothvillagestore.com</span>
               </div>
             </NavbarBrand>
           </NavbarContent>
@@ -115,9 +125,7 @@ export default function Nav_bar() {
             className="flex absolute left-1/2 transform -translate-x-1/2"
             justify="center"
           >
-            <p className="text-xs font-medium">
-              Official Universal Studio Store
-            </p>
+            <p className="text-xs font-medium">Official Cloth Village Store</p>
           </NavbarContent>
 
           <NavbarContent justify="end" className="gap-4">
@@ -152,20 +160,20 @@ export default function Nav_bar() {
               {mounted && theme === "dark" ? (
                 <NextImage
                   onClick={handleLogoClick}
-                  src={SiteLogoDark}
+                  src={SiteLogoDark2}
                   alt="Site Logo"
-                  width={120}
-                  height={40}
+                  width={160}
+                  height={80}
                   priority
                   className="cursor-pointer"
                 />
               ) : mounted ? (
                 <NextImage
                   onClick={handleLogoClick}
-                  src={SiteLogo}
+                  src={SiteLogo2}
                   alt="Site Logo"
-                  width={120}
-                  height={40}
+                  width={160}
+                  height={80}
                   priority
                   className="cursor-pointer"
                 />
@@ -192,6 +200,26 @@ export default function Nav_bar() {
           </NavbarContent>
 
           <NavbarContent justify="end" className="gap-4">
+            <Search
+              onClick={handleSearchClick}
+              className="h-5 cursor-pointer text-white dark:text-black"
+            />
+
+            {isAuthenticated ? (
+              <UserCircle className="h-5 cursor-pointer text-white dark:text-black"></UserCircle>
+            ) : (
+              <User className="h-5 cursor-pointer text-white dark:text-black"></User>
+            )}
+
+            <Badge
+              content={0}
+              className="border-none"
+              shape="circle"
+              color="danger"
+            >
+              <Heart className="h-5 cursor-pointer text-white dark:text-black"></Heart>
+            </Badge>
+
             <Badge
               onClick={handleCartClick}
               content={cartCount}
@@ -204,6 +232,7 @@ export default function Nav_bar() {
                 className="h-5 cursor-pointer text-white dark:text-black"
               />
             </Badge>
+
             {mounted && (
               <button onClick={toggleTheme} className="focus:outline-none">
                 {theme === "dark" ? (
@@ -213,14 +242,6 @@ export default function Nav_bar() {
                 )}
               </button>
             )}
-            <Search
-              onClick={handleSearchClick}
-              className="h-5 cursor-pointer text-white dark:text-black"
-            />
-            <Truck
-              onClick={handleTrackOrderClick}
-              className="h-5 cursor-pointer text-white dark:text-black"
-            />
           </NavbarContent>
 
           <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">

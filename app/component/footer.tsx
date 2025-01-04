@@ -13,6 +13,9 @@ import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
 import { useTheme } from "next-themes";
 import SiteLogoDark from "../../public/sitelogodark.jpg";
 
+import SiteLogo2 from "../../public/whitelogo.svg";
+import SiteLogoDark2 from "../../public/blacklogo.svg";
+
 const footerLinks = [
   {
     title: "Top Categories",
@@ -173,20 +176,20 @@ const Footer = () => {
               {mounted && theme === "dark" ? (
                 <NextImage
                   onClick={handleLogoClick}
-                  src={SiteLogoDark}
+                  src={SiteLogoDark2}
                   alt="Site Logo"
-                  width={120}
-                  height={40}
+                  width={160}
+                  height={80}
                   priority
                   className="cursor-pointer"
                 />
               ) : mounted ? (
                 <NextImage
                   onClick={handleLogoClick}
-                  src={SiteLogo}
+                  src={SiteLogo2}
                   alt="Site Logo"
-                  width={120}
-                  height={40}
+                  width={160}
+                  height={80}
                   priority
                   className="cursor-pointer"
                 />
