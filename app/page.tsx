@@ -7,16 +7,15 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
+  // Firebase auth
   // Login Screen
-  // Add in google authentication as well
-  // Register Screen
-  // Profile edit screen
-  // Forget password screen
-
-  // Alighments
-
+  // Register
+  // profile page
+  // customer api modded to username to get customer id
+  // add in check system if userlogged in and coustomer id exist
+  // add in autofill at the checkout
   // Pop Up Modals For Cart Login & Wishlist
-  // Authenticated User Checkout
+  // Alighments
   // Wishlist API
 
   return (
