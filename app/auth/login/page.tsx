@@ -75,16 +75,27 @@ export default function Login() {
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
           <Input
             isRequired
-            labelPlacement="outside"
+            labelPlacement="inside"
             label="Email Address"
             name="email"
             placeholder="Enter your email"
             type="email"
-            variant="bordered"
+            classNames={{
+              label: "text-white/50 dark:text-black/90",
+              input: ["bg-white dark:bg-black"],
+              innerWrapper: "bg-transparent",
+              inputWrapper: ["bg-white dark:bg-black"],
+            }}
           />
           <Input
             isRequired
-            labelPlacement="outside"
+            labelPlacement="inside"
+            classNames={{
+              label: "text-white/50 dark:text-black/90",
+              input: ["bg-white dark:bg-black"],
+              innerWrapper: "bg-transparent",
+              inputWrapper: ["bg-white dark:bg-black"],
+            }}
             endContent={
               <button type="button" onClick={toggleVisibility}>
                 {isVisible ? (
@@ -104,7 +115,7 @@ export default function Login() {
             name="password"
             placeholder="Enter your password"
             type={isVisible ? "text" : "password"}
-            variant="bordered"
+            className="bg-white rounded-3xl text-black"
           />
 
           <Button
