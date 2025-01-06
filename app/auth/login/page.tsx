@@ -16,12 +16,15 @@ import {
   facebookProvider,
   appleProvider,
   signInWithProvider,
+  signInWithEmailPassword,
 } from "../../../config/firebase";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -56,9 +59,18 @@ export default function Login() {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("handleSubmit");
+    try {
+      const userCredential = await signInWithEmailPassword(email, password);
+      console.log("Email Login Success:", userCredential.user);
+      // push it to the home page
+      // add in the icon toggle based on the user logged in or not
+      // use the useauth state to verify it
+    } catch (error) {
+      console.error("Email Login Failed:", error);
+    }
   };
 
   return (
@@ -116,6 +128,7 @@ export default function Login() {
             name="email"
             placeholder="Enter your email"
             type="email"
+            onChange={(e) => setEmail(e.target.value)}
             classNames={{
               label: "text-white/50 dark:text-black/90",
               input: ["bg-white dark:bg-black"],
@@ -126,6 +139,7 @@ export default function Login() {
           <Input
             isRequired
             labelPlacement="inside"
+            onChange={(e) => setPassword(e.target.value)}
             classNames={{
               label: "text-white/50 dark:text-black/90",
               input: ["bg-white dark:bg-black"],
@@ -183,6 +197,7 @@ export default function Login() {
           <Button
             startContent={<Icon icon="logos:facebook" width={20} />}
             size="lg"
+            onClick={handleFacebookLogin}
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
             Sign in with Facebook
@@ -201,6 +216,7 @@ export default function Login() {
           {/* Apple Sign-In Button */}
           <Button
             startContent={<Icon icon="logos:apple" width={20} />}
+            onClick={handleAppleLogin}
             size="lg"
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
