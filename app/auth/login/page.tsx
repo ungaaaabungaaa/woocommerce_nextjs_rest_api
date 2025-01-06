@@ -124,6 +124,7 @@ export default function Login() {
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             color="primary"
             type="submit"
+            size="lg"
           >
             log In
           </Button>
@@ -147,6 +148,7 @@ export default function Login() {
           {/* Facebook Sign-In Button */}
           <Button
             startContent={<Icon icon="logos:facebook" width={20} />}
+            size="lg"
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
             Sign in with Facebook
@@ -155,6 +157,7 @@ export default function Login() {
           {/* Google Sign-In Button */}
           <Button
             startContent={<Icon icon="flat-color-icons:google" width={20} />}
+            size="lg"
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
             Sign in with Google
@@ -163,6 +166,7 @@ export default function Login() {
           {/* Apple Sign-In Button */}
           <Button
             startContent={<Icon icon="logos:apple" width={20} />}
+            size="lg"
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
             Sign in with Apple
@@ -177,6 +181,8 @@ export default function Login() {
             Get Help
           </Link>
         </p>
+        <br></br>
+        <br></br>
       </div>
     </div>
   );

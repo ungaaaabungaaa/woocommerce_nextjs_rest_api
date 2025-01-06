@@ -337,21 +337,24 @@ export default function Register() {
               Offers, and Store News?
             </p>
             <div className="flex gap-6">
-              <label className="flex items-center cursor-pointer">
+              {/* Yes Option */}
+              <label className="flex items-center cursor-pointer space-x-2">
                 <input
                   type="radio"
                   name="marketingConsent"
                   value="yes"
-                  className="mr-2 w-5 h-5 bg-black border-2 border-white text-white checked:bg-white checked:border-white"
+                  className="w-6 h-6 border-2 border-white bg-transparent dark:border-black  appearance-none rounded-full  checked:bg-white  dark:checked:bg-black checked:border-white  dark:checked:border-black "
                 />
                 <span className="text-white dark:text-black">Yes</span>
               </label>
-              <label className="flex items-center cursor-pointer">
+
+              {/* No Option */}
+              <label className="flex items-center cursor-pointer space-x-2">
                 <input
                   type="radio"
                   name="marketingConsent"
                   value="no"
-                  className="mr-2 w-5 h-5 bg-white border-2 border-black text-black checked:bg-black checked:border-black"
+                  className="w-6 h-6 border-2 border-white bg-transparent dark:border-black  appearance-none rounded-full  checked:bg-white  dark:checked:bg-black checked:border-white  dark:checked:border-black "
                 />
                 <span className="text-white dark:text-black">No</span>
               </label>
@@ -372,6 +375,7 @@ export default function Register() {
           <Button
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl mt-4"
             type="submit"
+            size="lg"
           >
             Create Account
           </Button>
@@ -388,6 +392,7 @@ export default function Register() {
           <div className="flex flex-col gap-3">
             <Button
               startContent={<Icon icon="logos:facebook" width={20} />}
+              size="lg"
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Facebook
@@ -395,6 +400,7 @@ export default function Register() {
 
             <Button
               startContent={<Icon icon="flat-color-icons:google" width={20} />}
+              size="lg"
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Google
@@ -402,6 +408,7 @@ export default function Register() {
 
             <Button
               startContent={<Icon icon="logos:apple" width={20} />}
+              size="lg"
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Apple
@@ -416,10 +423,9 @@ export default function Register() {
             Get Help
           </Link>
         </p>
+        <br></br>
+        <br></br>
       </div>
     </div>
   );
 }
-
-// connect the firebase
-// make sure it goes to the profile page
