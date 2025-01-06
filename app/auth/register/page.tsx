@@ -132,7 +132,8 @@ export default function Register() {
 
     if (validateForm()) {
       console.log(formData);
-      console.log("Hoie Hoie");
+      // create the user with the signupwithemail method
+      // if the consent is yes take the email and calll the api for subscription
     }
   };
 
@@ -361,6 +362,49 @@ export default function Register() {
             ))}
           </Select>
 
+          {/* Marketing Preferences */}
+          <div className="mt-4">
+            <p className="text-sm text-white dark:text-black mb-2">
+              Would you like to receive updates about New Arrivals, Exclusive
+              Offers, and Store News?
+            </p>
+            <div className="flex gap-6">
+              {/* Yes Option */}
+              <label className="flex items-center cursor-pointer space-x-2">
+                <input
+                  type="radio"
+                  name="marketingConsent"
+                  value="yes"
+                  checked={formData.marketingConsent === "yes"}
+                  onChange={handleChange}
+                  className="w-6 h-6 border-2 border-white bg-transparent dark:border-black appearance-none rounded-full checked:bg-white dark:checked:bg-black checked:border-white dark:checked:border-black"
+                />
+                <span className="text-white dark:text-black">Yes</span>
+              </label>
+              {/* No Option */}
+              <label className="flex items-center cursor-pointer space-x-2">
+                <input
+                  type="radio"
+                  name="marketingConsent"
+                  value="no"
+                  checked={formData.marketingConsent === "no"}
+                  onChange={handleChange}
+                  className="w-6 h-6 border-2 border-white bg-transparent dark:border-black appearance-none rounded-full checked:bg-white dark:checked:bg-black checked:border-white dark:checked:border-black"
+                />
+                <span className="text-white dark:text-black">No</span>
+              </label>
+            </div>
+          </div>
+          {/* Terms and Conditions */}
+          <p className="text-xs text-white dark:text-black mt-4">
+            By signing up, you agree to ClothesVillage.com using your personal
+            data in accordance with our{" "}
+            <Link href="/privacy-policy" className="underline">
+              Privacy Policy
+            </Link>
+            . We use your data to personalize and enhance your shopping
+            experience.
+          </p>
           <Button
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl mt-4"
             type="submit"
