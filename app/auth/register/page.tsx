@@ -442,6 +442,14 @@ export default function Register() {
             . We use your data to personalize and enhance your shopping
             experience.
           </p>
+
+          <p className="text-xs text-white dark:text-black mt-4">
+            By signing up, you agree to ClothesVillage.com using your personal
+            data in accordance with our Privacy Policy. We use your data to
+            personalize and enhance your shopping experience on our platform,
+            provide the products and services you request, and conduct consumer
+            profiling and market research
+          </p>
           <Button
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl mt-4"
             type="submit"
