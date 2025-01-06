@@ -6,6 +6,7 @@ import {
   signInWithRedirect,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  sendPasswordResetEmail,
 } from "firebase/auth"; // For Authentication
 import {
   GoogleAuthProvider,
@@ -102,6 +103,21 @@ export const signUpWithEmail = async (email: string, password: string) => {
     return userCredential;
   } catch (error) {
     console.error("Email Registration Failed:", error);
+    throw error;
+  }
+};
+
+/**
+ * Send a password reset email to the user.
+ * @param {string} email - The user's email address.
+ * @returns {Promise<void>} - A promise that resolves once the password reset email is sent.
+ */
+export const sendPasswordReset = async (email: string) => {
+  try {
+    await sendPasswordResetEmail(auth, email);
+    console.log("Password reset email sent to:", email);
+  } catch (error) {
+    console.error("Error sending password reset email:", error);
     throw error;
   }
 };

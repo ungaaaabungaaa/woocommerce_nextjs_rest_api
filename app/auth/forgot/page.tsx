@@ -7,14 +7,48 @@ import { useTheme } from "next-themes";
 import { Divider, Input } from "@nextui-org/react";
 import Link from "next/link";
 import NextImage from "next/image";
+import { sendPasswordReset } from "../../../config/firebase";
 
 function Forgot() {
   const [mounted, setMounted] = useState(false);
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const { theme } = useTheme();
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [buttonText, setButtonText] = useState("Send Instruction");
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const validateEmail = (email: any) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return regex.test(email);
+  };
+
+  const sendRestMail = async (e: any) => {
+    e.preventDefault();
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    setError(""); // Clear any previous errors
+
+    try {
+      await sendPasswordReset(email); // Ensure 'auth' is initialized correctly
+      // Success, you might want to display a success message or redirect
+      setIsButtonDisabled(true); // Disable button
+      setButtonText("Sent Instructions"); // Change button text
+    } catch (error) {
+      console.error("Error sending password reset email:", error);
+      setError("Failed to send reset email. Please try again.");
+      setIsButtonDisabled(false); // Re-enable button in case of an error
+      setButtonText("Send Password Reset Email"); // Reset button text
+    }
+  };
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-black dark:bg-white p-4">
@@ -40,7 +74,6 @@ function Forgot() {
                 className="cursor-pointer"
               />
             ) : (
-              // Optional: A placeholder to avoid layout shift
               <div
                 style={{ width: 260, height: 160 }}
                 className="cursor-pointer"
@@ -48,12 +81,11 @@ function Forgot() {
             )}
           </div>
           <br></br>
-
           <p className="text-2xl md:text-4xl text-white dark:text-black font-semibold">
             RESET PASSWORD
           </p>
         </div>
-        <form className="flex flex-col gap-3">
+        <form className="flex flex-col gap-3" onSubmit={sendRestMail}>
           <Input
             isRequired
             labelPlacement="inside"
@@ -61,6 +93,8 @@ function Forgot() {
             name="email"
             placeholder="Enter your email"
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             classNames={{
               label: "text-white/50 dark:text-black/90",
               input: ["bg-white dark:bg-black"],
@@ -68,6 +102,7 @@ function Forgot() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
           />
+          {error && <p className="text-red-500 text-xs">{error}</p>}
 
           <Button
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl"
@@ -75,7 +110,7 @@ function Forgot() {
             type="submit"
             size="lg"
           >
-            Send Instruction
+            {buttonText} {/* Display the dynamic button text */}
           </Button>
           <div className="flex w-full items-center justify-center px-1 py-2">
             <Link
