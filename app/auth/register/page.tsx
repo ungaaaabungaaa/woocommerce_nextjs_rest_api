@@ -36,19 +36,6 @@ export default function Register() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
 
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    surname: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    country: "",
-    marketingConsent: "no",
-  });
-
-  const [errors, setErrors] = useState<Partial<FormData>>({});
-  const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -79,77 +66,6 @@ export default function Register() {
       console.log("Apple Login Success:", userCredential.user);
     } catch (error) {
       console.error("Apple Login Failed:", error);
-    }
-  };
-
-  const validateForm = (): boolean => {
-    const newErrors: Partial<FormData> = {};
-
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
-    }
-
-    if (!formData.surname.trim()) {
-      newErrors.surname = "Surname is required";
-    }
-
-    if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
-    }
-
-    if (!formData.password) {
-      newErrors.password = "Password is required";
-    } else if (formData.password.length < 6) {
-      newErrors.password = "Password must be at least 6 characters";
-    }
-
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = "Passwords do not match";
-    }
-
-    if (!formData.country) {
-      newErrors.country = "Please select a country";
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-    // Clear error when user starts typing
-    if (errors[name as keyof FormData]) {
-      setErrors((prev) => ({
-        ...prev,
-        [name]: undefined,
-      }));
-    }
-  };
-
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-
-    if (!validateForm()) {
-      return;
-    }
-    setIsLoading(true);
-    try {
-      // Add your Firebase authentication logic here
-      console.log("Form submitted with data:", formData);
-    } catch (error) {
-      console.error("Registration error:", error);
-      setErrors((prev) => ({
-        ...prev,
-        submit: "Registration failed. Please try again.",
-      }));
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -223,7 +139,7 @@ export default function Register() {
         </div>
 
         {/* Registration Form */}
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3">
           <Input
             isRequired
             labelPlacement="inside"
