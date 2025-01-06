@@ -2,7 +2,6 @@
 import { useState, useEffect, ReactNode } from "react";
 import { fetchCartKey } from "../utils/api";
 import NextImage from "next/image";
-import SiteLogo from "../public/sitelogo.jpeg";
 import SiteLogo2 from "../public/whitelogo.svg";
 
 // Custom Hook
