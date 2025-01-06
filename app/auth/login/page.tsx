@@ -1,12 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, Input, Link, Divider } from "@nextui-org/react";
 import SiteLogo2 from "../../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Icon } from "@iconify/react";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import Link from "next/link";
+import { Divider } from "@nextui-org/react";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
@@ -66,7 +69,6 @@ export default function Login() {
             <Link
               href="/auth/register"
               className="text-white dark:text-black underline hover:font-bold"
-              size="sm"
             >
               Create an Account
             </Link>
@@ -129,7 +131,6 @@ export default function Login() {
             <Link
               className="text-default-500 text-white dark:text-black underline"
               href="/contact"
-              size="sm"
             >
               Forgot password?
             </Link>
@@ -172,7 +173,6 @@ export default function Login() {
           <Link
             className="underline text-white dark:text-black"
             href="/contact"
-            size="sm"
           >
             Get Help
           </Link>

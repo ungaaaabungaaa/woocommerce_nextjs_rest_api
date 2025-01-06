@@ -1,13 +1,16 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Button, Input, Link, Divider } from "@nextui-org/react";
+import { Icon } from "@iconify/react";
+import { Button } from "@nextui-org/button";
+import { Input } from "@nextui-org/input";
+import Link from "next/link";
 import SiteLogo2 from "../../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
-import { Icon } from "@iconify/react";
-import { Select, SelectItem, Avatar } from "@nextui-org/react";
+import { Select, SelectItem } from "@nextui-org/select";
+import { Avatar, Divider } from "@nextui-org/react";
 import DOBSelector from "@/app/component/DOBSelector";
 
 export default function Register() {
@@ -105,7 +108,6 @@ export default function Register() {
             <Link
               href="/auth/login"
               className="text-white dark:text-black underline hover:font-bold"
-              size="sm"
             >
               Login in
             </Link>
@@ -295,7 +297,6 @@ export default function Register() {
           <Link
             className="underline text-white dark:text-black"
             href="/contact"
-            size="sm"
           >
             Get Help
           </Link>
@@ -305,7 +306,6 @@ export default function Register() {
   );
 }
 
-// add in DOB
 // add in the yes or no toggles
 // add in the the descriptions  below
 // connect the firebase
