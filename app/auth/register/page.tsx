@@ -127,13 +127,50 @@ export default function Register() {
     return isValid;
   };
 
+  const signupWithEmail = async (email: string, password: string) => {
+    console.log("User signed up with email:", email);
+    try {
+      const userCredential = await signUpWithEmail(email, password);
+      console.log("Email Singup Success:", userCredential.user);
+    } catch (error) {
+      console.error("Email Singup Failed:", error);
+    }
+  };
+
+  // Function to subscribe the user to the newsletter
+  const subscribeToNewsletter = async (email: string) => {
+    try {
+      const response = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        console.log("User subscribed to newsletter:", email);
+      } else {
+        console.error("Subscription failed:", result.message);
+      }
+    } catch (error) {
+      console.error("Error subscribing to newsletter:", error);
+    }
+  };
+
   const handleSubmit = (e: any) => {
     e.preventDefault();
 
     if (validateForm()) {
       console.log(formData);
-      // create the user with the signupwithemail method
-      // if the consent is yes take the email and calll the api for subscription
+      // Call signupWithEmail with email and password from formData
+      signupWithEmail(formData.email, formData.password);
+      // If marketingConsent is "yes", subscribe the user to the newsletter
+      if (formData.marketingConsent === "yes") {
+        subscribeToNewsletter(formData.email);
+      }
     }
   };
 
