@@ -8,6 +8,7 @@ import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Icon } from "@iconify/react";
 import { Select, SelectItem, Avatar } from "@nextui-org/react";
+import DOBSelector from "@/app/component/DOBSelector";
 
 export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
@@ -154,6 +155,10 @@ export default function Register() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
           />
+
+          {/* Add DOB Selector here */}
+          <DOBSelector />
+
           <Input
             isRequired
             labelPlacement="inside"
@@ -299,3 +304,9 @@ export default function Register() {
     </div>
   );
 }
+
+// add in DOB
+// add in the yes or no toggles
+// add in the the descriptions  below
+// connect the firebase
+// make sure it goes to the profile page

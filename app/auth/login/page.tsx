@@ -181,3 +181,6 @@ export default function Login() {
     </div>
   );
 }
+
+// connect the firebase
+// make an auth checker file and toggle the profile icon based on authenticated or not
