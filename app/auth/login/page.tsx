@@ -11,7 +11,6 @@ import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { Divider } from "@nextui-org/react";
 import {
-  auth,
   googleProvider,
   facebookProvider,
   appleProvider,

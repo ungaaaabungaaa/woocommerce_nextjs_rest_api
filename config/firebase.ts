@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   signInWithRedirect,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
 } from "firebase/auth"; // For Authentication
 import {
   GoogleAuthProvider,
@@ -80,6 +81,27 @@ export const signInWithEmailPassword = async (
     return userCredential;
   } catch (error) {
     console.error("Email Login Failed:", error);
+    throw error;
+  }
+};
+
+/**
+ * Sign up a new user with email and password.
+ * @param {string} email - The user's email.
+ * @param {string} password - The user's password.
+ * @returns {Promise<UserCredential>} - The user credential after successful registration.
+ */
+export const signUpWithEmail = async (email: string, password: string) => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    console.log("User registered:", userCredential.user);
+    return userCredential;
+  } catch (error) {
+    console.error("Email Registration Failed:", error);
     throw error;
   }
 };

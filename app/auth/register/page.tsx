@@ -13,6 +13,14 @@ import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar, Divider } from "@nextui-org/react";
 import DOBSelector from "@/app/component/DOBSelector";
 
+import {
+  googleProvider,
+  facebookProvider,
+  appleProvider,
+  signInWithProvider,
+  signUpWithEmail,
+} from "../../../config/firebase";
+
 interface FormData {
   firstName: string;
   surname: string;
@@ -46,6 +54,33 @@ export default function Register() {
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleGoogleLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(googleProvider);
+      console.log("Google Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Google Login Failed:", error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(facebookProvider);
+      console.log("Facebook Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Facebook Login Failed:", error);
+    }
+  };
+
+  const handleAppleLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(appleProvider);
+      console.log("Apple Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Apple Login Failed:", error);
+    }
+  };
 
   const validateForm = (): boolean => {
     const newErrors: Partial<FormData> = {};
@@ -103,13 +138,10 @@ export default function Register() {
     if (!validateForm()) {
       return;
     }
-
     setIsLoading(true);
     try {
       // Add your Firebase authentication logic here
       console.log("Form submitted with data:", formData);
-      // On successful registration, redirect to profile page
-      // router.push('/profile');
     } catch (error) {
       console.error("Registration error:", error);
       setErrors((prev) => ({
@@ -393,6 +425,7 @@ export default function Register() {
             <Button
               startContent={<Icon icon="logos:facebook" width={20} />}
               size="lg"
+              onClick={handleFacebookLogin}
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Facebook
@@ -401,6 +434,7 @@ export default function Register() {
             <Button
               startContent={<Icon icon="flat-color-icons:google" width={20} />}
               size="lg"
+              onClick={handleGoogleLogin}
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Google
@@ -409,6 +443,7 @@ export default function Register() {
             <Button
               startContent={<Icon icon="logos:apple" width={20} />}
               size="lg"
+              onClick={handleAppleLogin}
               className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
             >
               Sign Up With Apple
