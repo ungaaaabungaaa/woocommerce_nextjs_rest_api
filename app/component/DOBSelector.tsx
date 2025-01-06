@@ -45,7 +45,6 @@ export default function DOBSelector({ className }: DOBSelectorProps) {
   return (
     <div className={`grid grid-cols-3 gap-2 ${className}`}>
       <Select
-        isRequired
         label="Day"
         placeholder="Day"
         className="bg-white rounded-3xl text-black"
@@ -63,7 +62,6 @@ export default function DOBSelector({ className }: DOBSelectorProps) {
       </Select>
 
       <Select
-        isRequired
         label="Month"
         placeholder="Month"
         className="bg-white rounded-3xl text-black"
@@ -81,7 +79,6 @@ export default function DOBSelector({ className }: DOBSelectorProps) {
       </Select>
 
       <Select
-        isRequired
         label="Year"
         placeholder="Year"
         className="bg-white rounded-3xl text-black"
