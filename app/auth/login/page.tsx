@@ -10,6 +10,13 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { Divider } from "@nextui-org/react";
+import {
+  auth,
+  googleProvider,
+  facebookProvider,
+  appleProvider,
+  signInWithProvider,
+} from "../../../config/firebase";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
@@ -21,6 +28,33 @@ export default function Login() {
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  const handleGoogleLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(googleProvider);
+      console.log("Google Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Google Login Failed:", error);
+    }
+  };
+
+  const handleFacebookLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(facebookProvider);
+      console.log("Facebook Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Facebook Login Failed:", error);
+    }
+  };
+
+  const handleAppleLogin = async () => {
+    try {
+      const userCredential = await signInWithProvider(appleProvider);
+      console.log("Apple Login Success:", userCredential.user);
+    } catch (error) {
+      console.error("Apple Login Failed:", error);
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -158,6 +192,7 @@ export default function Login() {
           <Button
             startContent={<Icon icon="flat-color-icons:google" width={20} />}
             size="lg"
+            onClick={handleGoogleLogin}
             className="bg-white text-black dark:bg-black dark:text-white rounded-3xl"
           >
             Sign in with Google
@@ -187,6 +222,3 @@ export default function Login() {
     </div>
   );
 }
-
-// connect the firebase
-// make an auth checker file and toggle the profile icon based on authenticated or not
