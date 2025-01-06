@@ -11,7 +11,6 @@ import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar, Divider } from "@nextui-org/react";
-import DOBSelector from "@/app/component/DOBSelector";
 import {
   googleProvider,
   facebookProvider,
@@ -33,15 +32,6 @@ export default function Register() {
     confirmPassword: "",
     country: "",
     marketingConsent: "",
-  });
-
-  const [errors, setErrors] = useState({
-    firstName: "",
-    surname: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    country: "",
   });
 
   useEffect(() => {

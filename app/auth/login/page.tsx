@@ -64,9 +64,6 @@ export default function Login() {
     try {
       const userCredential = await signInWithEmailPassword(email, password);
       console.log("Email Login Success:", userCredential.user);
-      // push it to the home page
-      // add in the icon toggle based on the user logged in or not
-      // use the useauth state to verify it
     } catch (error) {
       console.error("Email Login Failed:", error);
     }
@@ -178,7 +175,7 @@ export default function Login() {
           <div className="flex w-full items-center justify-center px-1 py-2">
             <Link
               className="text-default-500 text-white dark:text-black underline"
-              href="/contact"
+              href="/auth/forgot"
             >
               Forgot password?
             </Link>
