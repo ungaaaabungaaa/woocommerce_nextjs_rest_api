@@ -18,6 +18,8 @@ import {
   signInWithProvider,
   signUpWithEmail,
 } from "../../../config/firebase";
+import { setPersistence, browserLocalPersistence } from "firebase/auth";
+import { auth } from "../../../config/firebase";
 
 export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
@@ -39,6 +41,14 @@ export default function Register() {
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+      console.log("Session persistence set to local.");
+    })
+    .catch((error) => {
+      console.error("Error setting session persistence:", error);
+    });
 
   const countries = [
     { key: "us", name: "United States", code: "us" },

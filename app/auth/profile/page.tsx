@@ -12,6 +12,8 @@ import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // Add this import
 import { auth } from "../../../config/firebase";
 
+import { setPersistence, browserLocalPersistence } from "firebase/auth";
+
 // if exist pull all the data and put in the input feilds
 // if the no details exist take all the details and all the call  for creating the user
 // use the uid as the username and meta data as well
@@ -46,9 +48,6 @@ async function getUserAuthDetails(router: any) {
     }
 
     console.log(`User UID: ${uid}`);
-    // make the api call with uid to get the coustomer id
-    // if the coustomer id exist pull the data and show it in the form & update it
-    // if no data exist create the coustomer and get the costomer id
   } catch (error) {
     console.error("Error fetching user details:", error);
   }

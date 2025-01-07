@@ -10,6 +10,8 @@ import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar, Divider } from "@nextui-org/react";
+import { setPersistence, browserLocalPersistence } from "firebase/auth";
+import { auth } from "../../../config/firebase";
 
 // check if uid is email auth then allow here
 // read only for the email
@@ -27,6 +29,14 @@ function EmailAuthProfile() {
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
+
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => {
+      console.log("Session persistence set to local.");
+    })
+    .catch((error) => {
+      console.error("Error setting session persistence:", error);
+    });
 
   const countries = [
     { key: "us", name: "United States", code: "us" },
