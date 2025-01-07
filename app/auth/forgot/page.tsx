@@ -8,8 +8,6 @@ import { Divider, Input } from "@nextui-org/react";
 import Link from "next/link";
 import NextImage from "next/image";
 import { sendPasswordReset } from "../../../config/firebase";
-import { setPersistence, browserLocalPersistence } from "firebase/auth";
-import { auth } from "../../../config/firebase";
 
 function Forgot() {
   const [mounted, setMounted] = useState(false);
@@ -23,14 +21,6 @@ function Forgot() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  setPersistence(auth, browserLocalPersistence)
-    .then(() => {
-      console.log("Session persistence set to local.");
-    })
-    .catch((error) => {
-      console.error("Error setting session persistence:", error);
-    });
 
   const validateEmail = (email: any) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

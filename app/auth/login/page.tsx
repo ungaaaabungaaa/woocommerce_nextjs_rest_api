@@ -18,7 +18,6 @@ import {
   signInWithEmailPassword,
   auth,
 } from "../../../config/firebase";
-import { setPersistence, browserLocalPersistence } from "firebase/auth";
 
 export default function Login() {
   const [isVisible, setIsVisible] = useState(false);
@@ -32,14 +31,6 @@ export default function Login() {
   }, []);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
-
-  setPersistence(auth, browserLocalPersistence)
-    .then(() => {
-      console.log("Session persistence set to local.");
-    })
-    .catch((error) => {
-      console.error("Error setting session persistence:", error);
-    });
 
   const handleGoogleLogin = async () => {
     try {

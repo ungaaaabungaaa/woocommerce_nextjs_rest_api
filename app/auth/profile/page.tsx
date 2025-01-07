@@ -11,46 +11,30 @@ import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation"; // Add this import
 import { auth } from "../../../config/firebase";
-
-import { setPersistence, browserLocalPersistence } from "firebase/auth";
-
-// if exist pull all the data and put in the input feilds
-// if the no details exist take all the details and all the call  for creating the user
-// use the uid as the username and meta data as well
-// test it using the reverse api
+import { onAuthStateChanged } from "firebase/auth";
 
 async function getUserAuthDetails(router: any) {
-  try {
-    // Get the current user
-    const user = auth.currentUser;
-
+  onAuthStateChanged(auth, (user) => {
     if (!user) {
       console.log("No user is currently signed in.");
       router.push("/");
       return;
     }
 
-    // Get the user's UID
     const uid = user.uid;
-
-    if (!uid) {
-      console.log("User UID does not exist. Redirecting to home...");
-      router.push("/");
-      return;
-    }
-
-    // Identify the login provider
-    let provider = "Unknown";
-    if (user.providerData.length > 0) {
-      provider = user.providerData[0].providerId;
-      console.log(provider);
-      // if the user is email send him to the emailauthprofile
-    }
-
     console.log(`User UID: ${uid}`);
-  } catch (error) {
-    console.error("Error fetching user details:", error);
-  }
+
+    // Check the provider used for login
+    let provider = "Unknown";
+
+    if (user.providerData && user.providerData.length > 0) {
+      provider = user.providerData[0].providerId;
+    }
+
+    // if the login provider is password send it to the emailauthprofile
+
+    console.log(`Login provider: ${provider}`);
+  });
 }
 
 // Call the function
@@ -326,3 +310,8 @@ function Profile() {
 }
 
 export default Profile;
+
+// if exist pull all the data and put in the input feilds
+// if the no details exist take all the details and all the call  for creating the user
+// use the uid as the username and meta data as well
+// test it using the reverse api

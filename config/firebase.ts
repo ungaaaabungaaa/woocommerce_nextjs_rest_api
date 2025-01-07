@@ -7,12 +7,15 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   sendPasswordResetEmail,
+  setPersistence,
 } from "firebase/auth"; // For Authentication
 import {
   GoogleAuthProvider,
   FacebookAuthProvider,
   OAuthProvider,
 } from "firebase/auth";
+
+import { browserLocalPersistence } from "firebase/auth";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -121,3 +124,7 @@ export const sendPasswordReset = async (email: string) => {
     throw error;
   }
 };
+
+setPersistence(auth, browserLocalPersistence).catch((error) => {
+  console.error("Error setting persistence:", error);
+});
