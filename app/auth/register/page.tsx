@@ -34,6 +34,11 @@ export default function Register() {
     marketingConsent: "",
   });
 
+  const RegisterChecks = (user: any) => {
+    // Log the UID of the Register-in user
+    console.log("User UID:", user.uid);
+  };
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -121,6 +126,7 @@ export default function Register() {
     console.log("User signed up with email:", email);
     try {
       const userCredential = await signUpWithEmail(email, password);
+      RegisterChecks(userCredential.user); // Call the RegisterChecks function
       console.log("Email Singup Success:", userCredential.user);
     } catch (error) {
       console.error("Email Singup Failed:", error);
@@ -176,6 +182,7 @@ export default function Register() {
     try {
       const userCredential = await signInWithProvider(googleProvider);
       console.log("Google Login Success:", userCredential.user);
+      RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Google Login Failed:", error);
     }
@@ -185,6 +192,7 @@ export default function Register() {
     try {
       const userCredential = await signInWithProvider(facebookProvider);
       console.log("Facebook Login Success:", userCredential.user);
+      RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Facebook Login Failed:", error);
     }
@@ -194,6 +202,7 @@ export default function Register() {
     try {
       const userCredential = await signInWithProvider(appleProvider);
       console.log("Apple Login Success:", userCredential.user);
+      RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Apple Login Failed:", error);
     }
