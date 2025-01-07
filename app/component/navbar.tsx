@@ -207,12 +207,12 @@ export default function Nav_bar() {
             {isAuthenticated ? (
               <UserCircle
                 className="h-5 cursor-pointer text-white dark:text-black"
-                onClick={() => router.push("/profile")}
+                onClick={() => router.push("/auth/user")}
               />
             ) : (
               <User
                 className="h-5 cursor-pointer text-white dark:text-black"
-                onClick={() => router.push("/login")}
+                onClick={() => router.push("/auth/register")}
               />
             )}
 
