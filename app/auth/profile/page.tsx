@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
@@ -9,24 +8,66 @@ import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Avatar, Divider } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
+import { useRouter } from "next/navigation"; // Add this import
+import { auth } from "../../../config/firebase";
 
-// check if the auth type is socail | media apple | Google | Facebook
-// get the UID
-// check if this costomer exist
 // if exist pull all the data and put in the input feilds
 // if the no details exist take all the details and all the call  for creating the user
 // use the uid as the username and meta data as well
 // test it using the reverse api
 
+async function getUserAuthDetails(router: any) {
+  try {
+    // Get the current user
+    const user = auth.currentUser;
+
+    if (!user) {
+      console.log("No user is currently signed in.");
+      router.push("/");
+      return;
+    }
+
+    // Get the user's UID
+    const uid = user.uid;
+
+    if (!uid) {
+      console.log("User UID does not exist. Redirecting to home...");
+      router.push("/");
+      return;
+    }
+
+    // Identify the login provider
+    let provider = "Unknown";
+    if (user.providerData.length > 0) {
+      provider = user.providerData[0].providerId;
+      console.log(provider);
+      // if the user is email send him to the emailauthprofile
+    }
+
+    console.log(`User UID: ${uid}`);
+    // make the api call with uid to get the coustomer id
+    // if the coustomer id exist pull the data and show it in the form & update it
+    // if no data exist create the coustomer and get the costomer id
+  } catch (error) {
+    console.error("Error fetching user details:", error);
+  }
+}
+
+// Call the function
+
 function Profile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+
   const [isVisible, setIsVisible] = useState(false);
+  const router = useRouter(); // Add router hook
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // Move getUserAuthDetails call to useEffect and pass router
+    getUserAuthDetails(router);
+  }, [router]);
 
   const countries = [
     { key: "us", name: "United States", code: "us" },
