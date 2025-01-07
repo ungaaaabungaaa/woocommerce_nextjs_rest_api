@@ -11,6 +11,7 @@ import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar, Divider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
 import {
   googleProvider,
   facebookProvider,
@@ -18,11 +19,14 @@ import {
   signInWithProvider,
   signUpWithEmail,
 } from "../../../config/firebase";
+import axios from "axios";
 
 export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const router = useRouter(); // Add router hook
+
   const [formData, setFormData] = useState({
     firstName: "",
     surname: "",
@@ -34,8 +38,33 @@ export default function Register() {
   });
 
   const RegisterChecks = (user: any) => {
-    // Log the UID of the Register-in user
     console.log("User UID:", user.uid);
+    const email = `${user.uid}@uid.com`;
+    axios
+      .get(
+        `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+      )
+      .then((response) => {
+        const customer_id = response.data.customer_id;
+        // If the customer_id is not null, navigate to the homepage
+        if (customer_id !== null) {
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        // Log the full error to understand its structure
+        console.error("Error object:", error);
+
+        if (error.response) {
+          if (error.response.status === 404) {
+            console.log("User authenticated but no customer found");
+          } else {
+            console.error("Error fetching customer ID:", error.response);
+          }
+        } else {
+          console.error("Error fetching customer ID:", error);
+        }
+      });
   };
 
   useEffect(() => {
