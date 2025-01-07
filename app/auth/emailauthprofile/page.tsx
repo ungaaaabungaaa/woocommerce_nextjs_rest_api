@@ -1,6 +1,5 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
@@ -9,24 +8,45 @@ import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Avatar, Divider } from "@nextui-org/react";
+import { Avatar } from "@nextui-org/react";
+import { auth } from "../../../config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
-// check if uid is email auth then allow here
-// read only for the email
-// check if the coustomer details exist pull and display or show save details
-// collect all the details and update the form
-// store the uid and customer id locallay
+async function getUserAuthDetails(router: any) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      console.log("No user is currently signed in.");
+      router.push("/");
+      return;
+    }
+
+    const uid = user.uid;
+    console.log(`User UID: ${uid}`);
+
+    // Check the provider used for login
+    let provider = "Unknown";
+
+    if (user.providerData && user.providerData.length > 0) {
+      provider = user.providerData[0].providerId;
+    }
+
+    // if the login provider is password send it to the emailauthprofile
+    console.log(`Login provider: ${provider}`);
+
+    // Route based on provider type
+    if (provider !== "password") {
+      router.push("/auth/profile");
+    }
+  });
+}
 
 function EmailAuthProfile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
-  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const countries = [
     { key: "us", name: "United States", code: "us" },

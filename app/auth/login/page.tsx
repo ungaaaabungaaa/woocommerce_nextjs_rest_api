@@ -235,3 +235,6 @@ export default function Login() {
     </div>
   );
 }
+
+// onlogin check the coustomer id exisst or not if not send to the respective profile page
+// if the costomer id exist with the details send to the home page

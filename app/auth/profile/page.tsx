@@ -34,6 +34,11 @@ async function getUserAuthDetails(router: any) {
     // if the login provider is password send it to the emailauthprofile
 
     console.log(`Login provider: ${provider}`);
+
+    // Route to emailauthprofile if the provider is password
+    if (provider === "password") {
+      router.push("/auth/emailauthprofile");
+    }
   });
 }
 
@@ -310,8 +315,3 @@ function Profile() {
 }
 
 export default Profile;
-
-// if exist pull all the data and put in the input feilds
-// if the no details exist take all the details and all the call  for creating the user
-// use the uid as the username and meta data as well
-// test it using the reverse api
