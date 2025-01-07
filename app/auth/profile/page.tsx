@@ -61,21 +61,65 @@ async function getcustomerID(uid: any) {
 }
 
 async function getcustomerData(id: any) {
-  const email = `${id}@uid.com`;
-  axios
-    .get(
-      `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
-    )
-    .then((response) => {
-      console.log("Data Response", response);
-    })
-    .catch((error) => {
-      console.error("Error object:", error);
-    });
+  try {
+    const response = await axios.get(`/api/retrieveCustomer?id=${id}`);
+    console.log("Data Response", response.data);
+    // set the form data here
+  } catch (error) {
+    console.error("Error object:", error);
+  }
 }
 
-async function updatecustomerData() {}
-async function createcustomer() {}
+async function updatecustomerData(customerId: string, formdata: any) {
+  try {
+    // Make a PUT request to the API route
+    const response = await axios.put(
+      `/api/updatecustomerdetails/${customerId}`,
+      formdata
+    );
+
+    // Handle the success response
+    if (response.data.success) {
+      console.log("Customer updated successfully:", response.data.customer);
+      alert("Customer updated successfully!");
+    } else {
+      console.error("Error in response:", response.data.message);
+      alert(`Error: ${response.data.message || "Unknown error occurred."}`);
+    }
+  } catch (error: any) {
+    // Handle the error
+    console.error(
+      "Error updating customer:",
+      error.response?.data || error.message
+    );
+    alert(`Error: ${error.response?.data?.message || error.message}`);
+  }
+}
+
+async function createcustomer(formdata: any) {
+  try {
+    // Make a POST request to the API route
+    const response = await axios.post("/api/createcustomer", formdata);
+
+    // Handle the success response
+    if (response.data.success) {
+      console.log("Customer created successfully:", response.data.data);
+      alert("Customer created successfully!");
+    } else {
+      console.error("Error in response:", response.data.error);
+      alert(
+        `Error: ${response.data.error.message || "Unknown error occurred."}`
+      );
+    }
+  } catch (error: any) {
+    // Handle the error
+    console.error(
+      "Error creating customer:",
+      error.response?.data || error.message
+    );
+    alert(`Error: ${error.response?.data?.message || error.message}`);
+  }
+}
 
 // Call the function
 
@@ -348,10 +392,3 @@ function Profile() {
 }
 
 export default Profile;
-
-// make an api call to check if the costomer data exist or not
-// if exist populate the form
-// enable a bollean called enable editing
-// if the enable bollean is enable is true call the patch api
-// if the data doesnt exist call create api
-// take all the data and call the api
