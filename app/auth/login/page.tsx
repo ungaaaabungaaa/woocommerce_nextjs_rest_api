@@ -12,12 +12,15 @@ import Link from "next/link";
 import { Divider } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+
 import {
   googleProvider,
   facebookProvider,
   appleProvider,
   signInWithProvider,
   signInWithEmailPassword,
+  auth,
 } from "../../../config/firebase";
 
 export default function Login() {
@@ -55,6 +58,7 @@ export default function Login() {
         if (error.response) {
           if (error.response.status === 404) {
             console.log("User authenticated but no customer found");
+            getUserAuthDetails;
           } else {
             console.error("Error fetching customer ID:", error.response);
           }
@@ -63,6 +67,35 @@ export default function Login() {
         }
       });
   };
+
+  async function getUserAuthDetails(router: any) {
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        console.log("No user is currently signed in.");
+        router.push("/");
+        return;
+      }
+
+      const uid = user.uid;
+      console.log(`User UID: ${uid}`);
+
+      // Check the provider used for login
+      let provider = "Unknown";
+
+      if (user.providerData && user.providerData.length > 0) {
+        provider = user.providerData[0].providerId;
+      }
+
+      // if the login provider is password send it to the emailauthprofile
+
+      console.log(`Login provider: ${provider}`);
+
+      // Route to emailauthprofile if the provider is password
+      if (provider === "password") {
+        router.push("/auth/emailauthprofile");
+      }
+    });
+  }
 
   const handleGoogleLogin = async () => {
     try {
