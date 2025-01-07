@@ -16,7 +16,6 @@ import {
   appleProvider,
   signInWithProvider,
   signInWithEmailPassword,
-  auth,
 } from "../../../config/firebase";
 
 export default function Login() {
@@ -32,10 +31,16 @@ export default function Login() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const loginChecks = (user: any) => {
+    // Log the UID of the logged-in user
+    console.log("User UID:", user.uid);
+  };
+
   const handleGoogleLogin = async () => {
     try {
       const userCredential = await signInWithProvider(googleProvider);
-      console.log("Google Login Success:", userCredential.user);
+      loginChecks(userCredential.user); // Call the loginChecks function
+      // console.log("Google Login Success:", userCredential.user);
     } catch (error) {
       console.error("Google Login Failed:", error);
     }
@@ -44,7 +49,8 @@ export default function Login() {
   const handleFacebookLogin = async () => {
     try {
       const userCredential = await signInWithProvider(facebookProvider);
-      console.log("Facebook Login Success:", userCredential.user);
+      loginChecks(userCredential.user); // Call the loginChecks function
+      // console.log("Facebook Login Success:", userCredential.user);
     } catch (error) {
       console.error("Facebook Login Failed:", error);
     }
@@ -53,7 +59,8 @@ export default function Login() {
   const handleAppleLogin = async () => {
     try {
       const userCredential = await signInWithProvider(appleProvider);
-      console.log("Apple Login Success:", userCredential.user);
+      loginChecks(userCredential.user); // Call the loginChecks function
+      // console.log("Apple Login Success:", userCredential.user);
     } catch (error) {
       console.error("Apple Login Failed:", error);
     }
@@ -64,7 +71,8 @@ export default function Login() {
     console.log("handleSubmit");
     try {
       const userCredential = await signInWithEmailPassword(email, password);
-      console.log("Email Login Success:", userCredential.user);
+      // console.log("Email Login Success:", userCredential.user);
+      loginChecks(userCredential.user); // Call the loginChecks function
     } catch (error) {
       console.error("Email Login Failed:", error);
     }
@@ -237,4 +245,6 @@ export default function Login() {
 }
 
 // onlogin check the coustomer id exisst or not if not send to the respective profile page
+// https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=uid@uid.com api call with the uid
 // if the costomer id exist with the details send to the home page
+// if no costomer id exist send them to profile page
