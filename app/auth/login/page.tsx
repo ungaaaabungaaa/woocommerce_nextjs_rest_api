@@ -58,7 +58,7 @@ export default function Login() {
         if (error.response) {
           if (error.response.status === 404) {
             console.log("User authenticated but no customer found");
-            getUserAuthDetails;
+            getUserAuthDetails(router); // Trigger the getUserAuthDetails function
           } else {
             console.error("Error fetching customer ID:", error.response);
           }
@@ -87,12 +87,12 @@ export default function Login() {
       }
 
       // if the login provider is password send it to the emailauthprofile
-
       console.log(`Login provider: ${provider}`);
-
       // Route to emailauthprofile if the provider is password
       if (provider === "password") {
         router.push("/auth/emailauthprofile");
+      } else {
+        router.push("/auth/profile");
       }
     });
   }
