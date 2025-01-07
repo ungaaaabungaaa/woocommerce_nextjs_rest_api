@@ -107,11 +107,6 @@ function Profile() {
     }));
   };
 
-  // test the endpoint
-  // resturcute the data
-  // call the api
-  // do the same of the emailauthprofile as well
-
   async function updatecustomerData(customerId: string, formdata: any) {
     // try {
     //   // Make a PUT request to the API route
@@ -487,3 +482,8 @@ function Profile() {
 }
 
 export default Profile;
+
+// implement & Test the update
+// fix the conuntry mapping
+// add in profile updating and creating splash for end user
+// do the same for the emailauthprofile

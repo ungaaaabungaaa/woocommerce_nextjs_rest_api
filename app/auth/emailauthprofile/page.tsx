@@ -316,3 +316,7 @@ function EmailAuthProfile() {
 }
 
 export default EmailAuthProfile;
+
+// make sure username is various and email edit option is disabled so is the username
+// then implement firebase reset password function using the current password
+// add in the splashes to create and update

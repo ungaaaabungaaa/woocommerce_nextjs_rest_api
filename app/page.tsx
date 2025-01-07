@@ -7,7 +7,8 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // profile page
+  // profile page - Missing the navbar icon change
+
   // add in autofill at the checkout
   // Pop Up Modals For Cart Login & Wishlist
   // Alighments

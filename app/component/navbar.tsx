@@ -25,10 +25,8 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
-
 import SiteLogo2 from "../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../public/blacklogo.svg";
-
 import { useCart } from "../../context/cartcontext";
 import { MensMegaMenu } from "./mens-mega-menu";
 import { WomensMegaMenu } from "./womens-mega-menu";
@@ -37,6 +35,8 @@ import { FootWearMegaMenu } from "./footwear-mega-menu";
 import { KidsMegaMenu } from "./kids-mega-menu";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
+import { auth } from "../../config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -46,9 +46,17 @@ export default function Nav_bar() {
   const { theme, setTheme } = useTheme();
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    setMounted(true); // Set the component as mounted
+
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAuthenticated(!!user); // Update authentication state
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
   }, []);
 
   const handleSearchClick = () => {
@@ -196,11 +204,17 @@ export default function Nav_bar() {
               className="h-5 cursor-pointer text-white dark:text-black"
             />
 
-            {/* <UserCircle
-              className="h-5 cursor-pointer text-white dark:text-black"
-            ></UserCircle> */}
-
-            <User className="h-5 cursor-pointer text-white dark:text-black"></User>
+            {isAuthenticated ? (
+              <UserCircle
+                className="h-5 cursor-pointer text-white dark:text-black"
+                onClick={() => router.push("/profile")}
+              />
+            ) : (
+              <User
+                className="h-5 cursor-pointer text-white dark:text-black"
+                onClick={() => router.push("/login")}
+              />
+            )}
 
             <Badge
               content={0}
