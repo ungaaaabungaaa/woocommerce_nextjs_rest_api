@@ -23,7 +23,6 @@ export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
-
   const [formData, setFormData] = useState({
     firstName: "",
     surname: "",

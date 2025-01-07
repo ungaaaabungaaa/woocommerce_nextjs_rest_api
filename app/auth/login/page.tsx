@@ -10,6 +10,8 @@ import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
 import { Divider } from "@nextui-org/react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 import {
   googleProvider,
   facebookProvider,
@@ -24,6 +26,7 @@ export default function Login() {
   const { theme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter(); // Add router hook
 
   useEffect(() => {
     setMounted(true);
@@ -32,15 +35,39 @@ export default function Login() {
   const toggleVisibility = () => setIsVisible(!isVisible);
 
   const loginChecks = (user: any) => {
-    // Log the UID of the logged-in user
     console.log("User UID:", user.uid);
+    const email = `${user.uid}@uid.com`;
+    axios
+      .get(
+        `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+      )
+      .then((response) => {
+        const customer_id = response.data.customer_id;
+        // If the customer_id is not null, navigate to the homepage
+        if (customer_id !== null) {
+          router.push("/");
+        }
+      })
+      .catch((error) => {
+        // Log the full error to understand its structure
+        console.error("Error object:", error);
+
+        if (error.response) {
+          if (error.response.status === 404) {
+            console.log("User authenticated but no customer found");
+          } else {
+            console.error("Error fetching customer ID:", error.response);
+          }
+        } else {
+          console.error("Error fetching customer ID:", error);
+        }
+      });
   };
 
   const handleGoogleLogin = async () => {
     try {
       const userCredential = await signInWithProvider(googleProvider);
       loginChecks(userCredential.user); // Call the loginChecks function
-      // console.log("Google Login Success:", userCredential.user);
     } catch (error) {
       console.error("Google Login Failed:", error);
     }
@@ -50,7 +77,6 @@ export default function Login() {
     try {
       const userCredential = await signInWithProvider(facebookProvider);
       loginChecks(userCredential.user); // Call the loginChecks function
-      // console.log("Facebook Login Success:", userCredential.user);
     } catch (error) {
       console.error("Facebook Login Failed:", error);
     }
@@ -60,7 +86,6 @@ export default function Login() {
     try {
       const userCredential = await signInWithProvider(appleProvider);
       loginChecks(userCredential.user); // Call the loginChecks function
-      // console.log("Apple Login Success:", userCredential.user);
     } catch (error) {
       console.error("Apple Login Failed:", error);
     }
@@ -71,7 +96,6 @@ export default function Login() {
     console.log("handleSubmit");
     try {
       const userCredential = await signInWithEmailPassword(email, password);
-      // console.log("Email Login Success:", userCredential.user);
       loginChecks(userCredential.user); // Call the loginChecks function
     } catch (error) {
       console.error("Email Login Failed:", error);
