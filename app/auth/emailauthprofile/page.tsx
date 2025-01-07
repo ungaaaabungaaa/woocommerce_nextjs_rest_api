@@ -11,15 +11,13 @@ import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar, Divider } from "@nextui-org/react";
 
-// check if the auth type is socail | media apple | Google | Facebook
-// get the UID
-// check if this costomer exist
-// if exist pull all the data and put in the input feilds
-// if the no details exist take all the details and all the call  for creating the user
-// use the uid as the username and meta data as well
-// test it using the reverse api
+// check if uid is email auth then allow here
+// read only for the email
+// check if the coustomer details exist pull and display or show save details
+// collect all the details and update the form
+// store the uid and customer id locallay
 
-function Profile() {
+function EmailAuthProfile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
   const [isVisible, setIsVisible] = useState(false);
@@ -27,6 +25,8 @@ function Profile() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const countries = [
     { key: "us", name: "United States", code: "us" },
@@ -61,8 +61,6 @@ function Profile() {
     { key: "sa", name: "Saudi Arabia", code: "sa" },
   ];
 
-  const toggleVisibility = () => setIsVisible(!isVisible);
-
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-black dark:bg-white p-4">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
@@ -87,6 +85,14 @@ function Profile() {
           </p>
           <p className="text-white dark:text-black text-center mt-4">
             Update Your Details Below
+          </p>
+          <p className="text-center text-small">
+            <Link
+              href="/auth/changepassword"
+              className="text-white dark:text-black underline hover:font-bold"
+            >
+              Change Password
+            </Link>
           </p>
         </div>
 
@@ -123,7 +129,7 @@ function Profile() {
           />
 
           <Input
-            isRequired
+            isReadOnly
             labelPlacement="inside"
             label="Email Address"
             name="email"
@@ -285,4 +291,4 @@ function Profile() {
   );
 }
 
-export default Profile;
+export default EmailAuthProfile;
