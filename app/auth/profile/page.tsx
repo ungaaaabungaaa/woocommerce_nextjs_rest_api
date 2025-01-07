@@ -13,7 +13,6 @@ import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
-import { setuid } from "process";
 
 function Profile() {
   const [mounted, setMounted] = useState(false);
@@ -130,7 +129,7 @@ function Profile() {
     //   );
     //   alert(`Error: ${error.response?.data?.message || error.message}`);
     // }
-    console.log("Updateing the User", formData);
+    console.log("Updating the User", formData);
   }
 
   async function createcustomer(formdata: any, UID: any) {
@@ -487,3 +486,4 @@ export default Profile;
 // fix the conuntry mapping
 // add in profile updating and creating splash for end user
 // do the same for the emailauthprofile
+// add in proper toast for the erros

@@ -7,13 +7,6 @@ import { ProductPromoCard } from "./component/productpromocard";
 import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
-  // profile page - Missing the navbar icon change
-
-  // add in autofill at the checkout
-  // Pop Up Modals For Cart Login & Wishlist
-  // Alighments
-  // Wishlist API
-
   return (
     <section className="flex flex-col items-center justify-center bg-black text-white dark:bg-white dark:text-black">
       <ImagesSliderDemo></ImagesSliderDemo>
@@ -40,4 +33,33 @@ export default function Home() {
       <br></br>
     </section>
   );
+
+  // jan - 7 - today
+
+  // authentication completion  - Update | EmailAuth | RestPassword
+  // wishlist routes setup
+  // add in the heart icon for the cards & console log the on clicked added to the cart
+
+  // jan - 8 - tommorw
+
+  // cart icons reducation
+  // pop up icons
+  // autofill in the checkout
+  // alignments
+  // icon size increaser
+  // on hover add border - b
+  // font updates
+  // filter button same as the manunited
+
+  // jan - 9 - day after tommorw
+
+  // wishlist implmenation
+  // remove hardcoded urls
+  // add in proper comments and document it
+
+  // jan - 10
+  // create a vercel account
+  // clone install
+  // connect the doamin
+  // check and handover
 }
