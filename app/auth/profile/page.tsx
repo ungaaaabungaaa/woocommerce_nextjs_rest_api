@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
+import { setuid } from "process";
 
 function Profile() {
   const [mounted, setMounted] = useState(false);
@@ -20,6 +21,7 @@ function Profile() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null>(null);
+  const [FirebaseUID, SetFirebaseUID] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -46,6 +48,7 @@ function Profile() {
 
         const uid = user.uid;
         console.log(`User UID: ${uid}`);
+        SetFirebaseUID(uid);
 
         let provider = user.providerData[0]?.providerId || "Unknown";
         console.log(`Login provider: ${provider}`);
@@ -66,7 +69,7 @@ function Profile() {
                 setFormData({
                   firstName: customerData.data.first_name || "",
                   surname: customerData.data.last_name || "",
-                  email: customerData.data.email || "",
+                  email: customerData.data.username || "",
                   mobile: customerData.data.billing.phone || "",
                   addressLine1: customerData.data.billing.address_1 || "",
                   addressLine2: customerData.data.billing.address_2 || "",
@@ -135,10 +138,11 @@ function Profile() {
     console.log("Updateing the User", formData);
   }
 
-  async function createcustomer(formdata: any) {
+  async function createcustomer(formdata: any, UID: any) {
     try {
+      const email_x = `${UID}@uid.com`;
       const data = {
-        email: formdata.email,
+        email: email_x,
         first_name: formdata.firstName,
         last_name: formdata.surname,
         username: formdata.email, // Using email as username
@@ -207,7 +211,7 @@ function Profile() {
         await updatecustomerData(customerId, formData);
       } else {
         // Create new customer
-        await createcustomer(formData);
+        await createcustomer(formData, FirebaseUID);
       }
       alert(
         customerId
