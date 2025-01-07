@@ -12,6 +12,7 @@ import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import axios from "axios";
 
 async function getUserAuthDetails(router: any) {
   onAuthStateChanged(auth, (user) => {
@@ -23,15 +24,15 @@ async function getUserAuthDetails(router: any) {
 
     const uid = user.uid;
     console.log(`User UID: ${uid}`);
+    if (!uid) {
+      getcustomerID(uid);
+    }
 
-    // Check the provider used for login
     let provider = "Unknown";
 
     if (user.providerData && user.providerData.length > 0) {
       provider = user.providerData[0].providerId;
     }
-
-    // if the login provider is password send it to the emailauthprofile
 
     console.log(`Login provider: ${provider}`);
 
@@ -42,18 +43,50 @@ async function getUserAuthDetails(router: any) {
   });
 }
 
+async function getcustomerID(uid: any) {
+  const email = `${uid}@uid.com`;
+  axios
+    .get(
+      `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+    )
+    .then((response) => {
+      const customer_id = response.data.customer_id;
+      if (customer_id !== null) {
+        getcustomerData(customer_id);
+      }
+    })
+    .catch((error) => {
+      console.error("Error object:", error);
+    });
+}
+
+async function getcustomerData(id: any) {
+  const email = `${id}@uid.com`;
+  axios
+    .get(
+      `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+    )
+    .then((response) => {
+      console.log("Data Response", response);
+    })
+    .catch((error) => {
+      console.error("Error object:", error);
+    });
+}
+
+async function updatecustomerData() {}
+async function createcustomer() {}
+
 // Call the function
 
 function Profile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
-
   const [isVisible, setIsVisible] = useState(false);
-  const router = useRouter(); // Add router hook
+  const router = useRouter();
 
   useEffect(() => {
     setMounted(true);
-    // Move getUserAuthDetails call to useEffect and pass router
     getUserAuthDetails(router);
   }, [router]);
 
@@ -315,3 +348,10 @@ function Profile() {
 }
 
 export default Profile;
+
+// make an api call to check if the costomer data exist or not
+// if exist populate the form
+// enable a bollean called enable editing
+// if the enable bollean is enable is true call the patch api
+// if the data doesnt exist call create api
+// take all the data and call the api

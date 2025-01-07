@@ -8,8 +8,6 @@ import ProductCarouselCategories from "./component/ ProductCarouselCategories";
 
 export default function Home() {
   // profile page
-  // customer api modded to username to get customer id
-  // add in check system if userlogged in and coustomer id exist
   // add in autofill at the checkout
   // Pop Up Modals For Cart Login & Wishlist
   // Alighments
