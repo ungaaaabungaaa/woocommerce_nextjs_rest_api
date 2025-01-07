@@ -11,6 +11,7 @@ import { Select, SelectItem } from "@nextui-org/select";
 import { Avatar } from "@nextui-org/react";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 async function getUserAuthDetails(router: any) {
   onAuthStateChanged(auth, (user) => {
@@ -43,10 +44,13 @@ async function getUserAuthDetails(router: any) {
 function EmailAuthProfile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
+  const router = useRouter(); // Add router hook
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    // Move getUserAuthDetails call to useEffect and pass router
+    getUserAuthDetails(router);
+  }, [router]);
 
   const countries = [
     { key: "us", name: "United States", code: "us" },
