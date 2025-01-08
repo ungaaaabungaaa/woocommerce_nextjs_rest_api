@@ -559,8 +559,6 @@ function Profile() {
 
 export default Profile;
 
-// implement & Test the update
 // fix the conuntry mapping
 // add in profile updating and creating splash for end user
-// do the same for the emailauthprofile
 // add in proper toast for the erros

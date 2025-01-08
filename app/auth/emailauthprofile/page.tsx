@@ -83,7 +83,7 @@ function EmailAuthProfile() {
 
         let provider = user.providerData[0]?.providerId || "Unknown";
         console.log(`Login provider: ${provider}`);
-        if (provider !== "password") {
+        if (provider === "password") {
           try {
             const email = `${uid}@uid.com`;
             const response = await axios.get(
@@ -114,7 +114,7 @@ function EmailAuthProfile() {
             console.error("Error fetching customer data:", error);
           }
         } else {
-          router.push("auth/emailauthprofile");
+          router.push("auth/profile");
         }
       });
     };
