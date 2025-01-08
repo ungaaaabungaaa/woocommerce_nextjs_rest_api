@@ -114,11 +114,6 @@ function EmailAuthProfile() {
             }
           } catch (error) {
             console.error("Error fetching customer data:", error);
-            toast.error("Error fetching customer data", {
-              position: "top-center",
-              theme: "dark",
-              autoClose: 5000,
-            });
           }
         } else {
           router.push("auth/profile");
@@ -298,15 +293,12 @@ function EmailAuthProfile() {
       if (customerId) {
         // Update existing customer
         await updatecustomerData(customerId, formData, FirebaseUID);
+        accountUpdatedCompleted(); // Call this function after update
       } else {
         // Create new customer
         await createcustomer(formData, FirebaseUID);
+        accountCreatedCompleted(); // Call this function after creation
       }
-      alert(
-        customerId
-          ? "Profile updated successfully!"
-          : "Profile created successfully!"
-      );
     } catch (error) {
       console.error("Error saving profile:", error);
       toast.error("Error saving profile", {
@@ -317,6 +309,21 @@ function EmailAuthProfile() {
     } finally {
       setLoading(false);
     }
+  };
+
+  // Define these functions separately
+  const accountCreatedCompleted = () => {
+    console.log("Account created successfully!");
+    router.push("/"); // Navigate to the home page
+  };
+
+  const accountUpdatedCompleted = () => {
+    console.log("Account updated successfully!");
+    toast.success("Profile Updated", {
+      position: "top-center",
+      theme: "dark",
+      autoClose: 3500,
+    });
   };
 
   const countries = [
