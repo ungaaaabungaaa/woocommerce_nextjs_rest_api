@@ -13,6 +13,8 @@ import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface CustomerUpdateData {
   id: string;
@@ -112,6 +114,11 @@ function EmailAuthProfile() {
             }
           } catch (error) {
             console.error("Error fetching customer data:", error);
+            toast.error("Error fetching customer data", {
+              position: "top-center",
+              theme: "dark",
+              autoClose: 5000,
+            });
           }
         } else {
           router.push("auth/profile");
@@ -193,6 +200,11 @@ function EmailAuthProfile() {
         "Error creating customer:",
         error.response?.data || error.message
       );
+      toast.error("Error creating customer", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       return {
         success: false,
         error: error.response?.data?.message || error.message,
@@ -262,6 +274,12 @@ function EmailAuthProfile() {
         "Error updating customer:",
         error.response?.data || error.message
       );
+      toast.error("Error updating customer", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
+
       return {
         success: false,
         error:
@@ -291,7 +309,11 @@ function EmailAuthProfile() {
       );
     } catch (error) {
       console.error("Error saving profile:", error);
-      alert("Error saving profile. Please try again.");
+      toast.error("Error saving profile", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     } finally {
       setLoading(false);
     }
@@ -332,6 +354,7 @@ function EmailAuthProfile() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-black dark:bg-white p-4">
+      <ToastContainer />
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
         {/* Logo and Header Section */}
         <div className="flex flex-col items-center pb-6">
