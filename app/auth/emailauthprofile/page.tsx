@@ -8,7 +8,6 @@ import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -55,6 +54,7 @@ function EmailAuthProfile() {
   const [loading, setLoading] = useState(false);
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [FirebaseUID, SetFirebaseUID] = useState<string | null>(null);
+  const [AuthEmailID, SetAuthEmailID] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -86,6 +86,11 @@ function EmailAuthProfile() {
         let provider = user.providerData[0]?.providerId || "Unknown";
         console.log(`Login provider: ${provider}`);
         if (provider === "password") {
+          const email = user.email; // Retrieve the email of the signed-in user
+          if (email) {
+            SetAuthEmailID(email);
+          }
+          console.log(`User Email: ${email}`);
           try {
             const email = `${uid}@uid.com`;
             const response = await axios.get(
@@ -139,14 +144,14 @@ function EmailAuthProfile() {
     }));
   };
 
-  async function createcustomer(formdata: any, UID: any) {
+  async function createcustomer(formdata: any, UID: any, Email: any) {
     try {
       const email_x = `${UID}@uid.com`;
       const data = {
         email: email_x,
         first_name: formdata.firstName,
         last_name: formdata.surname,
-        username: formdata.email, // Using email as username
+        username: Email,
         billing: {
           first_name: formdata.firstName,
           last_name: formdata.surname,
@@ -210,7 +215,8 @@ function EmailAuthProfile() {
   async function updatecustomerData(
     customerId: string,
     formData: any,
-    UID: any
+    UID: any,
+    Email: any
   ): Promise<{ success: boolean; data?: any; error?: string }> {
     try {
       const email_x = `${UID}@uid.com`;
@@ -219,7 +225,7 @@ function EmailAuthProfile() {
         email: email_x,
         first_name: formData.firstName,
         last_name: formData.surname,
-        username: formData.email,
+        username: Email,
         billing: {
           first_name: formData.firstName,
           last_name: formData.surname,
@@ -292,11 +298,16 @@ function EmailAuthProfile() {
     try {
       if (customerId) {
         // Update existing customer
-        await updatecustomerData(customerId, formData, FirebaseUID);
+        await updatecustomerData(
+          customerId,
+          formData,
+          FirebaseUID,
+          AuthEmailID
+        );
         accountUpdatedCompleted(); // Call this function after update
       } else {
         // Create new customer
-        await createcustomer(formData, FirebaseUID);
+        await createcustomer(formData, FirebaseUID, AuthEmailID);
         accountCreatedCompleted(); // Call this function after creation
       }
     } catch (error) {
@@ -430,8 +441,7 @@ function EmailAuthProfile() {
             }}
           />
 
-          {/* <Input
-            isRequired
+          <Input
             isReadOnly
             labelPlacement="inside"
             label="Email Address"
@@ -446,7 +456,7 @@ function EmailAuthProfile() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
-          /> */}
+          />
 
           <Input
             isRequired
@@ -595,3 +605,7 @@ function EmailAuthProfile() {
 }
 
 export default EmailAuthProfile;
+
+// get the email id using the authprovider
+// set it in the create user
+// try to get the details from the user page to this page as well
