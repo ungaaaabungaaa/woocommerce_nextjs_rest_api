@@ -34,32 +34,18 @@ export default function Home() {
     </section>
   );
 
-  // jan - 7 - today
-
   // authentication completion  - Update | EmailAuth | RestPassword
   // wishlist routes setup
   // add in the heart icon for the cards & console log the on clicked added to the cart
-
-  // jan - 8 - tommorw
-
   // cart icons reducation
   // pop up icons
-  // autofill in the checkout
-  // alignments
+  // autofill in the checkout if user authenticated
+  // variation selections colors
   // icon size increaser
   // on hover add border - b
   // font updates
   // filter button same as the manunited
-
-  // jan - 9 - day after tommorw
-
+  // alignments
   // wishlist implmenation
   // remove hardcoded urls
-  // add in proper comments and document it
-
-  // jan - 10
-  // create a vercel account
-  // clone install
-  // connect the doamin
-  // check and handover
 }

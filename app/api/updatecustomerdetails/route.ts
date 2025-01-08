@@ -17,8 +17,12 @@ export async function PUT(
     const body = await request.json();
 
     // Validate required fields
-    const requiredFields = ["email", "first_name", "last_name", "username"];
+    const requiredFields = ["email", "username"];
     const missingFields = requiredFields.filter((field) => !body[field]);
+
+    if (!params.id) {
+      missingFields.push("customer id");
+    }
 
     if (missingFields.length > 0) {
       return NextResponse.json(
@@ -31,36 +35,43 @@ export async function PUT(
     }
 
     // Prepare customer data
-    const customerData = {
+    const customerData: any = {
       email: body.email,
-      first_name: body.first_name,
-      last_name: body.last_name,
       username: body.username,
-      billing: {
-        first_name: body.first_name,
-        last_name: body.last_name,
-        company: body.billing?.company || "",
-        address_1: body.billing?.address_1 || "",
-        address_2: body.billing?.address_2 || "",
-        city: body.billing?.city || "",
-        state: body.billing?.state || "",
-        postcode: body.billing?.postcode || "",
-        country: body.billing?.country || "",
-        email: body.email,
-        phone: body.billing?.phone || "",
-      },
-      shipping: {
-        first_name: body.first_name,
-        last_name: body.last_name,
-        company: body.shipping?.company || "",
-        address_1: body.shipping?.address_1 || "",
-        address_2: body.shipping?.address_2 || "",
-        city: body.shipping?.city || "",
-        state: body.shipping?.state || "",
-        postcode: body.shipping?.postcode || "",
-        country: body.shipping?.country || "",
-      },
     };
+
+    if (body.first_name) customerData.first_name = body.first_name;
+    if (body.last_name) customerData.last_name = body.last_name;
+
+    if (body.billing) {
+      customerData.billing = {
+        first_name: body.first_name || "",
+        last_name: body.last_name || "",
+        company: body.billing.company || "",
+        address_1: body.billing.address_1 || "",
+        address_2: body.billing.address_2 || "",
+        city: body.billing.city || "",
+        state: body.billing.state || "",
+        postcode: body.billing.postcode || "",
+        country: body.billing.country || "",
+        email: body.email,
+        phone: body.billing.phone || "",
+      };
+    }
+
+    if (body.shipping) {
+      customerData.shipping = {
+        first_name: body.first_name || "",
+        last_name: body.last_name || "",
+        company: body.shipping.company || "",
+        address_1: body.shipping.address_1 || "",
+        address_2: body.shipping.address_2 || "",
+        city: body.shipping.city || "",
+        state: body.shipping.state || "",
+        postcode: body.shipping.postcode || "",
+        country: body.shipping.country || "",
+      };
+    }
 
     // Make API request to WooCommerce
     const response = await api.put(`customers/${params.id}`, customerData);
