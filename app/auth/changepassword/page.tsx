@@ -1,6 +1,6 @@
 import React from "react";
 
-function page() {
+function ChangePassword() {
   return (
     <div>
       <h1>Change Password For the Email logged in users only </h1>
@@ -8,4 +8,4 @@ function page() {
   );
 }
 
-export default page;
+export default ChangePassword;
