@@ -8,7 +8,6 @@ import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
-import { Avatar } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
@@ -326,36 +325,36 @@ function Profile() {
   };
 
   const countries = [
-    { key: "us", name: "United States", code: "us" },
-    { key: "gb", name: "United Kingdom", code: "gb" },
-    { key: "ca", name: "Canada", code: "ca" },
-    { key: "au", name: "Australia", code: "au" },
-    { key: "de", name: "Germany", code: "de" },
-    { key: "fr", name: "France", code: "fr" },
-    { key: "it", name: "Italy", code: "it" },
-    { key: "es", name: "Spain", code: "es" },
-    { key: "pt", name: "Portugal", code: "pt" },
-    { key: "nl", name: "Netherlands", code: "nl" },
-    { key: "be", name: "Belgium", code: "be" },
-    { key: "ch", name: "Switzerland", code: "ch" },
-    { key: "at", name: "Austria", code: "at" },
-    { key: "se", name: "Sweden", code: "se" },
-    { key: "no", name: "Norway", code: "no" },
-    { key: "dk", name: "Denmark", code: "dk" },
-    { key: "fi", name: "Finland", code: "fi" },
-    { key: "ie", name: "Ireland", code: "ie" },
-    { key: "nz", name: "New Zealand", code: "nz" },
-    { key: "jp", name: "Japan", code: "jp" },
-    { key: "kr", name: "South Korea", code: "kr" },
-    { key: "cn", name: "China", code: "cn" },
-    { key: "in", name: "India", code: "in" },
-    { key: "br", name: "Brazil", code: "br" },
-    { key: "mx", name: "Mexico", code: "mx" },
-    { key: "ar", name: "Argentina", code: "ar" },
-    { key: "cl", name: "Chile", code: "cl" },
-    { key: "za", name: "South Africa", code: "za" },
-    { key: "eg", name: "Egypt", code: "eg" },
-    { key: "sa", name: "Saudi Arabia", code: "sa" },
+    { key: "US", label: "United States" },
+    { key: "GB", label: "United Kingdom" },
+    { key: "CA", label: "Canada" },
+    { key: "AU", label: "Australia" },
+    { key: "DE", label: "Germany" },
+    { key: "FR", label: "France" },
+    { key: "IT", label: "Italy" },
+    { key: "ES", label: "Spain" },
+    { key: "PT", label: "Portugal" },
+    { key: "NL", label: "Netherlands" },
+    { key: "BE", label: "Belgium" },
+    { key: "CH", label: "Switzerland" },
+    { key: "AT", label: "Austria" },
+    { key: "SE", label: "Sweden" },
+    { key: "NO", label: "Norway" },
+    { key: "DK", label: "Denmark" },
+    { key: "FI", label: "Finland" },
+    { key: "IE", label: "Ireland" },
+    { key: "NZ", label: "New Zealand" },
+    { key: "JP", label: "Japan" },
+    { key: "KR", label: "South Korea" },
+    { key: "CN", label: "China" },
+    { key: "IN", label: "India" },
+    { key: "BR", label: "Brazil" },
+    { key: "MX", label: "Mexico" },
+    { key: "AR", label: "Argentina" },
+    { key: "CL", label: "Chile" },
+    { key: "ZA", label: "South Africa" },
+    { key: "EG", label: "Egypt" },
+    { key: "SA", label: "Saudi Arabia" },
   ];
 
   return (
@@ -506,13 +505,18 @@ function Profile() {
           />
 
           <Select
-            label="Select country"
             isRequired
-            placeholder="Select your country"
-            name="country"
-            value={formData.country}
-            onChange={(e) => handleSelectChange(e.target.value)}
-            className="bg-white rounded-3xl text-black"
+            label="Select Your Country"
+            placeholder="Choose a country"
+            selectedKeys={formData.country ? [formData.country] : []}
+            onSelectionChange={(keys) => {
+              const selectedKey = Array.from(keys)[0] as string;
+              setFormData((prev) => ({
+                ...prev,
+                country: selectedKey,
+              }));
+            }}
+            className="bg-white rounded-3xl text-black w-full max-w-md mx-auto"
             classNames={{
               listboxWrapper: "bg-white dark:bg-black",
               base: "bg-white dark:bg-black",
@@ -525,17 +529,10 @@ function Profile() {
             {countries.map((country) => (
               <SelectItem
                 key={country.key}
-                value={country.name}
+                value={country.key}
                 className="text-black dark:text-white"
-                startContent={
-                  <Avatar
-                    alt={country.name}
-                    className="w-6 h-6"
-                    src={`https://flagcdn.com/${country.code}.svg`}
-                  />
-                }
               >
-                {country.name}
+                {country.label}
               </SelectItem>
             ))}
           </Select>
@@ -587,6 +584,3 @@ function Profile() {
 }
 
 export default Profile;
-
-// fix the conuntry mapping
-// add in profile updating and creating splash for end user
