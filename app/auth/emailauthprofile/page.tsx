@@ -400,7 +400,7 @@ function EmailAuthProfile() {
             }}
           />
 
-          <Input
+          {/* <Input
             isRequired
             isReadOnly
             labelPlacement="inside"
@@ -416,7 +416,7 @@ function EmailAuthProfile() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
-          />
+          /> */}
 
           <Input
             isRequired
