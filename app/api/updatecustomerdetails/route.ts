@@ -9,88 +9,38 @@ const api = new WooCommerceRestApi({
   queryStringAuth: true,
 });
 
-export async function PUT(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function PUT(req: NextRequest) {
+  console.log("Received PUT request to update customer");
   try {
-    const body = await request.json();
+    const body = await req.json();
+    console.log("Request body:", body);
+    const { id, ...customerData } = body;
 
-    // Validate required fields
-    const requiredFields = ["email", "username"];
-    const missingFields = requiredFields.filter((field) => !body[field]);
-
-    if (!params.id) {
-      missingFields.push("customer id");
-    }
-
-    if (missingFields.length > 0) {
+    if (!id) {
+      console.log("Error: Customer ID is missing");
       return NextResponse.json(
-        {
-          success: false,
-          message: `Missing required fields: ${missingFields.join(", ")}`,
-        },
+        { success: false, error: "Customer ID is required" },
         { status: 400 }
       );
     }
 
-    // Prepare customer data
-    const customerData: any = {
-      email: body.email,
-      username: body.username,
-    };
+    console.log(`Updating customer with ID: ${id}`);
+    console.log("Customer data to update:", customerData);
 
-    if (body.first_name) customerData.first_name = body.first_name;
-    if (body.last_name) customerData.last_name = body.last_name;
-
-    if (body.billing) {
-      customerData.billing = {
-        first_name: body.first_name || "",
-        last_name: body.last_name || "",
-        company: body.billing.company || "",
-        address_1: body.billing.address_1 || "",
-        address_2: body.billing.address_2 || "",
-        city: body.billing.city || "",
-        state: body.billing.state || "",
-        postcode: body.billing.postcode || "",
-        country: body.billing.country || "",
-        email: body.email,
-        phone: body.billing.phone || "",
-      };
-    }
-
-    if (body.shipping) {
-      customerData.shipping = {
-        first_name: body.first_name || "",
-        last_name: body.last_name || "",
-        company: body.shipping.company || "",
-        address_1: body.shipping.address_1 || "",
-        address_2: body.shipping.address_2 || "",
-        city: body.shipping.city || "",
-        state: body.shipping.state || "",
-        postcode: body.shipping.postcode || "",
-        country: body.shipping.country || "",
-      };
-    }
-
-    // Make API request to WooCommerce
-    const response = await api.put(`customers/${params.id}`, customerData);
+    const response = await api.put(`customers/${id}`, customerData);
+    console.log("WooCommerce API response:", response.data);
 
     return NextResponse.json(
-      {
-        success: true,
-        customer: response.data,
-      },
+      { success: true, data: response.data },
       { status: 200 }
     );
   } catch (error: any) {
     console.error("Error updating customer:", error);
-
-    // Handle other errors
     return NextResponse.json(
       {
         success: false,
-        message: "Internal server error",
+        error: "Failed to update customer",
+        details: error.message,
       },
       { status: 500 }
     );

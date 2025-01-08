@@ -14,6 +14,38 @@ import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
 
+interface CustomerUpdateData {
+  id: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  username: string;
+  billing: {
+    first_name: string;
+    last_name: string;
+    company?: string;
+    address_1: string;
+    address_2?: string;
+    city: string;
+    state?: string;
+    postcode?: string;
+    country: string;
+    email: string;
+    phone: string;
+  };
+  shipping: {
+    first_name: string;
+    last_name: string;
+    company?: string;
+    address_1: string;
+    address_2?: string;
+    city: string;
+    state?: string;
+    postcode?: string;
+    country: string;
+  };
+}
+
 function Profile() {
   const [mounted, setMounted] = useState(false);
   const { theme } = useTheme();
@@ -64,7 +96,6 @@ function Profile() {
                 `/api/retrieveCustomer?id=${response.data.customer_id}`
               );
               if (customerData.data) {
-                console.error("Here Brooooooooooo", customerData.data);
                 setFormData({
                   firstName: customerData.data.first_name || "",
                   surname: customerData.data.last_name || "",
@@ -105,49 +136,6 @@ function Profile() {
       country: value,
     }));
   };
-
-  async function updatecustomerData(
-    customerId: string,
-    formdata: any,
-    UID: any
-  ) {
-    const email_x = `${UID}@uid.com`;
-    const data = {
-      email: email_x,
-      first_name: formdata.firstName,
-      last_name: formdata.surname,
-      username: formdata.email, // Using email as username
-      billing: {
-        first_name: formdata.firstName,
-        last_name: formdata.surname,
-        company: "", // Assuming no company field is provided in the form
-        address_1: formdata.addressLine1,
-        address_2: formdata.addressLine2 || "",
-        city: formdata.townCity,
-        state: "", // State is not in the form data; update if available
-        postcode: formdata.postcode,
-        country: formdata.country.toUpperCase(), // Assuming the country code should be in uppercase
-        email: formdata.email,
-        phone: formdata.mobile,
-      },
-      shipping: {
-        first_name: formdata.firstName,
-        last_name: formdata.surname,
-        company: "",
-        address_1: formdata.addressLine1,
-        address_2: formdata.addressLine2 || "",
-        city: formdata.townCity,
-        state: "",
-        postcode: formdata.postcode,
-        country: formdata.country.toUpperCase(),
-      },
-    };
-    console.log("Formatted data to send to API:", data);
-
-    // call the api here
-
-    console.log("Updating the User", formData);
-  }
 
   async function createcustomer(formdata: any, UID: any) {
     try {
@@ -208,6 +196,78 @@ function Profile() {
       return {
         success: false,
         error: error.response?.data?.message || error.message,
+      };
+    }
+  }
+
+  async function updatecustomerData(
+    customerId: string,
+    formData: any,
+    UID: any
+  ): Promise<{ success: boolean; data?: any; error?: string }> {
+    try {
+      const email_x = `${UID}@uid.com`;
+      const data: CustomerUpdateData = {
+        id: customerId,
+        email: email_x,
+        first_name: formData.firstName,
+        last_name: formData.surname,
+        username: formData.email,
+        billing: {
+          first_name: formData.firstName,
+          last_name: formData.surname,
+          company: formData.company || "",
+          address_1: formData.addressLine1,
+          address_2: formData.addressLine2 || "",
+          city: formData.townCity,
+          state: formData.state || "",
+          postcode: formData.postcode || "",
+          country: formData.country ? formData.country.toUpperCase() : "",
+          email: formData.email,
+          phone: formData.mobile,
+        },
+        shipping: {
+          first_name: formData.firstName,
+          last_name: formData.surname,
+          company: formData.company || "",
+          address_1: formData.addressLine1,
+          address_2: formData.addressLine2 || "",
+          city: formData.townCity,
+          state: formData.state || "",
+          postcode: formData.postcode || "",
+          country: formData.country ? formData.country.toUpperCase() : "",
+        },
+      };
+
+      console.log("Formatted data to send to API:", data);
+
+      const response = await axios.put<{
+        success: boolean;
+        data?: any;
+        error?: string;
+      }>("/api/updatecustomerdetails", data);
+
+      if (response.data.success) {
+        console.log("Customer updated successfully:", response.data.data);
+        return { success: true, data: response.data.data };
+      } else {
+        console.error("Error in response:", response.data.error);
+        return {
+          success: false,
+          error: response.data.error || "Unknown error occurred.",
+        };
+      }
+    } catch (error: any) {
+      console.error(
+        "Error updating customer:",
+        error.response?.data || error.message
+      );
+      return {
+        success: false,
+        error:
+          error.response?.data?.error ||
+          error.message ||
+          "An unexpected error occurred.",
       };
     }
   }
