@@ -55,6 +55,7 @@ function EmailAuthProfile() {
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [FirebaseUID, SetFirebaseUID] = useState<string | null>(null);
   const [AuthEmailID, SetAuthEmailID] = useState<string | null>(null);
+  const [isSettingFormData, setIsSettingFormData] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -103,6 +104,7 @@ function EmailAuthProfile() {
                 `/api/retrieveCustomer?id=${response.data.customer_id}`
               );
               if (customerData.data) {
+                setIsSettingFormData(true); // Set flag before updating form data
                 setFormData({
                   firstName: customerData.data.first_name || "",
                   surname: customerData.data.last_name || "",
@@ -115,6 +117,8 @@ function EmailAuthProfile() {
                   country: customerData.data.billing.country || "", // bug on this one
                   postcode: customerData.data.billing.postcode || "",
                 });
+              } else {
+                setIsSettingFormData(false); // Set flag before updating form data
               }
             }
           } catch (error) {
@@ -441,22 +445,24 @@ function EmailAuthProfile() {
             }}
           />
 
-          <Input
-            isReadOnly
-            labelPlacement="inside"
-            label="Email Address"
-            name="email"
-            placeholder="Enter your email"
-            type="email"
-            value={formData.email}
-            onChange={handleInputChange}
-            classNames={{
-              label: "text-white/50 dark:text-black/90",
-              input: ["bg-white dark:bg-black"],
-              innerWrapper: "bg-transparent",
-              inputWrapper: ["bg-white dark:bg-black"],
-            }}
-          />
+          {!isSettingFormData && (
+            <Input
+              isReadOnly
+              labelPlacement="inside"
+              label="Email Address"
+              name="email"
+              placeholder="Enter your email"
+              type="email"
+              value={formData.email}
+              onChange={handleInputChange}
+              classNames={{
+                label: "text-white/50 dark:text-black/90",
+                input: ["bg-white dark:bg-black"],
+                innerWrapper: "bg-transparent",
+                inputWrapper: ["bg-white dark:bg-black"],
+              }}
+            />
+          )}
 
           <Input
             isRequired
@@ -606,6 +612,4 @@ function EmailAuthProfile() {
 
 export default EmailAuthProfile;
 
-// get the email id using the authprovider
-// set it in the create user
 // try to get the details from the user page to this page as well
