@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
@@ -43,6 +42,9 @@ function page() {
             if (customerData.data) {
               setCustomerId(customerData.data.id);
               setCustomerName(customerData.data.first_name);
+              if (customerData.data.id) {
+                GetOrders(customerData.data.id);
+              }
             }
           }
         } catch (error) {
@@ -54,7 +56,30 @@ function page() {
     checkAuth();
   }, [router]);
 
-  // api get user orders
+  async function GetOrders(CustomerID: any) {
+    try {
+      // Check if CustomerID is provided
+      if (!CustomerID) {
+        console.log("CustomerID is required");
+        return;
+      }
+
+      // Call the API endpoint
+      const response = await axios.get("/api/getcustomerorders", {
+        params: { customer_id: CustomerID },
+      });
+
+      // Handle the response
+      if (Array.isArray(response.data) && response.data.length === 0) {
+        console.log("No orders created yet");
+      } else {
+        console.log("Customer Orders:", response.data);
+      }
+    } catch (error: any) {
+      // Handle errors
+      console.error("Error fetching customer orders:", error.message);
+    }
+  }
 
   return (
     <div className="min-h-screen bg-black dark:bg-white text-white dark:text-black">
