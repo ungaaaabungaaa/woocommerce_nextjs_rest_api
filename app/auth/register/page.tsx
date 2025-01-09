@@ -9,8 +9,7 @@ import SiteLogo2 from "../../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
-import { Select, SelectItem } from "@nextui-org/select";
-import { Avatar, Divider } from "@nextui-org/react";
+import { Divider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import {
