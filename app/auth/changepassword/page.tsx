@@ -14,6 +14,8 @@ import {
   EmailAuthProvider,
   updatePassword,
 } from "firebase/auth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -28,16 +30,13 @@ async function getUserAuthDetails(router: any) {
     const uid = user.uid;
     console.log(`User UID: ${uid}`);
 
-    // Check the provider used for login
     let provider = "Unknown";
 
     if (user.providerData && user.providerData.length > 0) {
       provider = user.providerData[0].providerId;
     }
 
-    // if the login provider is password send it to the emailauthprofile
     console.log(`Login provider: ${provider}`);
-    // Route to emailauthprofile if the provider is password
     if (provider !== "password") {
       router.push("/");
     }
@@ -60,8 +59,13 @@ function ChangePassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const toggleVisibility = () => setIsVisible(!isVisible);
+
+  // Separate visibility states for each password field
+  const [isCurrentPasswordVisible, setIsCurrentPasswordVisible] =
+    useState(false);
+  const [isNewPasswordVisible, setIsNewPasswordVisible] = useState(false);
+  const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] =
+    useState(false);
 
   const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -71,12 +75,22 @@ function ChangePassword() {
 
     if (newPassword.length < 6) {
       setError("New password must be at least 6 characters long.");
+      toast.error("New password must be at least 6 characters long", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       setIsLoading(false);
       return;
     }
 
     if (newPassword !== confirmPassword) {
       setError("New passwords do not match.");
+      toast.error("New passwords do not match", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       setIsLoading(false);
       return;
     }
@@ -90,21 +104,29 @@ function ChangePassword() {
     }
 
     try {
-      // Reauthenticate the user
       const credential = EmailAuthProvider.credential(
         user.email,
         currentPassword
       );
       await reauthenticateWithCredential(user, credential);
 
-      // Update the password
       await updatePassword(user, newPassword);
       setSuccess("Password updated successfully.");
+      toast.success("Password updated successfully", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (err: any) {
       setError(err.message || "An error occurred while updating the password.");
+      toast.error("An error occurred while updating the password", {
+        position: "top-center",
+        theme: "dark",
+        autoClose: 5000,
+      });
     } finally {
       setIsLoading(false);
     }
@@ -112,8 +134,8 @@ function ChangePassword() {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center bg-black dark:bg-white p-4">
+      <ToastContainer />
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
-        {/* Logo and Header Section */}
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
             {mounted && (
@@ -136,7 +158,6 @@ function ChangePassword() {
           </p>
         </div>
 
-        {/* Password Change Form */}
         <form className="flex flex-col gap-3" onSubmit={handlePasswordChange}>
           <Input
             isRequired
@@ -153,8 +174,13 @@ function ChangePassword() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
             endContent={
-              <button type="button" onClick={toggleVisibility}>
-                {isVisible ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setIsCurrentPasswordVisible(!isCurrentPasswordVisible)
+                }
+              >
+                {isCurrentPasswordVisible ? (
                   <Icon
                     className="pointer-events-none text-2xl text-default-400"
                     icon="solar:eye-closed-linear"
@@ -167,7 +193,7 @@ function ChangePassword() {
                 )}
               </button>
             }
-            type={isVisible ? "text" : "password"}
+            type={isCurrentPasswordVisible ? "text" : "password"}
           />
 
           <Input
@@ -185,8 +211,11 @@ function ChangePassword() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
             endContent={
-              <button type="button" onClick={toggleVisibility}>
-                {isVisible ? (
+              <button
+                type="button"
+                onClick={() => setIsNewPasswordVisible(!isNewPasswordVisible)}
+              >
+                {isNewPasswordVisible ? (
                   <Icon
                     className="pointer-events-none text-2xl text-default-400"
                     icon="solar:eye-closed-linear"
@@ -199,7 +228,7 @@ function ChangePassword() {
                 )}
               </button>
             }
-            type={isVisible ? "text" : "password"}
+            type={isNewPasswordVisible ? "text" : "password"}
           />
 
           <Input
@@ -217,8 +246,13 @@ function ChangePassword() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
             endContent={
-              <button type="button" onClick={toggleVisibility}>
-                {isVisible ? (
+              <button
+                type="button"
+                onClick={() =>
+                  setIsConfirmPasswordVisible(!isConfirmPasswordVisible)
+                }
+              >
+                {isConfirmPasswordVisible ? (
                   <Icon
                     className="pointer-events-none text-2xl text-default-400"
                     icon="solar:eye-closed-linear"
@@ -231,7 +265,7 @@ function ChangePassword() {
                 )}
               </button>
             }
-            type={isVisible ? "text" : "password"}
+            type={isConfirmPasswordVisible ? "text" : "password"}
           />
 
           <Button
