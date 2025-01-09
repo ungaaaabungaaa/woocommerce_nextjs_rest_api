@@ -69,7 +69,6 @@ function ChangePassword() {
       // Update the password
       await updatePassword(user, newPassword);
       setSuccess("Password updated successfully.");
-      // Clear form fields
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
@@ -99,7 +98,10 @@ function ChangePassword() {
           </div>
           <br />
           <p className="text-2xl md:text-2xl text-white dark:text-black font-semibold text-center">
-            Reset Password
+            Change Password
+          </p>
+          <p className="text-center text-small text-white dark:text-black">
+            To change your password, please complete the fields below
           </p>
         </div>
 
@@ -156,11 +158,6 @@ function ChangePassword() {
             }}
           />
 
-          {error && <p className="text-red-500 text-sm mt-2 hidden">{error}</p>}
-          {success && (
-            <p className="text-green-500 text-sm mt-2 hidden">{success}</p>
-          )}
-
           <Button
             className="w-full bg-white text-black dark:bg-black dark:text-white rounded-3xl mt-4"
             type="submit"
@@ -170,16 +167,6 @@ function ChangePassword() {
             {isLoading ? "Updating..." : "Update Password"}
           </Button>
         </form>
-
-        <p className="text-center text-small text-white dark:text-black">
-          © 2025 the clothes village store identity.{" "}
-          <Link
-            href="/privacy"
-            className="text-white dark:text-black underline hover:font-bold"
-          >
-            Privacy Policy
-          </Link>
-        </p>
         <br />
         <br />
       </div>
