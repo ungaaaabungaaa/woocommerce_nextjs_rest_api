@@ -187,7 +187,10 @@ export default function Register() {
     try {
       const userCredential = await signUpWithEmail(email, password);
       RegisterChecks(userCredential.user); // Call the RegisterChecks function
-      console.log("Email Singup Success:", userCredential.user);
+      console.log(
+        "Email Singup Success check this codeeeeeeee",
+        userCredential.user
+      );
     } catch (error) {
       console.error("Email Singup Failed:", error);
     }

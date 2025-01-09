@@ -445,7 +445,7 @@ function EmailAuthProfile() {
             }}
           />
 
-          {!isSettingFormData && (
+          {isSettingFormData && (
             <Input
               isReadOnly
               labelPlacement="inside"
