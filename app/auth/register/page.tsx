@@ -30,12 +30,12 @@ export default function Register() {
   const router = useRouter(); // Add router hook
 
   const [formData, setFormData] = useState({
-    firstName: "",
-    surname: "",
+    // firstName: "",
+    // surname: "",
     email: "",
     password: "",
     confirmPassword: "",
-    country: "",
+    // country: "",
     marketingConsent: "",
   });
 
@@ -143,17 +143,17 @@ export default function Register() {
     let isValid = true;
 
     // Validate each field
-    if (!formData.firstName) {
-      // newErrors.firstName = "First name is required";
-      console.log("First name is required");
-      isValid = false;
-    }
+    // if (!formData.firstName) {
+    //   // newErrors.firstName = "First name is required";
+    //   console.log("First name is required");
+    //   isValid = false;
+    // }
 
-    if (!formData.surname) {
-      // newErrors.surname = "Surname is required";
-      console.log("Surname is required");
-      isValid = false;
-    }
+    // if (!formData.surname) {
+    //   // newErrors.surname = "Surname is required";
+    //   console.log("Surname is required");
+    //   isValid = false;
+    // }
 
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       // newErrors.email = "Please enter a valid email";
@@ -173,11 +173,11 @@ export default function Register() {
       isValid = false;
     }
 
-    if (!formData.country) {
-      console.log("Please select a country");
-      // newErrors.country = "Please select a country";
-      isValid = false;
-    }
+    // if (!formData.country) {
+    //   console.log("Please select a country");
+    //   // newErrors.country = "Please select a country";
+    //   isValid = false;
+    // }
 
     return isValid;
   };
@@ -310,7 +310,7 @@ export default function Register() {
 
         {/* Registration Form */}
         <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          <Input
+          {/* <Input
             isRequired
             labelPlacement="inside"
             label="First Name"
@@ -342,7 +342,7 @@ export default function Register() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
-          />
+          /> */}
 
           <Input
             isRequired
@@ -425,7 +425,7 @@ export default function Register() {
             }}
           />
 
-          <Select
+          {/* <Select
             label="Select country"
             placeholder="Select your country"
             name="country"
@@ -457,7 +457,7 @@ export default function Register() {
                 {country.name}
               </SelectItem>
             ))}
-          </Select>
+          </Select> */}
 
           {/* Marketing Preferences */}
           <div className="mt-4">
