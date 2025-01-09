@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
-import Link from "next/link";
+import { Icon } from "@iconify/react";
 import SiteLogo2 from "../../../public/whitelogo.svg";
 import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
@@ -15,6 +15,34 @@ import {
   updatePassword,
 } from "firebase/auth";
 import { useRouter } from "next/navigation";
+import { onAuthStateChanged } from "firebase/auth";
+
+async function getUserAuthDetails(router: any) {
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      console.log("No user is currently signed in.");
+      router.push("/");
+      return;
+    }
+
+    const uid = user.uid;
+    console.log(`User UID: ${uid}`);
+
+    // Check the provider used for login
+    let provider = "Unknown";
+
+    if (user.providerData && user.providerData.length > 0) {
+      provider = user.providerData[0].providerId;
+    }
+
+    // if the login provider is password send it to the emailauthprofile
+    console.log(`Login provider: ${provider}`);
+    // Route to emailauthprofile if the provider is password
+    if (provider !== "password") {
+      router.push("/");
+    }
+  });
+}
 
 function ChangePassword() {
   const [mounted, setMounted] = useState(false);
@@ -22,6 +50,7 @@ function ChangePassword() {
   const router = useRouter();
 
   useEffect(() => {
+    getUserAuthDetails;
     setMounted(true);
   }, []);
 
@@ -31,6 +60,8 @@ function ChangePassword() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const toggleVisibility = () => setIsVisible(!isVisible);
 
   const handlePasswordChange = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -113,7 +144,6 @@ function ChangePassword() {
             label="Current Password"
             name="currentPassword"
             placeholder="Current Password"
-            type="password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
             classNames={{
@@ -122,6 +152,22 @@ function ChangePassword() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
+            endContent={
+              <button type="button" onClick={toggleVisibility}>
+                {isVisible ? (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-closed-linear"
+                  />
+                ) : (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-bold"
+                  />
+                )}
+              </button>
+            }
+            type={isVisible ? "text" : "password"}
           />
 
           <Input
@@ -130,7 +176,6 @@ function ChangePassword() {
             label="New Password"
             name="newPassword"
             placeholder="New Password"
-            type="password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             classNames={{
@@ -139,6 +184,22 @@ function ChangePassword() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
+            endContent={
+              <button type="button" onClick={toggleVisibility}>
+                {isVisible ? (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-closed-linear"
+                  />
+                ) : (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-bold"
+                  />
+                )}
+              </button>
+            }
+            type={isVisible ? "text" : "password"}
           />
 
           <Input
@@ -147,7 +208,6 @@ function ChangePassword() {
             label="Confirm New Password"
             name="confirmPassword"
             placeholder="Confirm New Password"
-            type="password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             classNames={{
@@ -156,6 +216,22 @@ function ChangePassword() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
+            endContent={
+              <button type="button" onClick={toggleVisibility}>
+                {isVisible ? (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-closed-linear"
+                  />
+                ) : (
+                  <Icon
+                    className="pointer-events-none text-2xl text-default-400"
+                    icon="solar:eye-bold"
+                  />
+                )}
+              </button>
+            }
+            type={isVisible ? "text" : "password"}
           />
 
           <Button
@@ -175,5 +251,3 @@ function ChangePassword() {
 }
 
 export default ChangePassword;
-
-// make sure only user type password this is allowed
