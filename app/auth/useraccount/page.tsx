@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
 import { Package, User } from "lucide-react";
-import { Card, CardBody, CardFooter, CardHeader } from "@nextui-org/card";
 
 function UserAccount() {
   const [mounted, setMounted] = useState(false);
@@ -19,7 +18,8 @@ function UserAccount() {
   const [CustomerAddress, setCustomerAddress] = useState<string | null>(null);
   const [customerId, setCustomerId] = useState<string | null>(null);
   const [FirebaseUID, setFirebaseUID] = useState<string | null>(null);
-  const [orders, setOrders] = useState<any[]>([]); // State to store customer orders
+  const [orders, setOrders] = useState<any[]>([]);
+  const [authProvider, setAuthProvider] = useState<string>("");
 
   const router = useRouter();
 
@@ -32,12 +32,19 @@ function UserAccount() {
 
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        console.log("No user is currently signed in.");
         router.push("/");
         return;
       }
       const uid = user.uid;
       setFirebaseUID(uid);
+
+      let provider = user.providerData[0]?.providerId || "Unknown";
+      setAuthProvider(provider);
+      if (provider === "password") {
+        console.log(`IS EMAIL AUTH: ${provider}`);
+      } else {
+        console.log(`IS Socail MEDIA AUTH: ${provider}`);
+      }
 
       try {
         const email = `${uid}@uid.com`;
@@ -53,7 +60,6 @@ function UserAccount() {
           );
 
           if (customerData.data) {
-            console.log(customerData.data);
             setCustomerId(customerData.data.id);
             setCustomerName(customerData.data.first_name);
             setCustomerLastName(customerData.data.last_name);
@@ -139,9 +145,23 @@ function UserAccount() {
                 Address : {CustomerAddress}
               </p>
               <br></br>
-              <Button className="bg-white rounded-full text-black  dark:bg-black dark:text-white">
-                Update Details
-              </Button>
+
+              {authProvider === "password" ? (
+                <Button
+                  onClick={() => navigateTo("/auth/emailauthprofile")}
+                  className="bg-white rounded-full text-black dark:bg-black dark:text-white"
+                >
+                  Update Details
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => navigateTo("/auth/profile")}
+                  className="bg-white rounded-full text-black dark:bg-black dark:text-white"
+                >
+                  Update Details
+                </Button>
+              )}
+
               <p className="text-xs text-muted-foreground mt-4 mb-4">
                 You will be redirected to Diffrent Page
               </p>
@@ -150,22 +170,27 @@ function UserAccount() {
           <br></br>
           <br></br>
 
-          <div className="rounded-lg border border-gray-700 dark:border-gray-200 p-8 bg-black dark:bg-white">
-            <div className="">
-              <h2 className="text-2xl font-semibold text-white dark:text-gray-900">
-                Password
-              </h2>
-              <p className="text-white dark:text-gray-900 mt-4">Password</p>
-              <p className="text-white dark:text-gray-900">••••••••••••</p>
-              <br></br>
-              <Button className="bg-white rounded-full text-black  dark:bg-black dark:text-white">
-                UPDATE PASSWORD
-              </Button>
-              <p className="text-xs text-muted-foreground mt-4 mb-4">
-                You will be redirected to Diffrent Page
-              </p>
+          {authProvider === "password" && (
+            <div className="rounded-lg border border-gray-700 dark:border-gray-200 p-8 bg-black dark:bg-white">
+              <div className="">
+                <h2 className="text-2xl font-semibold text-white dark:text-gray-900">
+                  Password
+                </h2>
+                <p className="text-white dark:text-gray-900 mt-4">Password</p>
+                <p className="text-white dark:text-gray-900">••••••••••••</p>
+                <br></br>
+                <Button
+                  onClick={() => navigateTo("/auth/changepassword")}
+                  className="bg-white rounded-full text-black dark:bg-black dark:text-white"
+                >
+                  UPDATE PASSWORD
+                </Button>
+                <p className="text-xs text-muted-foreground mt-4 mb-4">
+                  You will be redirected to Diffrent Page
+                </p>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>
@@ -173,6 +198,3 @@ function UserAccount() {
 }
 
 export default UserAccount;
-
-// check the auth type and display the password reset block
-// check the auth type and update the href link
