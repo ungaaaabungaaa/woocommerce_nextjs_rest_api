@@ -67,7 +67,7 @@ export default function TrackOrder() {
   return (
     <>
       <ToastContainer />
-      <div className="h-3/4 bg-black text-white dark:bg-white dark:text-black">
+      <div className=" bg-black text-white dark:bg-white dark:text-black">
         <main className="container mx-auto px-4 py-8">
           <Card
             shadow="none"
@@ -228,7 +228,6 @@ export default function TrackOrder() {
       </div>
       <br />
       <br />
-      <Footer />
     </>
   );
 }
