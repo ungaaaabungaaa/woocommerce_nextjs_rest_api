@@ -20,6 +20,10 @@ function Page() {
 
   const router = useRouter();
 
+  const navigateTo = (path: any) => {
+    router.push(path);
+  };
+
   useEffect(() => {
     setMounted(true);
 
@@ -104,6 +108,7 @@ function Page() {
             Orders ({orders.length})
           </Button>
           <Button
+            onClick={() => navigateTo("/auth/useraccount")}
             href="/auth/useraccount"
             className="rounded-full bg-white text-black dark:bg-black dark:text-white"
           >
