@@ -228,6 +228,7 @@ export default function TrackOrder() {
       </div>
       <br />
       <br />
+      <Footer />
     </>
   );
 }

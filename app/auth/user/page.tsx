@@ -96,11 +96,17 @@ function Page() {
           </p>
         </div>
         <div className="mb-8 flex gap-4 mt-4">
-          <Button className="rounded-full bg-white text-black dark:bg-black dark:text-white">
+          <Button
+            href="#"
+            className="rounded-full bg-white text-black dark:bg-black dark:text-white"
+          >
             <Package className="mr-2 h-4 w-4" />
             Orders ({orders.length})
           </Button>
-          <Button className="rounded-full bg-white text-black dark:bg-black dark:text-white">
+          <Button
+            href="/auth/useraccount"
+            className="rounded-full bg-white text-black dark:bg-black dark:text-white"
+          >
             <User className="mr-2 h-4 w-4" />
             Account
           </Button>

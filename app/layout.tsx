@@ -1,10 +1,9 @@
 import { ThemeProvider } from "@/app/component/theme-provider";
 import "@/styles/globals.css";
-import Footer from "@/app/component/footer";
-import Navbar from "@/app/component/navbar";
 import { CartProvider } from "@/context/cartcontext";
 import PayPalProvider from "@/context/PayPalProvider";
 import { CartKeyProvider } from "@/hooks/useCartKey";
+import LayoutWrapper from "../app/component/layout-wrapper";
 
 export const metadata = {
   title: "The Clothes Village",
@@ -54,9 +53,7 @@ export default function RootLayout({
           <PayPalProvider>
             <CartKeyProvider>
               <CartProvider>
-                <Navbar />
-                {children}
-                <Footer />
+                <LayoutWrapper>{children}</LayoutWrapper>
               </CartProvider>
             </CartKeyProvider>
           </PayPalProvider>

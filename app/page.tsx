@@ -34,7 +34,6 @@ export default function Home() {
     </section>
   );
 
-  // authentication completion  - Update | EmailAuth | RestPassword
   // wishlist routes setup
   // add in the heart icon for the cards & console log the on clicked added to the cart
   // cart icons reducation
