@@ -49,7 +49,7 @@ function UserAccount() {
       try {
         const email = `${uid}@uid.com`;
         const response = await axios.get(
-          `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+          `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/custom/v1/get-customer-id?email=${email}`
         );
 
         if (response.data.customer_id) {

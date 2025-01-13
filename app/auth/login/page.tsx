@@ -40,9 +40,10 @@ export default function Login() {
   const loginChecks = (user: any) => {
     console.log("User UID:", user.uid);
     const email = `${user.uid}@uid.com`;
+
     axios
       .get(
-        `https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=${email}`
+        `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/custom/v1/get-customer-id?email=${email}`
       )
       .then((response) => {
         const customer_id = response.data.customer_id;
