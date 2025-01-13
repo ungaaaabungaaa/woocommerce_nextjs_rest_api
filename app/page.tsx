@@ -34,11 +34,10 @@ export default function Home() {
     </section>
   );
 
-  // add in view orders
-  // correct the order page
+  // Add In View Orders
+  // view Order Page
   // wishlist routes setup
   // add in the heart icon for the cards & console log the on clicked added to the cart
-  // cart icons reducation
   // pop up icons
   // autofill in the checkout if user authenticated
   // variation selections colors
