@@ -47,6 +47,4 @@ export default function Home() {
   // font updates
   // filter button same as the manunited
   // alignments
-  // wishlist implmenation
-  // remove hardcoded urls
 }

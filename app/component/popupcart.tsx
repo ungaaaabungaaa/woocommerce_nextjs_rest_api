@@ -162,10 +162,7 @@ export function PopUpCart() {
             <>
               <div className="flex-1 overflow-y-auto">
                 {cartData.items.map((item) => (
-                  <div
-                    key={item.item_key}
-                    className="py-4 lg:py-8 cart-card-two"
-                  >
+                  <div key={item.item_key} className="py-2 cart-card-two">
                     <div className="cart-card-1-two">
                       <div className="relative w-32 h-40 bg-muted rounded-lg overflow-hidden">
                         <Image
@@ -222,7 +219,7 @@ export function PopUpCart() {
               <div className="pt-4 mt-4">
                 <Button
                   onClick={() => router.push("/checkout")}
-                  className="w-full bg-white text-black  dark:bg-dark dark:text-white rounded-full"
+                  className="w-full bg-white text-black  dark:bg-black dark:text-white rounded-full"
                 >
                   Checkout
                 </Button>
