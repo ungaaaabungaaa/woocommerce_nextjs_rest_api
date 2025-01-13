@@ -177,7 +177,7 @@ export function PopUpCart() {
                       </div>
                     </div>
                     <div className="my-2 cart-card-2-two">
-                      <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em]">
+                      <h3 className="text-white dark:text-black text-left text-balance text-base md:text-xl font-semibold tracking-[-0.015em]">
                         {item.name}
                       </h3>
                       <p className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-xl font-semibold tracking-[-0.015em] mt-2 mb-1">
