@@ -36,14 +36,14 @@ export default function Home() {
 
   // Add In View Orders
   // view Order Page
-  // wishlist routes setup
-  // add in the heart icon for the cards & console log the on clicked added to the cart
-  // pop up icons
   // autofill in the checkout if user authenticated
   // variation selections colors
-  // icon size increaser
   // on hover add border - b
-  // font updates
+  // add in the heart icon for the cards & console log the on clicked added to the cart
+  // pop up icons
+  // Site icon size increaser
   // filter button same as the manunited
   // alignments
+  // font updates
+  // wishlist routes setup & Implementation
 }
