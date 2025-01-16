@@ -34,16 +34,17 @@ export default function Home() {
     </section>
   );
 
-  // Add In View Orders
   // view Order Page
+
   // autofill in the checkout if user authenticated
+  // if user authenticated take them to authenticated checkout route
   // variation selections colors
   // on hover add border - b
   // add in the heart icon for the cards & console log the on clicked added to the cart
-  // pop up icons
   // Site icon size increaser
   // filter button same as the manunited
   // alignments
   // font updates
+  // pop up icons
   // wishlist routes setup & Implementation
 }

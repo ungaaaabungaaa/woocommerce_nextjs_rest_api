@@ -133,7 +133,7 @@ function Page() {
               </div>
             </div>
           ) : (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1 w-full md:w-3/5">
               {orders.map((order) => (
                 <OrderCard key={order.id} order={order} />
               ))}

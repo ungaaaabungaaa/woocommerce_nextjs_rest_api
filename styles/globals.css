@@ -322,3 +322,7 @@ input::placeholder {
   justify-content: flex-start;
   flex-direction: column;
 }
+
+.debug {
+  border: solid 1px red;
+}
