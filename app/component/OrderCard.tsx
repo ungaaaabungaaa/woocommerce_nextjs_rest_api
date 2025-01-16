@@ -25,7 +25,7 @@ export default function OrderCard({ order }: OrderCardProps) {
   return (
     <Card
       shadow="none"
-      className="p-6 mb-4 bg-black dark:bg-white rounded-3xl border-1 border-white dark:border-black"
+      className="p-6 mb-4 bg-black dark:bg-white rounded-3xl border border-gray-700 dark:border-gray-200"
     >
       <div className="space-y-2">
         <div className="flex items-center justify-between">
