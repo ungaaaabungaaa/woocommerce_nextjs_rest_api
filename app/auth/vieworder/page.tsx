@@ -4,12 +4,12 @@ import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@nextui-org/button";
 import { Package, User } from "lucide-react";
-import { ChevronLeft } from "lucide-react";
+import type { OrderDetails } from "@/types/order";
+import { OrderTracking } from "@/app/component/order-tracking";
 
 export default function ViewOrder() {
   const searchParams = useSearchParams();
@@ -26,6 +26,49 @@ export default function ViewOrder() {
   const [FirebaseUID, setFirebaseUID] = useState<string | null>(null);
   const [authProvider, setAuthProvider] = useState<string>("");
   const [orders, setOrders] = useState<any[]>([]);
+
+  const mockOrder: OrderDetails = {
+    id: 375,
+    status: "in-transit",
+    date_created: "2025-01-16T17:10:54",
+    total: "270.00",
+    currency_symbol: "$",
+    billing: {
+      first_name: "Syed Abdul",
+      last_name: "Muqeeth",
+      address_1: "315 2nd cross manorayana palya sultan palya. Rt nagar",
+      address_2: "315 2nd cross",
+      city: "BENGALURU URBAN",
+      state: "",
+      postcode: "560032",
+      country: "",
+      phone: "+919945405632",
+    },
+    shipping: {
+      first_name: "Syed Abdul",
+      last_name: "Muqeeth",
+      address_1: "315 2nd cross manorayana palya sultan palya. Rt nagar",
+      address_2: "315 2nd cross",
+      city: "BENGALURU URBAN",
+      state: "",
+      postcode: "560032",
+      country: "",
+      phone: "+919945405632",
+    },
+    line_items: [
+      {
+        id: 364,
+        name: "Sunglasses",
+        quantity: 3,
+        price: 90,
+        image: {
+          src: "https://clothvillage.com/wp-content/uploads/2024/11/Sunglasses2-scaled.jpg",
+        },
+      },
+    ],
+    payment_method: "Pay Pal",
+    transaction_id: "8LM17839WX733652B",
+  };
 
   const router = useRouter();
 
@@ -147,6 +190,7 @@ export default function ViewOrder() {
             &lt; &nbsp; <span className="underline">Order History</span>
           </p>
         </div>
+        <OrderTracking order={mockOrder} />
       </div>
     </div>
   );
