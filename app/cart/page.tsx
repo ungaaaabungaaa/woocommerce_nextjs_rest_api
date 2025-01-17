@@ -11,6 +11,8 @@ import { useCart } from "../../context/cartcontext";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Minus, Plus, Trash2 } from "lucide-react";
+import { auth } from "@/config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface CartItem {
   item_key: string;
@@ -35,15 +37,38 @@ export default function Cart() {
   const [cartData, setCartData] = useState<CartData | null>(null);
   const router = useRouter();
   const { fetchCartDetails } = useCart();
+  const [customerId, setCustomerId] = useState<string | null>(null);
+  const [FirebaseUID, SetFirebaseUID] = useState<string | null>(null);
+  const [user, setUser] = useState(null);
 
   const handleCheckoutClick = () => {
-    router.push("/checkout");
+    if (user) {
+      // User is authenticated, route to auth/checkout
+      router.push("/auth/checkout");
+    } else {
+      // User is not authenticated, route to regular checkout
+      router.push("/checkout");
+    }
   };
 
   useEffect(() => {
     if (cartKey) {
       fetch_Cart_Details();
     }
+    const checkAuth = async () => {
+      onAuthStateChanged(auth, async (user: any) => {
+        if (!user) {
+          console.log("No user is currently signed in.");
+          return;
+        }
+        const uid = user.uid;
+        console.log(`User UID: ${uid}`);
+        setUser(user); // Set the user state to authenticated user
+        SetFirebaseUID(uid);
+      });
+    };
+
+    checkAuth();
   }, [cartKey]);
 
   const fetch_Cart_Details = async () => {

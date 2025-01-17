@@ -15,6 +15,8 @@ import { Button } from "@nextui-org/button";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/config/firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 interface CartItem {
   item_key: string;
@@ -41,11 +43,24 @@ export function PopUpCart() {
   const [isLoading, setIsLoading] = useState(false);
   const { fetchCartDetails } = useCart();
   const router = useRouter();
+  const [customerId, setCustomerId] = useState<string | null>(null);
+  const [FirebaseUID, SetFirebaseUID] = useState<string | null>(null);
+  const [user, setUser] = useState(null);
 
   const openCart = async () => {
     setIsOpen(true);
     if (cartKey) {
       await fetch_Cart_Details();
+    }
+  };
+
+  const handleCheckoutClick = () => {
+    if (user) {
+      // User is authenticated, route to auth/checkout
+      router.push("/auth/checkout");
+    } else {
+      // User is not authenticated, route to regular checkout
+      router.push("/checkout");
     }
   };
 
@@ -63,6 +78,20 @@ export function PopUpCart() {
     if (cartKey && isOpen) {
       fetch_Cart_Details();
     }
+    const checkAuth = async () => {
+      onAuthStateChanged(auth, async (user: any) => {
+        if (!user) {
+          console.log("No user is currently signed in.");
+          return;
+        }
+        const uid = user.uid;
+        console.log(`User UID: ${uid}`);
+        setUser(user); // Set the user state to authenticated user
+        SetFirebaseUID(uid);
+      });
+    };
+
+    checkAuth();
   }, [cartKey, isOpen]);
 
   const fetch_Cart_Details = async () => {
@@ -77,34 +106,6 @@ export function PopUpCart() {
       console.error("Error fetching cart details:", err);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const updateItemQuantity = async (itemKey: string, quantity: number) => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/item/${itemKey}`;
-      await axios({
-        method: "post",
-        url: url,
-        data: { quantity: quantity.toString() },
-        headers: { "Content-Type": "application/json" },
-        params: { cart_key: cartKey },
-      });
-
-      if (cartData) {
-        const updatedItems = cartData.items.map((item) =>
-          item.item_key === itemKey
-            ? { ...item, quantity: { value: quantity } }
-            : item
-        );
-        setCartData({ ...cartData, items: updatedItems });
-      }
-
-      await Promise.all([fetchCartDetails(cartKey), fetch_Cart_Details()]);
-    } catch (err: any) {
-      console.error("Error:", err.response?.data);
-      await fetch_Cart_Details();
-      throw err;
     }
   };
 
@@ -123,18 +124,6 @@ export function PopUpCart() {
       await Promise.all([fetchCartDetails(cartKey), fetch_Cart_Details()]);
     } catch (err) {
       console.error("Error removing item:", err);
-      await fetch_Cart_Details();
-    }
-  };
-
-  const clearCart = async () => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/clear`;
-      await axios.post(url, {}, { params: { cart_key: cartKey } });
-      setCartData({ items: [], totals: { subtotal: "0", total: "0" } });
-      await Promise.all([fetchCartDetails(cartKey), fetch_Cart_Details()]);
-    } catch (err) {
-      console.error("Error clearing cart:", err);
       await fetch_Cart_Details();
     }
   };
@@ -217,7 +206,8 @@ export function PopUpCart() {
               {/* Fixed Checkout Button */}
               <div className="pt-4 mt-4">
                 <Button
-                  onClick={() => router.push("/checkout")}
+                  // onClick={() => router.push("/checkout")}
+                  onClick={handleCheckoutClick}
                   className="w-full bg-white text-black  dark:bg-black dark:text-white rounded-full"
                 >
                   Checkout
