@@ -116,8 +116,8 @@ function CheckoutCustomer() {
               apt: customerData.data.billing.address_2 || "",
               city: customerData.data.billing.city || "",
               country: customerData.data.billing.country || "",
-              postCode: customerData.data.billing.postcode || "",
-              phoneNumber: customerData.data.billing.phone || "",
+              postCode: "",
+              phoneNumber: "",
             });
             setCustomerName(customerData.data.first_name);
           }
@@ -205,7 +205,6 @@ function CheckoutCustomer() {
         payment: {
           method: "Paypal",
           title: "PayPal Payment",
-          transactionID: "",
         },
         billing: {
           first_name: formData.firstName,
