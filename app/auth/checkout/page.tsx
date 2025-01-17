@@ -56,6 +56,7 @@ function CheckoutCustomer() {
   const wooCommerceOrderIdRef = React.useRef<string | null>(null);
   const router = useRouter();
   const [CustomerName, setCustomerName] = useState<string | null>(null);
+  const [hideEmail, setHideEmail] = React.useState(true);
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -82,9 +83,10 @@ function CheckoutCustomer() {
       let provider = user.providerData[0]?.providerId || "Unknown";
       console.log(`Login provider: ${provider}`);
       if (provider !== "password") {
-        console.log("Bro this user used social auth");
+        setHideEmail(false); // Show email input
       } else {
         console.log("Bro this user used Emaillll Ewwww");
+        setHideEmail(true); // Hide email input
       }
 
       setAuthProvider(provider);
@@ -305,24 +307,26 @@ function CheckoutCustomer() {
         </h3>
 
         <form onSubmit={(e) => e.preventDefault()}>
-          <div className="mb-4">
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-white dark:text-black mb-1"
-            >
-              Email address
-            </label>
-            <Input
-              id="email"
-              name="email"
-              type="email"
-              isRequired
-              className="text-black dark:text-white"
-              placeholder="Enter your Email"
-              value={formData.email}
-              onChange={handleChange}
-            />
-          </div>
+          {!hideEmail && (
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-white dark:text-black mb-1"
+              >
+                Email address
+              </label>
+              <Input
+                id="email"
+                name="email"
+                type="email"
+                isRequired
+                className="text-black dark:text-white"
+                placeholder="Enter your Email"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+          )}
 
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <div className="flex-1">
