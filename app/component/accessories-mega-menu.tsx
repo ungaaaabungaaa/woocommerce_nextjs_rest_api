@@ -1,9 +1,9 @@
 import Link from "next/link";
 export function AccessoriesMegaMenu() {
   return (
-    <div className="w-full text-white bg-black z-40 sticky top-12 z-99 dark:bg-white dark:text-black">
-      <nav className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-5 gap-8">
+    <div className="w-full  text-white bg-black z-40 sticky top-12 z-99 dark:bg-white dark:text-black">
+      <nav className="container mx-auto px-4 py-8 max-w-7xl">
+        <div className="grid grid-cols-5 gap-8 ">
           {/* Bags Column */}
           <div>
             <h2 className="font-semibold text-lg mb-4">Bags</h2>

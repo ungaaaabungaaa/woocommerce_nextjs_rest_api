@@ -97,12 +97,12 @@ const Footer = () => {
 
   return (
     <>
-      <PromoBar></PromoBar>
+      {/* <PromoBar></PromoBar> */}
       <div className="hidden md:block bg-black dark:bg-white">
         <ScrollBasedVelocityDemo />
       </div>
-      <footer className="bg-black text-white dark:bg-white dark:text-black">
-        <div className="container mx-auto px-4 py-8">
+      <footer className="bg-black text-white dark:bg-white dark:text-black w-full">
+        <div className="container mx-auto px-4 py-8 max-w-7xl">
           <div className="hidden md:flex md:flex-wrap md:-mx-4 mb-8">
             {footerLinks.map((column, index) => (
               <div key={index} className="md:w-1/6 px-4 mb-8">

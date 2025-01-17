@@ -13,7 +13,7 @@ export default function Home() {
       <AppleCardsCarouselDemo></AppleCardsCarouselDemo>
       <ProductCarousel></ProductCarousel>
       <br></br>
-      <div className="container mx-auto grid gap-6 py-4 md:grid-cols-2">
+      <div className="container mx-auto grid gap-4 py-4 md:grid-cols-2 w-full max-w-7xl">
         <ProductPromoCard
           title="Heritage"
           discount="22"
@@ -36,6 +36,7 @@ export default function Home() {
 
   // autofill in the checkout if user authenticated - 5:00
   // if user authenticated take them to authenticated checkout route - 6:00
+
   // variation selections colors - 7:00
   // on hover add border - b -7:30
   // add in the heart icon for the cards & console log the on clicked added to the cart -8:30

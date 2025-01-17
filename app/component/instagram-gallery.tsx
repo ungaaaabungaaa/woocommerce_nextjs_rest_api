@@ -37,7 +37,7 @@ const instagramPosts: InstagramPost[] = [
 
 export default function InstagramGallery() {
   return (
-    <section className="w-full py-4">
+    <section className="w-full py-4 max-w-7xl">
       <div className="container mx-auto px-0">
         {" "}
         {/* Adjust padding */}
