@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
     // Define the data for the order (you can replace this with dynamic values)
     const data = {
       payment_method: body.payment.method,
-      customer_id: body.customerID,
+      customer_id: body.customer_id,
       payment_method_title: body.payment.title,
       transaction_id: body.payment.transactionID,
       set_paid: true,

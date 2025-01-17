@@ -57,6 +57,7 @@ function CheckoutCustomer() {
   const router = useRouter();
   const [CustomerName, setCustomerName] = useState<string | null>(null);
   const [hideEmail, setHideEmail] = React.useState(true);
+  const [CustomerEmail, setCustomerEmail] = useState<string | null>(null);
 
   const [formData, setFormData] = useState<FormData>({
     email: "",
@@ -93,11 +94,13 @@ function CheckoutCustomer() {
 
       try {
         const email = `${uid}@uid.com`;
+
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/custom/v1/get-customer-id?email=${email}`
         );
 
         if (response.data.customer_id) {
+          setCustomerEmail(email);
           setCustomerId(response.data.customer_id);
 
           const customerData = await axios.get(
@@ -212,7 +215,7 @@ function CheckoutCustomer() {
           city: formData.city,
           postcode: formData.postCode,
           country: formData.country,
-          email: formData.email,
+          email: CustomerEmail, // here set firebaseuid // username set the email // transcation id // cutomerid
           phone: formData.phoneNumber,
         },
         shipping: {
@@ -226,6 +229,7 @@ function CheckoutCustomer() {
           phone: formData.phoneNumber,
         },
         line_items: lineItems,
+        customer_id: customerId,
         shipping_lines: [
           {
             method_id: "flat_rate",
@@ -235,7 +239,7 @@ function CheckoutCustomer() {
         ],
       };
 
-      const response = await axios.post("/api/placeorder", orderData);
+      const response = await axios.post("/api/placeordercustomer", orderData);
       console.log("Order created successfully! Order ID:", response.data.id);
       wooCommerceOrderIdRef.current = response.data.id;
       return response.data;
@@ -255,7 +259,7 @@ function CheckoutCustomer() {
     woocommerceOrderId: string
   ) => {
     try {
-      const apiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/paymentcompleted?orderId=${woocommerceOrderId}&transactionId=${paypalOrderId}`;
+      const apiUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/api/paymentcompletecustomer?orderId=${woocommerceOrderId}&transactionId=${paypalOrderId}`;
       const response = await axios.put(apiUrl);
 
       if (response.status === 200) {
