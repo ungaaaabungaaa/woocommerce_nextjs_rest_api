@@ -34,15 +34,16 @@ export default function Home() {
     </section>
   );
 
-  // if user authenticated take them to authenticated checkout route
   // autofill in the checkout if user authenticated
-  // wishlist routes setup & Implementation https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349, Store Data , Retrive Data , Show Data thats all
 
-  // variation selections colors
+  // wishlist routes setup & Implementation https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349, Store Data , Retrive Data , Show Data thats all
+  // pop up icons
+
   // on hover add border - b
+
   // add in the heart icon for the cards & console log the on clicked added to the cart
   // Site icon size increaser
+
   // alignments
-  // pop up icons
   // font updates
 }

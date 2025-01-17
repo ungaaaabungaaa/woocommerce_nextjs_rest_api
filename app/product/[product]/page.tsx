@@ -410,9 +410,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                               key={option}
                               className={`text-white ${
                                 selectedOptions[attr.name] === option
-                                  ? "bg-primary"
+                                  ? "bg-white text-black dark:bg-black dark:text-white"
                                   : isAvailable
-                                    ? "bg-black hover:bg-white hover:text-black"
+                                    ? "bg-black hover:bg-white hover:text-black  dark:bg-white dark:hover:bg-black dark:text-black hover:dark:text-white "
                                     : "bg-gray-300 text-gray-500 cursor-not-allowed"
                               }`}
                               onClick={() =>

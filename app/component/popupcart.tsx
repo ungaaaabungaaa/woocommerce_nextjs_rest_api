@@ -12,9 +12,8 @@ import { useRouter } from "next/navigation";
 import { useCart } from "@/context/cartcontext";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { auth } from "@/config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 
