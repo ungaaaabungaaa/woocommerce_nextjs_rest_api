@@ -34,17 +34,14 @@ export default function Home() {
     </section>
   );
 
-  // view Order Page
-  // autofill in the checkout if user authenticated
-  // if user authenticated take them to authenticated checkout route
-
-  // variation selections colors
-  // on hover add border - b
-  // add in the heart icon for the cards & console log the on clicked added to the cart
-  // Site icon size increaser
-  // filter button same as the manunited
-  // alignments
-  // font updates
-  // pop up icons
-  // wishlist routes setup & Implementation
+  // autofill in the checkout if user authenticated - 5:00
+  // if user authenticated take them to authenticated checkout route - 6:00
+  // variation selections colors - 7:00
+  // on hover add border - b -7:30
+  // add in the heart icon for the cards & console log the on clicked added to the cart -8:30
+  // Site icon size increaser - 9:30
+  // alignments - 10:30
+  // pop up icons -  12:30
+  // wishlist routes setup & Implementation - 1:30
+  // font updates - 2:30
 }
