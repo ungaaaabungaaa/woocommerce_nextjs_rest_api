@@ -1,54 +1,56 @@
-import { Check, Package, Truck } from "lucide-react";
+"use client";
+
+import { FileText, Package, Truck, Check } from "lucide-react";
 
 interface OrderStatusProps {
-  status: string;
+  status?: string;
 }
 
-export function OrderStatus({ status }: OrderStatusProps) {
+export function OrderStatus({ status = "Processing Order" }: OrderStatusProps) {
   const steps = [
-    { label: "Processing Order", icon: Package },
+    { label: "Processing Order", icon: FileText },
     { label: "Order Dispatched", icon: Package },
     { label: "In Transit", icon: Truck },
     { label: "Delivered", icon: Check },
   ];
 
-  const currentStep =
-    steps.findIndex((step) =>
-      step.label.toLowerCase().includes(status.toLowerCase())
-    ) + 1;
+  const currentStep = steps.findIndex((step) =>
+    step.label.toLowerCase().includes(status.toLowerCase())
+  );
 
   return (
-    <div className="w-full py-4">
-      <div className="flex justify-between relative">
+    <div className="w-full max-w-5xl mx-auto ">
+      <div className="flex flex-col sm:flex-row justify-between items-center">
         {steps.map((step, index) => {
           const Icon = step.icon;
-          const isActive = index < currentStep;
-          const isCompleted = index + 1 < currentStep;
+          const isActive = index === currentStep;
 
           return (
             <div
               key={index}
-              className="flex flex-col items-center relative z-10"
+              className="flex flex-col sm:flex-row items-center mb-4 sm:mb-0 w-full sm:w-auto"
             >
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                  isActive ? "bg-primary text-primary-foreground" : "bg-muted"
-                }`}
-              >
-                <Icon className="w-5 h-5" />
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-12 h-12 rounded-full flex items-center justify-center 
+                    ${
+                      isActive
+                        ? "bg-black text-white ring-4 ring-green-500"
+                        : "bg-black text-white"
+                    }`}
+                >
+                  <Icon className="w-6 h-6" />
+                </div>
+                <span className="text-sm mt-2 text-center">{step.label}</span>
               </div>
-              <span className="text-sm mt-2">{step.label}</span>
+              {index < steps.length - 1 && (
+                <div className="flex-1 mx-2 sm:mx-4 my-2 sm:my-0 text-gray-400 flex items-center justify-center">
+                  <span className="transform rotate-90 sm:rotate-0">→</span>
+                </div>
+              )}
             </div>
           );
         })}
-        <div className="absolute top-5 left-0 h-[2px] w-full bg-muted -z-0">
-          <div
-            className="h-full bg-primary transition-all duration-300"
-            style={{
-              width: `${((currentStep - 1) / (steps.length - 1)) * 100}%`,
-            }}
-          />
-        </div>
       </div>
     </div>
   );

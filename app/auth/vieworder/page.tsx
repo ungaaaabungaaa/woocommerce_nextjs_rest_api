@@ -10,6 +10,7 @@ import { Button } from "@nextui-org/button";
 import { Package, User } from "lucide-react";
 import type { OrderDetails } from "@/types/order";
 import { OrderTracking } from "@/app/component/order-tracking";
+import { OrderStatus } from "@/app/component/order-status";
 
 export default function ViewOrder() {
   const searchParams = useSearchParams();
@@ -207,6 +208,10 @@ export default function ViewOrder() {
             {" "}
             &lt; &nbsp; <span className="underline">Order History</span>
           </Button>
+        </div>
+        <br></br>
+        <div className="rounded-lg border py-8 bg-gray-700 dark:bg-gray-200 border-gray-700 dark:border-gray-200 hidden md:block">
+          {orderDetails && <OrderStatus></OrderStatus>}
         </div>
         {orderDetails && <OrderTracking order={orderDetails} />}
       </div>

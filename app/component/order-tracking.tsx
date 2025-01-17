@@ -16,9 +16,7 @@ export function OrderTracking({ order }: OrderTrackingProps) {
   };
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <OrderStatus status={order.status} />
-
+    <div className="container mx-auto pt-4 pb-4 space-y-6">
       <div className="grid md:grid-cols-3 gap-6">
         {/* Order Items */}
         <div className="md:col-span-2">
