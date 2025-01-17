@@ -107,164 +107,170 @@ export default function Nav_bar() {
   return (
     <div className="sticky top-0 z-50">
       <div className="relative">
-        <Navbar
-          maxWidth="xl"
-          className="bg-white text-black dark:bg-black dark:text-white h-10"
-        >
-          <NavbarContent className="sm:flex gap-4" justify="start">
-            <NavbarBrand className="pr-4 hidden sm:flex">
-              <div className="flex items-center gap-2">
-                <ChevronLeft className="h-3 w-3" />
-                <span className="text-xs">theclothvillagestore.com</span>
-              </div>
-            </NavbarBrand>
-          </NavbarContent>
-
-          <NavbarContent
-            className="flex absolute left-1/2 transform -translate-x-1/2"
-            justify="center"
+        <div className="w-full flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
+          <Navbar
+            maxWidth="xl"
+            className="bg-white text-black dark:bg-black dark:text-white h-10 w-full max-w-7xl "
           >
-            <p className="text-xs font-medium">Official Cloth Village Store</p>
-          </NavbarContent>
+            <NavbarContent className="sm:flex gap-4" justify="start">
+              <NavbarBrand className="pr-4 hidden sm:flex">
+                <div className="flex items-center gap-2">
+                  <ChevronLeft className="h-3 w-3" />
+                  <span className="text-xs">theclothvillagestore.com</span>
+                </div>
+              </NavbarBrand>
+            </NavbarContent>
 
-          <NavbarContent justify="end" className="gap-4">
-            <nav className="hidden gap-4 md:flex">
-              <Link
-                href="/contact"
-                className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
-              >
-                Help
-              </Link>
-              <Link
-                href="/trackorder"
-                className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
-              >
-                Orders & Returns
-              </Link>
-            </nav>
-          </NavbarContent>
-        </Navbar>
+            <NavbarContent
+              className="flex absolute left-1/2 transform -translate-x-1/2"
+              justify="center"
+            >
+              <p className="text-xs font-medium">
+                Official Cloth Village Store
+              </p>
+            </NavbarContent>
 
-        <Navbar
-          maxWidth="xl"
-          className="bg-black text-white dark:bg-white dark:text-black"
-          onMenuOpenChange={setIsMenuOpen}
-        >
-          <NavbarContent className="sm:flex gap-4" justify="start">
-            <NavbarMenuToggle
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              className="sm:hidden"
-            />
-            <NavbarBrand className="pr-4">
-              {mounted && theme === "dark" ? (
-                <NextImage
-                  onClick={handleLogoClick}
-                  src={SiteLogoDark2}
-                  alt="Site Logo"
-                  width={180}
-                  height={100}
-                  priority
-                  className="cursor-pointer"
-                />
-              ) : mounted ? (
-                <NextImage
-                  onClick={handleLogoClick}
-                  src={SiteLogo2}
-                  alt="Site Logo"
-                  width={180}
-                  height={100}
-                  priority
-                  className="cursor-pointer"
+            <NavbarContent justify="end" className="gap-4">
+              <nav className="hidden gap-4 md:flex">
+                <Link
+                  href="/contact"
+                  className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
+                >
+                  Help
+                </Link>
+                <Link
+                  href="/trackorder"
+                  className="text-xs text-muted-foreground hover:font-bold cursor-pointer"
+                >
+                  Orders & Returns
+                </Link>
+              </nav>
+            </NavbarContent>
+          </Navbar>
+        </div>
+
+        <div className="w-full flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black">
+          <Navbar
+            maxWidth="full"
+            className="bg-black text-white dark:bg-white dark:text-black max-w-7xl"
+            onMenuOpenChange={setIsMenuOpen}
+          >
+            <NavbarContent className="sm:flex gap-4" justify="start">
+              <NavbarMenuToggle
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                className="sm:hidden"
+              />
+              <NavbarBrand className="pr-4">
+                {mounted && theme === "dark" ? (
+                  <NextImage
+                    onClick={handleLogoClick}
+                    src={SiteLogoDark2}
+                    alt="Site Logo"
+                    width={180}
+                    height={100}
+                    priority
+                    className="cursor-pointer"
+                  />
+                ) : mounted ? (
+                  <NextImage
+                    onClick={handleLogoClick}
+                    src={SiteLogo2}
+                    alt="Site Logo"
+                    width={180}
+                    height={100}
+                    priority
+                    className="cursor-pointer"
+                  />
+                ) : (
+                  <div
+                    style={{ width: 120, height: 40 }}
+                    className="cursor-pointer"
+                  />
+                )}
+              </NavbarBrand>
+
+              <NavbarContent className="hidden sm:flex gap-8" justify="start">
+                {megaMenus.map((menu) => (
+                  <NavbarItem
+                    key={menu.name}
+                    className="text-white hover:font-bold dark:text-black"
+                    onMouseEnter={() => setVisibleMegaMenu(menu.name)}
+                    // onMouseLeave={() => setVisibleMegaMenu("")}
+                  >
+                    <Link href="#">{menu.name}&apos;s</Link>
+                  </NavbarItem>
+                ))}
+              </NavbarContent>
+            </NavbarContent>
+
+            <NavbarContent justify="end" className="gap-4">
+              <Search
+                onClick={handleSearchClick}
+                className="h-5 cursor-pointer text-white dark:text-black"
+              />
+
+              {isAuthenticated ? (
+                <UserCircle
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                  onClick={() => router.push("/auth/user")}
                 />
               ) : (
-                <div
-                  style={{ width: 120, height: 40 }}
-                  className="cursor-pointer"
+                <User
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                  onClick={() => router.push("/auth/register")}
                 />
               )}
-            </NavbarBrand>
 
-            <NavbarContent className="hidden sm:flex gap-8" justify="start">
-              {megaMenus.map((menu) => (
-                <NavbarItem
-                  key={menu.name}
-                  className="text-white hover:font-bold dark:text-black"
-                  onMouseEnter={() => setVisibleMegaMenu(menu.name)}
-                  // onMouseLeave={() => setVisibleMegaMenu("")}
-                >
-                  <Link href="#">{menu.name}&apos;s</Link>
-                </NavbarItem>
-              ))}
-            </NavbarContent>
-          </NavbarContent>
-
-          <NavbarContent justify="end" className="gap-4">
-            <Search
-              onClick={handleSearchClick}
-              className="h-5 cursor-pointer text-white dark:text-black"
-            />
-
-            {isAuthenticated ? (
-              <UserCircle
-                className="h-5 cursor-pointer text-white dark:text-black"
-                onClick={() => router.push("/auth/user")}
-              />
-            ) : (
-              <User
-                className="h-5 cursor-pointer text-white dark:text-black"
-                onClick={() => router.push("/auth/register")}
-              />
-            )}
-
-            <Badge
-              content={0}
-              className="border-none"
-              shape="circle"
-              color="danger"
-            >
-              <Heart className="h-5 cursor-pointer text-white dark:text-black"></Heart>
-            </Badge>
-
-            <Badge
-              onClick={handleCartClick}
-              content={cartCount}
-              className="border-none"
-              shape="circle"
-              color="danger"
-            >
-              <ShoppingBag
-                onClick={handleCartClick}
-                className="h-5 cursor-pointer text-white dark:text-black"
-              />
-            </Badge>
-
-            {mounted && (
-              <button onClick={toggleTheme} className="focus:outline-none">
-                {theme === "dark" ? (
-                  <Sun className="h-5 cursor-pointer text-white dark:text-black" />
-                ) : (
-                  <Moon className="h-5 cursor-pointer text-white dark:text-black" />
-                )}
-              </button>
-            )}
-          </NavbarContent>
-
-          <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">
-            {menuItems.map((item, index) => (
-              <NavbarMenuItem
-                key={`${item.label}-${index}`}
-                className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800"
+              <Badge
+                content={0}
+                className="border-none"
+                shape="circle"
+                color="danger"
               >
-                <button
-                  onClick={() => handleMenuItemClick(item.route)}
-                  className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black"
-                >
-                  {item.label}
+                <Heart className="h-5 cursor-pointer text-white dark:text-black"></Heart>
+              </Badge>
+
+              <Badge
+                onClick={handleCartClick}
+                content={cartCount}
+                className="border-none"
+                shape="circle"
+                color="danger"
+              >
+                <ShoppingBag
+                  onClick={handleCartClick}
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                />
+              </Badge>
+
+              {mounted && (
+                <button onClick={toggleTheme} className="focus:outline-none">
+                  {theme === "dark" ? (
+                    <Sun className="h-5 cursor-pointer text-white dark:text-black" />
+                  ) : (
+                    <Moon className="h-5 cursor-pointer text-white dark:text-black" />
+                  )}
                 </button>
-              </NavbarMenuItem>
-            ))}
-          </NavbarMenu>
-        </Navbar>
+              )}
+            </NavbarContent>
+
+            <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">
+              {menuItems.map((item, index) => (
+                <NavbarMenuItem
+                  key={`${item.label}-${index}`}
+                  className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800"
+                >
+                  <button
+                    onClick={() => handleMenuItemClick(item.route)}
+                    className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black"
+                  >
+                    {item.label}
+                  </button>
+                </NavbarMenuItem>
+              ))}
+            </NavbarMenu>
+          </Navbar>
+        </div>
 
         {/* Mega Menus Container */}
         <div className="absolute left-0 w-full">
