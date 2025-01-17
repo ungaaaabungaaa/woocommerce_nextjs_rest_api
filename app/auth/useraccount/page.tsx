@@ -4,7 +4,6 @@ import { auth } from "../../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
-import { useTheme } from "next-themes";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
 import { Package, User } from "lucide-react";

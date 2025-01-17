@@ -315,276 +315,281 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       <>
         <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
           <ToastContainer />
-          <div className="grid md:grid-cols-2 gap-8 w-full">
-            <div className="space-y-4 lg:mr-12 ">
-              <ProductGallery images={mappedImages} />
-            </div>
+          <div className="w-full flex align-middle justify-center items-center">
+            <div className="grid md:grid-cols-2 gap-8 w-full max-w-7xl ">
+              <div className="space-y-4 lg:mr-6 ">
+                <ProductGallery images={mappedImages} />
+              </div>
 
-            <div className="space-y-6 lg:ml-12">
-              <div>
-                <Breadcrumbs
-                  itemClasses={{
-                    item: "text-white/60 dark:text-black data-[current=true]:text-white",
-                    separator: "text-white/40 dark:text-black/40",
-                  }}
-                >
-                  <BreadcrumbItem
-                    href="/"
-                    className="text-white dark:text-black hover:font-bold"
+              <div className="space-y-6 lg:ml-6">
+                <div>
+                  <Breadcrumbs
+                    itemClasses={{
+                      item: "text-white/60 dark:text-black data-[current=true]:text-white",
+                      separator: "text-white/40 dark:text-black/40",
+                    }}
                   >
-                    Home
-                  </BreadcrumbItem>
-                  <BreadcrumbItem
-                    href="/store"
-                    className="text-white dark:text-black"
-                  >
-                    Store
-                  </BreadcrumbItem>
-                  {product.categories && product.categories.length > 0 && (
                     <BreadcrumbItem
-                      itemScope
-                      href={`/store/${encodeURIComponent(product.categories[0].name)}`}
+                      href="/"
+                      className="text-white dark:text-black hover:font-bold"
+                    >
+                      Home
+                    </BreadcrumbItem>
+                    <BreadcrumbItem
+                      href="/store"
                       className="text-white dark:text-black"
                     >
-                      {product.categories[0].name}
+                      Store
                     </BreadcrumbItem>
-                  )}
-                  <BreadcrumbItem>{product.name}</BreadcrumbItem>
-                </Breadcrumbs>
-                <br></br>
+                    {product.categories && product.categories.length > 0 && (
+                      <BreadcrumbItem
+                        itemScope
+                        href={`/store/${encodeURIComponent(product.categories[0].name)}`}
+                        className="text-white dark:text-black"
+                      >
+                        {product.categories[0].name}
+                      </BreadcrumbItem>
+                    )}
+                    <BreadcrumbItem>{product.name}</BreadcrumbItem>
+                  </Breadcrumbs>
+                  <br></br>
 
-                <div className="flex items-center justify-between">
-                  <h1 className="text-3xl font-bold">{product.name}</h1>
-                  <Button
-                    onClick={handleShare}
-                    className="h-12 w-12 flex items-center justify-center bg-black text-white dark:bg-white dark:text-black"
-                  >
-                    <Share2 className="h-5 w-5 text-white dark:text-black" />
-                  </Button>
-                </div>
-                <div className="flex items-center space-x-2">
-                  {product.on_sale && (
-                    <span className="text-2xl font-bold text-muted-foreground line-through">
-                      ${product.regular_price}
+                  <div className="flex items-center justify-between">
+                    <h1 className="text-3xl font-bold">{product.name}</h1>
+                    <Button
+                      onClick={handleShare}
+                      className="h-12 w-12 flex items-center justify-center bg-black text-white dark:bg-white dark:text-black"
+                    >
+                      <Share2 className="h-5 w-5 text-white dark:text-black" />
+                    </Button>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    {product.on_sale && (
+                      <span className="text-2xl font-bold text-muted-foreground line-through">
+                        ${product.regular_price}
+                      </span>
+                    )}
+
+                    <span className="text-3xl font-bold">
+                      $
+                      {selectedVariation
+                        ? selectedVariation.price
+                        : product.price}
                     </span>
-                  )}
-
-                  <span className="text-3xl font-bold">
-                    $
-                    {selectedVariation
-                      ? selectedVariation.price
-                      : product.price}
-                  </span>
+                  </div>
+                  <br />
+                  <Chip size="lg">{product.stock_status}</Chip>
+                  <br></br>
+                  <br></br>
+                  <div
+                    dangerouslySetInnerHTML={{
+                      __html: product.short_description,
+                    }}
+                  />
+                  <br></br>
                 </div>
-                <br />
-                <Chip size="lg">{product.stock_status}</Chip>
-                <br></br>
-                <br></br>
-                <div
-                  dangerouslySetInnerHTML={{
-                    __html: product.short_description,
-                  }}
-                />
-                <br></br>
-              </div>
 
-              {product.type === "variable" && product.attributes && (
-                <div className="space-y-4">
-                  {product.attributes.map((attr) => (
-                    <div key={attr.name}>
-                      <label className="block text-sm font-medium mb-2">
-                        {attr.name}
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {attr.options.map((option) => {
-                          const isAvailable = variations.some((variation) =>
-                            variation.attributes.every((varAttr) =>
-                              varAttr.name === attr.name
-                                ? varAttr.option === option
-                                : selectedOptions[varAttr.name] ===
-                                  varAttr.option
-                            )
-                          );
-                          return (
-                            <Button
-                              key={option}
-                              className={`text-white ${
-                                selectedOptions[attr.name] === option
-                                  ? "bg-white text-black dark:bg-black dark:text-white"
-                                  : isAvailable
-                                    ? "bg-black hover:bg-white hover:text-black  dark:bg-white dark:hover:bg-black dark:text-black hover:dark:text-white "
-                                    : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                              }`}
-                              onClick={() =>
-                                isAvailable &&
-                                handleVariationChange(attr.name, option)
-                              }
-                              disabled={!isAvailable}
-                            >
-                              {option}
-                            </Button>
-                          );
-                        })}
+                {product.type === "variable" && product.attributes && (
+                  <div className="space-y-4">
+                    {product.attributes.map((attr) => (
+                      <div key={attr.name}>
+                        <label className="block text-sm font-medium mb-2">
+                          {attr.name}
+                        </label>
+                        <div className="flex flex-wrap gap-2">
+                          {attr.options.map((option) => {
+                            const isAvailable = variations.some((variation) =>
+                              variation.attributes.every((varAttr) =>
+                                varAttr.name === attr.name
+                                  ? varAttr.option === option
+                                  : selectedOptions[varAttr.name] ===
+                                    varAttr.option
+                              )
+                            );
+                            return (
+                              <Button
+                                key={option}
+                                className={`text-white ${
+                                  selectedOptions[attr.name] === option
+                                    ? "bg-white text-black dark:bg-black dark:text-white"
+                                    : isAvailable
+                                      ? "bg-black hover:bg-white hover:text-black  dark:bg-white dark:hover:bg-black dark:text-black hover:dark:text-white "
+                                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                                }`}
+                                onClick={() =>
+                                  isAvailable &&
+                                  handleVariationChange(attr.name, option)
+                                }
+                                disabled={!isAvailable}
+                              >
+                                {option}
+                              </Button>
+                            );
+                          })}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
-                  <Button
-                    size="lg"
-                    className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  >
-                    -
-                  </Button>
-                  <span className="px-3 text-sm text-black dark:text-white">
-                    {quantity}
-                  </span>
-                  <Button
-                    size="lg"
-                    className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
-                    +
-                  </Button>
-                </div>
+                    ))}
+                  </div>
+                )}
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                  <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
+                    <Button
+                      size="lg"
+                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                    >
+                      -
+                    </Button>
+                    <span className="px-3 text-sm text-black dark:text-white">
+                      {quantity}
+                    </span>
+                    <Button
+                      size="lg"
+                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                      onClick={() => setQuantity(quantity + 1)}
+                    >
+                      +
+                    </Button>
+                  </div>
 
-                <Button
-                  onClick={handleAddToCart}
-                  className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center"
-                >
-                  <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
-                </Button>
-              </div>
-              <div className="flex space-x-4 text-white dark:text-black">
-                <Accordion
-                  defaultExpandedKeys={["1"]}
-                  itemClasses={itemClasses}
-                >
-                  <AccordionItem
-                    subtitle="Product Description & Dimensions"
-                    key="1"
-                    aria-label="ABOUT"
-                    title="Description & Dimensions"
+                  <Button
+                    onClick={handleAddToCart}
+                    className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center"
                   >
-                    <div
-                      dangerouslySetInnerHTML={{ __html: product.description }}
-                    />
-                    <br></br>
-                    <p>
-                      <strong>Weight:</strong>{" "}
-                      {product.weight || "Not specified"} kg
-                    </p>
-                    <p>
-                      <strong>Dimensions:</strong>
-                      {product.dimensions.length &&
-                      product.dimensions.width &&
-                      product.dimensions.height
-                        ? `${product.dimensions.length} x ${product.dimensions.width} x ${product.dimensions.height} cm`
-                        : "Not specified"}
-                    </p>
-                  </AccordionItem>
-                  <AccordionItem
-                    key="2"
-                    subtitle="Please size down if you are between sizes"
-                    aria-label="SIZE GUIDE"
-                    title="SIZE GUIDE"
+                    <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
+                  </Button>
+                </div>
+                <div className="flex space-x-4 text-white dark:text-black">
+                  <Accordion
+                    defaultExpandedKeys={["1"]}
+                    itemClasses={itemClasses}
                   >
-                    <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
-                      <table className="w-full text-left text-sm">
-                        <thead>
-                          <tr>
-                            <th className="py-2">Height (cm)</th>
-                            <th className="py-2">Weight (kg)</th>
-                            <th className="py-2">Pants Size</th>
-                            <th className="py-2">Top Size</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="py-1">160-170</td>
-                            <td className="py-1">50-55</td>
-                            <td className="py-1">26/28</td>
-                            <td className="py-1">S/M</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">165-175</td>
-                            <td className="py-1">55-65</td>
-                            <td className="py-1">30</td>
-                            <td className="py-1">S/M</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">170-180</td>
-                            <td className="py-1">65-75</td>
-                            <td className="py-1">30/32</td>
-                            <td className="py-1">M/L</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">185-190</td>
-                            <td className="py-1">75-85</td>
-                            <td className="py-1">34</td>
-                            <td className="py-1">L/XL</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">185-190</td>
-                            <td className="py-1">80-90</td>
-                            <td className="py-1">36</td>
-                            <td className="py-1">XL</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </AccordionItem>
-                  <AccordionItem
-                    key="3"
-                    subtitle="Free Shipping on all orders over $100 USD"
-                    aria-label="SHIPPING"
-                    title="SHIPPING"
-                  >
-                    <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
-                      <table className="w-full text-left text-sm">
-                        <thead>
-                          <tr>
-                            <th className="py-2">Location</th>
-                            <th className="py-2">Cost</th>
-                            <th className="py-2">Delivery</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td className="py-1">US / Canada</td>
-                            <td className="py-1">$5</td>
-                            <td className="py-1">1 - 3 working days</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">UK / EU Countries</td>
-                            <td className="py-1">$5</td>
-                            <td className="py-1">1 - 3 working days</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">Australia</td>
-                            <td className="py-1">$5</td>
-                            <td className="py-1">1 - 3 working days</td>
-                          </tr>
-                          <tr>
-                            <td className="py-1">International</td>
-                            <td className="py-1">$15</td>
-                            <td className="py-1">2 - 4 working days</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                      <p className="text-sm mt-4">
-                        *Each order requires 24 hours for processing and
-                        handling. This does not include weekends or holidays.
+                    <AccordionItem
+                      subtitle="Product Description & Dimensions"
+                      key="1"
+                      aria-label="ABOUT"
+                      title="Description & Dimensions"
+                    >
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: product.description,
+                        }}
+                      />
+                      <br></br>
+                      <p>
+                        <strong>Weight:</strong>{" "}
+                        {product.weight || "Not specified"} kg
                       </p>
-                    </div>
-                  </AccordionItem>
-                </Accordion>
+                      <p>
+                        <strong>Dimensions:</strong>
+                        {product.dimensions.length &&
+                        product.dimensions.width &&
+                        product.dimensions.height
+                          ? `${product.dimensions.length} x ${product.dimensions.width} x ${product.dimensions.height} cm`
+                          : "Not specified"}
+                      </p>
+                    </AccordionItem>
+                    <AccordionItem
+                      key="2"
+                      subtitle="Please size down if you are between sizes"
+                      aria-label="SIZE GUIDE"
+                      title="SIZE GUIDE"
+                    >
+                      <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
+                        <table className="w-full text-left text-sm">
+                          <thead>
+                            <tr>
+                              <th className="py-2">Height (cm)</th>
+                              <th className="py-2">Weight (kg)</th>
+                              <th className="py-2">Pants Size</th>
+                              <th className="py-2">Top Size</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="py-1">160-170</td>
+                              <td className="py-1">50-55</td>
+                              <td className="py-1">26/28</td>
+                              <td className="py-1">S/M</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">165-175</td>
+                              <td className="py-1">55-65</td>
+                              <td className="py-1">30</td>
+                              <td className="py-1">S/M</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">170-180</td>
+                              <td className="py-1">65-75</td>
+                              <td className="py-1">30/32</td>
+                              <td className="py-1">M/L</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">185-190</td>
+                              <td className="py-1">75-85</td>
+                              <td className="py-1">34</td>
+                              <td className="py-1">L/XL</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">185-190</td>
+                              <td className="py-1">80-90</td>
+                              <td className="py-1">36</td>
+                              <td className="py-1">XL</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </AccordionItem>
+                    <AccordionItem
+                      key="3"
+                      subtitle="Free Shipping on all orders over $100 USD"
+                      aria-label="SHIPPING"
+                      title="SHIPPING"
+                    >
+                      <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
+                        <table className="w-full text-left text-sm">
+                          <thead>
+                            <tr>
+                              <th className="py-2">Location</th>
+                              <th className="py-2">Cost</th>
+                              <th className="py-2">Delivery</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td className="py-1">US / Canada</td>
+                              <td className="py-1">$5</td>
+                              <td className="py-1">1 - 3 working days</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">UK / EU Countries</td>
+                              <td className="py-1">$5</td>
+                              <td className="py-1">1 - 3 working days</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">Australia</td>
+                              <td className="py-1">$5</td>
+                              <td className="py-1">1 - 3 working days</td>
+                            </tr>
+                            <tr>
+                              <td className="py-1">International</td>
+                              <td className="py-1">$15</td>
+                              <td className="py-1">2 - 4 working days</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <p className="text-sm mt-4">
+                          *Each order requires 24 hours for processing and
+                          handling. This does not include weekends or holidays.
+                        </p>
+                      </div>
+                    </AccordionItem>
+                  </Accordion>
+                </div>
               </div>
             </div>
           </div>
+
           <PopUpCart />
           <br></br>
           <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
