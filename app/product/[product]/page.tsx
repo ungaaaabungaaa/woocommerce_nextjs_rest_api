@@ -316,11 +316,11 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
           <ToastContainer />
           <div className="grid md:grid-cols-2 gap-8 w-full">
-            <div className="space-y-4">
+            <div className="space-y-4 lg:mr-12 ">
               <ProductGallery images={mappedImages} />
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-6 lg:ml-12">
               <div>
                 <Breadcrumbs
                   itemClasses={{
