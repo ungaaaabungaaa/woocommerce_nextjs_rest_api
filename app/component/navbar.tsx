@@ -149,7 +149,7 @@ export default function Nav_bar() {
           </Navbar>
         </div>
 
-        <div className="w-full flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black">
+        <div className="w-full flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black border-b border-gray-700 dark:border-gray-200 ">
           <Navbar
             maxWidth="full"
             className="bg-black text-white dark:bg-white dark:text-black max-w-7xl"
