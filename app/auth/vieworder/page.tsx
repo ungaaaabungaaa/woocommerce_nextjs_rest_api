@@ -183,12 +183,13 @@ export default function ViewOrder() {
           </Button>
         </div>
         <div className="flex items-center pt-4">
-          <p
+          <Button
             onClick={handleGoBack}
-            className=" h-4 text-sm text-gray-500 dark:text-gray-400  mt-2 cursor-pointer"
+            className=" h-4 text-sm text-gray-500 dark:text-gray-400  mt-2 cursor-pointer bg-transparent"
           >
+            {" "}
             &lt; &nbsp; <span className="underline">Order History</span>
-          </p>
+          </Button>
         </div>
         <OrderTracking order={mockOrder} />
       </div>
