@@ -15,7 +15,7 @@ import { OrderStatus } from "@/app/component/order-status";
 export default function ViewOrder() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get("orderNumber");
-
+  const [orderStatus, setOrderStatus] = useState("Processing Order");
   const [mounted, setMounted] = useState(false);
   const [CustomerName, setCustomerName] = useState<string | null>(null);
   const [CustomerLastName, setCustomerLastName] = useState<string | null>(null);
@@ -72,6 +72,8 @@ export default function ViewOrder() {
               const orderData = await getOrdersDetails(orderNumber);
               if (orderData) {
                 // Transform API response to match OrderDetails type
+                setOrderStatus(orderData.status);
+                console.log("Order Data", orderData.status);
                 const formattedOrder: OrderDetails = {
                   id: orderData.id,
                   status: orderData.status,
@@ -210,8 +212,8 @@ export default function ViewOrder() {
           </Button>
         </div>
         <br></br>
-        <div className="rounded-lg border py-8 bg-gray-700 dark:bg-gray-200 border-gray-700 dark:border-gray-200 hidden md:block">
-          {orderDetails && <OrderStatus></OrderStatus>}
+        <div className="rounded-lg border py-8 bg-gray-700 dark:bg-gray-200 border-gray-700 dark:border-gray-200 hidden md:block flex justify-center">
+          {orderDetails && <OrderStatus status={orderStatus}></OrderStatus>}
         </div>
         {orderDetails && <OrderTracking order={orderDetails} />}
       </div>
