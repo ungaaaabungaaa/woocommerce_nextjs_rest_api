@@ -35,15 +35,9 @@ export default function Home() {
   );
 
   // autofill in the checkout if user authenticated
-
   // wishlist routes setup & Implementation https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349, Store Data , Retrive Data , Show Data thats all
   // pop up icons
-
-  // on hover add border - b
-
   // add in the heart icon for the cards & console log the on clicked added to the cart
-  // Site icon size increaser
-
-  // alignments
+  // alignments for the cards and check once all the pages 7xl max width thats all
   // font updates
 }
