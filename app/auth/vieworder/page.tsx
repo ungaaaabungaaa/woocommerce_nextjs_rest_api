@@ -14,8 +14,6 @@ import { OrderTracking } from "@/app/component/order-tracking";
 export default function ViewOrder() {
   const searchParams = useSearchParams();
   const orderNumber = searchParams.get("orderNumber");
-  // how to use this one
-  // <span className="font-semibold">{orderNumber}</span>
 
   const [mounted, setMounted] = useState(false);
   const [CustomerName, setCustomerName] = useState<string | null>(null);
@@ -26,49 +24,7 @@ export default function ViewOrder() {
   const [FirebaseUID, setFirebaseUID] = useState<string | null>(null);
   const [authProvider, setAuthProvider] = useState<string>("");
   const [orders, setOrders] = useState<any[]>([]);
-
-  const mockOrder: OrderDetails = {
-    id: 375,
-    status: "in-transit",
-    date_created: "2025-01-16T17:10:54",
-    total: "270.00",
-    currency_symbol: "$",
-    billing: {
-      first_name: "Syed Abdul",
-      last_name: "Muqeeth",
-      address_1: "315 2nd cross manorayana palya sultan palya. Rt nagar",
-      address_2: "315 2nd cross",
-      city: "BENGALURU URBAN",
-      state: "",
-      postcode: "560032",
-      country: "",
-      phone: "+919945405632",
-    },
-    shipping: {
-      first_name: "Syed Abdul",
-      last_name: "Muqeeth",
-      address_1: "315 2nd cross manorayana palya sultan palya. Rt nagar",
-      address_2: "315 2nd cross",
-      city: "BENGALURU URBAN",
-      state: "",
-      postcode: "560032",
-      country: "",
-      phone: "+919945405632",
-    },
-    line_items: [
-      {
-        id: 364,
-        name: "Sunglasses",
-        quantity: 3,
-        price: 90,
-        image: {
-          src: "https://clothvillage.com/wp-content/uploads/2024/11/Sunglasses2-scaled.jpg",
-        },
-      },
-    ],
-    payment_method: "Pay Pal",
-    transaction_id: "8LM17839WX733652B",
-  };
+  const [orderDetails, setOrderDetails] = useState<OrderDetails | null>(null);
 
   const router = useRouter();
 
@@ -89,11 +45,6 @@ export default function ViewOrder() {
 
       let provider = user.providerData[0]?.providerId || "Unknown";
       setAuthProvider(provider);
-      if (provider === "password") {
-        console.log(`IS EMAIL AUTH: ${provider}`);
-      } else {
-        console.log(`IS Socail MEDIA AUTH: ${provider}`);
-      }
 
       try {
         const email = `${uid}@uid.com`;
@@ -115,8 +66,53 @@ export default function ViewOrder() {
             setCustomerPhone(customerData.data.billing.phone);
             setCustomerAddress(customerData.data.billing.address_1);
 
-            if (customerData.data.id) {
+            if (customerData.data.id && orderNumber) {
               getOrders(customerData.data.id);
+              const orderData = await getOrdersDetails(orderNumber);
+              if (orderData) {
+                // Transform API response to match OrderDetails type
+                const formattedOrder: OrderDetails = {
+                  id: orderData.id,
+                  status: orderData.status,
+                  date_created: orderData.date_created,
+                  total: orderData.total,
+                  currency_symbol: orderData.currency_symbol,
+                  billing: {
+                    first_name: orderData.billing.first_name,
+                    last_name: orderData.billing.last_name,
+                    address_1: orderData.billing.address_1,
+                    address_2: orderData.billing.address_2,
+                    city: orderData.billing.city,
+                    state: orderData.billing.state,
+                    postcode: orderData.billing.postcode,
+                    country: orderData.billing.country,
+                    phone: orderData.billing.phone,
+                  },
+                  shipping: {
+                    first_name: orderData.shipping.first_name,
+                    last_name: orderData.shipping.last_name,
+                    address_1: orderData.shipping.address_1,
+                    address_2: orderData.shipping.address_2,
+                    city: orderData.shipping.city,
+                    state: orderData.shipping.state,
+                    postcode: orderData.shipping.postcode,
+                    country: orderData.shipping.country,
+                    phone: orderData.shipping.phone,
+                  },
+                  line_items: orderData.line_items.map((item: any) => ({
+                    id: item.id,
+                    name: item.name,
+                    quantity: item.quantity,
+                    price: item.price,
+                    image: {
+                      src: item.image?.src || "",
+                    },
+                  })),
+                  payment_method: orderData.payment_method,
+                  transaction_id: orderData.transaction_id,
+                };
+                setOrderDetails(formattedOrder);
+              }
             }
           }
         }
@@ -125,12 +121,35 @@ export default function ViewOrder() {
       }
     });
 
-    return () => unsubscribe(); // Cleanup subscription
-  }, [router]);
+    return () => unsubscribe();
+  }, [router, orderNumber]);
 
   const handleGoBack = () => {
-    router.back(); // Navigates to the previous page
+    router.back();
   };
+
+  async function getOrdersDetails(OrderID: string) {
+    try {
+      if (!OrderID) {
+        console.log("OrderID is required");
+        return null;
+      }
+
+      const response = await axios.get("/api/trackorder", {
+        params: { id: OrderID },
+      });
+      if (response.data && response.data.id) {
+        console.log("Order details:", response.data);
+        return response.data;
+      } else {
+        console.log("Invalid response data:", response.data);
+        return null;
+      }
+    } catch (error: any) {
+      console.error("Error fetching customer orders:", error.message);
+      return null;
+    }
+  }
 
   async function getOrders(CustomerID: string) {
     try {
@@ -138,14 +157,12 @@ export default function ViewOrder() {
         console.log("CustomerID is required");
         return;
       }
-
       const response = await axios.get("/api/getcustomerorders", {
         params: { customer_id: CustomerID },
       });
 
       if (Array.isArray(response.data)) {
-        setOrders(response.data); // Set the orders state
-        console.log("API Response", response.data);
+        setOrders(response.data);
       } else {
         console.log("Invalid response data");
       }
@@ -185,13 +202,13 @@ export default function ViewOrder() {
         <div className="flex items-center pt-4">
           <Button
             onClick={handleGoBack}
-            className=" h-4 text-sm text-white dark:text-black  mt-2 cursor-pointer bg-transparent"
+            className="h-4 text-sm text-white dark:text-black mt-2 cursor-pointer bg-transparent"
           >
             {" "}
             &lt; &nbsp; <span className="underline">Order History</span>
           </Button>
         </div>
-        <OrderTracking order={mockOrder} />
+        {orderDetails && <OrderTracking order={orderDetails} />}
       </div>
     </div>
   );
