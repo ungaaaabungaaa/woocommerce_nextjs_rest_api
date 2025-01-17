@@ -11,7 +11,6 @@ import { Package, User } from "lucide-react";
 
 function UserAccount() {
   const [mounted, setMounted] = useState(false);
-  const { theme } = useTheme();
   const [CustomerName, setCustomerName] = useState<string | null>(null);
   const [CustomerLastName, setCustomerLastName] = useState<string | null>(null);
   const [CustomerPhone, setCustomerPhone] = useState<string | null>(null);

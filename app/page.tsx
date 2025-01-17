@@ -35,9 +35,9 @@ export default function Home() {
   );
 
   // view Order Page
-
   // autofill in the checkout if user authenticated
   // if user authenticated take them to authenticated checkout route
+
   // variation selections colors
   // on hover add border - b
   // add in the heart icon for the cards & console log the on clicked added to the cart
