@@ -37,6 +37,7 @@ import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { wishlistCount } from "@/helper/wishlistHelper";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -47,17 +48,34 @@ export default function Nav_bar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [wishlistItemCount, setWishlistItemCount] = useState(0);
 
   useEffect(() => {
-    setMounted(true); // Set the component as mounted
+    setMounted(true);
+    setWishlistItemCount(wishlistCount());
+
+    // Add event listener for storage changes
+    const handleStorageChange = () => {
+      setWishlistItemCount(wishlistCount());
+    };
+
+    window.addEventListener("storage", handleStorageChange);
 
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsAuthenticated(!!user); // Update authentication state
+      setIsAuthenticated(!!user);
     });
 
-    // Cleanup subscription on unmount
-    return () => unsubscribe();
+    // Cleanup subscriptions on unmount
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+      unsubscribe();
+    };
   }, []);
+
+  // Update wishlist count when component mounts and after any navigation
+  useEffect(() => {
+    setWishlistItemCount(wishlistCount());
+  }, [pathname]);
 
   const handleSearchClick = () => {
     if (pathname === "/search") {
@@ -69,6 +87,10 @@ export default function Nav_bar() {
 
   const handleCartClick = () => {
     router.push("/cart");
+  };
+
+  const handleWishlistClick = () => {
+    router.push("/wishlist");
   };
 
   const handleLogoClick = () => {
@@ -195,7 +217,6 @@ export default function Nav_bar() {
                     key={menu.name}
                     className="text-white hover:font-bold dark:text-black"
                     onMouseEnter={() => setVisibleMegaMenu(menu.name)}
-                    // onMouseLeave={() => setVisibleMegaMenu("")}
                   >
                     <Link href="#">{menu.name}&apos;s</Link>
                   </NavbarItem>
@@ -222,16 +243,18 @@ export default function Nav_bar() {
               )}
 
               <Badge
-                content={0}
+                content={wishlistItemCount}
                 className="border-none"
                 shape="circle"
                 color="danger"
               >
-                <Heart className="h-5 cursor-pointer text-white dark:text-black"></Heart>
+                <Heart
+                  onClick={handleWishlistClick}
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                />
               </Badge>
 
               <Badge
-                onClick={handleCartClick}
                 content={cartCount}
                 className="border-none"
                 shape="circle"
