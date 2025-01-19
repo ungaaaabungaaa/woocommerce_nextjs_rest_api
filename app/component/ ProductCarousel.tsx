@@ -69,13 +69,13 @@ const ProductCard = ({ product }: ProductCardProps) => {
           className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
         >
           <Image
-            src={product.image}
+            src={product.image || "/placeholder.svg"}
             alt={product.title}
             fill
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
-            src={product.hoverimage}
+            src={product.hoverimage || "/placeholder.svg"}
             alt={`${product.title} hover`}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
@@ -208,12 +208,14 @@ const ProductCarousel = () => {
         <div className="flex items-center space-x-2">
           <button
             onClick={() => scrollCarousel("left")}
+            aria-label="Scroll left"
             className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
           >
             <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
           </button>
           <button
             onClick={() => scrollCarousel("right")}
+            aria-label="Scroll right"
             className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
           >
             <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
@@ -224,6 +226,7 @@ const ProductCarousel = () => {
         <div
           ref={carouselRef}
           className="flex overflow-x-auto scrollbar-hide gap-0.5 p-4"
+          aria-label="Product carousel"
         >
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />

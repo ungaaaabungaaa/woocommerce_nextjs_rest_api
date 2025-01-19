@@ -41,15 +41,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     router.push(`/product/${productId}`);
   };
 
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-    action: () => void
-  ) => {
-    if (event.key === "Enter" || event.key === " ") {
-      action();
-    }
-  };
-
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
     const regular = parseFloat(regularPrice);
     const sale = parseFloat(salePrice);
@@ -59,42 +50,41 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Card
-      role="button"
-      tabIndex={0}
-      aria-label={`View product: ${product.title}`}
+      isPressable
       onPress={() => ViewProduct(product.id)}
-      onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
       shadow="none"
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     >
       <CardBody onClick={() => ViewProduct(product.id)}>
-        <div
-          role="img"
-          aria-label={`Image of ${product.title}`}
-          className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
-        >
+        <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
           <Image
-            src={product.image}
+            src={product.image || "/placeholder.svg"}
             alt={product.title}
             fill
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
-            src={product.hoverimage}
+            src={product.hoverimage || "/placeholder.svg"}
             alt={`${product.title} hover`}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          <div className="absolute right-3 top-3 z-10" role="wishlist">
-            <span className="bg-white  rounded-full p-3 text-sm font-medium flex items-center justify-center ">
+          <div className="absolute right-3 top-3 z-10">
+            <button
+              aria-label="Add to wishlist"
+              className="bg-white rounded-full p-3 text-sm font-medium flex items-center justify-center"
+            >
               <Heart className="w-3 h-3 text-gray-600" />
-            </span>
+            </button>
           </div>
 
           {product.sale_price && product.regular_price && (
-            <div className="absolute left-2 bottom-2 z-10" role="status">
-              <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+            <div className="absolute left-2 bottom-2 z-10">
+              <span
+                aria-label={`${calculateDiscount(product.regular_price, product.sale_price)}% off`}
+                className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center"
+              >
                 -{calculateDiscount(product.regular_price, product.sale_price)}%
               </span>
             </div>
@@ -141,7 +131,6 @@ const ProductCarouselCategories = ({
   const [error, setError] = useState<string | null>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
 
-  // HTML sanitization function
   const sanitizeHTML = (html: string) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent || "";
@@ -153,7 +142,6 @@ const ProductCarouselCategories = ({
         `${process.env.NEXT_PUBLIC_SITE_URL}/api/getproduct`
       );
       const fetchedProducts = response.data.products
-        // Filter products based on the provided category
         .filter((product: any) =>
           product.categories.some((cat: any) => cat.slug === category)
         )
@@ -214,19 +202,21 @@ const ProductCarouselCategories = ({
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
         <h2
           className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans"
-          aria-label={`Products in ${category} category`}
+          id={`category-${category}`}
         >
           {category}
         </h2>
         <div className="flex items-center space-x-2">
           <button
             onClick={() => scrollCarousel("left")}
+            aria-label="Scroll left"
             className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
           >
             <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
           </button>
           <button
             onClick={() => scrollCarousel("right")}
+            aria-label="Scroll right"
             className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
           >
             <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
@@ -237,10 +227,10 @@ const ProductCarouselCategories = ({
         <div
           ref={carouselRef}
           className="flex overflow-x-auto pb-4 scrollbar-hide bg-black dark:bg-white"
-          role="list"
+          aria-labelledby={`category-${category}`}
         >
           {products.map((product) => (
-            <div key={product.id} role="listitem" className="mr-4 last:mr-0">
+            <div key={product.id} className="mr-4 last:mr-0">
               <ProductCard product={product} />
             </div>
           ))}
