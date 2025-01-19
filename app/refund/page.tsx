@@ -69,9 +69,9 @@ export default function RefundPage() {
 
   return (
     <>
-      <div className="min-h-screen bg-black text-white dark:bg-white dark:text-black">
+      <div className="min-h-screen  bg-black text-white dark:bg-white dark:text-black">
         <ToastContainer />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-4 py-8 w-full max-w-7xl">
           <Card
             shadow="none"
             className="bg-black text-white max-w-2xl mx-auto dark:bg-white dark:text-black"
@@ -166,9 +166,9 @@ export default function RefundPage() {
             </CardFooter>
           </Card>
         </main>
+        <br />
+        <br />
       </div>
-      <br />
-      <br />
     </>
   );
 }

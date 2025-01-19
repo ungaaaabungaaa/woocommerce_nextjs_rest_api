@@ -72,12 +72,12 @@ const FAQPage = () => {
     <div
       className={`min-h-screen flex items-center ${theme === "dark" ? "bg-black" : "bg-white"}`}
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 w-full max-w-7xl">
         <div className="flex justify-between mb-6">
           <h1
             className={`text-4xl font-bold ${theme === "dark" ? "text-white" : "text-black"}`}
           >
-            Frequently Asked Questions
+            FAQ
           </h1>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

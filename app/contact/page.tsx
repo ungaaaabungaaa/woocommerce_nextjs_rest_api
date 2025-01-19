@@ -4,8 +4,8 @@ import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 
 export default function ContactPage() {
   return (
-    <div className="bg-black dark:bg-white">
-      <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full">
+    <div className="bg-black dark:bg-white w-full flex align-middle items-center">
+      <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full w-full max-w-7xl">
         <br></br>
         <br></br>
         <br></br>

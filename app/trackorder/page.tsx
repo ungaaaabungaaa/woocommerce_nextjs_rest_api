@@ -67,167 +67,173 @@ export default function TrackOrder() {
   return (
     <>
       <ToastContainer />
-      <div className=" bg-black text-white dark:bg-white dark:text-black">
-        <main className="container mx-auto px-4 py-8">
-          <Card
-            shadow="none"
-            className=" bg-black text-white dark:bg-white dark:text-black  max-w-2xl mx-auto"
-          >
-            <CardHeader className="flex flex-col items-center space-y-4">
-              <Package size={48} className="text-white dark:text-black" />
-              <h1 className="text-3xl font-bold">Track Your Order</h1>
-              <p className="text-center text-white dark:text-black">
-                Enter your order number to see the details and status of your
-                order.
-              </p>
-            </CardHeader>
+      <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black">
+        <div className=" bg-black text-white dark:bg-white dark:text-black w-full max-w-7xl">
+          <main className="container mx-auto px-4 py-8">
+            <Card
+              shadow="none"
+              className=" bg-black text-white dark:bg-white dark:text-black  max-w-2xl mx-auto"
+            >
+              <CardHeader className="flex flex-col items-center space-y-4">
+                <Package size={48} className="text-white dark:text-black" />
+                <h1 className="text-3xl font-bold">Track Your Order</h1>
+                <p className="text-center text-white dark:text-black">
+                  Enter your order number to see the details and status of your
+                  order.
+                </p>
+              </CardHeader>
 
-            <Divider className="my-4" />
+              <Divider className="my-4" />
 
-            <CardBody>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div>
-                  <label
-                    htmlFor="order-number"
-                    className="block text-sm font-medium text-white dark:text-black"
+              <CardBody>
+                <form onSubmit={handleSubmit} className="space-y-6">
+                  <div>
+                    <label
+                      htmlFor="order-number"
+                      className="block text-sm font-medium text-white dark:text-black"
+                    >
+                      Order Number
+                    </label>
+                    <Input
+                      id="order-number"
+                      name="orderNumber"
+                      type="text"
+                      isClearable
+                      size="lg"
+                      isRequired
+                      className="mt-1 w-full bg-black text-white dark:bg-white dark:text-black"
+                      placeholder="Enter your Order Number"
+                      value={orderNumber}
+                      onChange={(e) => setOrderNumber(e.target.value)}
+                    />
+                  </div>
+
+                  <Button
+                    type="submit"
+                    className="w-2/4 lg:w-1/4 bg-white text-black  dark:bg-black dark:text-white py-2 px-4 rounded-full e"
+                    disabled={loading}
                   >
-                    Order Number
-                  </label>
-                  <Input
-                    id="order-number"
-                    name="orderNumber"
-                    type="text"
-                    isClearable
-                    size="lg"
-                    isRequired
-                    className="mt-1 w-full bg-black text-white dark:bg-white dark:text-black"
-                    placeholder="Enter your Order Number"
-                    value={orderNumber}
-                    onChange={(e) => setOrderNumber(e.target.value)}
-                  />
-                </div>
+                    {loading ? "Loading..." : "Track Order"}
+                  </Button>
+                </form>
 
-                <Button
-                  type="submit"
-                  className="w-2/4 lg:w-1/4 bg-white text-black  dark:bg-black dark:text-white py-2 px-4 rounded-full e"
-                  disabled={loading}
-                >
-                  {loading ? "Loading..." : "Track Order"}
-                </Button>
-              </form>
+                {error && (
+                  <div className="mt-4 p-4 rounded bg-red-800">{error}</div>
+                )}
 
-              {error && (
-                <div className="mt-4 p-4 rounded bg-red-800">{error}</div>
-              )}
-
-              {orderDetails && (
-                <div className="mt-6 space-y-6">
-                  <h2 className="text-2xl font-semibold">Order Details</h2>
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="flex items-center space-x-2">
-                      <Package className="w-6 h-6" />
-                      <div>
-                        <p className="text-gray-400">Order Number</p>
-                        <p className="font-semibold">{orderDetails.number}</p>
+                {orderDetails && (
+                  <div className="mt-6 space-y-6">
+                    <h2 className="text-2xl font-semibold">Order Details</h2>
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center space-x-2">
+                        <Package className="w-6 h-6" />
+                        <div>
+                          <p className="text-gray-400">Order Number</p>
+                          <p className="font-semibold">{orderDetails.number}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Clock className="w-6 h-6" />
+                        <div>
+                          <p className="text-gray-400">Order Date</p>
+                          <p className="font-semibold">
+                            {new Date(
+                              orderDetails.date_created
+                            ).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Truck className="w-6 h-6" />
+                        <div>
+                          <p className="text-gray-400">Status</p>
+                          <p className="font-semibold capitalize">
+                            {orderDetails.status}
+                          </p>
+                        </div>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <DollarSign className="w-6 h-6" />
+                        <div>
+                          <p className="text-gray-400">Total</p>
+                          <p className="font-semibold">${orderDetails.total}</p>
+                        </div>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Clock className="w-6 h-6" />
-                      <div>
-                        <p className="text-gray-400">Order Date</p>
-                        <p className="font-semibold">
-                          {new Date(
-                            orderDetails.date_created
-                          ).toLocaleDateString()}
-                        </p>
-                      </div>
+
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">Items</h3>
+                      <ul className="space-y-2">
+                        {orderDetails.line_items.map(
+                          (item: any, index: number) => (
+                            <li
+                              key={index}
+                              className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between"
+                            >
+                              <span>{item.name}</span>
+                              <span>
+                                Qty: {item.quantity} - ${item.total}
+                              </span>
+                            </li>
+                          )
+                        )}
+                      </ul>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <Truck className="w-6 h-6" />
-                      <div>
-                        <p className="text-gray-400">Status</p>
-                        <p className="font-semibold capitalize">
-                          {orderDetails.status}
-                        </p>
-                      </div>
+
+                    <div>
+                      <h3 className="text-xl font-semibold mb-2">
+                        Shipping Address
+                      </h3>
+                      <p className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg">
+                        {orderDetails.billing.first_name}{" "}
+                        {orderDetails.billing.last_name}
+                        <br />
+                        {orderDetails.billing.address_1}
+                        <br />
+                        {orderDetails.billing.city},{" "}
+                        {orderDetails.billing.state}{" "}
+                        {orderDetails.billing.postcode}
+                        <br />
+                        {orderDetails.billing.country}
+                      </p>
                     </div>
-                    <div className="flex items-center space-x-2">
-                      <DollarSign className="w-6 h-6" />
-                      <div>
-                        <p className="text-gray-400">Total</p>
-                        <p className="font-semibold">${orderDetails.total}</p>
-                      </div>
+
+                    <div className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between items-center">
+                      <span className="font-semibold">Shipping Total</span>
+                      <span>${orderDetails.shipping_total}</span>
                     </div>
                   </div>
+                )}
+              </CardBody>
 
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">Items</h3>
-                    <ul className="space-y-2">
-                      {orderDetails.line_items.map(
-                        (item: any, index: number) => (
-                          <li
-                            key={index}
-                            className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between"
-                          >
-                            <span>{item.name}</span>
-                            <span>
-                              Qty: {item.quantity} - ${item.total}
-                            </span>
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h3 className="text-xl font-semibold mb-2">
-                      Shipping Address
-                    </h3>
-                    <p className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg">
-                      {orderDetails.billing.first_name}{" "}
-                      {orderDetails.billing.last_name}
-                      <br />
-                      {orderDetails.billing.address_1}
-                      <br />
-                      {orderDetails.billing.city}, {orderDetails.billing.state}{" "}
-                      {orderDetails.billing.postcode}
-                      <br />
-                      {orderDetails.billing.country}
+              <CardFooter>
+                <div className="w-full space-y-4">
+                  <div className="flex items-center">
+                    <ShieldCheck className="text-white dark:text-black mr-2" />
+                    <p className="text-sm text-gray-300 dark:text-black">
+                      Your order information is secure and protected.
                     </p>
                   </div>
-
-                  <div className="bg-white text-black dark:bg-black dark:text-white p-3 rounded-lg flex justify-between items-center">
-                    <span className="font-semibold">Shipping Total</span>
-                    <span>${orderDetails.shipping_total}</span>
+                  <div className="flex items-center">
+                    <HelpCircle className="text-white dark:text-black mr-2" />
+                    <p className="text-sm dark:text-black text-gray-300">
+                      Need help? Contact our support team at{" "}
+                      <a
+                        href="mailto:support@example.com"
+                        className="underline"
+                      >
+                        support@example.com
+                      </a>
+                    </p>
                   </div>
                 </div>
-              )}
-            </CardBody>
-
-            <CardFooter>
-              <div className="w-full space-y-4">
-                <div className="flex items-center">
-                  <ShieldCheck className="text-white dark:text-black mr-2" />
-                  <p className="text-sm text-gray-300 dark:text-black">
-                    Your order information is secure and protected.
-                  </p>
-                </div>
-                <div className="flex items-center">
-                  <HelpCircle className="text-white dark:text-black mr-2" />
-                  <p className="text-sm dark:text-black text-gray-300">
-                    Need help? Contact our support team at{" "}
-                    <a href="mailto:support@example.com" className="underline">
-                      support@example.com
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </CardFooter>
-          </Card>
-        </main>
+              </CardFooter>
+            </Card>
+          </main>
+        </div>
+        <br />
+        <br />
       </div>
-      <br />
-      <br />
     </>
   );
 }

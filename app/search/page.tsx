@@ -101,7 +101,7 @@ export default function ProductSearch() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start pt-20 bg-black dark:bg-white">
       <ToastContainer />
-      <div className="w-full max-w-7xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg">
+      <div className="w-full max-w-7xl p-2 bg-black dark:bg-white flex items-center justify-center rounded-lg mx-auto px-4 py-8 ">
         <div className="space-y-4 w-full">
           {/* Search Form */}
           <form

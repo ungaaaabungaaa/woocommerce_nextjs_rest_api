@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 const TermsAndConditions = () => {
   return (
     <div className="terms-and-conditions overflow-hidden text-white dark:text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <br></br>
         <br></br>
         <br></br>

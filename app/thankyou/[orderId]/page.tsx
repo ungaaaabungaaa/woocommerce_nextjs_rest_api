@@ -106,7 +106,7 @@ export default function ThankYouPage() {
       <ToastContainer />
       <Card
         shadow="none"
-        className="w-full max-w-4xl bg-black text-white dark:bg-white dark:text-black"
+        className="w-full max-w-7xl bg-black text-white dark:bg-white dark:text-black"
       >
         <CardHeader className="text-center flex flex-col items-center justify-center p-6  rounded-t-xl">
           <div className="mx-auto mb-4 w-60 h-60 flex items-center justify-center">
