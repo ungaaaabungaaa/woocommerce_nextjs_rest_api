@@ -479,25 +479,23 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
                   <Button
                     onClick={handleAddToCart}
-                    className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center"
+                    className="w-full md:flex-1 bg-red text-white  rounded-full h-12 flex items-center justify-center"
                   >
-                    <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
+                    <ShoppingCart className="mr-2 h-12 w-4" /> Add To Bag
                   </Button>
                 </div>
 
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 ">
-                  <Button
-                    className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center ${
-                      isInWishlist
-                        ? "bg-red-500 text-white"
-                        : "bg-white text-black"
-                    }`}
-                    onClick={handleWishlistToggle}
-                  >
-                    <Heart className="mr-2 h-6 w-6" />
-                    {isInWishlist ? "Added to Wishlist" : "Add to Wishlist"}
-                  </Button>
-                </div>
+                <Button
+                  className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
+                  onClick={handleWishlistToggle}
+                >
+                  {/* Conditional Heart Icon */}
+                  <Heart
+                    className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+                  />
+                  {isInWishlist ? "Added To Wishlist" : "Add To Wishlist"}
+                </Button>
+
                 <div className="flex space-x-4 text-white dark:text-black">
                   <Accordion
                     defaultExpandedKeys={["1"]}
