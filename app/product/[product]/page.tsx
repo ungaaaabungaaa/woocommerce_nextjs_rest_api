@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { ShoppingCart, Share2 } from "lucide-react";
+import { ShoppingCart, Share2, Heart } from "lucide-react";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
 import { Accordion, AccordionItem } from "@nextui-org/accordion";
@@ -431,7 +431,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     ))}
                   </div>
                 )}
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 ">
                   <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
                     <Button
                       size="lg"
@@ -457,6 +457,12 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center"
                   >
                     <ShoppingCart className="mr-2 h-12 w-4" /> Add to Cart
+                  </Button>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 ">
+                  <Button className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center">
+                    <Heart className="mr-2 h-12 w-4" /> Add to WishList
                   </Button>
                 </div>
                 <div className="flex space-x-4 text-white dark:text-black">
