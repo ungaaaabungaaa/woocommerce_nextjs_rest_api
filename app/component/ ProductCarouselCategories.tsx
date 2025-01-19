@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import { Heart } from "lucide-react";
 
 interface Product {
   id: string;
@@ -85,13 +86,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          {/* {product.isNew && (
-            <div className="absolute right-2 top-2 z-10" role="status">
-              <span className="bg-white text-black rounded-full p-5 text-sm font-medium flex items-center justify-center w-8 h-8">
-                New
-              </span>
-            </div>
-          )} */}
+          <div className="absolute right-3 top-3 z-10" role="wishlist">
+            <span className="bg-white  rounded-full p-3 text-sm font-medium flex items-center justify-center ">
+              <Heart className="w-3 h-3 text-gray-600" />
+            </span>
+          </div>
 
           {product.sale_price && product.regular_price && (
             <div className="absolute left-2 bottom-2 z-10" role="status">
