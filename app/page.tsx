@@ -34,10 +34,8 @@ export default function Home() {
     </section>
   );
 
-  // autofill in the checkout if user authenticated
+  // add in the heart icon for the cards & console log the on clicked added to the cart
   // wishlist routes setup & Implementation https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349, Store Data , Retrive Data , Show Data thats all
   // pop up icons
-  // add in the heart icon for the cards & console log the on clicked added to the cart
   // alignments for the cards and check once all the pages 7xl max width thats all
-  // font updates
 }
