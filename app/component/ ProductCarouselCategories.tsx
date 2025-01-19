@@ -11,6 +11,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { Heart } from "lucide-react";
+import {
+  storeWishlist,
+  checkWishlist,
+  removeWishlistItem,
+} from "@/helper/wishlistHelper";
 
 interface Product {
   id: string;
@@ -36,6 +41,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
   const router = useRouter();
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [productId, setProductId] = useState<number | null>(null);
+
+  // Set productId when the product id changes
+  useEffect(() => {
+    if (product.id) {
+      setProductId(Number(product.id)); // Ensure it is a number
+      // Check if the product is already in the wishlist
+      setIsInWishlist(checkWishlist(product.id as any));
+    }
+  }, [product.id]);
 
   const ViewProduct = async (productId: string) => {
     router.push(`/product/${productId}`);
@@ -48,35 +64,45 @@ const ProductCard = ({ product }: ProductCardProps) => {
     return Math.round(discount);
   };
 
+  const handleWishlistToggle = () => {
+    if (productId === null) return;
+    if (isInWishlist) {
+      removeWishlistItem(productId);
+      setIsInWishlist(false);
+    } else {
+      storeWishlist(productId);
+      setIsInWishlist(true);
+    }
+  };
+
   return (
     <Card
       isPressable
-      onPress={() => ViewProduct(product.id)}
       shadow="none"
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     >
-      <CardBody onClick={() => ViewProduct(product.id)}>
+      <CardBody>
         <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
           <Image
             src={product.image || "/placeholder.svg"}
             alt={product.title}
+            onClick={() => ViewProduct(product.id)}
             fill
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
             src={product.hoverimage || "/placeholder.svg"}
             alt={`${product.title} hover`}
+            onClick={() => ViewProduct(product.id)}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          <div className="absolute right-3 top-3 z-10">
-            <button
-              aria-label="Add to wishlist"
-              className="bg-white rounded-full p-3 text-sm font-medium flex items-center justify-center"
-            >
-              <Heart className="w-3 h-3 text-gray-600" />
-            </button>
+          <div className="absolute right-3 top-3 z-10 bg-white  rounded-full p-3">
+            <Heart
+              onClick={handleWishlistToggle}
+              className={`h-3 w-3 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+            />
           </div>
 
           {product.sale_price && product.regular_price && (
