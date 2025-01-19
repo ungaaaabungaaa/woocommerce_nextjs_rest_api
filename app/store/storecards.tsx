@@ -1,7 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardBody } from "@nextui-org/card";
+import {
+  storeWishlist,
+  checkWishlist,
+  removeWishlistItem,
+} from "@/helper/wishlistHelper";
+import { Heart } from "lucide-react";
 
 interface Product {
   id: string;
@@ -17,14 +23,46 @@ interface Product {
   productId: string;
   type: string;
 }
+
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
+
+  // Track wishlist status for each product
+  const [wishlistStatus, setWishlistStatus] = useState<{
+    [key: string]: boolean;
+  }>({});
+
+  // Set initial wishlist status for each product
+  useEffect(() => {
+    const initialWishlistStatus: { [key: string]: boolean } = {};
+    safeProducts.forEach((product) => {
+      if (product.id) {
+        initialWishlistStatus[product.id] = checkWishlist(product.id as any);
+      }
+    });
+    setWishlistStatus(initialWishlistStatus);
+  }, [safeProducts]);
+
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
     const regular = parseFloat(regularPrice);
     const sale = parseFloat(salePrice);
     const discount = ((regular - sale) / regular) * 100;
     return Math.round(discount);
   };
+
+  const handleWishlistToggle = (productId: string) => {
+    if (wishlistStatus[productId]) {
+      removeWishlistItem(productId as any);
+      setWishlistStatus((prevStatus) => ({
+        ...prevStatus,
+        [productId]: false,
+      }));
+    } else {
+      storeWishlist(productId as any);
+      setWishlistStatus((prevStatus) => ({ ...prevStatus, [productId]: true }));
+    }
+  };
+
   return (
     <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
       {safeProducts.map((product) => (
@@ -34,8 +72,8 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
           className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
         >
           <CardBody>
-            <Link href={`/product/${product.id}`} passHref>
-              <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+            <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+              <Link href={`/product/${product.id}`} passHref>
                 <Image
                   src={product.image}
                   alt={product.title}
@@ -48,21 +86,28 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                   fill
                   className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                 />
+              </Link>
 
-                {product.sale_price && product.regular_price && (
-                  <div className="absolute left-2 bottom-2 z-10" role="status">
-                    <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
-                      -
-                      {calculateDiscount(
-                        product.regular_price,
-                        product.sale_price
-                      )}
-                      %
-                    </span>
-                  </div>
-                )}
+              <div className="absolute right-3 top-3 z-10 bg-white rounded-full p-3">
+                <Heart
+                  onClick={() => handleWishlistToggle(product.id)}
+                  className={`h-3 w-3 ${wishlistStatus[product.id] ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+                />
               </div>
-            </Link>
+
+              {product.sale_price && product.regular_price && (
+                <div className="absolute left-2 bottom-2 z-10" role="status">
+                  <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                    -
+                    {calculateDiscount(
+                      product.regular_price,
+                      product.sale_price
+                    )}
+                    %
+                  </span>
+                </div>
+              )}
+            </div>
 
             <div className="flex justify-between items-center mt-2">
               {product.sale_price && product.regular_price ? (
