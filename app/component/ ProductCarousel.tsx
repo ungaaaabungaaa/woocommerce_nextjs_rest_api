@@ -8,6 +8,11 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
+import {
+  storeWishlist,
+  checkWishlist,
+  removeWishlistItem,
+} from "@/helper/wishlistHelper";
 
 interface Product {
   id: string;
@@ -30,6 +35,17 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const router = useRouter();
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [productId, setProductId] = useState<number | null>(null);
+
+  // Set productId when the product id changes
+  useEffect(() => {
+    if (product.id) {
+      setProductId(Number(product.id)); // Ensure it is a number
+      // Check if the product is already in the wishlist
+      setIsInWishlist(checkWishlist(product.id as any));
+    }
+  }, [product.id]);
 
   const ViewProduct = (productId: string) => {
     console.log(productId);
@@ -50,6 +66,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
     const sale = parseFloat(salePrice);
     const discount = ((regular - sale) / regular) * 100;
     return Math.round(discount);
+  };
+
+  const handleWishlistToggle = () => {
+    if (productId === null) return;
+    if (isInWishlist) {
+      removeWishlistItem(productId);
+      setIsInWishlist(false);
+    } else {
+      storeWishlist(productId);
+      setIsInWishlist(true);
+    }
   };
 
   return (
@@ -81,7 +108,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
               aria-label="Add to wishlist"
               className="bg-white rounded-full p-3 text-sm font-medium flex items-center justify-center"
             >
-              <Heart className="w-3 h-3 text-gray-600" />
+              <Heart
+                className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+              />
             </button>
           </div>
 
