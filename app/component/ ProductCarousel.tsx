@@ -83,35 +83,32 @@ const ProductCard = ({ product }: ProductCardProps) => {
     <Card
       tabIndex={0}
       aria-label={`View product: ${product.title}`}
-      onPress={() => ViewProduct(product.id)}
       onKeyDown={(e) => handleKeyDown(e, () => ViewProduct(product.id))}
       shadow="none"
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     >
-      <CardBody onClick={() => ViewProduct(product.id)}>
+      <CardBody>
         <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
           <Image
             src={product.image || "/placeholder.svg"}
             alt={product.title}
             fill
+            onClick={() => ViewProduct(product.id)}
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
           />
           <Image
             src={product.hoverimage || "/placeholder.svg"}
             alt={`${product.title} hover view`}
+            onClick={() => ViewProduct(product.id)}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          <div className="absolute right-3 top-3 z-10">
-            <button
-              aria-label="Add to wishlist"
-              className="bg-white rounded-full p-3 text-sm font-medium flex items-center justify-center"
-            >
-              <Heart
-                className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
-              />
-            </button>
+          <div className="absolute right-3 top-3 z-10 bg-white  rounded-full p-3">
+            <Heart
+              onClick={handleWishlistToggle}
+              className={`h-3 w-3 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+            />
           </div>
 
           {product.sale_price && product.regular_price && (
