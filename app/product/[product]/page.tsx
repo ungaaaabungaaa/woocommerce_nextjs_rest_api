@@ -16,6 +16,11 @@ import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import { PopUpCart } from "@/app/component/popupcart";
 import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
 import ProductGallery from "./productGallery";
+import {
+  storeWishlist,
+  checkWishlist,
+  removeWishlistItem,
+} from "@/helper/wishlistHelper";
 
 interface Attribute {
   id: number;
@@ -69,6 +74,13 @@ interface Product {
   };
 }
 
+interface GalleryImage {
+  id: string; // Added unique identifier
+  src: string;
+  name: string;
+  alt: string;
+}
+
 const handleShare = () => {
   if (typeof window !== "undefined") {
     navigator.clipboard.writeText(window.location.href);
@@ -79,13 +91,6 @@ const handleShare = () => {
     });
   }
 };
-
-interface GalleryImage {
-  id: string; // Added unique identifier
-  src: string;
-  name: string;
-  alt: string;
-}
 
 const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const [product, setProduct] = useState<Product | null>(null);
@@ -101,6 +106,8 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
   const { theme, setTheme } = useTheme(); // Access current theme and theme setter
+  const [isInWishlist, setIsInWishlist] = useState(false);
+  const [productId, setProductId] = useState<number | null>(null);
 
   // Modify the mapProductImages function to include unique IDs
   function mapProductImages(images: any[]) {
@@ -135,6 +142,13 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       .then((res) => res.json())
       .then((data: Product) => {
         setProduct(data);
+        // Set product ID
+        if (data.id) {
+          setProductId(Number(data.id)); // Ensure it is a number
+          // Check if the product is already in the wishlist
+          setIsInWishlist(checkWishlist(data.id));
+        }
+
         if (data.images) {
           const mapped = data.images.map((image, index) => ({
             id: `${params.product}-image-${index}`, // Create unique ID using product ID and index
@@ -175,6 +189,17 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         }
       });
   }, [params.product]);
+
+  const handleWishlistToggle = () => {
+    if (productId === null) return;
+    if (isInWishlist) {
+      removeWishlistItem(productId);
+      setIsInWishlist(false);
+    } else {
+      storeWishlist(productId);
+      setIsInWishlist(true);
+    }
+  };
 
   const handleVariationChange = (attributeName: string, option: string) => {
     // Update selected options
@@ -461,8 +486,16 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 </div>
 
                 <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 ">
-                  <Button className="w-full md:flex-1 bg-white dark:bg-black  rounded-full h-12 flex items-center justify-center">
-                    <Heart className="mr-2 h-12 w-4" /> Add to WishList
+                  <Button
+                    className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center ${
+                      isInWishlist
+                        ? "bg-red-500 text-white"
+                        : "bg-white text-black"
+                    }`}
+                    onClick={handleWishlistToggle}
+                  >
+                    <Heart className="mr-2 h-6 w-6" />
+                    {isInWishlist ? "Added to Wishlist" : "Add to Wishlist"}
                   </Button>
                 </div>
                 <div className="flex space-x-4 text-white dark:text-black">

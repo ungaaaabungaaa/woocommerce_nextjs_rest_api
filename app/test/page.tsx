@@ -9,14 +9,14 @@ import {
   wishlistCount,
 } from "@/helper/wishlistHelper";
 
-const TestPage = () => {
-  const [testId, setTestId] = useState("101"); // Example ID for testing
-  const [wishlist, setWishlist] = useState<string[]>([]); // Local state for displaying wishlist
-  const [isInWishlist, setIsInWishlist] = useState(false); // Local state to check if ID is in wishlist
-  const [count, setCount] = useState(0); // Wishlist count
+const TestPage: React.FC = () => {
+  const [testId, setTestId] = useState<number>(101); // Example ID for testing
+  const [wishlist, setWishlist] = useState<number[]>([]); // Local state for displaying wishlist
+  const [isInWishlist, setIsInWishlist] = useState<boolean>(false); // Local state to check if ID is in wishlist
+  const [count, setCount] = useState<number>(0); // Wishlist count
 
   // Update the wishlist from storage
-  const updateWishlist = () => {
+  const updateWishlist = (): void => {
     const currentWishlist = showWishlist();
     setWishlist(currentWishlist);
     setCount(wishlistCount());
@@ -24,31 +24,31 @@ const TestPage = () => {
   };
 
   // Handlers for each function
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = (): void => {
     storeWishlist(testId);
     console.log(`Added ID ${testId} to wishlist`);
     updateWishlist();
   };
 
-  const handleShowWishlist = () => {
+  const handleShowWishlist = (): void => {
     const currentWishlist = showWishlist();
     console.log("Wishlist Items:", currentWishlist);
     updateWishlist();
   };
 
-  const handleRemoveFromWishlist = () => {
+  const handleRemoveFromWishlist = (): void => {
     removeWishlistItem(testId);
     console.log(`Removed ID ${testId} from wishlist`);
     updateWishlist();
   };
 
-  const handleClearWishlist = () => {
+  const handleClearWishlist = (): void => {
     clearWishlist();
     console.log("Wishlist cleared");
     updateWishlist();
   };
 
-  const handleCheckWishlist = () => {
+  const handleCheckWishlist = (): void => {
     const isInWishlist = checkWishlist(testId);
     console.log(`Is ID ${testId} in wishlist?`, isInWishlist);
     updateWishlist();
@@ -61,10 +61,10 @@ const TestPage = () => {
         <label>
           Test ID:
           <input
-            type="text"
+            type="number"
             className="block text-sm font-medium bg-black dark:bg-white text-white dark:text-black mb-1"
             value={testId}
-            onChange={(e) => setTestId(e.target.value)}
+            onChange={(e) => setTestId(Number(e.target.value))}
             style={{ marginLeft: "10px" }}
           />
         </label>
