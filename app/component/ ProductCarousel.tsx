@@ -54,7 +54,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <Card
-      role="button"
       tabIndex={0}
       aria-label={`View product: ${product.title}`}
       onPress={() => ViewProduct(product.id)}
@@ -63,11 +62,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
       className="group relative bg-card border-muted min-w-[310px] rounded-lg flex flex-col cursor-pointer"
     >
       <CardBody onClick={() => ViewProduct(product.id)}>
-        <div
-          role="img"
-          aria-label={`Image of ${product.title}`}
-          className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group"
-        >
+        <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
           <Image
             src={product.image || "/placeholder.svg"}
             alt={product.title}
@@ -76,19 +71,25 @@ const ProductCard = ({ product }: ProductCardProps) => {
           />
           <Image
             src={product.hoverimage || "/placeholder.svg"}
-            alt={`${product.title} hover`}
+            alt={`${product.title} hover view`}
             fill
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          <div className="absolute right-3 top-3 z-10" role="wishlist">
-            <span className="bg-white  rounded-full p-3 text-sm font-medium flex items-center justify-center ">
+          <div className="absolute right-3 top-3 z-10">
+            <button
+              aria-label="Add to wishlist"
+              className="bg-white rounded-full p-3 text-sm font-medium flex items-center justify-center"
+            >
               <Heart className="w-3 h-3 text-gray-600" />
-            </span>
+            </button>
           </div>
 
           {product.sale_price && product.regular_price && (
-            <div className="absolute left-2 bottom-2 z-10" role="status">
+            <div
+              className="absolute left-2 bottom-2 z-10"
+              aria-label={`${calculateDiscount(product.regular_price, product.sale_price)}% off`}
+            >
               <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
                 -{calculateDiscount(product.regular_price, product.sale_price)}%
               </span>
@@ -226,6 +227,7 @@ const ProductCarousel = () => {
         <div
           ref={carouselRef}
           className="flex overflow-x-auto scrollbar-hide gap-0.5 p-4"
+          role="region"
           aria-label="Product carousel"
         >
           {products.map((product) => (
