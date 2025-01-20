@@ -34,8 +34,13 @@ export default function Home() {
     </section>
   );
 
-  // add in the heart icon for the cards & console log the on clicked added to the cart
-  // wishlist routes setup & Implementation https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349, Store Data , Retrive Data , Show Data thats all
-  // pop up icons
-  // alignments for the cards and check once all the pages 7xl max width thats all
+  // pop ups on the hover
+  // load wishlist data , cart data , account data
+  // wishlist route setup  https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349,
+  // wihslist page setup
+  // check all the alignments for every page once
+  // documentation & comments
+  // Simple Read Me File
+  // Compress the code and handover
+  // mixture of the font
 }
