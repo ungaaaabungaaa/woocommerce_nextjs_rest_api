@@ -10,6 +10,8 @@ import {
   removeWishlistItem,
 } from "@/helper/wishlistHelper";
 import axios from "axios";
+import ProductCarouselCategories from "../component/ ProductCarouselCategories";
+import { Button } from "@nextui-org/button";
 
 interface WishlistItem {
   id: number;
@@ -110,16 +112,18 @@ export default function WishlistPage() {
               Wishlist <span className="text-sm">({count} products)</span>
             </h1>
           </div>
-
           {wishlistProducts.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-xl">Your wishlist is empty</p>
-              <Link
-                href="/store"
-                className="text-blue-500 hover:underline mt-4 inline-block"
+            <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
+              <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
+                Empty Whislist
+              </p>
+              <br></br>
+              <Button
+                onClick={() => (window.location.href = "/")}
+                color="default"
               >
                 Continue Shopping
-              </Link>
+              </Button>
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
@@ -160,7 +164,7 @@ export default function WishlistPage() {
                   </div>
 
                   <div className="p-4">
-                    <div className="flex justify-between items-center">
+                    {/* <div className="flex justify-between items-center">
                       {product.sale_price && product.regular_price ? (
                         <div className="flex items-center">
                           <span className="text-gray-500 dark:text-gray-400 text-1xl line-through mr-2">
@@ -179,7 +183,7 @@ export default function WishlistPage() {
                           {product.price}
                         </span>
                       ) : null}
-                    </div>
+                    </div> */}
 
                     <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
                       {product.name}
@@ -189,7 +193,11 @@ export default function WishlistPage() {
               ))}
             </div>
           )}
+          <br></br>
+          <br></br>
         </main>
+        <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
+        <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
       </div>
     </div>
   );
