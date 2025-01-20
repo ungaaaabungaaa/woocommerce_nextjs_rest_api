@@ -36,8 +36,6 @@ export default function Home() {
 
   // pop ups on the hover
   // load wishlist data , cart data , account data
-  // wishlist route setup  https://clothvillage.com/wp-json/custom/v1/wishlist?ids=352,350,349,
-  // wihslist page setup
   // check all the alignments for every page once
   // documentation & comments
   // Simple Read Me File

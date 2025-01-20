@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import type React from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ShoppingCart, Share2, Heart } from "lucide-react";
 import { Button } from "@nextui-org/button";
@@ -164,27 +165,8 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             .then((res) => res.json())
             .then((variationsData: Variation[]) => {
               setVariations(variationsData);
-
-              // Initialize selected options
-              const initialOptions: Record<string, string> = {};
-              data.attributes.forEach((attr) => {
-                const availableOption = variationsData
-                  .find((v) => v.attributes.some((a) => a.name === attr.name))
-                  ?.attributes.find((a) => a.name === attr.name)?.option;
-                if (availableOption) {
-                  initialOptions[attr.name] = availableOption;
-                }
-              });
-              setSelectedOptions(initialOptions);
-
-              // Select the first variation that matches all initial attributes
-              const initialVariation = variationsData.find((variation) =>
-                variation.attributes.every(
-                  (attr) => initialOptions[attr.name] === attr.option
-                )
-              );
-
-              setSelectedVariation(initialVariation || null);
+              setSelectedOptions({});
+              setSelectedVariation(null);
             });
         }
       });
@@ -202,21 +184,25 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   };
 
   const handleVariationChange = (attributeName: string, option: string) => {
-    // Update selected options
-    const updatedSelectedOptions = {
+    const updatedOptions = {
       ...selectedOptions,
       [attributeName]: option,
     };
-    setSelectedOptions(updatedSelectedOptions);
+    setSelectedOptions(updatedOptions);
 
-    // Find a variation that matches ALL selected attributes
-    const newVariation = variations.find((variation) =>
+    // Find a variation that matches all selected attributes
+    const matchingVariation = variations.find((variation) =>
       variation.attributes.every(
-        (attr) => updatedSelectedOptions[attr.name] === attr.option
+        (attr) => updatedOptions[attr.name] === attr.option
       )
     );
 
-    setSelectedVariation(newVariation || null);
+    setSelectedVariation(matchingVariation || null);
+  };
+
+  const allVariationsSelected = () => {
+    if (product?.type !== "variable" || !product.attributes) return true;
+    return product.attributes.every((attr) => selectedOptions[attr.name]);
   };
 
   const handleAddToCart = () => {
@@ -422,35 +408,21 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                           {attr.name}
                         </label>
                         <div className="flex flex-wrap gap-2">
-                          {attr.options.map((option) => {
-                            const isAvailable = variations.some((variation) =>
-                              variation.attributes.every((varAttr) =>
-                                varAttr.name === attr.name
-                                  ? varAttr.option === option
-                                  : selectedOptions[varAttr.name] ===
-                                    varAttr.option
-                              )
-                            );
-                            return (
-                              <Button
-                                key={option}
-                                className={`text-white ${
-                                  selectedOptions[attr.name] === option
-                                    ? "bg-white text-black dark:bg-black dark:text-white"
-                                    : isAvailable
-                                      ? "bg-black hover:bg-white hover:text-black  dark:bg-white dark:hover:bg-black dark:text-black hover:dark:text-white "
-                                      : "bg-gray-300 text-gray-500 cursor-not-allowed"
-                                }`}
-                                onClick={() =>
-                                  isAvailable &&
-                                  handleVariationChange(attr.name, option)
-                                }
-                                disabled={!isAvailable}
-                              >
-                                {option}
-                              </Button>
-                            );
-                          })}
+                          {attr.options.map((option) => (
+                            <Button
+                              key={option}
+                              className={`text-white ${
+                                selectedOptions[attr.name] === option
+                                  ? "bg-white text-black dark:bg-black dark:text-white"
+                                  : "bg-black hover:bg-white hover:text-black dark:bg-white dark:hover:bg-black dark:text-black hover:dark:text-white"
+                              }`}
+                              onClick={() =>
+                                handleVariationChange(attr.name, option)
+                              }
+                            >
+                              {option}
+                            </Button>
+                          ))}
                         </div>
                       </div>
                     ))}
@@ -479,9 +451,15 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
                   <Button
                     onClick={handleAddToCart}
-                    className="w-full md:flex-1 bg-red text-white  rounded-full h-12 flex items-center justify-center"
+                    className={`w-full md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
+                      !allVariationsSelected()
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                    disabled={!allVariationsSelected()}
                   >
-                    <ShoppingCart className="mr-2 h-12 w-4" /> Add To Bag
+                    <ShoppingCart className="mr-2 h-12 w-4" />
+                    {allVariationsSelected() ? "Add To Bag" : "Select Options"}
                   </Button>
                 </div>
 
@@ -491,7 +469,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 >
                   {/* Conditional Heart Icon */}
                   <Heart
-                    className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+                    className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-white dark:text-black" : "stroke-current text-gray-500"}`}
                   />
                   {isInWishlist ? "Added To Wishlist" : "Add To Wishlist"}
                 </Button>
