@@ -37,8 +37,9 @@ export default function Home() {
   // pop ups on the hover
   // load wishlist data , cart data , account data
   // check all the alignments for every page once
+  // mixture of the font
+
   // documentation & comments
   // Simple Read Me File
   // Compress the code and handover
-  // mixture of the font
 }

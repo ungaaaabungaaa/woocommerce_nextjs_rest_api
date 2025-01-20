@@ -37,7 +37,7 @@ import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import { wishlistCount } from "@/helper/wishlistHelper";
+import { useWishlist } from "../../context/wishlistContext";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -48,15 +48,13 @@ export default function Nav_bar() {
   const pathname = usePathname();
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [wishlistItemCount, setWishlistItemCount] = useState(0);
+  const { wishlistCount } = useWishlist();
 
   useEffect(() => {
     setMounted(true);
-    setWishlistItemCount(wishlistCount());
-
     // Add event listener for storage changes
     const handleStorageChange = () => {
-      setWishlistItemCount(wishlistCount());
+      //setWishlistItemCount(wishlistCount());
     };
 
     window.addEventListener("storage", handleStorageChange);
@@ -74,7 +72,7 @@ export default function Nav_bar() {
 
   // Update wishlist count when component mounts and after any navigation
   useEffect(() => {
-    setWishlistItemCount(wishlistCount());
+    //setWishlistItemCount(wishlistCount());
   }, [pathname]);
 
   const handleSearchClick = () => {
@@ -243,7 +241,7 @@ export default function Nav_bar() {
               )}
 
               <Badge
-                content={wishlistItemCount}
+                content={wishlistCount}
                 className="border-none"
                 shape="circle"
                 color="danger"

@@ -11,11 +11,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { Heart } from "lucide-react";
-import {
-  storeWishlist,
-  checkWishlist,
-  removeWishlistItem,
-} from "@/helper/wishlistHelper";
+import { useWishlist } from "@/context/wishlistContext";
 
 interface Product {
   id: string;
@@ -38,40 +34,44 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { cartKey, loading, error: cartKeyError } = useCartKey();
-  const { fetchCartDetails } = useCart();
   const router = useRouter();
-  const [isInWishlist, setIsInWishlist] = useState(false);
   const [productId, setProductId] = useState<number | null>(null);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   // Set productId when the product id changes
   useEffect(() => {
     if (product.id) {
       setProductId(Number(product.id)); // Ensure it is a number
-      // Check if the product is already in the wishlist
-      setIsInWishlist(checkWishlist(product.id as any));
     }
   }, [product.id]);
 
-  const ViewProduct = async (productId: string) => {
+  const ViewProduct = (productId: string) => {
+    console.log(productId);
     router.push(`/product/${productId}`);
   };
 
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLDivElement>,
+    action: () => void
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      action();
+    }
+  };
+
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
-    const regular = parseFloat(regularPrice);
-    const sale = parseFloat(salePrice);
+    const regular = Number.parseFloat(regularPrice);
+    const sale = Number.parseFloat(salePrice);
     const discount = ((regular - sale) / regular) * 100;
     return Math.round(discount);
   };
 
   const handleWishlistToggle = () => {
     if (productId === null) return;
-    if (isInWishlist) {
-      removeWishlistItem(productId);
-      setIsInWishlist(false);
+    if (isInWishlist(productId)) {
+      removeFromWishlist(productId);
     } else {
-      storeWishlist(productId);
-      setIsInWishlist(true);
+      addToWishlist(productId);
     }
   };
 
@@ -101,7 +101,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <div className="absolute right-3 top-3 z-10 bg-white  rounded-full p-3">
             <Heart
               onClick={handleWishlistToggle}
-              className={`h-3 w-3 ${isInWishlist ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+              className={`h-3 w-3 ${isInWishlist(productId as any) ? "fill-current text-black" : "stroke-current text-gray-500"}`}
             />
           </div>
 

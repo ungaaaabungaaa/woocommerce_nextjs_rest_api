@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { CartProvider } from "@/context/cartcontext";
 import PayPalProvider from "@/context/PayPalProvider";
 import { CartKeyProvider } from "@/hooks/useCartKey";
+import { WishlistProvider } from "../context/wishlistContext";
 import LayoutWrapper from "../app/component/layout-wrapper";
 
 export const metadata = {
@@ -50,13 +51,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <PayPalProvider>
-            <CartKeyProvider>
-              <CartProvider>
-                <LayoutWrapper>{children}</LayoutWrapper>
-              </CartProvider>
-            </CartKeyProvider>
-          </PayPalProvider>
+          <WishlistProvider>
+            <PayPalProvider>
+              <CartKeyProvider>
+                <CartProvider>
+                  <LayoutWrapper>{children}</LayoutWrapper>
+                </CartProvider>
+              </CartKeyProvider>
+            </PayPalProvider>
+          </WishlistProvider>
         </ThemeProvider>
       </body>
     </html>
