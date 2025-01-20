@@ -164,27 +164,6 @@ export default function WishlistPage() {
                   </div>
 
                   <div className="p-4">
-                    {/* <div className="flex justify-between items-center">
-                      {product.sale_price && product.regular_price ? (
-                        <div className="flex items-center">
-                          <span className="text-gray-500 dark:text-gray-400 text-1xl line-through mr-2">
-                            ${product.regular_price}
-                          </span>
-                          <span className="text-white dark:text-black font-bold text-1xl">
-                            ${product.sale_price}
-                          </span>
-                        </div>
-                      ) : product.regular_price ? (
-                        <span className="text-white dark:text-black font-bold">
-                          ${product.regular_price}
-                        </span>
-                      ) : product.type === "variable" ? (
-                        <span className="text-white dark:text-black font-bold">
-                          {product.price}
-                        </span>
-                      ) : null}
-                    </div> */}
-
                     <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
                       {product.name}
                     </h2>
