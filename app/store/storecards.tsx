@@ -1,12 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Card, CardBody } from "@nextui-org/card";
-import {
-  storeWishlist,
-  checkWishlist,
-  removeWishlistItem,
-} from "@/helper/wishlistHelper";
+import { useWishlist } from "@/context/wishlistContext";
 import { Heart } from "lucide-react";
 
 interface Product {
@@ -26,40 +22,20 @@ interface Product {
 
 function StoreCards({ products = [] }: { products?: Product[] }) {
   const safeProducts = products || [];
-
-  // Track wishlist status for each product
-  const [wishlistStatus, setWishlistStatus] = useState<{
-    [key: string]: boolean;
-  }>({});
-
-  // Set initial wishlist status for each product
-  useEffect(() => {
-    const initialWishlistStatus: { [key: string]: boolean } = {};
-    safeProducts.forEach((product) => {
-      if (product.id) {
-        initialWishlistStatus[product.id] = checkWishlist(product.id as any);
-      }
-    });
-    setWishlistStatus(initialWishlistStatus);
-  }, [safeProducts]);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
-    const regular = parseFloat(regularPrice);
-    const sale = parseFloat(salePrice);
+    const regular = Number.parseFloat(regularPrice);
+    const sale = Number.parseFloat(salePrice);
     const discount = ((regular - sale) / regular) * 100;
     return Math.round(discount);
   };
 
   const handleWishlistToggle = (productId: string) => {
-    if (wishlistStatus[productId]) {
-      removeWishlistItem(productId as any);
-      setWishlistStatus((prevStatus) => ({
-        ...prevStatus,
-        [productId]: false,
-      }));
+    if (isInWishlist(productId as any)) {
+      removeFromWishlist(productId as any);
     } else {
-      storeWishlist(productId as any);
-      setWishlistStatus((prevStatus) => ({ ...prevStatus, [productId]: true }));
+      addToWishlist(productId as any);
     }
   };
 
@@ -75,23 +51,23 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
             <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
               <Link href={`/product/${product.id}`} passHref>
                 <Image
-                  src={product.image}
+                  src={product.image || "/placeholder.svg"}
                   alt={product.title}
                   fill
                   className="object-cover transition-opacity duration-300 group-hover:opacity-0"
                 />
                 <Image
-                  src={product.hoverimage}
+                  src={product.hoverimage || "/placeholder.svg"}
                   alt={`${product.title} hover`}
                   fill
                   className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
                 />
               </Link>
 
-              <div className="absolute right-3 top-3 z-10 bg-white rounded-full p-3">
+              <div className="absolute right-3 top-3 z-10 bg-white rounded-full p-3 ">
                 <Heart
                   onClick={() => handleWishlistToggle(product.id)}
-                  className={`h-3 w-3 ${wishlistStatus[product.id] ? "fill-current text-black" : "stroke-current text-gray-500"}`}
+                  className={`h-3 w-3 ${isInWishlist(product.id as any) ? "fill-current text-black" : "stroke-current text-gray-500"}`}
                 />
               </div>
 
