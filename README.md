@@ -1,53 +1,113 @@
-# Next.js & NextUI Template
+# NextJs Headless Woocomerce Rest App
 
-This is a template for creating applications using Next.js 14 (app directory) and NextUI (v2).
+This project sets up a headless WordPress WooCommerce site with a Next.js frontend. By utilizing WooCommerce as the CMS (Content Management System) and payment provider, we can create an efficient, dynamic eCommerce platform. The backend (WooCommerce) serves as the product and payment system, while the frontend (Next.js) provides a modern, fast user experience.
 
-[Try it on CodeSandbox](https://githubbox.com/nextui-org/next-app-template)
+WooCommerce's REST API is used to connect the Next.js frontend with the WooCommerce backend. Additionally, PayPal is integrated as the payment provider to securely process transactions.
 
-## Technologies Used
+## Screenshots
 
-- [Next.js 14](https://nextjs.org/docs/getting-started)
-- [NextUI v2](https://nextui.org/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Tailwind Variants](https://tailwind-variants.org)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Framer Motion](https://www.framer.com/motion/)
-- [next-themes](https://github.com/pacocoursey/next-themes)
+### home Screen
 
-## How to Use
+![Home](https://i.imgur.com/eu1vr1z.jpg)
 
-### Use the template with create-next-app
+### Product Screen
 
-To create a new project based on this template using `create-next-app`, run the following command:
+![Product](https://i.imgur.com/qqLfGmp.png)
+
+### Scearch Screen
+
+![Search](https://i.imgur.com/bdVrg9Q.png)
+
+### Cart Screen
+
+![Cart](https://i.imgur.com/R3VAP59.png)
+
+### Auth Screen
+
+![Authentication](https://i.imgur.com/SzXbKkg.png)
+
+## Tech Stack
+
+**Client:** React, Redux, TailwindCSS , Shadcn, Nextjs
+
+**Server:** Firebase Auth, Wordpress Woocommerce Rest
+
+## Demo
+
+Demo Link Hosted On vercel
+
+https://woocommerce-nextjs-rest-api.vercel.app/
+
+## Run Locally
+
+Clone the project
 
 ```bash
-npx create-next-app -e https://github.com/nextui-org/next-app-template
+  git clone https://link-to-project
 ```
 
-### Install dependencies
-
-You can use one of them `npm`, `yarn`, `pnpm`, `bun`, Example using `npm`:
+Go to the project directory
 
 ```bash
-npm install
+  cd my-project
 ```
 
-### Run the development server
+Install dependencies
 
 ```bash
-npm run dev
+  npm install
 ```
 
-### Setup pnpm (optional)
-
-If you are using `pnpm`, you need to add the following code to your `.npmrc` file:
+Start the server
 
 ```bash
-public-hoist-pattern[]=*@nextui-org/*
+  npm run start
 ```
 
-After modifying the `.npmrc` file, you need to run `pnpm install` again to ensure that the dependencies are installed correctly.
+## Environment Variables
 
-## License
+To run this project, you will need to add the following environment variables to your .env file
 
-Licensed under the [MIT license](https://github.com/nextui-org/next-app-template/blob/main/LICENSE).
+`NEXT_PUBLIC_WORDPRESS_SITE_URL`
+`NEXT_PUBLIC_SITE_URL`
+`NEXT_PUBLIC_API_URL`
+
+Create woocommerce rest api auth keys
+
+`WC_CONSUMER_KEY`
+`WC_CONSUMER_SECRET`
+
+add in cocart endpoints
+
+`NEXT_PUBLIC_VIEW_CART_URL`
+`NEXT_PUBLIC_ADD_CART_URL`
+
+add in paypal keys
+
+`NEXT_PUBLIC_PAYPAL_CLIENT_ID`
+
+add in firebase web keys
+
+`NEXT_PUBLIC_PAYPAL_CLIENT_ID`
+`NEXT_PUBLIC_FIREBASE_API_KEY`
+`NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
+`NEXT_PUBLIC_FIREBASE_PROJECT_ID`
+`NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
+`NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
+`NEXT_PUBLIC_FIREBASE_APP_ID`
+`NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+
+## Roadmap
+
+- SEO
+- Customer Reviews
+- Machine learning for Product Recommendation
+- Fuzzy Search
+- GraphQL
+- Stripe Payment Gateway
+- SMS
+
+## Documentation
+
+[Cocart](https://linktodocumentation) |
+[Woocommerce](https://linktodocumentation)
