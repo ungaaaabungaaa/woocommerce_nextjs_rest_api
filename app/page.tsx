@@ -34,9 +34,7 @@ export default function Home() {
     </section>
   );
 
-  // pop ups on the hover
-  // load wishlist data , cart data , account data
-  // check all the alignments for every page once
-  // mixture of the font
-  // documentation & comments
+  // popups
+  // alignments - product scrolls , pages max-w-7xl for all the pages
+  // documentation
 }

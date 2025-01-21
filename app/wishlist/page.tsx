@@ -7,6 +7,7 @@ import { Trash2 } from "lucide-react";
 import { useWishlist } from "@/context/wishlistContext";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
+import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
 
 interface WishlistItem {
   id: number;
@@ -74,79 +75,83 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black">
-      <div className="w-full max-w-7xl">
-        <main className="px-4 py-8">
-          <div className="flex justify-between items-center mb-6">
-            <h1 className="text-3xl font-bold">
-              Wishlist{" "}
-              <span className="text-sm">({wishlistCount} products)</span>
-            </h1>
-          </div>
-          {wishlistProducts.length === 0 ? (
-            <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
-              <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
-                Empty Wishlist
-              </p>
-              <br></br>
-              <Button
-                onClick={() => (window.location.href = "/")}
-                color="default"
-              >
-                Continue Shopping
-              </Button>
+    <div className="ontainer mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
+      <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black">
+        <div className="w-full max-w-7xl">
+          <main className="px-4 py-8">
+            <div className="flex justify-between items-center mb-6">
+              <h1 className="text-3xl font-bold">
+                Wishlist{" "}
+                <span className="text-sm">({wishlistCount} products)</span>
+              </h1>
             </div>
-          ) : (
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
-              {wishlistProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
+            {wishlistProducts.length === 0 ? (
+              <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
+                <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
+                  Empty Wishlist
+                </p>
+                <br></br>
+                <Button
+                  onClick={() => (window.location.href = "/")}
+                  color="default"
                 >
-                  <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
-                    <Link href={`/product/${product.id}`}>
-                      <Image
-                        src={product.image || "/placeholder.svg"}
-                        alt={product.name}
-                        fill
-                        className="object-cover"
-                      />
-                    </Link>
+                  Continue Shopping
+                </Button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
+                {wishlistProducts.map((product) => (
+                  <div
+                    key={product.id}
+                    className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
+                  >
+                    <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+                      <Link href={`/product/${product.id}`}>
+                        <Image
+                          src={product.image || "/placeholder.svg"}
+                          alt={product.name}
+                          fill
+                          className="object-cover"
+                        />
+                      </Link>
 
-                    <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white hover:bg-opacity-100 hover:visible opacity-0 hover:opacity-100 transition-opacity duration-300">
-                      <Trash2
-                        onClick={() => removeFromWishlist(product.id)}
-                        className="h-3 w-3 text-black"
-                      />
+                      <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white hover:bg-opacity-100 hover:visible opacity-0 hover:opacity-100 transition-opacity duration-300">
+                        <Trash2
+                          onClick={() => removeFromWishlist(product.id)}
+                          className="h-3 w-3 text-black"
+                        />
+                      </div>
+
+                      {product.sale_price && product.regular_price && (
+                        <div className="absolute left-2 bottom-2 z-10 ">
+                          <span className="bg-red-500 text-white rounded-lg p-2 text-sm font-medium">
+                            -
+                            {calculateDiscount(
+                              product.regular_price,
+                              product.sale_price
+                            )}
+                            %
+                          </span>
+                        </div>
+                      )}
                     </div>
 
-                    {product.sale_price && product.regular_price && (
-                      <div className="absolute left-2 bottom-2 z-10 ">
-                        <span className="bg-red-500 text-white rounded-lg p-2 text-sm font-medium">
-                          -
-                          {calculateDiscount(
-                            product.regular_price,
-                            product.sale_price
-                          )}
-                          %
-                        </span>
-                      </div>
-                    )}
+                    <div className="p-4">
+                      <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
+                        {product.name}
+                      </h2>
+                    </div>
                   </div>
-
-                  <div className="p-4">
-                    <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
-                      {product.name}
-                    </h2>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-          <br></br>
-          <br></br>
-        </main>
+                ))}
+              </div>
+            )}
+          </main>
+        </div>
       </div>
+      <br></br>
+      <br></br>
+      <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
+      <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
     </div>
   );
 }
