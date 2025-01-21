@@ -244,7 +244,7 @@ export default function Nav_bar() {
               {isAuthenticated ? (
                 <div
                   onMouseEnter={() => handleIconMouseEnter("account")}
-                  onMouseLeave={handleIconMouseLeave}
+                  // onMouseLeave={handleIconMouseLeave}
                 >
                   <UserCircle
                     className="h-5 cursor-pointer text-white dark:text-black"
@@ -254,7 +254,7 @@ export default function Nav_bar() {
               ) : (
                 <div
                   onMouseEnter={() => handleIconMouseEnter("account")}
-                  onMouseLeave={handleIconMouseLeave}
+                  // onMouseLeave={handleIconMouseLeave}
                 >
                   <User
                     className="h-5 cursor-pointer text-white dark:text-black"

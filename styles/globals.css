@@ -66,6 +66,10 @@ input::placeholder {
   background-color: #ee1864;
 }
 
+.text-red {
+  color: #ee1864;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
