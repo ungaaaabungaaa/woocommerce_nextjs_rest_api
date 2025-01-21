@@ -4,13 +4,8 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
-import {
-  showWishlist,
-  wishlistCount,
-  removeWishlistItem,
-} from "@/helper/wishlistHelper";
+import { useWishlist } from "@/context/wishlistContext";
 import axios from "axios";
-import ProductCarouselCategories from "../component/ ProductCarouselCategories";
 import { Button } from "@nextui-org/button";
 
 interface WishlistItem {
@@ -26,34 +21,19 @@ interface WishlistItem {
 }
 
 export default function WishlistPage() {
-  const [count, setCount] = useState<number>(0);
-  const [wishlist, setWishlist] = useState<number[]>([]);
+  const { wishlistCount, removeFromWishlist, wishlistItems } = useWishlist();
   const [wishlistProducts, setWishlistProducts] = useState<WishlistItem[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchWishlist = async () => {
-      try {
-        const wishlistItems = await showWishlist();
-        setWishlist(wishlistItems);
-        setCount(wishlistCount());
-      } catch (err) {
-        setError("Failed to load wishlist IDs");
-        console.error("Error loading wishlist:", err);
-      }
-    };
-
-    fetchWishlist();
-  }, []);
-  useEffect(() => {
     const fetchWishlistProducts = async () => {
-      if (wishlist.length === 0) {
+      if (wishlistItems.length === 0) {
+        setWishlistProducts([]);
         return;
       }
 
       try {
-        const ids = wishlist.join(",");
-
+        const ids = wishlistItems.join(",");
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/custom/v1/wishlist?ids=${ids}`
         );
@@ -76,19 +56,11 @@ export default function WishlistPage() {
     };
 
     fetchWishlistProducts();
-  }, [wishlist]);
-
-  const handleRemoveFromWishlist = (productId: number) => {
-    removeWishlistItem(productId);
-    setWishlistProducts((prev) =>
-      prev.filter((product) => product.id !== productId)
-    );
-    setCount((prev) => prev - 1);
-  };
+  }, [wishlistItems]);
 
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
-    const regular = parseFloat(regularPrice);
-    const sale = parseFloat(salePrice);
+    const regular = Number.parseFloat(regularPrice);
+    const sale = Number.parseFloat(salePrice);
     const discount = ((regular - sale) / regular) * 100;
     return Math.round(discount);
   };
@@ -107,13 +79,14 @@ export default function WishlistPage() {
         <main className="px-4 py-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-3xl font-bold">
-              Wishlist <span className="text-sm">({count} products)</span>
+              Wishlist{" "}
+              <span className="text-sm">({wishlistCount} products)</span>
             </h1>
           </div>
           {wishlistProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
               <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
-                Empty Whislist
+                Empty Wishlist
               </p>
               <br></br>
               <Button
@@ -133,7 +106,7 @@ export default function WishlistPage() {
                   <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
                     <Link href={`/product/${product.id}`}>
                       <Image
-                        src={product.image}
+                        src={product.image || "/placeholder.svg"}
                         alt={product.name}
                         fill
                         className="object-cover"
@@ -142,7 +115,7 @@ export default function WishlistPage() {
 
                     <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white hover:bg-opacity-100 hover:visible opacity-0 hover:opacity-100 transition-opacity duration-300">
                       <Trash2
-                        onClick={() => handleRemoveFromWishlist(product.id)}
+                        onClick={() => removeFromWishlist(product.id)}
                         className="h-3 w-3 text-black"
                       />
                     </div>
@@ -173,8 +146,6 @@ export default function WishlistPage() {
           <br></br>
           <br></br>
         </main>
-        <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
-        <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
       </div>
     </div>
   );
