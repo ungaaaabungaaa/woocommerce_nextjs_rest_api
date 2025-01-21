@@ -53,21 +53,19 @@ export default function WishlistPage() {
 
       try {
         const ids = wishlist.join(",");
-        const response = await axios.get(
-          `https://clothvillage.com/wp-json/custom/v1/wishlist?ids=${ids}`
-        );
 
-        // Map API response to match the expected structure
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/custom/v1/wishlist?ids=${ids}`
+        );
         const mappedProducts = response.data.map((product: any) => ({
           id: product.id,
           name: product.name,
           price: product.price,
-          image: product.thumbnail, // Map thumbnail as main image
-
+          image: product.thumbnail,
           regular_price: product.regular_price,
           sale_price: product.sale_price,
-          slug: product.slug || "", // Placeholder for slug
-          type: "simple", // Assuming default type if missing
+          slug: product.slug || "",
+          type: "simple",
         }));
 
         setWishlistProducts(mappedProducts);
