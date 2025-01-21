@@ -242,15 +242,25 @@ export default function Nav_bar() {
               />
 
               {isAuthenticated ? (
-                <UserCircle
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                  onClick={() => router.push("/auth/user")}
-                />
+                <div
+                  onMouseEnter={() => handleIconMouseEnter("account")}
+                  onMouseLeave={handleIconMouseLeave}
+                >
+                  <UserCircle
+                    className="h-5 cursor-pointer text-white dark:text-black"
+                    onClick={() => router.push("/auth/user")}
+                  />
+                </div>
               ) : (
-                <User
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                  onClick={() => router.push("/auth/register")}
-                />
+                <div
+                  onMouseEnter={() => handleIconMouseEnter("account")}
+                  onMouseLeave={handleIconMouseLeave}
+                >
+                  <User
+                    className="h-5 cursor-pointer text-white dark:text-black"
+                    onClick={() => router.push("/auth/register")}
+                  />
+                </div>
               )}
 
               <Badge
