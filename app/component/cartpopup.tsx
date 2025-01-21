@@ -95,8 +95,21 @@ export function CartPopUp() {
                     </div>
                   ))}
                 </div>
-                <div className="pt-3 mt-2 border-t border-gray-700 dark:border-gray-200">
-                  {/* add two buttons here  */}
+                <div className="pt-3 mt-2 ">
+                  <div className="flex space-x-2">
+                    <button
+                      onClick={() => (window.location.href = "/cart")}
+                      className="w-1/2 text-center bg-white text-black dark:bg-black dark:text-white  rounded-full "
+                    >
+                      Bag
+                    </button>
+                    <button
+                      onClick={() => (window.location.href = "/checkout")}
+                      className="w-1/2 text-center bg-red text-white py-2 px-4  rounded-full "
+                    >
+                      Go to Checkout
+                    </button>
+                  </div>
                 </div>
               </div>
             )

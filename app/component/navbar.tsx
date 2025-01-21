@@ -284,12 +284,12 @@ export default function Nav_bar() {
                 shape="circle"
                 color="danger"
                 onMouseEnter={() => handleIconMouseEnter("cart")}
-                onMouseLeave={handleIconMouseLeave}
+                // onMouseLeave={handleIconMouseLeave}
               >
                 <ShoppingBag
                   onClick={handleCartClick}
                   onMouseEnter={() => handleIconMouseEnter("cart")}
-                  onMouseLeave={handleIconMouseLeave}
+                  // onMouseLeave={handleIconMouseLeave}
                   className="h-5 cursor-pointer text-white dark:text-black"
                 />
               </Badge>
