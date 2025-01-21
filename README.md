@@ -100,6 +100,8 @@ add in firebase web keys
 ## Roadmap
 
 - SEO
+- ChatBot
+- e-Lamma
 - Customer Reviews
 - Machine learning for Product Recommendation
 - Fuzzy Search
@@ -110,4 +112,5 @@ add in firebase web keys
 ## Documentation
 
 [Cocart](https://linktodocumentation) |
-[Woocommerce](https://linktodocumentation)
+[Woocommerce](https://linktodocumentation) |
+[FirebaseAuth](https://linktodocumentation)

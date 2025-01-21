@@ -39,6 +39,10 @@ import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useWishlist } from "../../context/wishlistContext";
 
+import { CartPopUp } from "./cartpopup";
+import { AccountPopUp } from "./accountpopup";
+import { WishlistPopUp } from "./wishlistpopup";
+
 export default function Nav_bar() {
   const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -49,6 +53,7 @@ export default function Nav_bar() {
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { wishlistCount } = useWishlist();
+  const [visiblePopup, setVisiblePopup] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -228,41 +233,71 @@ export default function Nav_bar() {
                 className="h-5 cursor-pointer text-white dark:text-black"
               />
 
-              {isAuthenticated ? (
-                <UserCircle
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                  onClick={() => router.push("/auth/user")}
-                />
-              ) : (
-                <User
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                  onClick={() => router.push("/auth/register")}
-                />
-              )}
-
-              <Badge
-                content={wishlistCount}
-                className="border-none"
-                shape="circle"
-                color="danger"
+              <div
+                onMouseEnter={() => setVisiblePopup("account")}
+                onMouseLeave={() => setVisiblePopup("")}
               >
-                <Heart
-                  onClick={handleWishlistClick}
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                />
-              </Badge>
+                {isAuthenticated ? (
+                  <UserCircle className="h-5 cursor-pointer text-white dark:text-black" />
+                ) : (
+                  <User className="h-5 cursor-pointer text-white dark:text-black" />
+                )}
+                <div
+                  className={`absolute right-0 mt-2 ${
+                    visiblePopup === "account"
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible pointer-events-none"
+                  }`}
+                >
+                  <AccountPopUp />
+                </div>
+              </div>
 
-              <Badge
-                content={cartCount}
-                className="border-none"
-                shape="circle"
-                color="danger"
+              <div
+                onMouseEnter={() => setVisiblePopup("wishlist")}
+                onMouseLeave={() => setVisiblePopup("")}
               >
-                <ShoppingBag
-                  onClick={handleCartClick}
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                />
-              </Badge>
+                <Badge
+                  content={wishlistCount}
+                  className="border-none"
+                  shape="circle"
+                  color="danger"
+                >
+                  <Heart className="h-5 cursor-pointer text-white dark:text-black" />
+                </Badge>
+                <div
+                  className={`absolute right-0 mt-2 ${
+                    visiblePopup === "wishlist"
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible pointer-events-none"
+                  }`}
+                >
+                  <WishlistPopUp />
+                </div>
+              </div>
+
+              <div
+                onMouseEnter={() => setVisiblePopup("cart")}
+                onMouseLeave={() => setVisiblePopup("")}
+              >
+                <Badge
+                  content={cartCount}
+                  className="border-none"
+                  shape="circle"
+                  color="danger"
+                >
+                  <ShoppingBag className="h-5 cursor-pointer text-white dark:text-black" />
+                </Badge>
+                <div
+                  className={`absolute right-0 mt-2 ${
+                    visiblePopup === "cart"
+                      ? "opacity-100 visible"
+                      : "opacity-0 invisible pointer-events-none"
+                  }`}
+                >
+                  <CartPopUp />
+                </div>
+              </div>
 
               {mounted && (
                 <button onClick={toggleTheme} className="focus:outline-none">
