@@ -259,10 +259,11 @@ export default function Nav_bar() {
                 shape="circle"
                 color="danger"
                 onMouseEnter={() => handleIconMouseEnter("wishlist")}
-                onMouseLeave={handleIconMouseLeave}
               >
                 <Heart
                   onClick={handleWishlistClick}
+                  onMouseEnter={() => handleIconMouseEnter("wishlist")}
+                  // onMouseLeave={handleIconMouseLeave}
                   className="h-5 cursor-pointer text-white dark:text-black"
                 />
               </Badge>
@@ -277,6 +278,8 @@ export default function Nav_bar() {
               >
                 <ShoppingBag
                   onClick={handleCartClick}
+                  onMouseEnter={() => handleIconMouseEnter("cart")}
+                  onMouseLeave={handleIconMouseLeave}
                   className="h-5 cursor-pointer text-white dark:text-black"
                 />
               </Badge>
