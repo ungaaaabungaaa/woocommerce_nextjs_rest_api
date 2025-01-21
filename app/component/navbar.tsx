@@ -53,7 +53,7 @@ export default function Nav_bar() {
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { wishlistCount } = useWishlist();
-  const [visiblePopup, setVisiblePopup] = useState("");
+  const [visibleIconPopup, setVisibleIconPopup] = useState("");
 
   useEffect(() => {
     setMounted(true);
@@ -128,6 +128,14 @@ export default function Nav_bar() {
     { name: "Kids", component: KidsMegaMenu },
     { name: "Footwear", component: FootWearMegaMenu },
   ];
+
+  const handleIconMouseEnter = (popup: string) => {
+    setVisibleIconPopup(popup);
+  };
+
+  const handleIconMouseLeave = () => {
+    setVisibleIconPopup("");
+  };
 
   return (
     <div className="sticky top-0 z-50">
@@ -233,71 +241,45 @@ export default function Nav_bar() {
                 className="h-5 cursor-pointer text-white dark:text-black"
               />
 
-              <div
-                onMouseEnter={() => setVisiblePopup("account")}
-                onMouseLeave={() => setVisiblePopup("")}
-              >
-                {isAuthenticated ? (
-                  <UserCircle className="h-5 cursor-pointer text-white dark:text-black" />
-                ) : (
-                  <User className="h-5 cursor-pointer text-white dark:text-black" />
-                )}
-                <div
-                  className={`absolute right-0 mt-2 ${
-                    visiblePopup === "account"
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible pointer-events-none"
-                  }`}
-                >
-                  <AccountPopUp />
-                </div>
-              </div>
+              {isAuthenticated ? (
+                <UserCircle
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                  onClick={() => router.push("/auth/user")}
+                />
+              ) : (
+                <User
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                  onClick={() => router.push("/auth/register")}
+                />
+              )}
 
-              <div
-                onMouseEnter={() => setVisiblePopup("wishlist")}
-                onMouseLeave={() => setVisiblePopup("")}
+              <Badge
+                content={wishlistCount}
+                className="border-none"
+                shape="circle"
+                color="danger"
+                onMouseEnter={() => handleIconMouseEnter("wishlist")}
+                onMouseLeave={handleIconMouseLeave}
               >
-                <Badge
-                  content={wishlistCount}
-                  className="border-none"
-                  shape="circle"
-                  color="danger"
-                >
-                  <Heart className="h-5 cursor-pointer text-white dark:text-black" />
-                </Badge>
-                <div
-                  className={`absolute right-0 mt-2 ${
-                    visiblePopup === "wishlist"
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible pointer-events-none"
-                  }`}
-                >
-                  <WishlistPopUp />
-                </div>
-              </div>
+                <Heart
+                  onClick={handleWishlistClick}
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                />
+              </Badge>
 
-              <div
-                onMouseEnter={() => setVisiblePopup("cart")}
-                onMouseLeave={() => setVisiblePopup("")}
+              <Badge
+                content={cartCount}
+                className="border-none"
+                shape="circle"
+                color="danger"
+                onMouseEnter={() => handleIconMouseEnter("cart")}
+                onMouseLeave={handleIconMouseLeave}
               >
-                <Badge
-                  content={cartCount}
-                  className="border-none"
-                  shape="circle"
-                  color="danger"
-                >
-                  <ShoppingBag className="h-5 cursor-pointer text-white dark:text-black" />
-                </Badge>
-                <div
-                  className={`absolute right-0 mt-2 ${
-                    visiblePopup === "cart"
-                      ? "opacity-100 visible"
-                      : "opacity-0 invisible pointer-events-none"
-                  }`}
-                >
-                  <CartPopUp />
-                </div>
-              </div>
+                <ShoppingBag
+                  onClick={handleCartClick}
+                  className="h-5 cursor-pointer text-white dark:text-black"
+                />
+              </Badge>
 
               {mounted && (
                 <button onClick={toggleTheme} className="focus:outline-none">
@@ -344,6 +326,42 @@ export default function Nav_bar() {
               <menu.component />
             </div>
           ))}
+        </div>
+        {/* Icon Popups Container */}
+        <div className="absolute left-0 w-full">
+          <div
+            className={`absolute top-full left-0 w-full transition-all duration-300 ${
+              visibleIconPopup === "cart"
+                ? "opacity-100 visible"
+                : "opacity-0 invisible pointer-events-none"
+            }`}
+            onMouseEnter={() => handleIconMouseEnter("cart")}
+            onMouseLeave={handleIconMouseLeave}
+          >
+            <CartPopUp />
+          </div>
+          <div
+            className={`absolute top-full left-0 w-full transition-all duration-300 ${
+              visibleIconPopup === "account"
+                ? "opacity-100 visible"
+                : "opacity-0 invisible pointer-events-none"
+            }`}
+            onMouseEnter={() => handleIconMouseEnter("account")}
+            onMouseLeave={handleIconMouseLeave}
+          >
+            <AccountPopUp />
+          </div>
+          <div
+            className={`absolute top-full left-0 w-full transition-all duration-300 ${
+              visibleIconPopup === "wishlist"
+                ? "opacity-100 visible"
+                : "opacity-0 invisible pointer-events-none"
+            }`}
+            onMouseEnter={() => handleIconMouseEnter("wishlist")}
+            onMouseLeave={handleIconMouseLeave}
+          >
+            <WishlistPopUp />
+          </div>
         </div>
       </div>
     </div>
