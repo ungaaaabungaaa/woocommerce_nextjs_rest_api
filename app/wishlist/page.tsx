@@ -123,8 +123,11 @@ export default function WishlistPage() {
                       </div>
 
                       {product.sale_price && product.regular_price && (
-                        <div className="absolute left-2 bottom-2 z-10 ">
-                          <span className="bg-red-500 text-white rounded-lg p-2 text-sm font-medium">
+                        <div
+                          className="absolute left-2 bottom-2 z-10"
+                          role="status"
+                        >
+                          <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
                             -
                             {calculateDiscount(
                               product.regular_price,
