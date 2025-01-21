@@ -38,8 +38,5 @@ export default function Home() {
   // load wishlist data , cart data , account data
   // check all the alignments for every page once
   // mixture of the font
-
   // documentation & comments
-  // Simple Read Me File
-  // Compress the code and handover
 }
