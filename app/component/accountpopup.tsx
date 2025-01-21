@@ -105,7 +105,7 @@ export function AccountPopUp() {
               <div className="w-full  border-gray-700 dark:border-gray-200  pb-2"></div>
               <div className=" dark:border-gray-200 pb-2">
                 <h1
-                  className=" cursor-pointer text-white dark:text-black mt-2 bg-red rounded-full w-full pl-12 pr-12  pt-2 pb-2 text-center"
+                  className=" cursor-pointer  mt-2 bg-red text-white rounded-full w-full pl-12 pr-12  pt-2 pb-2 text-center"
                   onClick={() => navigateTo("auth/login")}
                 >
                   Login

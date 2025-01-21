@@ -78,9 +78,9 @@ export function WishlistPopUp() {
                 <div className="flex align-middle items-end flex-col">
                   <div className="w-3/5 bg-black dark:bg-white p-4 rounded-lg   border border-gray-700 dark:border-gray-200  ">
                     <>
-                      <div className="border-b border-gray-200 pb-3">
+                      <div className="border-b border-gray-700 dark:border-gray-200 pb-2">
                         <h2 className="font-semibold">Your Wishlist</h2>
-                        <p className="text-sm text-gray-600">
+                        <p className="text-sm text-gray-200 dark:text-gray-700 ">
                           {wishlistCount} items
                         </p>
                       </div>
@@ -88,7 +88,7 @@ export function WishlistPopUp() {
                         {wishlistProducts.map((product) => (
                           <div
                             key={product.id}
-                            className="flex gap-4 py-4 border-b border-gray-100 group"
+                            className="flex gap-4 py-4 border-b border-gray-700 dark:border-gray-200 group"
                           >
                             <div className="relative w-20 h-20 bg-gray-50 rounded">
                               <Image
@@ -99,13 +99,10 @@ export function WishlistPopUp() {
                               />
                             </div>
                             <div className="flex-1">
-                              <Link
-                                href={`/product/${product.slug}`}
-                                className="text-sm font-medium hover:underline line-clamp-2"
-                              >
+                              <p className="text-medium font-semibold mt-1">
                                 {product.name}
-                              </Link>
-                              <p className="text-sm font-semibold mt-1">
+                              </p>
+                              <p className="text-sm ">
                                 ${product.regular_price}
                               </p>
                             </div>
@@ -115,7 +112,7 @@ export function WishlistPopUp() {
                       <div className="pt-3 mt-2">
                         <Link
                           href="/wishlist"
-                          className="text-sm text-gray-600 hover:text-gray-900"
+                          className="text-sm text-gray-200 dark:text-gray-700"
                         >
                           View all
                         </Link>
