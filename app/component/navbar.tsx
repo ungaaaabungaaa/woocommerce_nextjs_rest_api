@@ -273,7 +273,7 @@ export default function Nav_bar() {
                 <Heart
                   onClick={handleWishlistClick}
                   onMouseEnter={() => handleIconMouseEnter("wishlist")}
-                  onMouseLeave={handleIconMouseLeave}
+                  // onMouseLeave={handleIconMouseLeave}
                   className="h-5 cursor-pointer text-white dark:text-black"
                 />
               </Badge>
