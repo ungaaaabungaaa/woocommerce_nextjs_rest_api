@@ -64,44 +64,101 @@ Start the server
   npm run start
 ```
 
-## Environment Variables
+# Environment Variables
 
-To run this project, you will need to add the following environment variables to your .env file
+This guide will help you configure the .env file when setting up the ClothVillage project. Follow the steps below to ensure all environment variables are correctly configured.
+
+# Environment Variables Explained
+
+### Backend and Frontend URLs
 
 `NEXT_PUBLIC_WORDPRESS_SITE_URL`
-`NEXT_PUBLIC_SITE_URL`
-`NEXT_PUBLIC_API_URL`
 
-Create woocommerce rest api auth keys
+- This is the backend WordPress site URL.
+  `NEXT_PUBLIC_SITE_URL`
+- This is the frontend URL. Replace it with the domain you use for the frontend (e.g., a Vercel deployment URL).
 
-`WC_CONSUMER_KEY`
-`WC_CONSUMER_SECRET`
+# WooCommerce API Keys
 
-add in cocart endpoints
+`WC_CONSUMER_KEY=ck_a87bee45cf036ead38159015b3660139962b9c2e`
+`WC_CONSUMER_SECRET=cs_fca482b412b6d14ffe164ab6ff8f4f1d6af17ad9`
 
-`NEXT_PUBLIC_VIEW_CART_URL`
-`NEXT_PUBLIC_ADD_CART_URL`
+These keys are generated in WordPress for the REST API. To generate them:
 
-add in paypal keys
+1. Log in to your WordPress admin panel.
+2. Navigate to WooCommerce > Settings > Advanced > REST API.
+3. Click "Add Key."
+4. Enter a description, select the user, and set permissions to Read/Write.
+5. Generate the key and copy the Consumer Key and Consumer Secret into the .env file.
 
-`NEXT_PUBLIC_PAYPAL_CLIENT_ID`
+# CoCart API Endpoints
 
-add in firebase web keys
+- `NEXT_PUBLIC_VIEW_CART_URL=https://clothvillage.com/wp-json/cocart/v2/cart`
+- `NEXT_PUBLIC_ADD_CART_URL=https://clothvillage.com/wp-json/cocart/v2/cart/add-item`
 
-`NEXT_PUBLIC_PAYPAL_CLIENT_ID`
-`NEXT_PUBLIC_FIREBASE_API_KEY`
-`NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`
-`NEXT_PUBLIC_FIREBASE_PROJECT_ID`
-`NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`
-`NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`
-`NEXT_PUBLIC_FIREBASE_APP_ID`
-`NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID`
+These are CoCart endpoints used for cart operations. Note that the URL might change if the backend URL changes, but the endpoints (/cart and /cart/add-item) remain the same.
+
+# Backend API URL
+
+- `NEXT_PUBLIC_API_URL=https://clothvillage.com`
+- This is the backend API URL.
+
+# PayPal Client ID
+
+- `NEXT_PUBLIC_PAYPAL_CLIENT_ID=AaMWJxShAuaNSFi30bJSDmVbAwy1LqZgWYyvvFNkkPZEts0uqTh80r2UitF8O32p5odfqFUhzF1Jy0Wq`
+
+1. To generate a PayPal client ID for payment processing:
+2. Log in to your PayPal Developer account: https://developer.paypal.com.
+3. Navigate to Dashboard > My Apps & Credentials.
+4. Create a new app under REST API apps.
+
+# Firebase SDK Keys
+
+- `NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyBw7eEVv205f4cAWFYH_xbmuz5JyPXy8LA`
+- `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=clothesvillageauth.firebaseapp.com`
+- `NEXT_PUBLIC_FIREBASE_PROJECT_ID=clothesvillageauth`
+- `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=clothesvillageauth.firebase.storage.app`
+- `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=448354174238`
+- `NEXT_PUBLIC_FIREBASE_APP_ID=1:448354174238:web:7bb4de2650c9b3b345b50f`
+- `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-BXJ1P36ZEZ`
+
+These are Firebase SDK keys. Ensure they match your Firebase project. If you need to set up a Firebase project:
+
+1. Go to Firebase Console.
+2. Create a new project or select an existing one.
+3. Navigate to Project Settings > General > Your Apps.
+4. Add a new app and copy the configuration keys.
+
+# Deployment on Vercel
+
+If deploying on Vercel, ensure the following:
+
+Update the `NEXT_PUBLIC_SITE_URL` variable to your Vercel deployment URL.
+Add all environment variables in the Vercel dashboard:
+Go to Settings > Environment Variables in your Vercel project.
+Add the variables one by one.
+
+# example .env file
+
+`NEXT_PUBLIC_WORDPRESS_SITE_URL=https://clothvillage.com`
+`NEXT_PUBLIC_SITE_URL=http://localhost:3000`
+`WC_CONSUMER_KEY=ck_a87bee45cf036ead38159015b3660139962b9c2e`
+`WC_CONSUMER_SECRET=cs_fca482b412b6d14ffe164ab6ff8f4f1d6af17ad9`
+`NEXT_PUBLIC_VIEW_CART_URL=https://clothvillage.com/wp-json/cocart/v2/cart`
+`NEXT_PUBLIC_ADD_CART_URL=https://clothvillage.com/wp-json/cocart/v2/cart/add-item`
+`NEXT_PUBLIC_API_URL=https://clothvillage.com`
+`NEXT_PUBLIC_PAYPAL_CLIENT_ID=AaMWJxShAuaNSFi30bJSDmVbAwy1LqZgWYyvvFNkkPZEts0uqTh80r2UitF8O32p5odfqFUhzF1Jy0Wq`
+`NEXT_PUBLIC_FIREBASE_API_KEY=AIzaSyBw7eEVv205f4cAWFYH_xbmuz5JyPXy8LA`
+`NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=clothesvillageauth.firebaseapp.com`
+`NEXT_PUBLIC_FIREBASE_PROJECT_ID=clothesvillageauth`
+`NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=clothesvillageauth.firebasestorage.app`
+`NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=448354174238`
+`NEXT_PUBLIC_FIREBASE_APP_ID=1:448354174238:web:7bb4de2650c9b3b345b50f`
+`NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=G-BXJ1P36ZEZ`
 
 ## Roadmap
 
 - SEO
-- ChatBot
-- e-Lamma
 - Customer Reviews
 - Machine learning for Product Recommendation
 - Fuzzy Search
@@ -112,5 +169,4 @@ add in firebase web keys
 ## Documentation
 
 [Cocart](https://linktodocumentation) |
-[Woocommerce](https://linktodocumentation) |
-[FirebaseAuth](https://linktodocumentation)
+[Woocommerce](https://linktodocumentation)
