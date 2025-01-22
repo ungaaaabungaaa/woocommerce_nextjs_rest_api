@@ -7,6 +7,8 @@ import { Trash2 } from "lucide-react";
 import { useWishlist } from "@/context/wishlistContext";
 import axios from "axios";
 import { Button } from "@nextui-org/button";
+import { useCartKey } from "@/hooks/useCartKey";
+import { useCart } from "@/context/cartcontext";
 import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
 
 interface WishlistItem {
@@ -25,6 +27,8 @@ export default function WishlistPage() {
   const { wishlistCount, removeFromWishlist, wishlistItems } = useWishlist();
   const [wishlistProducts, setWishlistProducts] = useState<WishlistItem[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const { cartKey, loading, error: cartKeyError } = useCartKey();
+  const { fetchCartDetails } = useCart();
 
   useEffect(() => {
     const fetchWishlistProducts = async () => {
@@ -66,6 +70,42 @@ export default function WishlistPage() {
     return Math.round(discount);
   };
 
+  const addToCartApiCallSimple = async (id: string, quantity: string) => {
+    if (loading) {
+      console.log("Cart key is still loading...");
+      return;
+    }
+    if (cartKeyError) {
+      console.error("Error with cart key:", cartKeyError);
+      return;
+    }
+    const endpoint = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart/add-item?cart_key=${cartKey}`;
+    try {
+      const response = await axios.post(
+        endpoint,
+        new URLSearchParams({
+          id: id,
+          quantity: quantity.toString(),
+        }),
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        }
+      );
+      await fetchCartDetails(cartKey); // Refresh cart data after adding an item
+      if (typeof window !== "undefined" && (window as any).openCart) {
+        (window as any).openCart();
+      }
+    } catch (error: any) {
+      console.error(
+        "Error adding item to cart:",
+        error.response?.data || error.message
+      );
+      return;
+    }
+  };
+
   if (error) {
     return (
       <div className="w-full min-h-[400px] flex items-center justify-center text-red-500">
@@ -75,7 +115,7 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="ontainer mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
+    <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
       <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black">
         <div className="w-full max-w-7xl">
           <main className="px-4 py-8">
@@ -140,16 +180,25 @@ export default function WishlistPage() {
                     </div>
 
                     <div className="p-4">
-                      <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-2">
+                      <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-1">
                         {product.name}
                       </h2>
                     </div>
                     <div>
-                      <div className="flex space-x-2">
-                        <button className="w-1/3 text-center bg-white text-black dark:bg-black dark:text-white  text-xs rounded-full ">
+                      <div className="flex flex-col lg:flex-row lg:space-x-2">
+                        <Button
+                          href={`/product/${product.id}`}
+                          className="w-full lg:w-1/3 text-center bg-white text-black dark:bg-black dark:text-white py-2 px-4 text-xs rounded-full mt-1"
+                        >
                           View
-                        </button>
-                        <button className="w-1/3 text-center bg-red text-white py-2 px-4 text-xs rounded-full ">
+                        </Button>
+
+                        <button
+                          onClick={() =>
+                            addToCartApiCallSimple(product.id.toString(), "1")
+                          }
+                          className="w-full lg:w-1/3 text-center bg-red text-white py-2 px-4 text-xs rounded-full mt-2"
+                        >
                           Add To Bag
                         </button>
                       </div>
