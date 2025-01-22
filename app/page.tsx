@@ -34,8 +34,9 @@ export default function Home() {
     </section>
   );
 
-  // Font Changes
   // Cart Context
+  // wishlist Buttons ViewProduct & Add to Bag
   // Alignments
+  // Font Changes
   // Soruce Code Handover
 }

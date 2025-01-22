@@ -1,10 +1,9 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useCartKey } from "../../hooks/useCartKey";
+import { useCart } from "@/context/cartcontext"; // Adjust the import path as necessary
 
 interface CartItem {
   item_key: string;
@@ -24,24 +23,13 @@ interface CartData {
 }
 
 export function CartPopUp() {
-  const { cartKey, loading, error } = useCartKey();
-  const [cartData, setCartData] = useState<CartData | null>(null);
+  const { cartData, loading, error, fetchCartDetails } = useCart();
 
   useEffect(() => {
-    if (cartKey) {
+    if (!loading && !error) {
       fetchCartDetails();
     }
-  }, [cartKey]);
-
-  const fetchCartDetails = async () => {
-    try {
-      const url = `${process.env.NEXT_PUBLIC_WORDPRESS_SITE_URL}/wp-json/cocart/v2/cart`;
-      const response = await axios.get(url, { params: { cart_key: cartKey } });
-      setCartData(response.data);
-    } catch (err) {
-      console.error("Error fetching cart details:", err);
-    }
-  };
+  }, [fetchCartDetails, loading, error]);
 
   return (
     <div className="w-full text-white bg-transparent z-40 sticky top-12 dark:text-black">
@@ -70,7 +58,7 @@ export function CartPopUp() {
                   </p>
                 </div>
                 <div className="max-h-[400px] overflow-y-auto">
-                  {cartData.items.map((product) => (
+                  {cartData.items.map((product: any) => (
                     <div
                       key={product.item_key}
                       className="flex gap-4 py-4 border-b border-gray-700 dark:border-gray-200 group"
