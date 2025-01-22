@@ -68,56 +68,69 @@ export function AccountPopUp() {
       <nav className="container mx-auto mt-1 max-w-7xl">
         <div className="flex align-middle items-end flex-col">
           {CustomerName && (
-            <div className="w-1/5 bg-black dark:bg-white p-4 rounded-lg   border border-gray-700 dark:border-gray-200  ">
-              <div className="w-full border-b border-gray-700 dark:border-gray-200  pb-2">
+            <div className="w-1/5 bg-black dark:bg-white p-4 rounded-lg border border-gray-700 dark:border-gray-200">
+              <div className="w-full border-b border-gray-700 dark:border-gray-200 pb-2">
                 {CustomerName && <h1>{CustomerName}</h1>}
                 <h1 className="text-gray-400 dark:text-gray-600 text-sm mt-2">
                   Registered
                 </h1>
               </div>
               <div className="border-b border-gray-700 dark:border-gray-200 pb-2">
-                <h1
+                <button
                   className="hover:font-bold cursor-pointer text-white dark:text-black mt-2"
                   onClick={() => navigateTo("auth/user")}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && navigateTo("auth/user")
+                  }
                 >
                   Orders
-                </h1>
-                <h1
+                </button>
+                <button
                   className="hover:font-bold cursor-pointer text-white dark:text-black mt-2"
                   onClick={() => navigateTo("auth/useraccount")}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && navigateTo("auth/useraccount")
+                  }
                 >
                   Account
-                </h1>
+                </button>
               </div>
               <div>
-                <h1
+                <button
                   className="font-bold cursor-pointer text-red mt-2"
                   onClick={handleLogout}
+                  onKeyDown={(e) => e.key === "Enter" && handleLogout()}
                 >
                   LogOut
-                </h1>
+                </button>
               </div>
             </div>
           )}
 
           {!CustomerName && (
-            <div className="w-1/5 bg-black dark:bg-white p-4 rounded-lg   border border-gray-700 dark:border-gray-200  ">
-              <div className="w-full  border-gray-700 dark:border-gray-200  pb-2"></div>
-              <div className=" dark:border-gray-200 pb-2">
-                <h1
-                  className=" cursor-pointer  mt-2 bg-red text-white rounded-full w-full pl-12 pr-12  pt-2 pb-2 text-center"
+            <div className="w-1/5 bg-black dark:bg-white p-4 rounded-lg border border-gray-700 dark:border-gray-200">
+              <div className="w-full border-gray-700 dark:border-gray-200 pb-2" />
+              <div className="dark:border-gray-200 pb-2">
+                <button
+                  className="cursor-pointer mt-2 bg-red text-white rounded-full w-full pl-12 pr-12 pt-2 pb-2 text-center"
                   onClick={() => navigateTo("auth/login")}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && navigateTo("auth/login")
+                  }
                 >
                   Login
-                </h1>
-                <br></br>
-                <h1
+                </button>
+                <br />
+                <button
                   className="text-small cursor-pointer text-white dark:text-black mt-2"
                   onClick={() => navigateTo("auth/register")}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && navigateTo("auth/register")
+                  }
                 >
-                  Don't have an account?{" "}
+                  Don&apos;t have an account?{" "}
                   <span className="text-red underline">Sign up</span>
-                </h1>
+                </button>
               </div>
             </div>
           )}
