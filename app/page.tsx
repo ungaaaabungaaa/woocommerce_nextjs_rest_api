@@ -34,7 +34,6 @@ export default function Home() {
     </section>
   );
 
-  // Cart Context
   // wishlist Buttons ViewProduct & Add to Bag
   // Alignments
   // Font Changes

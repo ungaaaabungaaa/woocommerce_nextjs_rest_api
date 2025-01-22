@@ -144,6 +144,16 @@ export default function WishlistPage() {
                         {product.name}
                       </h2>
                     </div>
+                    <div>
+                      <div className="flex space-x-2">
+                        <button className="w-1/3 text-center bg-white text-black dark:bg-black dark:text-white  text-xs rounded-full ">
+                          View
+                        </button>
+                        <button className="w-1/3 text-center bg-red text-white py-2 px-4 text-xs rounded-full ">
+                          Add To Bag
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
