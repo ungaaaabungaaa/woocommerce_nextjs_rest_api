@@ -34,7 +34,8 @@ export default function Home() {
     </section>
   );
 
-  // popups
-  // alignments - product scrolls , pages max-w-7xl for all the pages
-  // documentation
+  // Font Changes
+  // Cart Context
+  // Alignments
+  // Soruce Code Handover
 }
