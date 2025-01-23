@@ -17,25 +17,20 @@ body {
 }
 
 :root {
-  --font-primary: "Inter", sans-serif; /* Updated to Inter */
-  --font-secondary: "Inter", sans-serif; /* Updated to Inter */
-  --font-sans: "Inter", sans-serif; /* Updated to Inter */
+  --font-primary: "Source Sans 3", sans-serif; /* Default font for the website */
+  --font-heading: "Inter", sans-serif; /* Font for h1, h2, h3 */
 }
 
 body {
-  font-family: var(--font-primary); /* Now uses Inter */
+  font-family: var(
+    --font-primary
+  ); /* Apply Source Sans 3 to the entire website */
 }
 
-.font-pt-serif {
-  font-family: var(--font-primary); /* Updated to Inter */
-}
-
-.font-playfair {
-  font-family: var(--font-secondary); /* Updated to Inter */
-}
-
-.font-source-sans {
-  font-family: var(--font-sans); /* Updated to Inter */
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading); /* Apply Inter to headings */
 }
 
 @layer utilities {
