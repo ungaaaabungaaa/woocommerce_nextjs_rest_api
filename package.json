@@ -15,6 +15,8 @@
   },
   "dependencies": {
     "@cocart/cocart-rest-api": "^1.1.0",
+    "@heroui/alert": "^2.2.10",
+    "@heroui/form": "^2.1.9",
     "@nextui-org/accordion": "^2.0.40",
     "@nextui-org/autocomplete": "^2.1.7",
     "@nextui-org/badge": "^2.0.32",

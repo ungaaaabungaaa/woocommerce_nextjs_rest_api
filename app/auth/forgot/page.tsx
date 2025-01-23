@@ -7,6 +7,7 @@ import Link from "next/link";
 import NextImage from "next/image";
 import { sendPasswordReset } from "../../../config/firebase";
 import SiteLogo from "@/public/finallogo.svg";
+import { Form } from "@heroui/form";
 
 function Forgot() {
   const [mounted, setMounted] = useState(false);
@@ -68,7 +69,11 @@ function Forgot() {
             RESET PASSWORD
           </p>
         </div>
-        <form className="flex flex-col gap-3" onSubmit={sendRestMail}>
+        <Form
+          validationBehavior="native"
+          className="flex flex-col gap-3"
+          onSubmit={sendRestMail}
+        >
           <Input
             isRequired
             labelPlacement="inside"
@@ -103,7 +108,7 @@ function Forgot() {
               Create an Account?
             </Link>
           </div>
-        </form>
+        </Form>
         <div className="flex items-center gap-4 py-2 ">
           <Divider className="flex-1 bg-white dark:bg-black" />
           <p className="shrink-0 text-tiny text-default-500 text-white dark:text-black">

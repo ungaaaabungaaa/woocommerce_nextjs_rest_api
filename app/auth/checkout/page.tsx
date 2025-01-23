@@ -11,6 +11,7 @@ import { useCartKey } from "@/hooks/useCartKey";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../../../config/firebase";
+import { Form } from "@heroui/form";
 
 interface FormData {
   email: string;
@@ -310,7 +311,10 @@ function CheckoutCustomer() {
             Shipping Information
           </h3>
 
-          <form onSubmit={(e) => e.preventDefault()}>
+          <Form
+            validationBehavior="native"
+            onSubmit={(e) => e.preventDefault()}
+          >
             {!hideEmail && (
               <div className="mb-4">
                 <label
@@ -490,7 +494,7 @@ function CheckoutCustomer() {
                 />
               </div>
             </div>
-          </form>
+          </Form>
         </div>
 
         <div className="w-full h-auto lg:order-1 p-6 lg:p-12 flex align-middle justify-center flex-col">

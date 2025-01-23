@@ -12,6 +12,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import SiteLogo from "@/public/finallogo.svg";
+import { Form } from "@heroui/form";
 
 import {
   googleProvider,
@@ -165,7 +166,11 @@ export default function Login() {
             </Link>
           </p>
         </div>
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <Form
+          validationBehavior="native"
+          className="flex flex-col gap-3"
+          onSubmit={handleSubmit}
+        >
           <Input
             isRequired
             labelPlacement="inside"
@@ -229,7 +234,7 @@ export default function Login() {
               Forgot password?
             </Link>
           </div>
-        </form>
+        </Form>
         <div className="flex items-center gap-4 py-2 ">
           <Divider className="flex-1 bg-white dark:bg-black" />
           <p className="shrink-0 text-tiny text-default-500 text-white dark:text-black">

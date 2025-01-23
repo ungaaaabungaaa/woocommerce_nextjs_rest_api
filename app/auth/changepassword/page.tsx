@@ -17,6 +17,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import SiteLogo from "@/public/finallogo.svg";
+import { Form } from "@heroui/form";
 
 async function getUserAuthDetails(router: any) {
   onAuthStateChanged(auth, (user) => {
@@ -155,7 +156,11 @@ function ChangePassword() {
           </p>
         </div>
 
-        <form className="flex flex-col gap-3" onSubmit={handlePasswordChange}>
+        <Form
+          validationBehavior="native"
+          className="flex flex-col gap-3"
+          onSubmit={handlePasswordChange}
+        >
           <Input
             isRequired
             labelPlacement="inside"
@@ -273,7 +278,7 @@ function ChangePassword() {
           >
             {isLoading ? "Updating..." : "Update Password"}
           </Button>
-        </form>
+        </Form>
         <br />
         <br />
       </div>

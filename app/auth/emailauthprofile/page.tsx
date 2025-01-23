@@ -13,6 +13,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import SiteLogo from "@/public/finallogo.svg";
+import { Form } from "@heroui/form";
 
 interface CustomerUpdateData {
   id: string;
@@ -407,7 +408,11 @@ function EmailAuthProfile() {
         </div>
 
         {/* Profile Form */}
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
+        <Form
+          validationBehavior="native"
+          className="flex flex-col gap-3"
+          onSubmit={handleSubmit}
+        >
           <Input
             isRequired
             labelPlacement="inside"
@@ -589,7 +594,7 @@ function EmailAuthProfile() {
                 ? "Update Details"
                 : "Create Profile"}
           </Button>
-        </form>
+        </Form>
 
         <p className="text-center text-small text-white dark:text-black">
           © 2025 the clothes village store identity.{" "}

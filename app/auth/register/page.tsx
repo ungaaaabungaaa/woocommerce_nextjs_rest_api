@@ -20,6 +20,7 @@ import {
   auth,
 } from "../../../config/firebase";
 import axios from "axios";
+import { Form } from "@heroui/form";
 
 export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
@@ -140,19 +141,6 @@ export default function Register() {
     const newErrors = {};
     let isValid = true;
 
-    // Validate each field
-    // if (!formData.firstName) {
-    //   // newErrors.firstName = "First name is required";
-    //   console.log("First name is required");
-    //   isValid = false;
-    // }
-
-    // if (!formData.surname) {
-    //   // newErrors.surname = "Surname is required";
-    //   console.log("Surname is required");
-    //   isValid = false;
-    // }
-
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
       // newErrors.email = "Please enter a valid email";
       console.log("Please enter a valid email");
@@ -170,12 +158,6 @@ export default function Register() {
       console.log("Passwords do not match");
       isValid = false;
     }
-
-    // if (!formData.country) {
-    //   console.log("Please select a country");
-    //   // newErrors.country = "Please select a country";
-    //   isValid = false;
-    // }
 
     return isValid;
   };
@@ -305,41 +287,11 @@ export default function Register() {
         </div>
 
         {/* Registration Form */}
-        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
-          {/* <Input
-            isRequired
-            labelPlacement="inside"
-            label="First Name"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleChange}
-            placeholder="Enter Your First Name"
-            type="text"
-            classNames={{
-              label: "text-white/50 dark:text-black/90",
-              input: ["bg-white dark:bg-black"],
-              innerWrapper: "bg-transparent",
-              inputWrapper: ["bg-white dark:bg-black"],
-            }}
-          />
-
-          <Input
-            isRequired
-            labelPlacement="inside"
-            label="Surname"
-            name="surname"
-            value={formData.surname}
-            onChange={handleChange}
-            placeholder="Enter Your Surname"
-            type="text"
-            classNames={{
-              label: "text-white/50 dark:text-black/90",
-              input: ["bg-white dark:bg-black"],
-              innerWrapper: "bg-transparent",
-              inputWrapper: ["bg-white dark:bg-black"],
-            }}
-          /> */}
-
+        <Form
+          className="flex flex-col gap-3"
+          validationBehavior="native"
+          onSubmit={handleSubmit}
+        >
           <Input
             isRequired
             labelPlacement="inside"
@@ -421,40 +373,6 @@ export default function Register() {
             }}
           />
 
-          {/* <Select
-            label="Select country"
-            placeholder="Select your country"
-            name="country"
-            value={formData.country}
-            onChange={handleChange}
-            className="bg-white rounded-3xl text-black"
-            classNames={{
-              listboxWrapper: "bg-white dark:bg-black",
-              base: "bg-white dark:bg-black",
-              trigger: "bg-white dark:bg-black",
-              listbox: "bg-white dark:bg-black",
-              innerWrapper: "bg-white dark:bg-black",
-              selectorIcon: "text-black dark:text-white",
-            }}
-          >
-            {countries.map((country) => (
-              <SelectItem
-                key={country.key}
-                value={country.name}
-                className="text-black dark:text-white"
-                startContent={
-                  <Avatar
-                    alt={country.name}
-                    className="w-6 h-6"
-                    src={`https://flagcdn.com/${country.code}.svg`}
-                  />
-                }
-              >
-                {country.name}
-              </SelectItem>
-            ))}
-          </Select> */}
-
           {/* Marketing Preferences */}
           <div className="mt-4">
             <p className="text-sm text-white dark:text-black mb-2">
@@ -513,7 +431,7 @@ export default function Register() {
           >
             Create Account
           </Button>
-        </form>
+        </Form>
         <div className="flex items-center gap-4 py-2 ">
           <Divider className="flex-1 bg-white dark:bg-black" />
           <p className="shrink-0 text-tiny text-default-500 text-white dark:text-black">
