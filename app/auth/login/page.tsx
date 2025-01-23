@@ -11,7 +11,7 @@ import { Divider } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
-import SiteLogo from "@/public/sitelogo.jpeg";
+import SiteLogo from "@/public/finallogo.svg";
 
 import {
   googleProvider,
