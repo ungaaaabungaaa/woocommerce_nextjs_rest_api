@@ -16,7 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
-import SiteLogo from "@/public/sitelogo.jpeg";
+import SiteLogo from "@/public/finallogo.svg";
 
 async function getUserAuthDetails(router: any) {
   onAuthStateChanged(auth, (user) => {
