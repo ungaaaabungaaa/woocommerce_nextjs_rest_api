@@ -25,8 +25,11 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
-import SiteLogo2 from "../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../public/blacklogo.svg";
+
+// import SiteLogo2 from "../../public/whitelogo.svg";
+// import SiteLogoDark2 from "../../public/blacklogo.svg";
+import Sitelogo from "@/public/finallogo.svg";
+
 import { useCart } from "../../context/cartcontext";
 import { MensMegaMenu } from "./mens-mega-menu";
 import { WomensMegaMenu } from "./womens-mega-menu";
@@ -194,32 +197,15 @@ export default function Nav_bar() {
                 className="sm:hidden"
               />
               <NavbarBrand className="pr-4">
-                {mounted && theme === "dark" ? (
-                  <NextImage
-                    onClick={handleLogoClick}
-                    src={SiteLogoDark2}
-                    alt="Site Logo"
-                    width={180}
-                    height={100}
-                    priority
-                    className="cursor-pointer"
-                  />
-                ) : mounted ? (
-                  <NextImage
-                    onClick={handleLogoClick}
-                    src={SiteLogo2}
-                    alt="Site Logo"
-                    width={180}
-                    height={100}
-                    priority
-                    className="cursor-pointer"
-                  />
-                ) : (
-                  <div
-                    style={{ width: 120, height: 40 }}
-                    className="cursor-pointer"
-                  />
-                )}
+                <NextImage
+                  onClick={handleLogoClick}
+                  src={Sitelogo}
+                  alt="Site Logo"
+                  width={280}
+                  height={200}
+                  priority
+                  className="cursor-pointer"
+                />
               </NavbarBrand>
 
               <NavbarContent className="hidden sm:flex gap-8" justify="start">
