@@ -128,8 +128,36 @@ export default function Login() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     console.log("handleSubmit");
+
+    // Collect form data
+    const data = Object.fromEntries(new FormData(event.currentTarget));
+    const errors: Record<string, string> = {};
+
+    // Validation logic
+    if (!data.email) {
+      errors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.toString())) {
+      errors.email = "Please enter a valid email address";
+    }
+
+    if (!data.password) {
+      errors.password = "Password is required";
+    } else if (data.password.toString().length < 6) {
+      errors.password = "Password must be at least 6 characters long";
+    }
+
+    // If errors exist, log them and prevent login
+    if (Object.keys(errors).length) {
+      console.error("Validation Errors:", errors);
+      return;
+    }
+
+    // Proceed with login if no validation errors
     try {
-      const userCredential = await signInWithEmailPassword(email, password);
+      const userCredential = await signInWithEmailPassword(
+        data.email.toString(),
+        data.password.toString()
+      );
       loginChecks(userCredential.user); // Call the loginChecks function
     } catch (error) {
       console.error("Email Login Failed:", error);
@@ -179,7 +207,16 @@ export default function Login() {
             name="email"
             placeholder="Enter your email"
             type="email"
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
+            isInvalid={
+              email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+            }
+            errorMessage={
+              email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+                ? "Please enter a valid email address"
+                : ""
+            }
             classNames={{
               label: "text-white/50 dark:text-black/90",
               input: ["bg-white dark:bg-black"],
@@ -187,16 +224,22 @@ export default function Login() {
               inputWrapper: ["bg-white dark:bg-black"],
             }}
           />
+
           <Input
             isRequired
             labelPlacement="inside"
+            label="Password"
+            name="password"
+            placeholder="Enter your password"
+            type={isVisible ? "text" : "password"}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
-            classNames={{
-              label: "text-white/50 dark:text-black/90",
-              input: ["bg-white dark:bg-black"],
-              innerWrapper: "bg-transparent",
-              inputWrapper: ["bg-white dark:bg-black"],
-            }}
+            isInvalid={password !== "" && password.length < 6}
+            errorMessage={
+              password !== "" && password.length < 6
+                ? "Password must be at least 6 characters long"
+                : ""
+            }
             endContent={
               <button type="button" onClick={toggleVisibility}>
                 {isVisible ? (
@@ -212,11 +255,12 @@ export default function Login() {
                 )}
               </button>
             }
-            label="Password"
-            name="password"
-            placeholder="Enter your password"
-            type={isVisible ? "text" : "password"}
-            className="bg-white rounded-3xl text-black"
+            classNames={{
+              label: "text-white/50 dark:text-black/90",
+              input: ["bg-white dark:bg-black"],
+              innerWrapper: "bg-transparent",
+              inputWrapper: ["bg-white dark:bg-black"],
+            }}
           />
 
           <Button
