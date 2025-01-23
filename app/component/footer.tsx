@@ -11,10 +11,7 @@ import NextImage from "next/image";
 import PromoBar from "./promo-bar";
 import { ScrollBasedVelocityDemo } from "./ScrollBasedVelocityDemo";
 import { useTheme } from "next-themes";
-import SiteLogoDark from "../../public/sitelogodark.jpg";
-
-import SiteLogo2 from "../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../public/blacklogo.svg";
+import Sitelogo from "@/public/finallogo.svg";
 
 const footerLinks = [
   {
@@ -173,33 +170,15 @@ const Footer = () => {
 
           <div className="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
             <div className="mb-4 md:mb-0">
-              {mounted && theme === "dark" ? (
-                <NextImage
-                  onClick={handleLogoClick}
-                  src={SiteLogoDark2}
-                  alt="Site Logo"
-                  width={160}
-                  height={80}
-                  priority
-                  className="cursor-pointer"
-                />
-              ) : mounted ? (
-                <NextImage
-                  onClick={handleLogoClick}
-                  src={SiteLogo2}
-                  alt="Site Logo"
-                  width={160}
-                  height={80}
-                  priority
-                  className="cursor-pointer"
-                />
-              ) : (
-                // Optional: A placeholder to avoid layout shift
-                <div
-                  style={{ width: 120, height: 40 }}
-                  className="cursor-pointer"
-                />
-              )}
+              <NextImage
+                onClick={handleLogoClick}
+                src={Sitelogo}
+                alt="Site Logo"
+                width={160}
+                height={80}
+                priority
+                className="cursor-pointer"
+              />
             </div>
             <div className="flex space-x-4 text-sm">
               <Link href="/terms" className="">

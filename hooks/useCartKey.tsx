@@ -2,7 +2,7 @@
 import { useState, useEffect, ReactNode } from "react";
 import { fetchCartKey } from "../utils/api";
 import NextImage from "next/image";
-import SiteLogo2 from "../public/whitelogo.svg";
+import SiteLogo from "@/public/finallogo.svg";
 
 // Custom Hook
 export function useCartKey() {
@@ -53,7 +53,7 @@ export function CartKeyProvider({ children }: { children: ReactNode }) {
   if (loading) {
     return (
       <div className={`loading-overlay ${fadeOut ? "fade-out" : ""}`}>
-        <NextImage src={SiteLogo2} alt="Site Logo" width={360} height={280} />
+        <NextImage src={SiteLogo} alt="Site Logo" width={360} height={280} />
       </div>
     );
   }
