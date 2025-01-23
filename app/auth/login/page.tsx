@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import SiteLogo2 from "../../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Icon } from "@iconify/react";
@@ -13,6 +11,7 @@ import { Divider } from "@nextui-org/react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
+import SiteLogo from "@/public/sitelogo.jpeg";
 
 import {
   googleProvider,
@@ -141,31 +140,14 @@ export default function Login() {
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
-            {mounted && theme === "dark" ? (
-              <NextImage
-                src={SiteLogoDark2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            ) : mounted ? (
-              <NextImage
-                src={SiteLogo2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            ) : (
-              // Optional: A placeholder to avoid layout shift
-              <div
-                style={{ width: 260, height: 160 }}
-                className="cursor-pointer"
-              />
-            )}
+            <NextImage
+              src={SiteLogo}
+              alt="Site Logo"
+              width={260}
+              height={160}
+              priority
+              className="cursor-pointer"
+            />
           </div>
           <br></br>
 
@@ -301,8 +283,3 @@ export default function Login() {
     </div>
   );
 }
-
-// onlogin check the coustomer id exisst or not if not send to the respective profile page
-// https://clothvillage.com/wp-json/custom/v1/get-customer-id?email=uid@uid.com api call with the uid
-// if the costomer id exist with the details send to the home page
-// if no costomer id exist send them to profile page

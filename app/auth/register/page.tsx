@@ -5,13 +5,12 @@ import { Icon } from "@iconify/react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
-import SiteLogo2 from "../../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Divider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
+import SiteLogo from "@/public/finallogo.svg";
 import {
   googleProvider,
   facebookProvider,
@@ -276,16 +275,14 @@ export default function Register() {
         {/* Logo and Header Section */}
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
-            {mounted && (
-              <NextImage
-                src={theme === "dark" ? SiteLogoDark2 : SiteLogo2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            )}
+            <NextImage
+              alt="Site Logo"
+              width={260}
+              height={160}
+              priority
+              className="cursor-pointer"
+              src={SiteLogo}
+            />
           </div>
           <br></br>
 

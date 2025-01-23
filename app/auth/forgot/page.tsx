@@ -1,13 +1,12 @@
 "use client";
 import { Button } from "@nextui-org/button";
-import SiteLogo2 from "../../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import React, { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import { Divider, Input } from "@nextui-org/react";
 import Link from "next/link";
 import NextImage from "next/image";
 import { sendPasswordReset } from "../../../config/firebase";
+import SiteLogo from "@/public/finallogo.svg";
 
 function Forgot() {
   const [mounted, setMounted] = useState(false);
@@ -55,30 +54,14 @@ function Forgot() {
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
-            {mounted && theme === "dark" ? (
-              <NextImage
-                src={SiteLogoDark2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            ) : mounted ? (
-              <NextImage
-                src={SiteLogo2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            ) : (
-              <div
-                style={{ width: 260, height: 160 }}
-                className="cursor-pointer"
-              />
-            )}
+            <NextImage
+              src={SiteLogo}
+              alt="Site Logo"
+              width={260}
+              height={160}
+              priority
+              className="cursor-pointer"
+            />
           </div>
           <br></br>
           <p className="text-2xl md:text-4xl text-white dark:text-black font-semibold">

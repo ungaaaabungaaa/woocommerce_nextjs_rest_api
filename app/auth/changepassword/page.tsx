@@ -4,8 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import { Icon } from "@iconify/react";
-import SiteLogo2 from "../../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { auth } from "../../../config/firebase";
@@ -18,6 +16,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
+import SiteLogo from "@/public/sitelogo.jpeg";
 
 async function getUserAuthDetails(router: any) {
   onAuthStateChanged(auth, (user) => {
@@ -138,16 +137,14 @@ function ChangePassword() {
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large">
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
-            {mounted && (
-              <NextImage
-                src={theme === "dark" ? SiteLogoDark2 : SiteLogo2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            )}
+            <NextImage
+              src={SiteLogo}
+              alt="Site Logo"
+              width={260}
+              height={160}
+              priority
+              className="cursor-pointer"
+            />
           </div>
           <br />
           <p className="text-2xl md:text-2xl text-white dark:text-black font-semibold text-center">

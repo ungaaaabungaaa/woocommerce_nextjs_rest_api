@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import { Button } from "@nextui-org/button";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
-import SiteLogo2 from "../../../public/whitelogo.svg";
-import SiteLogoDark2 from "../../../public/blacklogo.svg";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Select, SelectItem } from "@nextui-org/select";
@@ -14,6 +12,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import SiteLogo from "@/public/finallogo.svg";
 
 interface CustomerUpdateData {
   id: string;
@@ -364,16 +363,14 @@ function Profile() {
         {/* Logo and Header Section */}
         <div className="flex flex-col items-center pb-6">
           <div className="mb-4 md:mb-0">
-            {mounted && (
-              <NextImage
-                src={theme === "dark" ? SiteLogoDark2 : SiteLogo2}
-                alt="Site Logo"
-                width={260}
-                height={160}
-                priority
-                className="cursor-pointer"
-              />
-            )}
+            <NextImage
+              src={SiteLogo}
+              alt="Site Logo"
+              width={260}
+              height={160}
+              priority
+              className="cursor-pointer"
+            />
           </div>
           <br />
           <p className="text-2xl md:text-2xl text-white dark:text-black font-semibold text-center">
