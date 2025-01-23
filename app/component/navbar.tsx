@@ -26,8 +26,6 @@ import {
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
 
-// import SiteLogo2 from "../../public/whitelogo.svg";
-// import SiteLogoDark2 from "../../public/blacklogo.svg";
 import Sitelogo from "@/public/finallogo.svg";
 
 import { useCart } from "../../context/cartcontext";

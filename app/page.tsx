@@ -33,7 +33,4 @@ export default function Home() {
       <br></br>
     </section>
   );
-
-  // Font Changes
-  // Soruce Code Handover
 }
