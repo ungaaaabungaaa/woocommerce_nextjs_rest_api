@@ -188,7 +188,7 @@ export default function WishlistPage() {
                       <div className="flex flex-col lg:flex-row lg:space-x-2">
                         <Button
                           href={`/product/${product.id}`}
-                          className="w-full lg:w-1/3 text-center bg-white text-black dark:bg-black dark:text-white py-2 px-4 text-xs rounded-full mt-1"
+                          className="w-full lg:w-1/3 text-center bg-white text-black dark:bg-black dark:text-white py-2 px-4 text-xs rounded-full mt-2 whitespace-nowrap"
                         >
                           View
                         </Button>
@@ -197,7 +197,7 @@ export default function WishlistPage() {
                           onClick={() =>
                             addToCartApiCallSimple(product.id.toString(), "1")
                           }
-                          className="w-full lg:w-1/3 text-center bg-red text-white py-2 px-4 text-xs rounded-full mt-2"
+                          className="w-full lg:w-1/3 text-center bg-red text-white py-2 px-4 text-xs rounded-full mt-2 whitespace-nowrap"
                         >
                           Add To Bag
                         </button>
