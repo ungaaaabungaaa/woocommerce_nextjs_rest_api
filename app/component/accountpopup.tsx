@@ -77,7 +77,7 @@ export function AccountPopUp() {
               </div>
               <div className="border-b border-gray-700 dark:border-gray-200 pb-2">
                 <button
-                  className="hover:font-bold cursor-pointer text-white dark:text-black mt-2"
+                  className="block w-full hover:font-bold cursor-pointer text-white dark:text-black mt-2 text-start"
                   onClick={() => navigateTo("auth/user")}
                   onKeyDown={(e) =>
                     e.key === "Enter" && navigateTo("auth/user")
@@ -86,7 +86,7 @@ export function AccountPopUp() {
                   Orders
                 </button>
                 <button
-                  className="hover:font-bold cursor-pointer text-white dark:text-black mt-2"
+                  className="block w-full hover:font-bold cursor-pointer text-white dark:text-black mt-2 text-start"
                   onClick={() => navigateTo("auth/useraccount")}
                   onKeyDown={(e) =>
                     e.key === "Enter" && navigateTo("auth/useraccount")
