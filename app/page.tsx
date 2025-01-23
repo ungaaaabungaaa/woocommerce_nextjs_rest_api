@@ -34,3 +34,6 @@ export default function Home() {
     </section>
   );
 }
+
+// tooltips
+// cards alignments
