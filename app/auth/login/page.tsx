@@ -169,6 +169,7 @@ export default function Login() {
         <Form
           validationBehavior="native"
           className="flex flex-col gap-3"
+          autoComplete="off"
           onSubmit={handleSubmit}
         >
           <Input

@@ -290,6 +290,7 @@ export default function Register() {
         <Form
           className="flex flex-col gap-3"
           validationBehavior="native"
+          autoComplete="off"
           onSubmit={handleSubmit}
         >
           <Input

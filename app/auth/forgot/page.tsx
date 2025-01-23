@@ -72,6 +72,7 @@ function Forgot() {
         <Form
           validationBehavior="native"
           className="flex flex-col gap-3"
+          autoComplete="off"
           onSubmit={sendRestMail}
         >
           <Input
