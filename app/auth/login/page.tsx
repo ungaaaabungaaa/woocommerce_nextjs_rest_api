@@ -234,10 +234,10 @@ export default function Login() {
             type={isVisible ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            isInvalid={password !== "" && password.length < 6}
+            isInvalid={password !== "" && password.length < 8}
             errorMessage={
-              password !== "" && password.length < 6
-                ? "Password must be at least 6 characters long"
+              password !== "" && password.length < 8
+                ? "Password must be at least 8 characters long"
                 : ""
             }
             endContent={
