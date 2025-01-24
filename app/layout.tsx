@@ -5,6 +5,7 @@ import PayPalProvider from "@/context/PayPalProvider";
 import { CartKeyProvider } from "@/hooks/useCartKey";
 import { WishlistProvider } from "../context/wishlistContext";
 import LayoutWrapper from "../app/component/layout-wrapper";
+import { AuthProvider } from "@/context/AuthContext";
 
 export const metadata = {
   title: "The Clothes Village",
@@ -51,15 +52,17 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <WishlistProvider>
-            <PayPalProvider>
-              <CartKeyProvider>
-                <CartProvider>
-                  <LayoutWrapper>{children}</LayoutWrapper>
-                </CartProvider>
-              </CartKeyProvider>
-            </PayPalProvider>
-          </WishlistProvider>
+          <AuthProvider>
+            <WishlistProvider>
+              <PayPalProvider>
+                <CartKeyProvider>
+                  <CartProvider>
+                    <LayoutWrapper>{children}</LayoutWrapper>
+                  </CartProvider>
+                </CartKeyProvider>
+              </PayPalProvider>
+            </WishlistProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

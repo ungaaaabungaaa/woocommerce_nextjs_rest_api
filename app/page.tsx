@@ -35,6 +35,5 @@ export default function Home() {
   );
 }
 
-// add to wishlist on product add context
 // firebase context so its much better
 // maxwidth-10xl
