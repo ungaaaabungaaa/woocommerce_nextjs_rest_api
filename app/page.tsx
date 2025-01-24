@@ -35,9 +35,7 @@ export default function Home() {
   );
 }
 
-// first alerts on all the input feilds
 // fix the firebase context so its much better
-// fix the cartcontext provider cause it making to many api calls
 // add to wishlist on product add context
 // maxwidth-10xl
 // fix the alignments on the product page
