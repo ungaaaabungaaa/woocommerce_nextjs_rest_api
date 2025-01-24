@@ -2,7 +2,6 @@
 
 import type React from "react";
 import { useState, useEffect } from "react";
-import Image from "next/image";
 import { ShoppingCart, Share2, Heart } from "lucide-react";
 import { Button } from "@nextui-org/button";
 import { Chip } from "@nextui-org/chip";
@@ -17,11 +16,7 @@ import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import { PopUpCart } from "@/app/component/popupcart";
 import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
 import ProductGallery from "./productGallery";
-import {
-  storeWishlist,
-  checkWishlist,
-  removeWishlistItem,
-} from "@/helper/wishlistHelper";
+import { useWishlist } from "@/context/wishlistContext";
 
 interface Attribute {
   id: number;
@@ -107,7 +102,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
   const { theme, setTheme } = useTheme(); // Access current theme and theme setter
-  const [isInWishlist, setIsInWishlist] = useState(false);
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist(); // Use the useWish
   const [productId, setProductId] = useState<number | null>(null);
 
   // Modify the mapProductImages function to include unique IDs
@@ -146,8 +141,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
         // Set product ID
         if (data.id) {
           setProductId(Number(data.id)); // Ensure it is a number
-          // Check if the product is already in the wishlist
-          setIsInWishlist(checkWishlist(data.id));
         }
 
         if (data.images) {
@@ -170,16 +163,14 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
             });
         }
       });
-  }, [params.product]);
+  }, [params.product, isInWishlist]);
 
   const handleWishlistToggle = () => {
     if (productId === null) return;
-    if (isInWishlist) {
-      removeWishlistItem(productId);
-      setIsInWishlist(false);
+    if (isInWishlist(productId)) {
+      removeFromWishlist(productId); // Use the removeFromWishlist function from context
     } else {
-      storeWishlist(productId);
-      setIsInWishlist(true);
+      addToWishlist(productId); // Use the addToWishlist function from context
     }
   };
 
@@ -467,11 +458,12 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                   className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
                   onClick={handleWishlistToggle}
                 >
-                  {/* Conditional Heart Icon */}
                   <Heart
-                    className={`mr-2 h-6 w-6 ${isInWishlist ? "fill-current text-white dark:text-black" : "stroke-current text-gray-500"}`}
+                    className={`mr-2 h-6 w-6 ${isInWishlist(productId as any) ? "fill-current text-white dark:text-black" : "stroke-current text-gray-500"}`}
                   />
-                  {isInWishlist ? "Added To Wishlist" : "Add To Wishlist"}
+                  {isInWishlist(productId as any)
+                    ? "Added To Wishlist"
+                    : "Add To Wishlist"}
                 </Button>
 
                 <div className="flex space-x-4 text-white dark:text-black">

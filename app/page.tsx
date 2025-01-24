@@ -35,8 +35,6 @@ export default function Home() {
   );
 }
 
-// fix the firebase context so its much better
 // add to wishlist on product add context
+// firebase context so its much better
 // maxwidth-10xl
-// fix the alignments on the product page
-// fix the account api details as well
