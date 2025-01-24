@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import type React from "react";
+import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import NextImage from "next/image";
 import { Icon } from "@iconify/react";
@@ -12,7 +13,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { onAuthStateChanged } from "firebase/auth";
 import SiteLogo from "@/public/finallogo.svg";
-import { Form } from "@heroui/form";
+import FormAlert from "@/app/component/FormAlert";
 
 import {
   googleProvider,
@@ -29,7 +30,16 @@ export default function Login() {
   const { theme } = useTheme();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const router = useRouter(); // Add router hook
+  const router = useRouter();
+
+  const [alert, setAlert] = useState<{ show: boolean; description: string }>({
+    show: false,
+    description: "",
+  });
+
+  const [errors, setErrors] = useState<{ email?: string; password?: string }>(
+    {}
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -47,7 +57,6 @@ export default function Login() {
       )
       .then((response) => {
         const customer_id = response.data.customer_id;
-        // If the customer_id is not null, navigate to the homepage
         if (customer_id !== null) {
           router.push("/");
         }
@@ -59,7 +68,7 @@ export default function Login() {
         if (error.response) {
           if (error.response.status === 404) {
             console.log("User authenticated but no customer found");
-            getUserAuthDetails(router); // Trigger the getUserAuthDetails function
+            getUserAuthDetails(router);
           } else {
             console.error("Error fetching customer ID:", error.response);
           }
@@ -80,14 +89,12 @@ export default function Login() {
       const uid = user.uid;
       console.log(`User UID: ${uid}`);
 
-      // Check the provider used for login
       let provider = "Unknown";
 
       if (user.providerData && user.providerData.length > 0) {
         provider = user.providerData[0].providerId;
       }
 
-      // if the login provider is password send it to the emailauthprofile
       console.log(`Login provider: ${provider}`);
       // Route to emailauthprofile if the provider is password
       if (provider === "password") {
@@ -125,42 +132,46 @@ export default function Login() {
     }
   };
 
+  const validateForm = () => {
+    const newErrors: { email?: string; password?: string } = {};
+
+    // Email validation
+    if (!email) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    // Password validation
+    if (!password) {
+      newErrors.password = "Password is required";
+    } else if (password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters long";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("handleSubmit");
 
-    // Collect form data
-    const data = Object.fromEntries(new FormData(event.currentTarget));
-    const errors: Record<string, string> = {};
-
-    // Validation logic
-    if (!data.email) {
-      errors.email = "Email is required";
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.toString())) {
-      errors.email = "Please enter a valid email address";
-    }
-
-    if (!data.password) {
-      errors.password = "Password is required";
-    } else if (data.password.toString().length < 6) {
-      errors.password = "Password must be at least 6 characters long";
-    }
-
-    // If errors exist, log them and prevent login
-    if (Object.keys(errors).length) {
-      console.error("Validation Errors:", errors);
-      return;
-    }
-
-    // Proceed with login if no validation errors
-    try {
-      const userCredential = await signInWithEmailPassword(
-        data.email.toString(),
-        data.password.toString()
-      );
-      loginChecks(userCredential.user); // Call the loginChecks function
-    } catch (error) {
-      console.error("Email Login Failed:", error);
+    if (validateForm()) {
+      try {
+        const userCredential = await signInWithEmailPassword(email, password);
+        loginChecks(userCredential.user);
+      } catch (error) {
+        console.error("Email Login Failed:", error);
+        setAlert({
+          show: true,
+          description: "Please Check your Credentials & try again.",
+        });
+      }
+    } else {
+      setAlert({
+        show: true,
+        description: "Please correct the errors in the form.",
+      });
     }
   };
 
@@ -193,9 +204,10 @@ export default function Login() {
               Create an Account
             </Link>
           </p>
+          <br></br>
+          <FormAlert show={alert.show} description={alert.description} />
         </div>
-        <Form
-          validationBehavior="native"
+        <form
           className="flex flex-col gap-3"
           autoComplete="off"
           onSubmit={handleSubmit}
@@ -209,20 +221,14 @@ export default function Login() {
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            isInvalid={
-              email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-            }
-            errorMessage={
-              email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-                ? "Please enter a valid email address"
-                : ""
-            }
             classNames={{
               label: "text-white/50 dark:text-black/90",
               input: ["bg-white dark:bg-black"],
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
+            isInvalid={!!errors.email}
+            errorMessage={errors.email}
           />
 
           <Input
@@ -234,12 +240,6 @@ export default function Login() {
             type={isVisible ? "text" : "password"}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            isInvalid={password !== "" && password.length < 8}
-            errorMessage={
-              password !== "" && password.length < 8
-                ? "Password must be at least 8 characters long"
-                : ""
-            }
             endContent={
               <button type="button" onClick={toggleVisibility}>
                 {isVisible ? (
@@ -261,6 +261,8 @@ export default function Login() {
               innerWrapper: "bg-transparent",
               inputWrapper: ["bg-white dark:bg-black"],
             }}
+            isInvalid={!!errors.password}
+            errorMessage={errors.password}
           />
 
           <Button
@@ -269,22 +271,12 @@ export default function Login() {
             type="submit"
             size="lg"
           >
-            log In
+            Log In
           </Button>
-          <div className="flex w-full items-center justify-center px-1 py-2">
-            <Link
-              className="text-default-500 text-white dark:text-black underline"
-              href="/auth/forgot"
-            >
-              Forgot password?
-            </Link>
-          </div>
-        </Form>
+        </form>
         <div className="flex items-center gap-4 py-2 ">
           <Divider className="flex-1 bg-white dark:bg-black" />
-          <p className="shrink-0 text-tiny text-default-500 text-white dark:text-black">
-            OR
-          </p>
+          <p className="shrink-0 text-sm text-white dark:text-black">OR</p>
           <Divider className="flex-1  bg-white dark:bg-black " />
         </div>
         <div className="flex flex-col gap-2">
