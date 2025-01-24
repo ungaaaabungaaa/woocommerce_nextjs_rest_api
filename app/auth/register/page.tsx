@@ -21,6 +21,7 @@ import {
 } from "../../../config/firebase";
 import axios from "axios";
 import { Form } from "@heroui/form";
+import FormAlert from "@/app/component/FormAlert";
 
 export default function Register() {
   const [isVisible, setIsVisible] = useState(false);
@@ -29,13 +30,14 @@ export default function Register() {
   const router = useRouter(); // Add router hook
 
   const [formData, setFormData] = useState({
-    // firstName: "",
-    // surname: "",
     email: "",
     password: "",
     confirmPassword: "",
-    // country: "",
     marketingConsent: "",
+  });
+  const [alert, setAlert] = useState<{ show: boolean; description: string }>({
+    show: false,
+    description: "",
   });
 
   const RegisterChecks = (user: any) => {
@@ -104,39 +106,6 @@ export default function Register() {
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const countries = [
-    { key: "us", name: "United States", code: "us" },
-    { key: "gb", name: "United Kingdom", code: "gb" },
-    { key: "ca", name: "Canada", code: "ca" },
-    { key: "au", name: "Australia", code: "au" },
-    { key: "de", name: "Germany", code: "de" },
-    { key: "fr", name: "France", code: "fr" },
-    { key: "it", name: "Italy", code: "it" },
-    { key: "es", name: "Spain", code: "es" },
-    { key: "pt", name: "Portugal", code: "pt" },
-    { key: "nl", name: "Netherlands", code: "nl" },
-    { key: "be", name: "Belgium", code: "be" },
-    { key: "ch", name: "Switzerland", code: "ch" },
-    { key: "at", name: "Austria", code: "at" },
-    { key: "se", name: "Sweden", code: "se" },
-    { key: "no", name: "Norway", code: "no" },
-    { key: "dk", name: "Denmark", code: "dk" },
-    { key: "fi", name: "Finland", code: "fi" },
-    { key: "ie", name: "Ireland", code: "ie" },
-    { key: "nz", name: "New Zealand", code: "nz" },
-    { key: "jp", name: "Japan", code: "jp" },
-    { key: "kr", name: "South Korea", code: "kr" },
-    { key: "cn", name: "China", code: "cn" },
-    { key: "in", name: "India", code: "in" },
-    { key: "br", name: "Brazil", code: "br" },
-    { key: "mx", name: "Mexico", code: "mx" },
-    { key: "ar", name: "Argentina", code: "ar" },
-    { key: "cl", name: "Chile", code: "cl" },
-    { key: "za", name: "South Africa", code: "za" },
-    { key: "eg", name: "Egypt", code: "eg" },
-    { key: "sa", name: "Saudi Arabia", code: "sa" },
-  ];
-
   const validateForm = () => {
     const newErrors = {};
     let isValid = true;
@@ -145,16 +114,28 @@ export default function Register() {
       // newErrors.email = "Please enter a valid email";
       console.log("Please enter a valid email");
       isValid = false;
+      setAlert({
+        show: true,
+        description: "Please enter a valid email.",
+      });
     }
 
     if (!formData.password) {
       // newErrors.password = "Password is required";
       console.log("Password is required");
+      setAlert({
+        show: true,
+        description: "Password is required.",
+      });
       isValid = false;
     }
 
     if (formData.password !== formData.confirmPassword) {
       // newErrors.confirmPassword = "Passwords do not match";
+      setAlert({
+        show: true,
+        description: "Passwords do not match.",
+      });
       console.log("Passwords do not match");
       isValid = false;
     }
@@ -228,6 +209,10 @@ export default function Register() {
       RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Google Login Failed:", error);
+      setAlert({
+        show: true,
+        description: "Google Login Failed:",
+      });
     }
   };
 
@@ -238,6 +223,10 @@ export default function Register() {
       RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Facebook Login Failed:", error);
+      setAlert({
+        show: true,
+        description: "Facebook Login Faileds:",
+      });
     }
   };
 
@@ -248,6 +237,10 @@ export default function Register() {
       RegisterChecks(userCredential.user); // Call the RegisterChecks function
     } catch (error) {
       console.error("Apple Login Failed:", error);
+      setAlert({
+        show: true,
+        description: "Apple Login Failed:",
+      });
     }
   };
 
@@ -284,6 +277,8 @@ export default function Register() {
               Log in
             </Link>
           </p>
+          <br></br>
+          <FormAlert show={alert.show} description={alert.description} />
         </div>
 
         {/* Registration Form */}
