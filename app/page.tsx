@@ -34,6 +34,3 @@ export default function Home() {
     </section>
   );
 }
-
-// firebase context so its much better
-// maxwidth-10xl
