@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useCart } from "@/context/cartcontext"; // Adjust the import path as necessary
@@ -26,10 +26,10 @@ export function CartPopUp() {
   const { cartData, loading, error, fetchCartDetails } = useCart();
 
   useEffect(() => {
-    if (!loading && !error) {
+    if (!loading && !error && !cartData) {
       fetchCartDetails();
     }
-  }, [fetchCartDetails, loading, error]);
+  }, [loading, error, cartData, fetchCartDetails]);
 
   return (
     <div className="w-full text-white bg-transparent z-40 sticky top-12 dark:text-black">
