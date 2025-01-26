@@ -200,7 +200,7 @@ export default function ChipsChategoriesFilter({
 
   return (
     <div className="w-full">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0">
           {/* Categories Scroll */}
           <div className="w-full md:max-w-[72%] md:flex-1">
@@ -233,7 +233,7 @@ export default function ChipsChategoriesFilter({
           </div>
 
           {/* Count and Buttons */}
-          <div className="flex items-center w-full md:w-auto md:space-x-4 md:flex-shrink-0">
+          <div className="flex items-center w-full md:w-auto md:space-x-4 md:flex-shrink-0 pb-2">
             {/* Count */}
             <div className="text-white dark:text-black whitespace-nowrap pl-4 hidden md:block">
               {totalProducts} Products
