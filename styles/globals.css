@@ -325,3 +325,17 @@ input::placeholder {
 .debug {
   border: solid 1px red;
 }
+
+@media (hover: hover) {
+  .hover-enabled:hover {
+    /* Your hover styles here */
+    opacity: 0.8;
+  }
+}
+
+/* Hide popups by default on touch devices */
+@media (hover: none) {
+  .popup {
+    display: none !important;
+  }
+}

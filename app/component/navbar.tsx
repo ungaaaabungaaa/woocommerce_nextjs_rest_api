@@ -43,6 +43,7 @@ import { useWishlist } from "../../context/wishlistContext";
 import { CartPopUp } from "./cartpopup";
 import { AccountPopUp } from "./accountpopup";
 import { WishlistPopUp } from "./wishlistpopup";
+import { useHoverSupport } from "@/hooks/useHoverSupport";
 
 export default function Nav_bar() {
   const router = useRouter();
@@ -55,6 +56,7 @@ export default function Nav_bar() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const { wishlistCount } = useWishlist();
   const [visibleIconPopup, setVisibleIconPopup] = useState("");
+  const supportsHover = useHoverSupport();
 
   useEffect(() => {
     setMounted(true);
@@ -79,7 +81,7 @@ export default function Nav_bar() {
   // Update wishlist count when component mounts and after any navigation
   useEffect(() => {
     //setWishlistItemCount(wishlistCount());
-  }, [pathname]);
+  }, []); // Removed pathname dependency
 
   const handleSearchClick = () => {
     if (pathname === "/search") {
@@ -131,11 +133,15 @@ export default function Nav_bar() {
   ];
 
   const handleIconMouseEnter = (popup: string) => {
-    setVisibleIconPopup(popup);
+    if (supportsHover) {
+      setVisibleIconPopup(popup);
+    }
   };
 
   const handleIconMouseLeave = () => {
-    setVisibleIconPopup("");
+    if (supportsHover) {
+      setVisibleIconPopup("");
+    }
   };
 
   return (
@@ -211,7 +217,10 @@ export default function Nav_bar() {
                   <NavbarItem
                     key={menu.name}
                     className="text-white hover:font-bold dark:text-black"
-                    onMouseEnter={() => setVisibleMegaMenu(menu.name)}
+                    onMouseEnter={() =>
+                      supportsHover && setVisibleMegaMenu(menu.name)
+                    }
+                    onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
                   >
                     <Link href="#">{menu.name}&apos;s</Link>
                   </NavbarItem>
@@ -227,8 +236,9 @@ export default function Nav_bar() {
 
               {isAuthenticated ? (
                 <div
+                  className={supportsHover ? "hover-enabled" : ""}
                   onMouseEnter={() => handleIconMouseEnter("account")}
-                  // onMouseLeave={handleIconMouseLeave}
+                  onMouseLeave={handleIconMouseLeave}
                 >
                   <UserCircle
                     className="h-5 cursor-pointer text-white dark:text-black"
@@ -237,8 +247,9 @@ export default function Nav_bar() {
                 </div>
               ) : (
                 <div
+                  className={supportsHover ? "hover-enabled" : ""}
                   onMouseEnter={() => handleIconMouseEnter("account")}
-                  // onMouseLeave={handleIconMouseLeave}
+                  onMouseLeave={handleIconMouseLeave}
                 >
                   <User
                     className="h-5 cursor-pointer text-white dark:text-black"
@@ -252,14 +263,17 @@ export default function Nav_bar() {
                 className="border-none"
                 shape="circle"
                 color="danger"
-                onMouseEnter={() => handleIconMouseEnter("wishlist")}
               >
-                <Heart
-                  onClick={handleWishlistClick}
+                <div
+                  className={supportsHover ? "hover-enabled" : ""}
                   onMouseEnter={() => handleIconMouseEnter("wishlist")}
-                  // onMouseLeave={handleIconMouseLeave}
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                />
+                  onMouseLeave={handleIconMouseLeave}
+                >
+                  <Heart
+                    onClick={handleWishlistClick}
+                    className="h-5 cursor-pointer text-white dark:text-black"
+                  />
+                </div>
               </Badge>
 
               <Badge
@@ -267,15 +281,17 @@ export default function Nav_bar() {
                 className="border-none"
                 shape="circle"
                 color="danger"
-                onMouseEnter={() => handleIconMouseEnter("cart")}
-                // onMouseLeave={handleIconMouseLeave}
               >
-                <ShoppingBag
-                  onClick={handleCartClick}
+                <div
+                  className={supportsHover ? "hover-enabled" : ""}
                   onMouseEnter={() => handleIconMouseEnter("cart")}
-                  // onMouseLeave={handleIconMouseLeave}
-                  className="h-5 cursor-pointer text-white dark:text-black"
-                />
+                  onMouseLeave={handleIconMouseLeave}
+                >
+                  <ShoppingBag
+                    onClick={handleCartClick}
+                    className="h-5 cursor-pointer text-white dark:text-black"
+                  />
+                </div>
               </Badge>
 
               {mounted && (
@@ -317,8 +333,10 @@ export default function Nav_bar() {
                   ? "opacity-100 visible"
                   : "opacity-0 invisible pointer-events-none"
               }`}
-              onMouseEnter={() => setVisibleMegaMenu(menu.name)}
-              onMouseLeave={() => setVisibleMegaMenu("")}
+              onMouseEnter={() =>
+                supportsHover && setVisibleMegaMenu(menu.name)
+              }
+              onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
             >
               <menu.component />
             </div>
