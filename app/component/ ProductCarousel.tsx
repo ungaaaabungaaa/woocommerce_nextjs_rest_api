@@ -229,7 +229,7 @@ const ProductCarousel = () => {
   }
 
   return (
-    <div className="w-full max-w-7xl h-full py-4">
+    <div className="w-full h-full py-4">
       <ToastContainer />
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
         <h2 className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans">
