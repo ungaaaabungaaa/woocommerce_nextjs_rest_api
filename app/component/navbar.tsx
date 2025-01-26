@@ -220,7 +220,7 @@ export default function Nav_bar() {
                     onMouseEnter={() =>
                       supportsHover && setVisibleMegaMenu(menu.name)
                     }
-                    onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
+                    // onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
                   >
                     <Link href="#">{menu.name}&apos;s</Link>
                   </NavbarItem>
