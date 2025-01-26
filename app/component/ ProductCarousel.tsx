@@ -72,6 +72,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+  const isNewProduct = (dateCreated: string) => {
+    const productDate = new Date(dateCreated);
+    const currentDate = new Date();
+    const differenceInTime = currentDate.getTime() - productDate.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    return differenceInDays < 15;
+  };
+
   return (
     <Card
       tabIndex={0}
@@ -104,16 +112,18 @@ const ProductCard = ({ product }: ProductCardProps) => {
             />
           </div>
 
-          {product.sale_price && product.regular_price && (
-            <div
-              className="absolute left-2 bottom-2 z-10"
-              aria-label={`${calculateDiscount(product.regular_price, product.sale_price)}% off`}
-            >
+          <div className="absolute left-2 bottom-2 z-10 flex items-center space-x-2">
+            {isNewProduct(product.date_created) && (
+              <span className="bg-white text-black rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                New
+              </span>
+            )}
+            {product.sale_price && product.regular_price && (
               <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
                 -{calculateDiscount(product.regular_price, product.sale_price)}%
               </span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
 
         <div className="flex justify-between items-center mt-2">
