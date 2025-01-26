@@ -125,12 +125,12 @@ function StoreId({ params }: { params: Params }) {
           </div>
         ) : (
           <div className="min-h-screen bg-black dark:bg-white">
-            <div className="bg-black dark:bg-white max-w-7xl mx-auto">
+            <div className="bg-black dark:bg-white overflow-hidden w-full flex justify-center items-center">
               <br></br>
               <ToastContainer />
               <br></br>
 
-              <div className="container mx-auto px-4 py-8">
+              <div className="w-full max-w-7xl container mx-auto px-4 py-8">
                 <Breadcrumbs
                   itemClasses={{
                     item: "text-white/60 dark:text-black data-[current=true]:text-white",
@@ -190,3 +190,5 @@ function StoreId({ params }: { params: Params }) {
 }
 
 export default StoreId;
+
+// hello

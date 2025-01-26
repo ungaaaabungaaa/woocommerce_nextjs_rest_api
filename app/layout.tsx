@@ -69,9 +69,4 @@ export default function RootLayout({
   );
 }
 
-// 1.max-width change from 7-xl to 9xl
-// 2.overlap cards scrolls
-// 3.Font sizes on the card & new card
 // 4.Store Page Alignments
-// 5.Paginiation
-// 5.add in mouse leave and enter

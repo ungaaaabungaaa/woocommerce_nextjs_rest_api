@@ -150,7 +150,7 @@ export default function Nav_bar() {
         <div className="w-full flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
           <Navbar
             maxWidth="xl"
-            className="bg-white text-black dark:bg-black dark:text-white h-10 w-full max-w-7xl "
+            className="bg-white text-black dark:bg-black dark:text-white h-8 w-full  max-w-7xl "
           >
             <NavbarContent className="sm:flex gap-4" justify="start">
               <NavbarBrand className="pr-4 hidden sm:flex">
@@ -192,7 +192,7 @@ export default function Nav_bar() {
         <div className="w-full flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black border-b border-gray-700 dark:border-gray-200 ">
           <Navbar
             maxWidth="full"
-            className="bg-black text-white dark:bg-white dark:text-black max-w-7xl"
+            className="bg-black text-white dark:bg-white dark:text-black px-4 max-w-7xl"
             onMenuOpenChange={setIsMenuOpen}
           >
             <NavbarContent className="sm:flex gap-4" justify="start">

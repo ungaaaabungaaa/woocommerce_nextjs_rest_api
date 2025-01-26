@@ -129,7 +129,7 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div className="bg-black dark:bg-white overflow-hidden">
+          <div className="bg-black dark:bg-white overflow-hidden  w-full flex justify-center items-center">
             <br />
             <ToastContainer />
             <br />
@@ -184,3 +184,5 @@ function StorePage() {
 }
 
 export default StorePage;
+
+// hello
