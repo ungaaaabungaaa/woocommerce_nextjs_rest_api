@@ -85,10 +85,6 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
               )}
             </div>
 
-            <p className="text-white dark:text-black text-left text-balance text-base font-normal tracking-[-0.015em] mt-2">
-              {product.title}
-            </p>
-
             <div className="flex justify-between items-center">
               {product.sale_price && product.regular_price ? (
                 <div className="flex items-center">
@@ -109,6 +105,10 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                 </span>
               ) : null}
             </div>
+
+            <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
+              {product.title}
+            </p>
           </CardBody>
         </Card>
       ))}
