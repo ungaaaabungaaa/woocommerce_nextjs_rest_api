@@ -17,7 +17,6 @@ module.exports = {
         protocol: 'https',
         hostname: 'clothvillage.com',
       },
-      // Add more patterns here
       {
         protocol: 'https',
         hostname: 'nextui.org',
