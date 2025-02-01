@@ -46,14 +46,6 @@ const ProductCard = ({ product }: ProductCardProps) => {
     router.push(`/product/${productId}`);
   };
 
-  const handleKeyDown = (
-    event: React.KeyboardEvent<HTMLDivElement>,
-    action: () => void
-  ) => {
-    if (event.key === "Enter" || event.key === " ") {
-      action();
-    }
-  };
 
   const calculateDiscount = (regularPrice: string, salePrice: string) => {
     const regular = Number.parseFloat(regularPrice);
@@ -129,22 +121,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
               <span className="text-gray-500 dark:text-gray-400 text-base md:text-xl lg:text-2xl line-through mr-2">
                 ${product.regular_price}
               </span>
-              <span className="text-white dark:text-black font-semibold text-base md:text-xl lg:text-2xl">
+              <span className="text-red font-semibold text-base md:text-xl lg:text-2xl">
                 ${product.sale_price}
               </span>
             </div>
           ) : product.regular_price ? (
-            <span className="text-white dark:text-black font-semibold text-base md:text-xl lg:text-2xl">
+            <span className="text-red font-semibold text-base md:text-xl lg:text-2xl">
               ${product.regular_price}
             </span>
           ) : product.type === "variable" ? (
-            <span className="text-white dark:text-black font-semibold text-base md:text-xl lg:text-2xl">
+            <span className="text-red font-semibold text-base md:text-xl lg:text-2xl">
               {product.price}
             </span>
           ) : null}
         </div>
 
-        <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize mt-2">
+        <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize mt-1">
           {product.title}
         </p>
       </CardBody>
