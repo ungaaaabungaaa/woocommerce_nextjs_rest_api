@@ -189,13 +189,13 @@ export default function Nav_bar() {
           </Navbar>
         </div>
 
-        <div className="w-full py-3 flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black border-b border-gray-700 dark:border-gray-200 ">
+        <div className="w-full py-3 flex align-middle items-center justify-center  text-white  dark:text-black border-b border-gray-700 dark:border-gray-200 glassmorphism">
           <Navbar
             maxWidth="full"
-            className="bg-black text-white dark:bg-white dark:text-black  max-w-7xl"
+            className="text-white dark:text-black  max-w-7xl bg-transparent"
             onMenuOpenChange={setIsMenuOpen}
           >
-            <NavbarContent className="sm:flex gap-4" justify="start">
+            <NavbarContent className="sm:flex gap-4 bg-transparent" justify="start">
               <NavbarMenuToggle
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="sm:hidden"
@@ -305,11 +305,11 @@ export default function Nav_bar() {
               )}
             </NavbarContent>
 
-            <NavbarMenu className="bg-black text-white dark:bg-white dark:text-white">
+            <NavbarMenu className=" text-white dark:text-white debug">
               {menuItems.map((item, index) => (
                 <NavbarMenuItem
                   key={`${item.label}-${index}`}
-                  className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800"
+                  className=" text-white  dark:text-black "
                 >
                   <button
                     onClick={() => handleMenuItemClick(item.route)}
