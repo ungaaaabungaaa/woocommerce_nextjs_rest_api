@@ -48,8 +48,6 @@ const footerLinks = [
     title: "Explore More",
     links: [
       { name: "Search Products", url: "/search" },
-      { name: "Sizing Charts", url: "/sizechart" },
-      { name: "Store Locator", url: "/storelocator" },
     ],
   },
   {
