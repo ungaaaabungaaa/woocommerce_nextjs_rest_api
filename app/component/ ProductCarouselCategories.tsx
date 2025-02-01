@@ -38,10 +38,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
   const [productId, setProductId] = useState<number | null>(null);
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
 
-  // Set productId when the product id changes
   useEffect(() => {
     if (product.id) {
-      setProductId(Number(product.id)); // Ensure it is a number
+      setProductId(Number(product.id));
     }
   }, [product.id]);
 
@@ -106,7 +105,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             className="object-cover absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           />
 
-          <div className="absolute right-3 top-3 z-10 bg-white  rounded-full p-3">
+          <div className="absolute right-3 top-3 z-10 bg-white rounded-full p-3">
             <Heart
               onClick={handleWishlistToggle}
               className={`h-3 w-3 ${isInWishlist(productId as any) ? "fill-current text-black" : "stroke-current text-gray-500"}`}
@@ -233,43 +232,43 @@ const ProductCarouselCategories = ({
   }
 
   return (
-    <div className="w-full  h-full py-4">
+    <div className="w-full h-full py-4">
       <ToastContainer />
-      <div className="max-w-7xl mx-auto flex justify-between items-center px-4 mb-4">
-        <h2
-          className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans"
-          id={`category-${category}`}
-        >
-          {category}
-        </h2>
-        <div className="flex items-center space-x-2">
-          <button
-            onClick={() => scrollCarousel("left")}
-            aria-label="Scroll left"
-            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="flex justify-between items-center mb-4">
+          <h2
+            className="text-xl md:text-5xl font-bold text-neutral-200 dark:text-black font-sans capitalize"
+            id={`category-${category}`}
           >
-            <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
-          </button>
-          <button
-            onClick={() => scrollCarousel("right")}
-            aria-label="Scroll right"
-            className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
-          >
-            <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
-          </button>
+            {category}
+          </h2>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => scrollCarousel("left")}
+              aria-label="Scroll left"
+              className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+            >
+              <IconArrowLeft className="h-5 w-5 bg-white text-black dark:bg-black dark:text-white group-hover/button:rotate-12 transition-transform duration-300" />
+            </button>
+            <button
+              onClick={() => scrollCarousel("right")}
+              aria-label="Scroll right"
+              className="group/button bg-white text-black dark:bg-black dark:text-white rounded-full w-10 h-10 flex items-center justify-center"
+            >
+              <IconArrowRight className="h-5 w-5 text-black dark:bg-black dark:text-white group-hover/button:-rotate-12 transition-transform duration-300" />
+            </button>
+          </div>
         </div>
-      </div>
-      <div className="w-full overflow-hidden bg-black dark:bg-white p-4">
-        <div
-          ref={carouselRef}
-          className="flex overflow-x-auto pb-4 scrollbar-hide bg-black dark:bg-white"
-          aria-labelledby={`category-${category}`}
-        >
-          {products.map((product) => (
-            <div key={product.id} className="mr-4 last:mr-0">
-              <ProductCard product={product} />
-            </div>
-          ))}
+        <div className="w-full relative">
+          <div
+            ref={carouselRef}
+            className="flex overflow-x-auto scrollbar-hide gap-4 pl-0 pr-[calc(100vw-100%)] -mr-[calc(50vw-50%+1rem)] pb-4"
+            aria-labelledby={`category-${category}`}
+          >
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
