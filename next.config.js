@@ -26,6 +26,10 @@ module.exports = {
         protocol: 'https',
         hostname: 'www.w3.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'backend.clothvillage.com',
+      },
     ],
   },
   async headers() {
