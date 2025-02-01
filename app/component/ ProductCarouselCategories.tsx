@@ -1,11 +1,8 @@
 "use client";
 import React, { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { Button } from "@nextui-org/button";
-import { Card, CardHeader, CardBody } from "@nextui-org/card";
+import { Card, CardBody } from "@nextui-org/card";
 import axios from "axios";
-import { useCartKey } from "../../hooks/useCartKey";
-import { useCart } from "../../context/cartcontext";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

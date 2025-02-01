@@ -6,7 +6,7 @@ import { Heart } from "lucide-react";
 import axios from "axios";
 import { Card, CardBody } from "@nextui-org/card";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IconArrowLeft, IconArrowRight } from "@tabler/icons-react";
 import { useWishlist } from "@/context/wishlistContext";
