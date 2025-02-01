@@ -146,7 +146,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           ) : null}
         </div>
 
-        <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize mt-1">
+        <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
           {product.title}
         </p>
       </CardBody>

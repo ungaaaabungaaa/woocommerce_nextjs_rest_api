@@ -106,7 +106,7 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
               ) : null}
             </div>
 
-            <p className="text-red text-left text-balance text-1xl tracking-[-0.015em] capitalize mt-1">
+            <p className="text-red text-left text-balance text-1xl tracking-[-0.015em] capitalize">
               {product.title}
             </p>
           </CardBody>
