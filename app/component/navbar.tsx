@@ -147,7 +147,7 @@ export default function Nav_bar() {
   return (
     <div className="sticky top-0 z-50">
       <div className="relative">
-        <div className="w-full flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
+        <div className="w-full py-2 flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
           <Navbar
             maxWidth="xl"
             className="bg-white text-black dark:bg-black dark:text-white h-8 w-full  max-w-7xl "
@@ -189,10 +189,10 @@ export default function Nav_bar() {
           </Navbar>
         </div>
 
-        <div className="w-full flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black border-b border-gray-700 dark:border-gray-200 ">
+        <div className="w-full py-3 flex align-middle items-center justify-center bg-black text-white dark:bg-white dark:text-black border-b border-gray-700 dark:border-gray-200 ">
           <Navbar
             maxWidth="full"
-            className="bg-black text-white dark:bg-white dark:text-black px-4 max-w-7xl"
+            className="bg-black text-white dark:bg-white dark:text-black  max-w-7xl"
             onMenuOpenChange={setIsMenuOpen}
           >
             <NavbarContent className="sm:flex gap-4" justify="start">
@@ -200,7 +200,7 @@ export default function Nav_bar() {
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 className="sm:hidden"
               />
-              <NavbarBrand className="pr-4">
+              <NavbarBrand className="pr-2">
                 <NextImage
                   onClick={handleLogoClick}
                   src={Sitelogo}
@@ -231,7 +231,7 @@ export default function Nav_bar() {
             <NavbarContent justify="end" className="gap-4">
               <Search
                 onClick={handleSearchClick}
-                className="h-5 cursor-pointer text-white dark:text-black"
+                className="h-8 cursor-pointer text-white dark:text-black"
               />
 
               {isAuthenticated ? (
@@ -241,7 +241,7 @@ export default function Nav_bar() {
                   onMouseLeave={handleIconMouseLeave}
                 >
                   <UserCircle
-                    className="h-5 cursor-pointer text-white dark:text-black"
+                    className="h-8 cursor-pointer text-white dark:text-black"
                     onClick={() => router.push("/auth/user")}
                   />
                 </div>
@@ -252,7 +252,7 @@ export default function Nav_bar() {
                   onMouseLeave={handleIconMouseLeave}
                 >
                   <User
-                    className="h-5 cursor-pointer text-white dark:text-black"
+                    className="h-8 cursor-pointer text-white dark:text-black"
                     onClick={() => router.push("/auth/register")}
                   />
                 </div>
@@ -271,7 +271,7 @@ export default function Nav_bar() {
                 >
                   <Heart
                     onClick={handleWishlistClick}
-                    className="h-5 cursor-pointer text-white dark:text-black"
+                    className="h-8 cursor-pointer text-white dark:text-black"
                   />
                 </div>
               </Badge>
@@ -289,7 +289,7 @@ export default function Nav_bar() {
                 >
                   <ShoppingBag
                     onClick={handleCartClick}
-                    className="h-5 cursor-pointer text-white dark:text-black"
+                    className="h-8 cursor-pointer text-white dark:text-black"
                   />
                 </div>
               </Badge>
@@ -297,9 +297,9 @@ export default function Nav_bar() {
               {mounted && (
                 <button onClick={toggleTheme} className="focus:outline-none">
                   {theme === "dark" ? (
-                    <Sun className="h-5 cursor-pointer text-white dark:text-black" />
+                    <Sun className="h-8 cursor-pointer text-white dark:text-black" />
                   ) : (
-                    <Moon className="h-5 cursor-pointer text-white dark:text-black" />
+                    <Moon className="h-8 cursor-pointer text-white dark:text-black" />
                   )}
                 </button>
               )}
