@@ -255,7 +255,7 @@ const ProductCarousel = () => {
         <div className="w-full relative">
           <div
             ref={carouselRef}
-            className="flex overflow-x-auto scrollbar-hide gap-4 pl-0 pr-[calc(100vw-100%)] -mr-[calc(50vw-50%+1rem)] pb-4"
+            className="flex overflow-x-auto scrollbar-hide gap-4 pl-0 pr-[calc(100vw-100%)] -mr-[calc(50vw-50%)] pb-4"
             role="region"
             aria-label="Product carousel"
           >

@@ -259,7 +259,7 @@ const ProductCarouselCategories = ({
         <div className="w-full relative">
           <div
             ref={carouselRef}
-            className="flex overflow-x-auto scrollbar-hide gap-4 pl-0 pr-[calc(100vw-100%)] -mr-[calc(50vw-50%+1rem)] pb-4"
+   className="flex overflow-x-auto scrollbar-hide gap-4 pl-0 pr-[calc(100vw-100%)] -mr-[calc(50vw-50%)] pb-4"
             aria-labelledby={`category-${category}`}
           >
             {products.map((product) => (
