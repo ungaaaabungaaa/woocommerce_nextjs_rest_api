@@ -599,7 +599,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           <PopUpCart />
         </div>
         <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full flex flex-col align-middle justify-center items-center">
-          <div className="w-full flex flex-col align-middle justify-center items-center  max-w-7xl">
+          <div className="w-full flex flex-col align-middle justify-center items-center">
             <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
             <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
           </div>
