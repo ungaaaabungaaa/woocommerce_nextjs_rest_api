@@ -180,9 +180,10 @@ export default function WishlistPage() {
                     </div>
 
                     <div className="p-4">
-                      <h2 className="text-white dark:text-black text-left text-balance text-base md:text-xl lg:text-2xl font-semibold tracking-[-0.015em] mt-1">
-                        {product.name}
-                      </h2>
+                
+                      <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
+          {product.name}
+        </p>
                     </div>
                     <div className="flex flex-col lg:flex-row lg:space-x-2">
   <Button
