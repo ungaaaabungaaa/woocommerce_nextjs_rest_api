@@ -16,7 +16,7 @@ interface WishlistItem {
   slug: string;
   type: string;
 }
-
+//
 export function WishlistPopUp() {
   const { wishlistCount, removeFromWishlist, wishlistItems } = useWishlist();
   const [wishlistProducts, setWishlistProducts] = useState<WishlistItem[]>([]);
@@ -73,10 +73,8 @@ export function WishlistPopUp() {
               </div>
             </div>
           ) : (
-            <div className="w-full text-white bg-transparent z-40 sticky top-12 z-99 dark:text-black">
-              <nav className="container mx-auto mt-1 max-w-7xl">
-                <div className="flex align-middle items-end flex-col">
-                  <div className="w-2/5 bg-black dark:bg-white p-4 rounded-lg   border border-gray-700 dark:border-gray-200  ">
+          
+                  <div className="w-2/5 bg-black dark:bg-white p-4 rounded-lg   border border-gray-700 dark:border-gray-200">
                     <>
                       <div className="border-b border-gray-700 dark:border-gray-200 pb-2">
                         <h2 className="font-semibold">Your Wishlist</h2>
@@ -119,9 +117,6 @@ export function WishlistPopUp() {
                       </div>
                     </>
                   </div>
-                </div>
-              </nav>
-            </div>
           )}
         </div>
       </nav>
