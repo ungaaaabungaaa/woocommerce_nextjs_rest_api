@@ -9,7 +9,7 @@ import axios from "axios";
 import { Button } from "@nextui-org/button";
 import { useCartKey } from "@/hooks/useCartKey";
 import { useCart } from "@/context/cartcontext";
-import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
+import ProductCarouselCategories from "@/app/component/products/ ProductCarouselCategories";
 
 interface WishlistItem {
   id: number;

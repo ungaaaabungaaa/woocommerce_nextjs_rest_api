@@ -29,20 +29,20 @@ import { Badge } from "@nextui-org/badge";
 import Sitelogo from "@/public/finallogo.svg";
 
 import { useCart } from "../../context/cartcontext";
-import { MensMegaMenu } from "./mens-mega-menu";
-import { WomensMegaMenu } from "./womens-mega-menu";
-import { AccessoriesMegaMenu } from "./accessories-mega-menu";
-import { FootWearMegaMenu } from "./footwear-mega-menu";
-import { KidsMegaMenu } from "./kids-mega-menu";
+import { MensMegaMenu } from "@/app/component/megamenus/mens-mega-menu";
+import { WomensMegaMenu } from "@/app/component/megamenus/womens-mega-menu";
+import { AccessoriesMegaMenu } from "@/app/component/megamenus/accessories-mega-menu";
+import { FootWearMegaMenu } from "@/app/component/megamenus/footwear-mega-menu";
+import { KidsMegaMenu } from "@/app/component/megamenus/kids-mega-menu";
 import { useTheme } from "next-themes";
 import { usePathname } from "next/navigation";
 import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useWishlist } from "../../context/wishlistContext";
 
-import { CartPopUp } from "./cartpopup";
-import { AccountPopUp } from "./accountpopup";
-import { WishlistPopUp } from "./wishlistpopup";
+import { CartPopUp } from "@/app/component/popups/cartpopup";
+import { AccountPopUp } from "@/app/component/popups/accountpopup";
+import { WishlistPopUp } from "@/app/component/popups/wishlistpopup";
 import { useHoverSupport } from "@/hooks/useHoverSupport";
 
 export default function Nav_bar() {

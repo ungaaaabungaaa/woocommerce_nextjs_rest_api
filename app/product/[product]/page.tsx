@@ -14,7 +14,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTheme } from "next-themes";
 import { Breadcrumbs, BreadcrumbItem } from "@nextui-org/breadcrumbs";
 import { PopUpCart } from "@/app/component/popupcart";
-import ProductCarouselCategories from "@/app/component/ ProductCarouselCategories";
+import ProductCarouselCategories from "@/app/component/products/ ProductCarouselCategories";
 import ProductGallery from "./productGallery";
 import { useWishlist } from "@/context/wishlistContext";
 

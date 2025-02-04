@@ -1,10 +1,10 @@
 import { AppleCardsCarouselDemo } from "./component/apple-cards-carousel";
 import { ImagesSliderDemo } from "./component/ImagesSliderDemo";
 import { WobbleCardDemo } from "./component/wobble-card";
-import ProductCarousel from "./component/ ProductCarousel";
+import ProductCarousel from "./component/products/ ProductCarousel";
 import InstagramGallery from "./component/instagram-gallery";
 import { ProductPromoCard } from "./component/productpromocard";
-import ProductCarouselCategories from "./component/ ProductCarouselCategories";
+import ProductCarouselCategories from "./component/products/ ProductCarouselCategories";
 
 export default function Home() {
   return (
