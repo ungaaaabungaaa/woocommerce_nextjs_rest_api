@@ -7,7 +7,7 @@ const config = {
     './components/**/*.{ts,tsx}',
     './app/**/*.{ts,tsx}',
     './src/**/*.{ts,tsx}',
-	],
+  ],
   prefix: "",
   theme: {
     container: {
@@ -18,6 +18,9 @@ const config = {
       },
     },
     extend: {
+      maxWidth: {
+        "7xl": "92%", // Override default max-w-7xl
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
