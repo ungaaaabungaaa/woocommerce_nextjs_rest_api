@@ -366,13 +366,13 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     </Button>
                   </div>
                   <div className="flex items-center space-x-2">
-                    {product.on_sale && (
-                      <span className="text-2xl font-bold text-muted-foreground line-through">
-                        ${product.regular_price}
-                      </span>
-                    )}
+                  {product.on_sale && product.regular_price && (
+  <span className="text-2xl font-bold text-muted-foreground line-through">
+    ${product.regular_price}
+  </span>
+)}
 
-                    <span className="text-3xl font-bold">
+                    <span className="text-3xl font-bold text-red">
                       $
                       {selectedVariation
                         ? selectedVariation.price
