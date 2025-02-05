@@ -346,7 +346,7 @@ input::placeholder {
 
 @media (min-width: 1024px) { /* Adjust breakpoint as needed */
   .max-w-7xl {
-    max-width: 68% !important;
+    max-width: 72% !important;
   }
 }
 

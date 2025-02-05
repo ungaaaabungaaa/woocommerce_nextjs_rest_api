@@ -29,14 +29,12 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
   const handleZoom = useCallback((event: React.MouseEvent | React.KeyboardEvent) => {
     event.preventDefault()
     if ("detail" in event) {
-      // Mouse event
       if (event.detail === 1) {
         setScale(2)
       } else if (event.detail === 2) {
         setScale(1)
       }
     } else {
-      // Keyboard event
       setScale((prev) => (prev === 1 ? 2 : 1))
     }
   }, [])
@@ -60,32 +58,24 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
     <div
       aria-label="Image Gallery"
       aria-modal="true"
-      className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm focus:outline-none"
+      className="fixed inset-0 z-50 bg-white"
       onKeyDown={handleKeyDown}
       role="dialog"
       tabIndex={-1}
     >
-      <div className="fixed inset-0 bg-black">
+      <div className="fixed inset-0 flex items-center justify-center">
         <button
           aria-label="Close gallery"
-          className="absolute right-4 top-4 z-50 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          className="absolute right-4 top-4 z-50 rounded-full p-2 hover:bg-gray-100"
           onClick={onClose}
         >
-          <X className="h-5 w-5" />
+          <X className="h-6 w-6 text-gray-600" />
         </button>
 
         <div
-          aria-label={`Image ${currentIndex + 1} of ${images.length}. Click or press Enter to zoom.`}
-          className="relative h-full w-full focus:outline-none"
-          onClick={handleZoom}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              handleZoom(e)
-            }
-          }}
+          aria-label={`Image ${currentIndex + 1} of ${images.length}`}
+          className="relative h-[80vh] w-full max-w-4xl focus:outline-none"
           ref={containerRef}
-          role="button"
-          tabIndex={0}
         >
           <div
             className="h-full w-full transition-transform duration-200 ease-out"
@@ -106,22 +96,22 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
 
         <button
           aria-label="Previous image"
-          className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white p-3 shadow-lg hover:bg-gray-100"
           onClick={handlePrevious}
         >
-          <ChevronLeft className="h-5 w-5" />
+          <ChevronLeft className="h-6 w-6 text-gray-600" />
         </button>
         <button
           aria-label="Next image"
-          className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white p-3 shadow-lg hover:bg-gray-100"
           onClick={handleNext}
         >
-          <ChevronRight className="h-5 w-5" />
+          <ChevronRight className="h-6 w-6 text-gray-600" />
         </button>
 
         <div
           aria-label="Image thumbnails"
-          className="absolute bottom-4 left-1/2 z-50 -translate-x-1/2 flex gap-2 px-4"
+          className="absolute bottom-8 left-1/2 z-50 -translate-x-1/2 flex gap-4 bg-white p-4 rounded-lg shadow-lg"
           role="region"
         >
           {images.map((image, index) => (
@@ -129,9 +119,8 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
               key={image.name}
               aria-current={index === currentIndex ? "true" : "false"}
               aria-label={`View image ${index + 1}`}
-              className={`relative h-16 w-16 overflow-hidden rounded-md ${
-                index === currentIndex ? "ring-2 ring-primary" : ""
-              }`}
+              className={`relative h-20 w-20 overflow-hidden rounded-md border-2 transition-all
+                ${index === currentIndex ? "border-blue-500" : "border-transparent hover:border-gray-300"}`}
               onClick={() => {
                 setCurrentIndex(index)
                 setScale(1)
@@ -150,4 +139,3 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
     </div>
   )
 }
-
