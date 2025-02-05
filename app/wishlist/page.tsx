@@ -9,7 +9,8 @@ import axios from "axios";
 import { Button } from "@nextui-org/button";
 import { useCartKey } from "@/hooks/useCartKey";
 import { useCart } from "@/context/cartcontext";
-import ProductCarouselCategories from "@/app/component/products/ ProductCarouselCategories";
+import ProductCarouselCategories from "../component/products/ ProductCarouselCategories";
+
 
 interface WishlistItem {
   id: number;
@@ -145,7 +146,7 @@ export default function WishlistPage() {
                     key={product.id}
                     className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
                   >
-                    <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted group">
+                    <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted">
                       <Link href={`/product/${product.id}`}>
                         <Image
                           src={product.image || "/placeholder.svg"}
@@ -155,7 +156,7 @@ export default function WishlistPage() {
                         />
                       </Link>
 
-                      <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white hover:bg-opacity-100 hover:visible opacity-0 hover:opacity-100 transition-opacity duration-300">
+                      <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
                         <Trash2
                           onClick={() => removeFromWishlist(product.id)}
                           className="h-3 w-3 text-black"
@@ -180,28 +181,27 @@ export default function WishlistPage() {
                     </div>
 
                     <div className="p-4">
-                
                       <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
-          {product.name}
-        </p>
+                        {product.name}
+                      </p>
                     </div>
                     <div className="flex flex-col lg:flex-row lg:space-x-2">
-  <Button
-    href={`/product/${product.id}`}
-    className="w-full lg:w-1/2 text-center bg-white text-black dark:bg-black dark:text-white py-3 px-6 text-xs rounded-full mt-2"
-  >
-    View
-  </Button>
+                      <Button
+                        href={`/product/${product.id}`}
+                        className="w-full lg:w-1/2 text-center bg-white text-black dark:bg-black dark:text-white py-3 px-6 text-xs rounded-full mt-2"
+                      >
+                        View
+                      </Button>
 
-  <button
-    onClick={() =>
-      addToCartApiCallSimple(product.id.toString(), "1")
-    }
-    className="w-full lg:w-1/2 text-center bg-red text-white py-3 px-6 text-xs rounded-full mt-2"
-  >
-    Add To Bag
-  </button>
-</div>
+                      <button
+                        onClick={() =>
+                          addToCartApiCallSimple(product.id.toString(), "1")
+                        }
+                        className="w-full lg:w-1/2 text-center bg-red text-white py-3 px-6 text-xs rounded-full mt-2"
+                      >
+                        Add To Bag
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
