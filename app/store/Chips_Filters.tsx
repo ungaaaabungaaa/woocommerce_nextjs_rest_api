@@ -239,7 +239,6 @@ export default function ChipsChategoriesFilter({
           {/* Categories Scroll */}
 
           {/* Categories Scroll with Arrows */}
-          {/* Categories Scroll with Arrows */}
           <div className="w-full md:max-w-[72%] md:flex-1 relative">
             {/* Left Arrow */}
             {showLeftArrow && (

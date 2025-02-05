@@ -344,12 +344,12 @@ input::placeholder {
   max-width: 100% !important; /* Default for smaller devices */
 }
 
-@media (min-width: 1024px) { /* Adjust breakpoint as needed */
+@media (min-width: 1024px) {
+  /* Adjust breakpoint as needed */
   .max-w-7xl {
     max-width: 72% !important;
   }
 }
-
 
 @layer utilities {
   .glassmorphic {
@@ -364,8 +364,7 @@ input::placeholder {
   }
 }
 
-
-
-
-
-
+/* Add this to your global CSS file */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
