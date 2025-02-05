@@ -58,23 +58,23 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
     <div
       aria-label="Image Gallery"
       aria-modal="true"
-      className="fixed inset-0 z-50 bg-white"
+      className="fixed inset-0 z-50 bg-black/60 p-8 backdrop-blur-sm "
       onKeyDown={handleKeyDown}
       role="dialog"
       tabIndex={-1}
     >
-      <div className="fixed inset-0 flex items-center justify-center">
+      <div className="relative mx-auto h-full w-full rounded-sm bg-black dark:bg-white shadow-2xl">
         <button
           aria-label="Close gallery"
-          className="absolute right-4 top-4 z-50 rounded-full p-2 hover:bg-gray-100"
+          className="absolute right-6 top-6 z-50 rounded-full p-2 bg-none"
           onClick={onClose}
         >
-          <X className="h-6 w-6 text-gray-600" />
+          <X className="h-6 w-6 text-white dark:text-black" />
         </button>
 
         <div
           aria-label={`Image ${currentIndex + 1} of ${images.length}`}
-          className="relative h-[80vh] w-full max-w-4xl focus:outline-none"
+          className="relative h-full w-full p-8 focus:outline-none"
           ref={containerRef}
         >
           <div
@@ -85,7 +85,7 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
           >
             <Image
               alt={images[currentIndex].alt || images[currentIndex].name}
-              className="object-contain"
+              className="object-cover"
               draggable={false}
               fill
               priority
@@ -96,22 +96,22 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
 
         <button
           aria-label="Previous image"
-          className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white p-3 shadow-lg hover:bg-gray-100"
+          className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full  p-3 bg-none shadow-none"
           onClick={handlePrevious}
         >
-          <ChevronLeft className="h-6 w-6 text-gray-600" />
+          <ChevronLeft className="h-8 w-8 text-white dark:text-black" />
         </button>
         <button
           aria-label="Next image"
-          className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-white p-3 shadow-lg hover:bg-gray-100"
+          className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full  p-3 bg-none shadow-none"
           onClick={handleNext}
         >
-          <ChevronRight className="h-6 w-6 text-gray-600" />
+          <ChevronRight className="h-8 w-8 text-white dark:text-black" />
         </button>
 
         <div
           aria-label="Image thumbnails"
-          className="absolute bottom-8 left-1/2 z-50 -translate-x-1/2 flex gap-4 bg-white p-4 rounded-lg shadow-lg"
+          className="absolute bottom-6 left-1/2 z-50 -translate-x-1/2 flex gap-4 rounded-lg bg-black dark:bg-white p-4 shadow-lg backdrop-blur-sm "
           role="region"
         >
           {images.map((image, index) => (
@@ -119,8 +119,8 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
               key={image.name}
               aria-current={index === currentIndex ? "true" : "false"}
               aria-label={`View image ${index + 1}`}
-              className={`relative h-20 w-20 overflow-hidden rounded-md border-2 transition-all
-                ${index === currentIndex ? "border-blue-500" : "border-transparent hover:border-gray-300"}`}
+              className={`relative h-20 w-20 overflow-hidden rounded-md border-1 transition-all
+                ${index === currentIndex ? "border-black" : "border-transparent hover:border-gray-300"}`}
               onClick={() => {
                 setCurrentIndex(index)
                 setScale(1)
