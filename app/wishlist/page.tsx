@@ -11,7 +11,6 @@ import { useCartKey } from "@/hooks/useCartKey";
 import { useCart } from "@/context/cartcontext";
 import ProductCarouselCategories from "../component/products/ ProductCarouselCategories";
 
-
 interface WishlistItem {
   id: number;
   name: string;
@@ -186,21 +185,22 @@ export default function WishlistPage() {
                       </p>
                     </div>
                     <div className="flex flex-col lg:flex-row lg:space-x-2 items-center w-full">
-  <Button
-    href={`/product/${product.id}`}
-    className="flex-1 text-center bg-white text-black dark:bg-black dark:text-white py-3 px-6 text-xs rounded-full mt-2"
-  >
-    View
-  </Button>
+                      <Button
+                        href={`/product/${product.id}`}
+                        className="flex-1 text-center bg-white text-black py-3 px-3 text-xs rounded-full mt-2 dark:bg-black dark:text-white"
+                      >
+                        View
+                      </Button>
 
-  <button
-    onClick={() => addToCartApiCallSimple(product.id.toString(), "1")}
-    className="flex-1 text-center bg-red-600 text-white py-3 px-6 text-xs rounded-full mt-2"
-  >
-    Add To Bag
-  </button>
-</div>
-
+                      <button
+                        onClick={() =>
+                          addToCartApiCallSimple(product.id.toString(), "1")
+                        }
+                        className="flex-1 text-center bg-red text-white py-3 px-3 text-xs rounded-full mt-2 text-wrap "
+                      >
+                        Add To Bag
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
