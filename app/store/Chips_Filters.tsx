@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import { Button } from "@nextui-org/button";
 import {
   Sheet,
@@ -80,6 +82,10 @@ export default function ChipsChategoriesFilter({
   const [isAccordionDefaultOpen, setIsAccordionDefaultOpen] = useState(true);
   const router = useRouter();
 
+  const [showLeftArrow, setShowLeftArrow] = useState(false);
+  const [showRightArrow, setShowRightArrow] = useState(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
   // Memoize processed categories
   const { categories, totalProducts, selectedCategory } = useMemo(() => {
     const filteredCategories = filterCategories(initialCategories)
@@ -111,16 +117,44 @@ export default function ChipsChategoriesFilter({
     };
   }, [initialCategories, notDisplay, highlight]);
 
+  const checkScrollPosition = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const { scrollLeft, scrollWidth, clientWidth } = container;
+      setShowLeftArrow(scrollLeft > 0);
+      setShowRightArrow(scrollLeft < scrollWidth - clientWidth - 1);
+    }
+  };
+
+  const scroll = (direction: "left" | "right") => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const scrollAmount = 200;
+      const newScrollLeft =
+        direction === "left"
+          ? container.scrollLeft - scrollAmount
+          : container.scrollLeft + scrollAmount;
+
+      container.scrollTo({
+        left: newScrollLeft,
+        behavior: "smooth",
+      });
+    }
+  };
+
   // Handle window resize
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
-      setIsAccordionDefaultOpen(window.innerWidth >= 768);
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", checkScrollPosition);
+      checkScrollPosition();
+      setTimeout(checkScrollPosition, 100);
+    }
+    return () => {
+      if (container) {
+        container.removeEventListener("scroll", checkScrollPosition);
+      }
     };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
   const genderOptions = [
@@ -203,14 +237,31 @@ export default function ChipsChategoriesFilter({
       <div className="container mx-auto">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0">
           {/* Categories Scroll */}
-          <div className="w-full md:max-w-[72%] md:flex-1">
+
+          {/* Categories Scroll with Arrows */}
+          {/* Categories Scroll with Arrows */}
+          <div className="w-full md:max-w-[72%] md:flex-1 relative">
+            {/* Left Arrow */}
+            {showLeftArrow && (
+              <button
+                onClick={() => scroll("left")}
+                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md hover:bg-white transition-all"
+                aria-label="Scroll left"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Scrollable Container */}
             <div
-              className="overflow-x-auto hide-scrollbar"
+              ref={scrollContainerRef}
+              className="overflow-x-auto hide-scrollbar relative"
               style={{
                 msOverflowStyle: "none",
                 scrollbarWidth: "none",
                 WebkitOverflowScrolling: "touch",
               }}
+              onScroll={checkScrollPosition}
             >
               <div className="flex space-x-2 pb-2 px-1">
                 {categories.map((category) => (
@@ -218,18 +269,28 @@ export default function ChipsChategoriesFilter({
                     key={category.name}
                     onClick={() => categoriesSelected(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-                ${
-                  selectedCategory === category.name ||
-                  category.name === highlight
-                    ? "bg-white border border-gray-200 text-black"
-                    : "bg-black text-white hover:bg-white hover:text-black"
-                }`}
+            ${
+              selectedCategory === category.name || category.name === highlight
+                ? "bg-white border border-gray-200 text-black"
+                : "bg-black text-white hover:bg-white hover:text-black"
+            }`}
                   >
                     {category.name}
                   </button>
                 ))}
               </div>
             </div>
+
+            {/* Right Arrow */}
+            {showRightArrow && (
+              <button
+                onClick={() => scroll("right")}
+                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md hover:bg-white transition-all"
+                aria-label="Scroll right"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            )}
           </div>
 
           {/* Count and Buttons */}
