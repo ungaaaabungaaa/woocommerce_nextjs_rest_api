@@ -28,7 +28,7 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
 
   const handleZoom = useCallback((event: React.MouseEvent | React.KeyboardEvent) => {
     event.preventDefault()
-    if ('detail' in event) {
+    if ("detail" in event) {
       // Mouse event
       if (event.detail === 1) {
         setScale(2)
@@ -37,7 +37,7 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
       }
     } else {
       // Keyboard event
-      setScale((prev) => prev === 1 ? 2 : 1)
+      setScale((prev) => (prev === 1 ? 2 : 1))
     }
   }, [])
 
@@ -57,27 +57,25 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
   )
 
   return (
-    <div 
-      role="dialog"
-      aria-modal="true"
+    <div
       aria-label="Image Gallery"
+      aria-modal="true"
       className="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm focus:outline-none"
       onKeyDown={handleKeyDown}
-      tabIndex={0}
+      role="dialog"
+      tabIndex={-1}
     >
       <div className="fixed inset-0 bg-black">
         <button
-          onClick={onClose}
           aria-label="Close gallery"
           className="absolute right-4 top-4 z-50 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          onClick={onClose}
         >
           <X className="h-5 w-5" />
         </button>
 
-        <div 
-          ref={containerRef}
-          role="button"
-          tabIndex={0}
+        <div
+          aria-label={`Image ${currentIndex + 1} of ${images.length}. Click or press Enter to zoom.`}
           className="relative h-full w-full focus:outline-none"
           onClick={handleZoom}
           onKeyDown={(e) => {
@@ -85,7 +83,9 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
               handleZoom(e)
             }
           }}
-          aria-label={`Image ${currentIndex + 1} of ${images.length}. Click or press Enter to zoom.`}
+          ref={containerRef}
+          role="button"
+          tabIndex={0}
         >
           <div
             className="h-full w-full transition-transform duration-200 ease-out"
@@ -94,54 +94,54 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
             }}
           >
             <Image
-              src={images[currentIndex].src || "/placeholder.svg"}
               alt={images[currentIndex].alt || images[currentIndex].name}
-              fill
               className="object-contain"
               draggable={false}
+              fill
               priority
+              src={images[currentIndex].src || "/placeholder.svg"}
             />
           </div>
         </div>
 
         <button
-          onClick={handlePrevious}
           aria-label="Previous image"
           className="absolute left-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          onClick={handlePrevious}
         >
           <ChevronLeft className="h-5 w-5" />
         </button>
         <button
-          onClick={handleNext}
           aria-label="Next image"
           className="absolute right-4 top-1/2 z-50 -translate-y-1/2 rounded-full bg-background/80 p-2 text-foreground/80 backdrop-blur-sm transition hover:bg-background/60"
+          onClick={handleNext}
         >
           <ChevronRight className="h-5 w-5" />
         </button>
 
-        <div 
+        <div
+          aria-label="Image thumbnails"
           className="absolute bottom-4 left-1/2 z-50 -translate-x-1/2 flex gap-2 px-4"
           role="region"
-          aria-label="Image thumbnails"
         >
           {images.map((image, index) => (
             <button
               key={image.name}
+              aria-current={index === currentIndex ? "true" : "false"}
+              aria-label={`View image ${index + 1}`}
+              className={`relative h-16 w-16 overflow-hidden rounded-md ${
+                index === currentIndex ? "ring-2 ring-primary" : ""
+              }`}
               onClick={() => {
                 setCurrentIndex(index)
                 setScale(1)
               }}
-              aria-label={`View image ${index + 1}`}
-              aria-current={index === currentIndex ? "true" : "false"}
-              className={`relative h-16 w-16 overflow-hidden rounded-md ${
-                index === currentIndex ? "ring-2 ring-primary" : ""
-              }`}
             >
               <Image
-                src={image.src || "/placeholder.svg"}
                 alt={image.alt || image.name}
-                fill
                 className="object-cover"
+                fill
+                src={image.src || "/placeholder.svg"}
               />
             </button>
           ))}
@@ -150,3 +150,4 @@ export function GalleryModal({ images, initialIndex, onClose }: GalleryModalProp
     </div>
   )
 }
+
