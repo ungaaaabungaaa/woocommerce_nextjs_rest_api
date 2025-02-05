@@ -21,14 +21,23 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
     setShowModal(true);
   };
 
+  const handleKeyDown = (event: React.KeyboardEvent, handler: () => void) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      handler();
+    }
+  };
+
   return (
     <div className="container mx-auto p-4">
       {/* Mobile Layout */}
       <div className="block lg:hidden">
         <div className="space-y-4">
-          <div 
-            className="relative aspect-square overflow-hidden rounded-lg"
+          <button
+            className="relative aspect-square w-full overflow-hidden rounded-lg"
             onClick={() => openModal(activeImageIndex)}
+            onKeyDown={(e) => handleKeyDown(e, () => openModal(activeImageIndex))}
+            aria-label={`View ${images[activeImageIndex]?.alt || images[activeImageIndex]?.name} in gallery`}
           >
             <Image
               src={images[activeImageIndex]?.src || "/placeholder.svg"}
@@ -36,7 +45,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
               fill
               className="object-cover"
             />
-          </div>
+          </button>
           <div className="grid grid-cols-5 gap-2">
             {images.map((image, index) => (
               <button
@@ -45,6 +54,9 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                   index === activeImageIndex ? "ring-2 ring-primary" : ""
                 }`}
                 onClick={() => setActiveImageIndex(index)}
+                onKeyDown={(e) => handleKeyDown(e, () => setActiveImageIndex(index))}
+                aria-label={`Select ${image.alt || image.name}`}
+                aria-pressed={index === activeImageIndex}
               >
                 <Image
                   src={image.src || "/placeholder.svg"}
@@ -62,18 +74,24 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
       <div className="hidden lg:block">
         <div className="grid grid-cols-2 gap-4">
           {images.map((image, index) => (
-            <div
+            <button
               key={image.name}
               className={`relative ${
                 index === 2 ? "aspect-[2/1] col-span-2" : "aspect-square"
               }`}
               onClick={() => openModal(index)}
+              onKeyDown={(e) => handleKeyDown(e, () => openModal(index))}
+              aria-label={`View ${image.alt || image.name} in gallery`}
             >
               {index === 0 && (
                 <button
                   onClick={(e) => {
                     e.stopPropagation();
                     router.back();
+                  }}
+                  onKeyDown={(e) => {
+                    e.stopPropagation();
+                    handleKeyDown(e, () => router.back());
                   }}
                   className="absolute top-5 left-5 z-10 inline-flex items-center justify-center rounded-full w-9 h-9 bg-black text-white"
                   aria-label="Go back"
@@ -87,7 +105,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                 fill
                 className="object-cover rounded-lg"
               />
-            </div>
+            </button>
           ))}
         </div>
       </div>
