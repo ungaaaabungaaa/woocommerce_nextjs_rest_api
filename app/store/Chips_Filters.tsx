@@ -235,7 +235,7 @@ export default function ChipsChategoriesFilter({
   return (
     <div className="w-full">
       <div className="container mx-auto">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0 pb-2">
           {/* Categories Scroll */}
 
           {/* Categories Scroll with Arrows */}
@@ -244,10 +244,11 @@ export default function ChipsChategoriesFilter({
             {showLeftArrow && (
               <button
                 onClick={() => scroll("left")}
-                className="hidden md:block absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md hover:bg-white transition-all"
+                className="hidden md:block absolute left-0 z-10 bg-black dark:bg-white backdrop-blur-sm  p-1   transition-all"
+                style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
                 aria-label="Scroll left"
               >
-                <ChevronLeft className="w-5 h-5" />
+                <ChevronLeft className="w-7 h-7 text-white dark:text-black" />
               </button>
             )}
 
@@ -262,17 +263,17 @@ export default function ChipsChategoriesFilter({
               }}
               onScroll={checkScrollPosition}
             >
-              <div className="flex space-x-2 pb-2 px-1">
-                {categories.map((category) => (
+              <div className="flex space-x-2  px-1">
+                {categories.map((category: any) => (
                   <button
                     key={category.name}
                     onClick={() => categoriesSelected(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-            ${
-              selectedCategory === category.name || category.name === highlight
-                ? "bg-white border border-gray-200 text-black"
-                : "bg-black text-white hover:bg-white hover:text-black"
-            }`}
+          ${
+            selectedCategory === category.name || category.name === highlight
+              ? "bg-white border border-gray-200 text-black"
+              : "bg-black text-white hover:bg-white hover:text-black"
+          }`}
                   >
                     {category.name}
                   </button>
@@ -284,10 +285,11 @@ export default function ChipsChategoriesFilter({
             {showRightArrow && (
               <button
                 onClick={() => scroll("right")}
-                className="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 shadow-md hover:bg-white transition-all"
+                className="hidden md:block absolute right-0 z-10 bg-none backdrop-blur-sm  p-1  bg-black dark:bg-white transition-all"
+                style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
                 aria-label="Scroll right"
               >
-                <ChevronRight className="w-5 h-5" />
+                <ChevronRight className="w-7 h-7 text-white dark:text-black" />
               </button>
             )}
           </div>
