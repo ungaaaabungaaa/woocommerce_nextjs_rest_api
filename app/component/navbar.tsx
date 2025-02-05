@@ -145,9 +145,8 @@ export default function Nav_bar() {
   };
 
   return (
-    <div className="sticky top-0 z-50">
-      <div className="relative">
-      <div className="w-full py-2 flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
+    <>
+    <div className="w-full py-2 flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
           <Navbar
             maxWidth="xl"
             className="bg-white text-black dark:bg-black dark:text-white h-8 w-full  max-w-7xl "
@@ -188,6 +187,9 @@ export default function Nav_bar() {
             </NavbarContent>
           </Navbar>
         </div>
+    <div className="sticky top-0 z-50">
+      <div className="relative">
+      
 
         <div className="w-full py-3 flex align-middle items-center justify-center  text-white  dark:text-black border-b border-gray-700 dark:border-gray-200 bg-black dark:bg-white">
           <Navbar
@@ -380,5 +382,6 @@ export default function Nav_bar() {
         </div>
       </div>
     </div>
+    </>
   );
 }
