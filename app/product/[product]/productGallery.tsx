@@ -54,9 +54,6 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                   index === activeImageIndex ? "ring-2 ring-primary" : ""
                 }`}
                 onClick={() => setActiveImageIndex(index)}
-                onKeyDown={(e) => handleKeyDown(e, () => setActiveImageIndex(index))}
-                aria-label={`Select ${image.alt || image.name}`}
-                aria-pressed={index === activeImageIndex}
               >
                 <Image
                   src={image.src || "/placeholder.svg"}
