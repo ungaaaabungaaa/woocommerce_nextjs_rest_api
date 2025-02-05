@@ -185,23 +185,22 @@ export default function WishlistPage() {
                         {product.name}
                       </p>
                     </div>
-                    <div className="flex flex-col lg:flex-row lg:space-x-2">
-                      <Button
-                        href={`/product/${product.id}`}
-                        className="w-full lg:w-1/2 text-center bg-white text-black dark:bg-black dark:text-white py-3 px-6 text-xs rounded-full mt-2"
-                      >
-                        View
-                      </Button>
+                    <div className="flex flex-col lg:flex-row lg:space-x-2 items-center w-full">
+  <Button
+    href={`/product/${product.id}`}
+    className="flex-1 text-center bg-white text-black dark:bg-black dark:text-white py-3 px-6 text-xs rounded-full mt-2"
+  >
+    View
+  </Button>
 
-                      <button
-                        onClick={() =>
-                          addToCartApiCallSimple(product.id.toString(), "1")
-                        }
-                        className="w-full lg:w-1/2 text-center bg-red text-white py-3 px-6 text-xs rounded-full mt-2"
-                      >
-                        Add To Bag
-                      </button>
-                    </div>
+  <button
+    onClick={() => addToCartApiCallSimple(product.id.toString(), "1")}
+    className="flex-1 text-center bg-red-600 text-white py-3 px-6 text-xs rounded-full mt-2"
+  >
+    Add To Bag
+  </button>
+</div>
+
                   </div>
                 ))}
               </div>

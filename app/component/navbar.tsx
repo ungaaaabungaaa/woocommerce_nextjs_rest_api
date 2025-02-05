@@ -25,9 +25,7 @@ import {
   UserCircle,
 } from "lucide-react";
 import { Badge } from "@nextui-org/badge";
-
 import Sitelogo from "@/public/finallogo.svg";
-
 import { useCart } from "../../context/cartcontext";
 import { MensMegaMenu } from "@/app/component/megamenus/mens-mega-menu";
 import { WomensMegaMenu } from "@/app/component/megamenus/womens-mega-menu";
@@ -39,7 +37,6 @@ import { usePathname } from "next/navigation";
 import { auth } from "../../config/firebase";
 import { onAuthStateChanged } from "firebase/auth";
 import { useWishlist } from "../../context/wishlistContext";
-
 import { CartPopUp } from "@/app/component/popups/cartpopup";
 import { AccountPopUp } from "@/app/component/popups/accountpopup";
 import { WishlistPopUp } from "@/app/component/popups/wishlistpopup";
