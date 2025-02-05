@@ -351,6 +351,19 @@ input::placeholder {
 }
 
 
+@layer utilities {
+  .glassmorphic {
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px) saturate(100%);
+    -webkit-backdrop-filter: blur(4px) saturate(100%);
+    border: none;
+  }
+
+  .dark .glassmorphic {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+}
+
 
 
 

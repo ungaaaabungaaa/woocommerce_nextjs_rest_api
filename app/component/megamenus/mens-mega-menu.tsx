@@ -1,7 +1,7 @@
 import Link from "next/link";
 export function MensMegaMenu() {
   return (
-    <div className="w-full text-white  z-40 sticky top-12 z-99 bg-black dark:bg-white  dark:text-black">
+    <div className="w-full text-white  z-40 sticky top-12 z-99 glassmorphic  dark:text-black">
       <nav className="container mx-auto px-4 py-8 max-w-7xl">
         <div className="grid grid-cols-5 gap-8">
           {/* Home Column */}
