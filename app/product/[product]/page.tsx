@@ -317,8 +317,8 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
       <>
         <ToastContainer />
         <div className="w-full max-w-7xl mx-auto py-8 text-white dark:text-black bg-black dark:bg-white flex align-middle justify-center items-center">
-          <div className="flex align-middle justify-center items-center min-w-full">
-            <div className="grid md:grid-cols-2 gap-8 w-full">
+          <div className="flex align-middle justify-center items-center min-w-full bg-black dark:bg-white">
+            <div className="grid md:grid-cols-2 gap-8 w-full bg-black dark:bg-white">
               <div>
                 <ProductGallery images={mappedImages} />
               </div>

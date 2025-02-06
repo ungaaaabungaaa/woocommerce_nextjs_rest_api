@@ -4,33 +4,22 @@
 
 html,
 body {
-  background-color: black;
-  color: white;
-}
-
-html {
-  @apply bg-black dark:bg-white;
-}
-
-body {
-  @apply text-white dark:text-black;
+  @apply bg-black text-white dark:bg-white dark:text-black min-h-screen;
 }
 
 :root {
-  --font-primary: "Source Sans 3", sans-serif; /* Default font for the website */
-  --font-heading: "Inter", sans-serif; /* Font for h1, h2, h3 */
+  --font-primary: "Source Sans 3", sans-serif;
+  --font-heading: "Inter", sans-serif;
 }
 
 body {
-  font-family: var(
-    --font-primary
-  ); /* Apply Source Sans 3 to the entire website */
+  font-family: var(--font-primary);
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-heading); /* Apply Inter to headings */
+  font-family: var(--font-heading);
 }
 
 @layer utilities {
