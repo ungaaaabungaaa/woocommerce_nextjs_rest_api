@@ -40,7 +40,7 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
   };
 
   return (
-    <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
       {safeProducts.map((product) => (
         <Card
           key={product.id}
