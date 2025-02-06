@@ -316,9 +316,9 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
     return (
       <>
         <ToastContainer />
-        <div className="container mx-auto  md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white w-full max-w-7xl  flex align-middle justify-center items-center">
+        <div className="w-full max-w-7xl mx-auto py-8 text-white dark:text-black bg-black dark:bg-white flex align-middle justify-center items-center">
           <div className="flex align-middle justify-center items-center min-w-full">
-            <div className="grid md:grid-cols-2 gap-8  w-full">
+            <div className="grid md:grid-cols-2 gap-8 w-full">
               <div>
                 <ProductGallery images={mappedImages} />
               </div>
@@ -418,7 +418,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     ))}
                   </div>
                 )}
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4 ">
+                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
                   <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
                     <Button
                       size="lg"
@@ -597,7 +597,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
           </div>
           <PopUpCart />
         </div>
-        <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full flex flex-col align-middle justify-center items-center">
+        <div className="w-full max-w-7xl mx-auto py-8 text-white dark:text-black bg-black dark:bg-white flex flex-col align-middle justify-center items-center">
           <div className="w-full flex flex-col align-middle justify-center items-center">
             <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
             <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
