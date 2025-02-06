@@ -127,6 +127,8 @@ export default function Nav_bar() {
     { name: "Accessories", component: AccessoriesMegaMenu },
     { name: "Kids", component: KidsMegaMenu },
     { name: "Footwear", component: FootWearMegaMenu },
+    { name: "Comfort", component: MensMegaMenu },
+    { name: "Everyday", component: WomensMegaMenu },
   ];
 
   const handleIconMouseEnter = (popup: string) => {
@@ -187,7 +189,7 @@ export default function Nav_bar() {
           <div className="w-full py-3 flex align-middle items-center justify-center  text-white  dark:text-black border-b border-gray-700 dark:border-gray-200 bg-black dark:bg-white">
             <Navbar
               maxWidth="full"
-              className="text-white dark:text-black  bg-black dark:bg-white max-w-7xl "
+              className="text-white dark:text-black  bg-black dark:bg-white max-w-7xl"
               onMenuOpenChange={setIsMenuOpen}
             >
               <NavbarContent
@@ -198,7 +200,7 @@ export default function Nav_bar() {
                   aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                   className="sm:hidden"
                 />
-                <NavbarBrand className="pr-2">
+                <NavbarBrand>
                   <NextImage
                     onClick={handleLogoClick}
                     src={Sitelogo}
@@ -303,7 +305,7 @@ export default function Nav_bar() {
                 )}
               </NavbarContent>
 
-              <NavbarMenu className=" text-white dark:text-white debug">
+              <NavbarMenu className=" text-white dark:text-white">
                 {menuItems.map((item, index) => (
                   <NavbarMenuItem
                     key={`${item.label}-${index}`}
