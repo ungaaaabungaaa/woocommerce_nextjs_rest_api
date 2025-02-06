@@ -6,7 +6,7 @@ import React from "react";
 
 const PrivacyPolicy = () => {
   return (
-    <div className="privacy-policy text-white dark:text-white">
+    <div className="privacy-policy text-white dark:text-black">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <br></br>
         <br></br>
