@@ -115,9 +115,9 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
-      <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black">
-        <div className="w-full max-w-7xl">
+    <div className="container mx-auto w-full  py-8 text-white dark:text-black bg-black dark:bg-white max-w-7xl ">
+      <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black ">
+        <div className="w-full ">
           <main className="px-4 py-8">
             <div className="flex justify-between items-center mb-6">
               <h1 className="text-3xl font-bold">
