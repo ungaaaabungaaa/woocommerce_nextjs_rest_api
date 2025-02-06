@@ -29,7 +29,7 @@ export default function Home() {
       <ProductCarouselCategories category="core"></ProductCarouselCategories>
       <WobbleCardDemo></WobbleCardDemo>
       <ProductCarouselCategories category="footwear"></ProductCarouselCategories>
-      <InstagramGallery></InstagramGallery>
+      {/* <InstagramGallery></InstagramGallery> */}
       <br></br>
     </section>
   );
