@@ -3,9 +3,9 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from "lucide-react";
 import { ImageData } from "../../types/imagedata";
-import { GalleryModal } from "@/app/component/gallery-modal"
+import { GalleryModal } from "@/app/component/gallery-modal";
 import { Button } from "@nextui-org/button";
 
 interface ProductGalleryProps {
@@ -23,7 +23,7 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
   };
 
   const handleKeyDown = (event: React.KeyboardEvent, handler: () => void) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+    if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       handler();
     }
@@ -37,12 +37,16 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
           <button
             className="relative aspect-square w-full overflow-hidden rounded-lg"
             onClick={() => openModal(activeImageIndex)}
-            onKeyDown={(e) => handleKeyDown(e, () => openModal(activeImageIndex))}
+            onKeyDown={(e) =>
+              handleKeyDown(e, () => openModal(activeImageIndex))
+            }
             aria-label={`View ${images[activeImageIndex]?.alt || images[activeImageIndex]?.name} in gallery`}
           >
             <Image
               src={images[activeImageIndex]?.src || "/placeholder.svg"}
-              alt={images[activeImageIndex]?.alt || images[activeImageIndex]?.name}
+              alt={
+                images[activeImageIndex]?.alt || images[activeImageIndex]?.name
+              }
               fill
               className="object-cover"
             />
@@ -55,7 +59,9 @@ export default function ProductGallery({ images }: ProductGalleryProps) {
                   index === activeImageIndex ? "ring-2 ring-primary" : ""
                 }`}
                 onClick={() => setActiveImageIndex(index)}
-                onKeyDown={(e) => handleKeyDown(e, () => setActiveImageIndex(index))}
+                onKeyDown={(e) =>
+                  handleKeyDown(e, () => setActiveImageIndex(index))
+                }
                 aria-label={`Select ${image.alt || image.name}`}
                 aria-pressed={index === activeImageIndex}
               >

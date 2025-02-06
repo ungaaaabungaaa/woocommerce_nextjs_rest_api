@@ -315,11 +315,11 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
   if (product)
     return (
       <>
-        <div className="container mx-auto px-4 md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white min-w-full">
-          <ToastContainer />
-          <div className="w-full flex align-middle justify-center items-center">
-            <div className="grid md:grid-cols-2 gap-8 w-full max-w-7xl ">
-              <div className="space-y-4 lg:mr-6 ">
+        <ToastContainer />
+        <div className="container mx-auto  md:px-24 py-8 text-white dark:text-black bg-black dark:bg-white w-full max-w-7xl  flex align-middle justify-center items-center">
+          <div className="flex align-middle justify-center items-center min-w-full">
+            <div className="grid md:grid-cols-2 gap-8  w-full">
+              <div>
                 <ProductGallery images={mappedImages} />
               </div>
 
@@ -366,12 +366,11 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     </Button>
                   </div>
                   <div className="flex items-center space-x-2">
-                  {product.on_sale && product.regular_price && (
-  <span className="text-2xl font-bold text-muted-foreground line-through">
-    ${product.regular_price}
-  </span>
-)}
-
+                    {product.on_sale && product.regular_price && (
+                      <span className="text-2xl font-bold text-muted-foreground line-through">
+                        ${product.regular_price}
+                      </span>
+                    )}
                     <span className="text-3xl font-bold text-red">
                       $
                       {selectedVariation
