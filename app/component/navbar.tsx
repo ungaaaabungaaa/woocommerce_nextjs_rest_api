@@ -145,7 +145,7 @@ export default function Nav_bar() {
     <>
       <div className="w-full py-2 flex align-middle items-center justify-center bg-white text-black dark:bg-black dark:text-white">
         <Navbar
-          maxWidth="xl"
+          maxWidth="full"
           className="bg-white text-black dark:bg-black dark:text-white h-8 w-full  max-w-7xl "
         >
           <NavbarContent className="sm:flex gap-4" justify="start">
