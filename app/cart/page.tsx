@@ -184,7 +184,7 @@ export default function Cart() {
     <div className="min-h-screen bg-black dark:bg-white text-white dark:text-black">
       <ToastContainer />
       <div className="container max-w-7xl mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-8">
+        <div className="flex flex-col lg:flex-row gap-8 ">
           {/* Main Cart Section */}
           <div className="flex-1">
             <div className="flex justify-between items-baseline mb-8">
