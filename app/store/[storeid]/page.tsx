@@ -124,59 +124,56 @@ function StoreId({ params }: { params: Params }) {
             </Button>
           </div>
         ) : (
-          <div className="bg-black dark:bg-white overflow-hidden  flex justify-center items-center">
-            <br />
+          <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full  max-w-7xl">
             <ToastContainer />
-            <br />
-            <div className=" container mx-auto  py-8 w-full max-w-7xl">
-              <Breadcrumbs
-                itemClasses={{
-                  item: "text-white/60 dark:text-black data-[current=true]:text-white",
-                  separator: "text-white/40 dark:text-black/40",
-                }}
+            <Breadcrumbs
+              itemClasses={{
+                item: "text-white/60 dark:text-black data-[current=true]:text-white",
+                separator: "text-white/40 dark:text-black/40",
+              }}
+            >
+              <BreadcrumbItem
+                href="/"
+                className="text-white dark:text-black hover:font-bold"
               >
-                <BreadcrumbItem
-                  href="/"
-                  className="text-white dark:text-black hover:font-bold"
-                >
-                  Home
-                </BreadcrumbItem>
-                <BreadcrumbItem
-                  href="/store"
-                  className="text-white dark:text-black"
-                >
-                  Store
-                </BreadcrumbItem>
+                Home
+              </BreadcrumbItem>
+              <BreadcrumbItem
+                href="/store"
+                className="text-white dark:text-black"
+              >
+                Store
+              </BreadcrumbItem>
 
-                <BreadcrumbItem
-                  href={`/store/${params.storeid}`}
-                  className="text-white dark:text-black"
-                >
-                  {decodeURIComponent(params.storeid)}
-                </BreadcrumbItem>
-              </Breadcrumbs>
-              <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
+              <BreadcrumbItem
+                href={`/store/${params.storeid}`}
+                className="text-white dark:text-black"
+              >
                 {decodeURIComponent(params.storeid)}
-              </h2>
-              <ChipsChategoriesFilter
-                categories={categories}
-                onFilterChange={(filters) => {
-                  const processedProducts = processProducts(
-                    filteredProducts,
-                    filters
-                  );
-                  setDisplayedProducts(processedProducts);
-                }}
-                onSortChange={(sortOption) => {
-                  const processedProducts = sortProducts(
-                    filteredProducts,
-                    sortOption.toString()
-                  );
-                  setDisplayedProducts(processedProducts);
-                }}
-              />
-              <StoreCards products={displayedProducts}></StoreCards>
-            </div>
+              </BreadcrumbItem>
+            </Breadcrumbs>
+            <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
+              {decodeURIComponent(params.storeid)}
+            </h2>
+
+            <ChipsChategoriesFilter
+              categories={categories}
+              onFilterChange={(filters) => {
+                const processedProducts = processProducts(
+                  filteredProducts,
+                  filters
+                );
+                setDisplayedProducts(processedProducts);
+              }}
+              onSortChange={(sortOption) => {
+                const processedProducts = sortProducts(
+                  filteredProducts,
+                  sortOption.toString()
+                );
+                setDisplayedProducts(processedProducts);
+              }}
+            />
+            <StoreCards products={displayedProducts}></StoreCards>
           </div>
         )}
       </div>

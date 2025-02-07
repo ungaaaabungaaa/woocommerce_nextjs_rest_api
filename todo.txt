@@ -1,1 +1,2 @@
-1. Arrows for the store - Easy 
+1.Fix the Store Alignmets
+2.Fix the Bottom Categories Scrool Alginments 
