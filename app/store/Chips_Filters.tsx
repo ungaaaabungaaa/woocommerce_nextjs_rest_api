@@ -233,8 +233,8 @@ export default function ChipsChategoriesFilter({
   };
 
   return (
-    <div className="w-full">
-      <div className="container mx-auto">
+    <div className="w-full ">
+      <div className="w-full">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0 pb-2">
           {/* Categories Scroll */}
 

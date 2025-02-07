@@ -9,7 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { BreadcrumbItem, Breadcrumbs } from "@nextui-org/breadcrumbs";
 import ChipsChategoriesFilter from "./Chips_Filters";
 import StoreCards from "./storecards";
-import { filterProducts, processProducts } from "./productFilters";
+import { processProducts } from "./productFilters";
 import { sortProducts } from "./sortProducts";
 
 interface Product {
