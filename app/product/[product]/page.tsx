@@ -477,6 +477,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                       title="Description & Dimensions"
                     >
                       <div
+                        className="text-gray-500 dark:text-gray-400"
                         dangerouslySetInnerHTML={{
                           __html: product.description,
                         }}
@@ -502,7 +503,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                       title="SIZE GUIDE"
                     >
                       <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
-                        <table className="w-full text-left text-sm">
+                        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                           <thead>
                             <tr>
                               <th className="py-2">Height (cm)</th>
@@ -553,7 +554,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                       title="SHIPPING"
                     >
                       <div className="bg-black text-white dark:bg-white dark:text-black p-4 rounded">
-                        <table className="w-full text-left text-sm">
+                        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
                           <thead>
                             <tr>
                               <th className="py-2">Location</th>
@@ -561,7 +562,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                               <th className="py-2">Delivery</th>
                             </tr>
                           </thead>
-                          <tbody>
+                          <tbody className="">
                             <tr>
                               <td className="py-1">US / Canada</td>
                               <td className="py-1">$5</td>
@@ -584,7 +585,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                             </tr>
                           </tbody>
                         </table>
-                        <p className="text-sm mt-4">
+                        <p className="text-sm mt-4 text-gray-500 dark:text-gray-400">
                           *Each order requires 24 hours for processing and
                           handling. This does not include weekends or holidays.
                         </p>
