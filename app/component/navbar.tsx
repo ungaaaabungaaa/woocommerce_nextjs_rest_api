@@ -127,8 +127,6 @@ export default function Nav_bar() {
     { name: "Accessories", component: AccessoriesMegaMenu },
     { name: "Kids", component: KidsMegaMenu },
     { name: "Footwear", component: FootWearMegaMenu },
-    { name: "Comfort", component: MensMegaMenu },
-    { name: "Everyday", component: WomensMegaMenu },
   ];
 
   const handleIconMouseEnter = (popup: string) => {
@@ -205,8 +203,8 @@ export default function Nav_bar() {
                     onClick={handleLogoClick}
                     src={Sitelogo}
                     alt="Site Logo"
-                    width={180}
-                    height={100}
+                    width={280}
+                    height={200}
                     priority
                     className="cursor-pointer"
                   />
