@@ -127,6 +127,8 @@ export default function Nav_bar() {
     { name: "Accessories", component: AccessoriesMegaMenu },
     { name: "Kids", component: KidsMegaMenu },
     { name: "Footwear", component: FootWearMegaMenu },
+    { name: "Comfort", component: MensMegaMenu },
+    { name: "EveryDay", component: AccessoriesMegaMenu },
   ];
 
   const handleIconMouseEnter = (popup: string) => {
@@ -210,11 +212,14 @@ export default function Nav_bar() {
                   />
                 </NavbarBrand>
 
-                <NavbarContent className="hidden sm:flex gap-8" justify="start">
+                <NavbarContent
+                  className="hidden sm:flex gap-10"
+                  justify="start"
+                >
                   {megaMenus.map((menu) => (
                     <NavbarItem
                       key={menu.name}
-                      className="text-white hover:font-bold dark:text-black"
+                      className="text-white hover:font-bold dark:text-black "
                       onMouseEnter={() =>
                         supportsHover && setVisibleMegaMenu(menu.name)
                       }
