@@ -115,103 +115,109 @@ export default function WishlistPage() {
   }
 
   return (
-    <div className="container mx-auto w-full  py-8 text-white dark:text-black bg-black dark:bg-white max-w-7xl ">
-      <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black ">
-        <div className="w-full ">
-          <main className="px-4 py-8">
-            <div className="flex justify-between items-center mb-6">
-              <h1 className="text-3xl font-bold">
-                Wishlist{" "}
-                <span className="text-sm">({wishlistCount} products)</span>
-              </h1>
-            </div>
-            {wishlistProducts.length === 0 ? (
-              <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
-                <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
-                  Empty Wishlist
-                </p>
-                <br></br>
-                <Button
-                  onClick={() => (window.location.href = "/")}
-                  color="default"
-                >
-                  Continue Shopping
-                </Button>
+    <>
+      <div className="container mx-auto w-full  py-8 text-white dark:text-black bg-black dark:bg-white max-w-7xl ">
+        <div className="w-full flex align-middle justify-center items-center bg-black text-white dark:bg-white dark:text-black ">
+          <div className="w-full ">
+            <main className="px-4 py-8">
+              <div className="flex justify-between items-center mb-6">
+                <h1 className="text-3xl font-bold">
+                  Wishlist{" "}
+                  <span className="text-sm">({wishlistCount} products)</span>
+                </h1>
               </div>
-            ) : (
-              <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
-                {wishlistProducts.map((product) => (
-                  <div
-                    key={product.id}
-                    className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
+              {wishlistProducts.length === 0 ? (
+                <div className="flex flex-col items-center justify-center min-h-screen bg-black text-white dark:bg-white dark:text-black">
+                  <p className="mb-4 text-3xl sm:text-4xl md:text-6xl font-bold text-center">
+                    Empty Wishlist
+                  </p>
+                  <br></br>
+                  <Button
+                    onClick={() => (window.location.href = "/")}
+                    color="default"
                   >
-                    <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted">
-                      <Link href={`/product/${product.id}`}>
-                        <Image
-                          src={product.image || "/placeholder.svg"}
-                          alt={product.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </Link>
+                    Continue Shopping
+                  </Button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-4 md:grid-cols-4 p-4">
+                  {wishlistProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="group relative bg-card border-muted rounded-lg flex flex-col cursor-pointer"
+                    >
+                      <div className="aspect-portrait relative overflow-hidden rounded-lg bg-muted">
+                        <Link href={`/product/${product.id}`}>
+                          <Image
+                            src={product.image || "/placeholder.svg"}
+                            alt={product.name}
+                            fill
+                            className="object-cover"
+                          />
+                        </Link>
 
-                      <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
-                        <Trash2
-                          onClick={() => removeFromWishlist(product.id)}
-                          className="h-3 w-3 text-black"
-                        />
+                        <div className="absolute right-3 top-3 z-10 rounded-full p-3 bg-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-opacity duration-300">
+                          <Trash2
+                            onClick={() => removeFromWishlist(product.id)}
+                            className="h-3 w-3 text-black"
+                          />
+                        </div>
+
+                        {product.sale_price && product.regular_price && (
+                          <div
+                            className="absolute left-2 bottom-2 z-10"
+                            role="status"
+                          >
+                            <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
+                              -
+                              {calculateDiscount(
+                                product.regular_price,
+                                product.sale_price
+                              )}
+                              %
+                            </span>
+                          </div>
+                        )}
                       </div>
 
-                      {product.sale_price && product.regular_price && (
-                        <div
-                          className="absolute left-2 bottom-2 z-10"
-                          role="status"
+                      <div className="p-4">
+                        <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
+                          {product.name}
+                        </p>
+                      </div>
+                      <div className="flex flex-col lg:flex-row lg:space-x-2 items-center w-full">
+                        <Button
+                          href={`/product/${product.id}`}
+                          className="flex-1 text-center bg-white text-black py-3 px-3 text-xs rounded-full mt-2 dark:bg-black dark:text-white"
                         >
-                          <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
-                            -
-                            {calculateDiscount(
-                              product.regular_price,
-                              product.sale_price
-                            )}
-                            %
-                          </span>
-                        </div>
-                      )}
-                    </div>
+                          View
+                        </Button>
 
-                    <div className="p-4">
-                      <p className="text-white dark:text-black text-left text-balance text-1xl tracking-[-0.015em] capitalize">
-                        {product.name}
-                      </p>
+                        <button
+                          onClick={() =>
+                            addToCartApiCallSimple(product.id.toString(), "1")
+                          }
+                          className="flex-1 text-center bg-red text-white py-3 px-3 text-xs rounded-full mt-2 text-wrap "
+                        >
+                          Add To Bag
+                        </button>
+                      </div>
                     </div>
-                    <div className="flex flex-col lg:flex-row lg:space-x-2 items-center w-full">
-                      <Button
-                        href={`/product/${product.id}`}
-                        className="flex-1 text-center bg-white text-black py-3 px-3 text-xs rounded-full mt-2 dark:bg-black dark:text-white"
-                      >
-                        View
-                      </Button>
-
-                      <button
-                        onClick={() =>
-                          addToCartApiCallSimple(product.id.toString(), "1")
-                        }
-                        className="flex-1 text-center bg-red text-white py-3 px-3 text-xs rounded-full mt-2 text-wrap "
-                      >
-                        Add To Bag
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
-          </main>
+                  ))}
+                </div>
+              )}
+            </main>
+          </div>
+        </div>
+        <br></br>
+        <br></br>
+      </div>
+      <div className="w-full max-w-7xl px-4 mx-auto py-8 text-white dark:text-black bg-black dark:bg-white flex flex-col align-middle justify-center items-center">
+        <div className="w-full flex flex-col align-middle justify-center items-center">
+          <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
+          <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
         </div>
       </div>
-      <br></br>
-      <br></br>
-      <ProductCarouselCategories category="trending-now"></ProductCarouselCategories>
-      <ProductCarouselCategories category="best-sellers"></ProductCarouselCategories>
-    </div>
+    </>
   );
 }
