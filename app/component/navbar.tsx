@@ -203,8 +203,8 @@ export default function Nav_bar() {
                     onClick={handleLogoClick}
                     src={Sitelogo}
                     alt="Site Logo"
-                    width={280}
-                    height={200}
+                    width={180}
+                    height={100}
                     priority
                     className="cursor-pointer"
                   />
