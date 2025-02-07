@@ -13,8 +13,10 @@ const api = new WooCommerceRestApi({
 // GET handler for fetching all Categories
 export async function GET(req: NextRequest) {
   try {
-    // Call WooCommerce API to get product categories
-    const response = await api.get("products/categories");
+    // Call WooCommerce API to get product categories with per_page=50
+    const response = await api.get("products/categories", {
+      per_page: 50, // Set default to 50
+    });
 
     // Return the response data as JSON
     return NextResponse.json(response.data);
