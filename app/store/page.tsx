@@ -129,11 +129,11 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div className="bg-black dark:bg-white overflow-hidden  w-full flex justify-center items-center">
+          <div className="bg-black dark:bg-white overflow-hidden  flex justify-center items-center">
             <br />
             <ToastContainer />
             <br />
-            <div className="w-full max-w-7xl container mx-auto px-4 py-8">
+            <div className=" container mx-auto  py-8 w-full max-w-7xl debug">
               <Breadcrumbs
                 itemClasses={{
                   item: "text-white/60 dark:text-black data-[current=true]:text-white",
@@ -152,11 +152,9 @@ function StorePage() {
                 </BreadcrumbItem>
                 <BreadcrumbItem>Studio Store</BreadcrumbItem>
               </Breadcrumbs>
-              <br></br>
               <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
                 Studio Store
               </h2>
-              <br></br>
               <ChipsChategoriesFilter
                 categories={categories}
                 onFilterChange={(filters) => {

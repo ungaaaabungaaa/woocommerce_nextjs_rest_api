@@ -157,7 +157,6 @@ function StoreId({ params }: { params: Params }) {
                     {decodeURIComponent(params.storeid)}
                   </BreadcrumbItem>
                 </Breadcrumbs>
-                <br></br>
                 <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
                   {decodeURIComponent(params.storeid)}
                 </h2>
