@@ -11,29 +11,73 @@ import ChipsChategoriesFilter from "./Chips_Filters";
 import StoreCards from "./storecards";
 import { filterProducts, processProducts } from "./productFilters";
 import { sortProducts } from "./sortProducts";
+
 interface Product {
   id: string;
+  title: string;
+  description: string;
+  image: string;
+  hoverimage: string;
+  isNew?: boolean;
+  price: string;
+  slug: string;
+  sale_price: string;
+  regular_price: string;
+  productId: string;
+  type: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+  count: number;
 }
 
 interface FilterOptions {
   sortBy: string;
 }
 
-type FilterProductsFunction = (
-  products: Product[],
-  options: FilterOptions
-) => Product[];
-
 function StorePage() {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
-
+  const [categories, setCategories] = useState<Category[]>([]);
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
-
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
 
+  // Fetch categories
+  useEffect(() => {
+    axios
+      .get("/api/getcategories")
+      .then((response) => {
+        if (response.data && response.data.length > 0) {
+          // Transform the API response to match the expected format
+          const formattedCategories = response.data.map((category: any) => ({
+            name: category.name,
+            count: category.count,
+          }));
+          setCategories(formattedCategories);
+        } else {
+          console.error("No categories found");
+          toast.error("Error loading categories", {
+            position: "top-center",
+            theme: "dark",
+            autoClose: 5000,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+        toast.error("Error loading categories", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+      });
+  }, []);
+
+  // Fetch products
   useEffect(() => {
     axios
       .get<{ products: Product[] }>(`/api/getproduct`)
@@ -85,33 +129,6 @@ function StorePage() {
       });
   }, []);
 
-  const categories = [
-    { name: "Accessories", count: 6 },
-    { name: "Core", count: 10 },
-    { name: "Footwear", count: 0 },
-    { name: "Kids' Clothing", count: 9 },
-    { name: "Men's Clothing", count: 11 },
-    { name: "New Arrivals", count: 10 },
-    { name: "Shop By Fit", count: 10 },
-    { name: "T-Shirts", count: 4 },
-    { name: "Women's Clothing", count: 11 },
-  ];
-
-  interface Product {
-    id: string;
-    title: string;
-    description: string;
-    image: string;
-    hoverimage: string;
-    isNew?: boolean;
-    price: string;
-    slug: string;
-    sale_price: string;
-    regular_price: string;
-    productId: string;
-    type: string;
-  }
-
   return (
     <>
       <div>
@@ -129,7 +146,7 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full  max-w-7xl">
+          <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full max-w-7xl">
             <ToastContainer />
             <Breadcrumbs
               itemClasses={{
@@ -178,5 +195,3 @@ function StorePage() {
 }
 
 export default StorePage;
-
-// hello

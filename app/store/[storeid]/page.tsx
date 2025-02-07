@@ -31,6 +31,16 @@ interface Product {
   type: string;
 }
 
+interface Category {
+  id: number;
+  name: string;
+  count: number;
+}
+
+interface FilterOptions {
+  sortBy: string;
+}
+
 function StoreId({ params }: { params: Params }) {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
@@ -38,6 +48,38 @@ function StoreId({ params }: { params: Params }) {
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  // Fetch categories
+  useEffect(() => {
+    axios
+      .get("/api/getcategories")
+      .then((response) => {
+        if (response.data && response.data.length > 0) {
+          // Transform the API response to match the expected format
+          const formattedCategories = response.data.map((category: any) => ({
+            name: category.name,
+            count: category.count,
+          }));
+          setCategories(formattedCategories);
+        } else {
+          console.error("No categories found");
+          toast.error("Error loading categories", {
+            position: "top-center",
+            theme: "dark",
+            autoClose: 5000,
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("Error fetching categories:", err);
+        toast.error("Error loading categories", {
+          position: "top-center",
+          theme: "dark",
+          autoClose: 5000,
+        });
+      });
+  }, []);
 
   useEffect(() => {
     axios
@@ -94,18 +136,6 @@ function StoreId({ params }: { params: Params }) {
         });
       });
   }, [params.storeid]);
-
-  const categories = [
-    { name: "Accessories", count: 6 },
-    { name: "Core", count: 10 },
-    { name: "Footwear", count: 0 },
-    { name: "Kids' Clothing", count: 9 },
-    { name: "Men's Clothing", count: 11 },
-    { name: "New Arrivals", count: 10 },
-    { name: "Shop By Fit", count: 10 },
-    { name: "T-Shirts", count: 4 },
-    { name: "Women's Clothing", count: 11 },
-  ];
 
   return (
     <>
