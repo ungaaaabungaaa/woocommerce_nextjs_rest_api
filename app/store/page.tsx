@@ -133,7 +133,7 @@ function StorePage() {
             <br />
             <ToastContainer />
             <br />
-            <div className=" container mx-auto  py-8 w-full max-w-7xl debug">
+            <div className=" container mx-auto  py-8 w-full max-w-7xl">
               <Breadcrumbs
                 itemClasses={{
                   item: "text-white/60 dark:text-black data-[current=true]:text-white",
