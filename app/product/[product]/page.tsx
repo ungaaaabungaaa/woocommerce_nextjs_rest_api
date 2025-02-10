@@ -418,40 +418,40 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     ))}
                   </div>
                 )}
-                <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
-                  <div className="w-full md:w-auto flex items-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
+                {/* <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-4">
+                  <div className="w-full flex items-center justify-center bg-white dark:bg-black rounded-full border border-white dark:border-black overflow-hidden">
                     <Button
                       size="lg"
-                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-12 flex items-center justify-center"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     >
                       -
                     </Button>
-                    <span className="px-3 text-sm text-black dark:text-white">
+                    <span className="flex-grow text-center text-sm text-black dark:text-white">
                       {quantity}
                     </span>
                     <Button
                       size="lg"
-                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-full md:w-8 flex items-center justify-center"
+                      className="bg-white dark:bg-black rounded-full p-4 h-12 w-12 flex items-center justify-center"
                       onClick={() => setQuantity(quantity + 1)}
                     >
                       +
                     </Button>
                   </div>
+                </div> */}
 
-                  <Button
-                    onClick={handleAddToCart}
-                    className={`w-full md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
-                      !allVariationsSelected()
-                        ? "opacity-50 cursor-not-allowed"
-                        : ""
-                    }`}
-                    disabled={!allVariationsSelected()}
-                  >
-                    <ShoppingCart className="mr-2 h-12 w-4" />
-                    {allVariationsSelected() ? "Add To Bag" : "Select Options"}
-                  </Button>
-                </div>
+                <Button
+                  onClick={handleAddToCart}
+                  className={`w-full md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
+                    !allVariationsSelected()
+                      ? "opacity-50 cursor-not-allowed"
+                      : ""
+                  }`}
+                  disabled={!allVariationsSelected()}
+                >
+                  <ShoppingCart className="mr-2 h-12 w-4" />
+                  {allVariationsSelected() ? "Add To Bag" : "Select Options"}
+                </Button>
 
                 <Button
                   className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
@@ -462,7 +462,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                   />
                   {isInWishlist(productId as any)
                     ? "Added To Wishlist"
-                    : "Add To Wishlist"}
+                    : "Add To Wishlist "}
                 </Button>
 
                 <div className="flex space-x-4 text-white dark:text-black">
@@ -471,34 +471,22 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     itemClasses={itemClasses}
                   >
                     <AccordionItem
-                      subtitle="Product Description & Dimensions"
+                      subtitle=""
                       key="1"
                       aria-label="ABOUT"
-                      title="Description & Dimensions"
+                      title="Description"
                     >
                       <div
-                        className="text-gray-500 dark:text-gray-400"
+                        className="text-gray-500 dark:text-gray-400 mt-2"
                         dangerouslySetInnerHTML={{
                           __html: product.description,
                         }}
                       />
                       <br></br>
-                      <p>
-                        <strong>Weight:</strong>{" "}
-                        {product.weight || "Not specified"} kg
-                      </p>
-                      <p>
-                        <strong>Dimensions:</strong>
-                        {product.dimensions.length &&
-                        product.dimensions.width &&
-                        product.dimensions.height
-                          ? `${product.dimensions.length} x ${product.dimensions.width} x ${product.dimensions.height} cm`
-                          : "Not specified"}
-                      </p>
                     </AccordionItem>
                     <AccordionItem
                       key="2"
-                      subtitle="Please size down if you are between sizes"
+                      subtitle=""
                       aria-label="SIZE GUIDE"
                       title="SIZE GUIDE"
                     >
@@ -549,7 +537,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     </AccordionItem>
                     <AccordionItem
                       key="3"
-                      subtitle="Free Shipping on all orders over $100 USD"
+                      subtitle=""
                       aria-label="SHIPPING"
                       title="SHIPPING"
                     >

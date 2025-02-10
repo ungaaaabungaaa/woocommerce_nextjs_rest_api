@@ -308,15 +308,15 @@ export default function Nav_bar() {
                 )}
               </NavbarContent>
 
-              <NavbarMenu className=" text-white dark:text-white">
+              <NavbarMenu className=" bg-black dark:bg-white dark:text-black text-white flex align-middle items-start justify-center text-start">
                 {menuItems.map((item, index) => (
                   <NavbarMenuItem
                     key={`${item.label}-${index}`}
-                    className=" text-white  dark:text-black "
+                    className=""
                   >
                     <button
                       onClick={() => handleMenuItemClick(item.route)}
-                      className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black"
+                      className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black text-lg"
                     >
                       {item.label}
                     </button>
