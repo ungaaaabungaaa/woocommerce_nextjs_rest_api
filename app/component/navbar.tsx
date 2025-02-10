@@ -127,8 +127,6 @@ export default function Nav_bar() {
     { name: "Accessories", component: AccessoriesMegaMenu },
     { name: "Kids", component: KidsMegaMenu },
     { name: "Footwear", component: FootWearMegaMenu },
-    { name: "Comfort", component: MensMegaMenu },
-    { name: "EveryDay", component: AccessoriesMegaMenu },
   ];
 
   const handleIconMouseEnter = (popup: string) => {
@@ -210,25 +208,25 @@ export default function Nav_bar() {
                     priority
                     className="cursor-pointer"
                   />
-                </NavbarBrand>
 
-                <NavbarContent
-                  className="hidden sm:flex gap-10"
-                  justify="start"
-                >
-                  {megaMenus.map((menu) => (
-                    <NavbarItem
-                      key={menu.name}
-                      className="text-white hover:font-bold dark:text-black "
-                      onMouseEnter={() =>
-                        supportsHover && setVisibleMegaMenu(menu.name)
-                      }
-                      // onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
-                    >
-                      <Link href="#">{menu.name}&apos;s</Link>
-                    </NavbarItem>
-                  ))}
-                </NavbarContent>
+                  <NavbarContent
+                    className="hidden sm:flex gap-10 ml-6"
+                    justify="start"
+                  >
+                    {megaMenus.map((menu) => (
+                      <NavbarItem
+                        key={menu.name}
+                        className="text-white hover:font-bold dark:text-black "
+                        onMouseEnter={() =>
+                          supportsHover && setVisibleMegaMenu(menu.name)
+                        }
+                        // onMouseLeave={() => supportsHover && setVisibleMegaMenu("")}
+                      >
+                        <Link href="#">{menu.name}&apos;s</Link>
+                      </NavbarItem>
+                    ))}
+                  </NavbarContent>
+                </NavbarBrand>
               </NavbarContent>
 
               <NavbarContent justify="end" className="gap-4">
@@ -310,10 +308,7 @@ export default function Nav_bar() {
 
               <NavbarMenu className=" bg-black dark:bg-white dark:text-black text-white flex align-middle items-start justify-center text-start">
                 {menuItems.map((item, index) => (
-                  <NavbarMenuItem
-                    key={`${item.label}-${index}`}
-                    className=""
-                  >
+                  <NavbarMenuItem key={`${item.label}-${index}`} className="">
                     <button
                       onClick={() => handleMenuItemClick(item.route)}
                       className="w-full text-left py-2 px-4 text-white hover:text-gray-300 dark:text-black text-lg"
