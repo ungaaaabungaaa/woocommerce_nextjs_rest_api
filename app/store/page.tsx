@@ -171,24 +171,29 @@ function StorePage() {
             <h2 className="text-2xl lg:text-3xl font-medium text-white dark:text-black">
               Studio Store
             </h2>
-            <ChipsChategoriesFilter
-              categories={categories}
-              totalProducts={totalProductsCount} // Use the state variable here
-              onFilterChange={(filters) => {
-                const processedProducts = processProducts(
-                  filteredProducts,
-                  filters
-                );
-                setDisplayedProducts(processedProducts);
-              }}
-              onSortChange={(sortOption) => {
-                const processedProducts = sortProducts(
-                  filteredProducts,
-                  sortOption.toString()
-                );
-                setDisplayedProducts(processedProducts);
-              }}
-            />
+
+            {/* Wrapper for sticky ChipsChategoriesFilter */}
+            <div className="sticky top-[80px] z-10 dark:bg-white bg-black">
+              <ChipsChategoriesFilter
+                categories={categories}
+                totalProducts={totalProductsCount}
+                onFilterChange={(filters) => {
+                  const processedProducts = processProducts(
+                    filteredProducts,
+                    filters
+                  );
+                  setDisplayedProducts(processedProducts);
+                }}
+                onSortChange={(sortOption) => {
+                  const processedProducts = sortProducts(
+                    filteredProducts,
+                    sortOption.toString()
+                  );
+                  setDisplayedProducts(processedProducts);
+                }}
+              />
+            </div>
+
             <StoreCards products={displayedProducts}></StoreCards>
           </div>
         )}
