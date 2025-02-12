@@ -49,6 +49,7 @@ function StoreId({ params }: { params: Params }) {
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [totalProductsCount, setTotalProductsCount] = useState<number>(0); // New state for total products count
 
   // Fetch categories
   useEffect(() => {
@@ -116,6 +117,7 @@ function StoreId({ params }: { params: Params }) {
           setProducts(fetchedProducts);
           setAllProducts(fetchedProducts);
           setDisplayedProducts(fetchedProducts);
+          setTotalProductsCount(fetchedProducts.length); // Set the total products count
           setError(null);
         } else {
           setError("No products found for this category.");
@@ -188,7 +190,7 @@ function StoreId({ params }: { params: Params }) {
 
             <ChipsChategoriesFilter
               categories={categories}
-              totalProducts={100}
+              totalProducts={totalProductsCount} // Use the state variable here
               onFilterChange={(filters) => {
                 const processedProducts = processProducts(
                   filteredProducts,

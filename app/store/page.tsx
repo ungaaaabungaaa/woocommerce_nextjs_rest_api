@@ -45,6 +45,7 @@ function StorePage() {
   const [allProducts, setAllProducts] = useState<any[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<any[]>([]);
   const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
+  const [totalProductsCount, setTotalProductsCount] = useState<number>(0); // New state for total products count
 
   // Fetch categories
   useEffect(() => {
@@ -108,6 +109,7 @@ function StorePage() {
           setProducts(fetchedProducts);
           setAllProducts(fetchedProducts);
           setDisplayedProducts(fetchedProducts);
+          setTotalProductsCount(fetchedProducts.length); // Set the total products count
           setError(null);
         } else {
           setError("No products found.");
@@ -171,7 +173,7 @@ function StorePage() {
             </h2>
             <ChipsChategoriesFilter
               categories={categories}
-              totalProducts={203}
+              totalProducts={totalProductsCount} // Use the state variable here
               onFilterChange={(filters) => {
                 const processedProducts = processProducts(
                   filteredProducts,
