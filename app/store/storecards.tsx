@@ -129,7 +129,7 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                   />
                 </Link>
 
-                <div className="absolute right-3 top-3 z-10 bg-white rounded-full p-3">
+                <div className="absolute right-3 top-3 z-5 bg-white rounded-full p-3">
                   <Heart
                     onClick={() => handleWishlistToggle(product.id)}
                     className={`h-3 w-3 ${
@@ -141,7 +141,7 @@ function StoreCards({ products = [] }: { products?: Product[] }) {
                 </div>
 
                 {product.sale_price && product.regular_price && (
-                  <div className="absolute left-2 bottom-2 z-10" role="status">
+                  <div className="absolute left-2 bottom-2 z-5" role="status">
                     <span className="bg-red text-white rounded-lg p-2 text-sm font-medium flex items-center justify-center">
                       -
                       {calculateDiscount(
