@@ -70,7 +70,7 @@ function Pagination({
       </div>
 
       <div className="text-sm text-muted-foreground">
-        Viewing {startProduct} - {endProduct} of {totalProducts} products
+        Viewing {totalProducts} products
       </div>
     </div>
   );
