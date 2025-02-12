@@ -27,6 +27,7 @@ interface ChipsCategoriesFilterProps {
   highlight?: string;
   onFilterChange?: (filters: FilterState) => void;
   onSortChange?: (sort: SortOption) => void;
+  totalProducts: number; // New prop for total products count
 }
 
 interface FilterState {
@@ -54,21 +55,13 @@ const filterCategories = (categories: Array<Category>): Category[] => {
   );
 };
 
-const calculateTotalProducts = (categories: Array<Category>): number => {
-  if (!Array.isArray(categories)) return 0;
-
-  return categories.reduce(
-    (sum: number, cat: Category) => sum + (cat.count || 0),
-    0
-  );
-};
-
 export default function ChipsChategoriesFilter({
   categories: initialCategories = [],
   notDisplay = [],
   highlight = "",
   onFilterChange,
   onSortChange,
+  totalProducts, // Destructure the new prop
 }: ChipsCategoriesFilterProps) {
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
@@ -87,7 +80,7 @@ export default function ChipsChategoriesFilter({
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Memoize processed categories
-  const { categories, totalProducts, selectedCategory } = useMemo(() => {
+  const { categories, selectedCategory } = useMemo(() => {
     const filteredCategories = filterCategories(initialCategories)
       .filter((category) => !notDisplay.includes(category.name.toUpperCase()))
       .map((category) => ({
@@ -106,13 +99,11 @@ export default function ChipsChategoriesFilter({
         ]
       : filteredCategories;
 
-    const total = calculateTotalProducts(rearrangedCategories);
     const selected =
       rearrangedCategories.length > 0 ? rearrangedCategories[0].name : "";
 
     return {
       categories: rearrangedCategories,
-      totalProducts: total,
       selectedCategory: selected,
     };
   }, [initialCategories, notDisplay, highlight]);
@@ -269,11 +260,12 @@ export default function ChipsChategoriesFilter({
                     key={category.name}
                     onClick={() => categoriesSelected(category.name)}
                     className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-          ${
-            selectedCategory === category.name || category.name === highlight
-              ? "bg-white border border-gray-200 text-black"
-              : "bg-black text-white hover:bg-white hover:text-black"
-          }`}
+                  ${
+                    selectedCategory === category.name ||
+                    category.name === highlight
+                      ? "bg-white border border-gray-200 text-black"
+                      : "bg-black text-white hover:bg-white hover:text-black"
+                  }`}
                   >
                     {category.name}
                   </button>

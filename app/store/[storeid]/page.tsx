@@ -188,6 +188,7 @@ function StoreId({ params }: { params: Params }) {
 
             <ChipsChategoriesFilter
               categories={categories}
+              totalProducts={100}
               onFilterChange={(filters) => {
                 const processedProducts = processProducts(
                   filteredProducts,

@@ -171,6 +171,7 @@ function StorePage() {
             </h2>
             <ChipsChategoriesFilter
               categories={categories}
+              totalProducts={203}
               onFilterChange={(filters) => {
                 const processedProducts = processProducts(
                   filteredProducts,
