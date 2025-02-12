@@ -1,1 +1,2 @@
-2.Fix the Bottom Categories Scrool Alginments 
+1. fix the product count in store 
+2. fix the count in the pagination 
