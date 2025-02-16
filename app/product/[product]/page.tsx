@@ -323,7 +323,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 <ProductGallery images={mappedImages} />
               </div>
 
-              <div className="space-y-6 lg:ml-80">
+              <div className="space-y-6 lg:ml-40">
                 <div>
                   <Breadcrumbs
                     itemClasses={{
@@ -442,7 +442,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
 
                 <Button
                   onClick={handleAddToCart}
-                  className={`w-full md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
+                  className={`w-2/3 md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
                     !allVariationsSelected()
                       ? "opacity-50 cursor-not-allowed"
                       : ""
@@ -454,7 +454,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 </Button>
 
                 <Button
-                  className={`w-full md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
+                  className={`w-2/3 md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
                   onClick={handleWishlistToggle}
                 >
                   <Heart
