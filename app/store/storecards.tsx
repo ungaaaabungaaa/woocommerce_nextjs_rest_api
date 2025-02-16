@@ -41,36 +41,58 @@ function Pagination({
   const startProduct = (currentPage - 1) * productsPerPage + 1;
   const endProduct = Math.min(currentPage * productsPerPage, totalProducts);
 
+  if (totalPages <= 1) {
+    return (
+      <div className="flex justify-end w-full mt-8">
+        <div className="text-sm text-muted-foreground">
+          Viewing {totalProducts} products
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex items-center justify-between w-full mt-8">
       <div className="flex items-center gap-2">
-        <Button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
+        {totalPages > 1 && (
+          <Button
+            isIconOnly
+            onClick={() => onPageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className="min-w-8 h-8 bg-transparent"
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+        )}
 
         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
           <Button
             key={page}
             onClick={() => onPageChange(page)}
-            className="w-8 h-8 text-white bg-black dark:bg-white dark:text-black"
+            className={`min-w-8 h-8 ${
+              currentPage === page
+                ? "bg-black text-white dark:bg-white dark:text-black"
+                : "bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
+            }`}
           >
             {page}
           </Button>
         ))}
 
-        <Button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+        {totalPages > 1 && (
+          <Button
+            isIconOnly
+            onClick={() => onPageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className="min-w-8 h-8 bg-transparent"
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        )}
       </div>
 
       <div className="text-sm text-muted-foreground">
-        Viewing {totalProducts} products
+        Viewing {startProduct} - {endProduct} of {totalProducts} products
       </div>
     </div>
   );
