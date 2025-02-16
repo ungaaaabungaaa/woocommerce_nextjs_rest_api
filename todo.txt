@@ -1,3 +1,2 @@
-1.store spacing 
 2.logo side padding 
 3.pagination fixes 

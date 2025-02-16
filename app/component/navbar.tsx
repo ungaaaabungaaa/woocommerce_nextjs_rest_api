@@ -210,7 +210,7 @@ export default function Nav_bar() {
                   />
 
                   <NavbarContent
-                    className="hidden sm:flex gap-10 ml-6"
+                    className="hidden sm:flex gap-10 ml-12"
                     justify="start"
                   >
                     {megaMenus.map((menu) => (
