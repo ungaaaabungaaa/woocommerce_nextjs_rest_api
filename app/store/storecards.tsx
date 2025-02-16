@@ -61,7 +61,7 @@ function Pagination({
             disabled={currentPage === 1}
             className="min-w-8 h-8 bg-transparent"
           >
-            <ChevronLeft className="h-4 w-4" />
+            <ChevronLeft className="h-4 w-4 dark:text-black text-white" />
           </Button>
         )}
 
@@ -71,8 +71,8 @@ function Pagination({
             onClick={() => onPageChange(page)}
             className={`min-w-8 h-8 ${
               currentPage === page
-                ? "bg-black text-white dark:bg-white dark:text-black"
-                : "bg-transparent hover:bg-gray-100 dark:hover:bg-gray-800"
+                ? "bg-black text-white dark:bg-white dark:text-black "
+                : "bg-black text-white dark:bg-white dark:text-black bg-gray-800 dark:bg-gray-100 "
             }`}
           >
             {page}
@@ -86,7 +86,7 @@ function Pagination({
             disabled={currentPage === totalPages}
             className="min-w-8 h-8 bg-transparent"
           >
-            <ChevronRight className="h-4 w-4" />
+            <ChevronRight className="h-4 w-4 dark:text-black text-white" />
           </Button>
         )}
       </div>
