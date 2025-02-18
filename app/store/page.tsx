@@ -148,7 +148,7 @@ function StorePage() {
             </Button>
           </div>
         ) : (
-          <div className="container mx-auto px-4 py-8 bg-black text-white dark:bg-white dark:text-black w-full max-w-7xl">
+          <div className="container mx-auto px-8 py-8 bg-black text-white dark:bg-white dark:text-black w-full max-w-7xl">
             <ToastContainer />
 
             <Breadcrumbs
