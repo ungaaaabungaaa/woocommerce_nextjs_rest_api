@@ -323,7 +323,7 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 <ProductGallery images={mappedImages} />
               </div>
 
-              <div className="space-y-6 lg:ml-40">
+              <div className="space-y-6 lg:ml-24">
                 <div>
                   <Breadcrumbs
                     itemClasses={{

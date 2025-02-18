@@ -52,7 +52,7 @@ function Pagination({
   }
 
   return (
-    <div className="flex items-center justify-between w-full mt-8">
+    <div className="flex items-center justify-between w-full mt-8 mb-8 py-8 border-t border-b dark:border-gray-300 border-gray-700">
       <div className="flex items-center gap-2">
         {totalPages > 1 && (
           <Button
@@ -71,14 +71,13 @@ function Pagination({
             onClick={() => onPageChange(page)}
             className={`min-w-8 h-8 ${
               currentPage === page
-                ? "bg-black text-white dark:bg-white dark:text-black "
-                : "bg-black text-white dark:bg-white dark:text-black bg-gray-800 dark:bg-gray-100 "
+                ? "bg-black text-white dark:bg-white dark:text-black bg-gray-800 dark:bg-gray-100"
+                : " bg-black text-white dark:bg-white dark:text-black "
             }`}
           >
             {page}
           </Button>
         ))}
-
         {totalPages > 1 && (
           <Button
             isIconOnly
