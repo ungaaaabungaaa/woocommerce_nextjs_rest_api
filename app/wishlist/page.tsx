@@ -10,6 +10,7 @@ import { Button } from "@nextui-org/button";
 import { useCartKey } from "@/hooks/useCartKey";
 import { useCart } from "@/context/cartcontext";
 import ProductCarouselCategories from "../component/products/ ProductCarouselCategories";
+import { useRouter } from 'next/navigation'; // Not from 'next/router'
 
 interface WishlistItem {
   id: number;
@@ -29,6 +30,7 @@ export default function WishlistPage() {
   const [error, setError] = useState<string | null>(null);
   const { cartKey, loading, error: cartKeyError } = useCartKey();
   const { fetchCartDetails } = useCart();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchWishlistProducts = async () => {
@@ -186,12 +188,12 @@ export default function WishlistPage() {
                         </p>
                       </div>
                       <div className="flex flex-col lg:flex-row lg:space-x-2 items-center w-full">
-                        <Button
-                          href={`/product/${product.id}`}
+                        <button
+                          onClick={() => router.push(`/product/${product.id}`)}
                           className="flex-1 text-center bg-white text-black py-3 px-3 text-xs rounded-full mt-2 dark:bg-black dark:text-white"
                         >
                           View
-                        </Button>
+                        </button>
 
                         <button
                           onClick={() =>
