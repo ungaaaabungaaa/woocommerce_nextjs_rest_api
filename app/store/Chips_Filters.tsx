@@ -27,7 +27,8 @@ interface ChipsCategoriesFilterProps {
   highlight?: string;
   onFilterChange?: (filters: FilterState) => void;
   onSortChange?: (sort: SortOption) => void;
-  totalProducts: number; // New prop for total products count
+  totalProducts: number;
+  onAllCategoryClick?: () => void; // New prop for handling ALL chip click
 }
 
 interface FilterState {
@@ -61,7 +62,8 @@ export default function ChipsChategoriesFilter({
   highlight = "",
   onFilterChange,
   onSortChange,
-  totalProducts, // Destructure the new prop
+  totalProducts,
+  onAllCategoryClick, // Destructure the new prop
 }: ChipsCategoriesFilterProps) {
   const [activeSheet, setActiveSheet] = useState<
     "filter" | "recommended" | null
@@ -78,6 +80,7 @@ export default function ChipsChategoriesFilter({
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
   const [isOverflowing, setIsOverflowing] = useState(false);
+  const [allCategorySelected, setAllCategorySelected] = useState(false); // New state for tracking ALL chip selection
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Memoize processed categories
@@ -249,7 +252,20 @@ export default function ChipsChategoriesFilter({
   };
 
   const categoriesSelected = (category: string) => {
+    setAllCategorySelected(false);
     router.push(`/store/${category}`);
+  };
+
+  // Handle ALL category click
+  const handleAllCategoryClick = () => {
+    setAllCategorySelected(true);
+    
+    if (onAllCategoryClick) {
+      onAllCategoryClick();
+    } else {
+      // Default behavior if no specific handler is provided
+      router.push('/store');
+    }
   };
 
   return (
@@ -265,7 +281,7 @@ export default function ChipsChategoriesFilter({
               <button
                 onClick={() => scroll("left")}
                 className="hidden md:block absolute left-0 z-10 bg-black dark:bg-white backdrop-blur-sm p-1 transition-all"
-                style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
+                style={{ top: "50%", transform: "translateY(-50%)" }}
                 aria-label="Scroll left"
               >
                 <ChevronLeft className="w-7 h-7 text-white dark:text-black" />
@@ -284,6 +300,18 @@ export default function ChipsChategoriesFilter({
               onScroll={checkScrollPosition}
             >
               <div className="flex space-x-2 px-1">
+                {/* ALL chip - always first */}
+                <button
+                  onClick={handleAllCategoryClick}
+                  className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
+                    ${allCategorySelected 
+                      ? "bg-black text-white border border-white" 
+                      : "bg-gray-800 text-white hover:bg-black"}`}
+                >
+                  ALL
+                </button>
+
+                {/* Existing category chips */}
                 {categories.map((category: any) => (
                   <button
                     key={category.name}
@@ -307,7 +335,7 @@ export default function ChipsChategoriesFilter({
               <button
                 onClick={() => scroll("right")}
                 className="hidden md:block absolute right-0 z-10 bg-none backdrop-blur-sm p-1 bg-black dark:bg-white transition-all"
-                style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
+                style={{ top: "50%", transform: "translateY(-50%)" }}
                 aria-label="Scroll right"
               >
                 <ChevronRight className="w-7 h-7 text-white dark:text-black" />
