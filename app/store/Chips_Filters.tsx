@@ -28,7 +28,7 @@ interface ChipsCategoriesFilterProps {
   onFilterChange?: (filters: FilterState) => void;
   onSortChange?: (sort: SortOption) => void;
   totalProducts: number;
-  onAllCategoryClick?: () => void; // New prop for handling ALL chip click
+  onAllCategoryClick?: (total: number) => void; // Modified type
 }
 
 interface FilterState {
@@ -119,7 +119,7 @@ export default function ChipsChategoriesFilter({
       const { scrollWidth, clientWidth } = container;
       const hasOverflow = scrollWidth > clientWidth;
       setIsOverflowing(hasOverflow);
-      
+
       // Also update arrow visibility if we're keeping that functionality
       checkScrollPosition();
     }
@@ -153,24 +153,24 @@ export default function ChipsChategoriesFilter({
   // Handle window resize and initial load
   useEffect(() => {
     const container = scrollContainerRef.current;
-    
+
     if (container) {
       // Initial check for overflow
       checkOverflow();
-      
+
       // Set up scroll event listener
       container.addEventListener("scroll", checkScrollPosition);
-      
+
       // Check again after a short delay (for loading content)
       setTimeout(checkOverflow, 100);
-      
+
       // Check on window resize
       const handleResize = () => {
         checkOverflow();
       };
-      
+
       window.addEventListener("resize", handleResize);
-      
+
       return () => {
         if (container) {
           container.removeEventListener("scroll", checkScrollPosition);
@@ -259,12 +259,12 @@ export default function ChipsChategoriesFilter({
   // Handle ALL category click
   const handleAllCategoryClick = () => {
     setAllCategorySelected(true);
-    
+
     if (onAllCategoryClick) {
-      onAllCategoryClick();
+      onAllCategoryClick(totalProducts); // Pass the total count
     } else {
       // Default behavior if no specific handler is provided
-      router.push('/store');
+      router.push("/store");
     }
   };
 
@@ -304,11 +304,13 @@ export default function ChipsChategoriesFilter({
                 <button
                   onClick={handleAllCategoryClick}
                   className={`inline-flex items-center rounded-full px-4 py-1.5 text-sm font-medium transition-colors shrink-0
-                    ${allCategorySelected 
-                      ? "bg-black text-white border border-white" 
-                      : "bg-gray-800 text-white hover:bg-black"}`}
+                    ${
+                      allCategorySelected
+                        ? "bg-black text-white border border-white"
+                        : "bg-gray-800 text-white hover:bg-black"
+                    }`}
                 >
-                  ALL
+                  ALL ({totalProducts})
                 </button>
 
                 {/* Existing category chips */}
