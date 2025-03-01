@@ -77,6 +77,7 @@ export default function ChipsChategoriesFilter({
 
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [isOverflowing, setIsOverflowing] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   // Memoize processed categories
@@ -108,6 +109,19 @@ export default function ChipsChategoriesFilter({
     };
   }, [initialCategories, notDisplay, highlight]);
 
+  // Check if container is overflowing
+  const checkOverflow = () => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const { scrollWidth, clientWidth } = container;
+      const hasOverflow = scrollWidth > clientWidth;
+      setIsOverflowing(hasOverflow);
+      
+      // Also update arrow visibility if we're keeping that functionality
+      checkScrollPosition();
+    }
+  };
+
   const checkScrollPosition = () => {
     const container = scrollContainerRef.current;
     if (container) {
@@ -133,20 +147,35 @@ export default function ChipsChategoriesFilter({
     }
   };
 
-  // Handle window resize
+  // Handle window resize and initial load
   useEffect(() => {
     const container = scrollContainerRef.current;
+    
     if (container) {
+      // Initial check for overflow
+      checkOverflow();
+      
+      // Set up scroll event listener
       container.addEventListener("scroll", checkScrollPosition);
-      checkScrollPosition();
-      setTimeout(checkScrollPosition, 100);
+      
+      // Check again after a short delay (for loading content)
+      setTimeout(checkOverflow, 100);
+      
+      // Check on window resize
+      const handleResize = () => {
+        checkOverflow();
+      };
+      
+      window.addEventListener("resize", handleResize);
+      
+      return () => {
+        if (container) {
+          container.removeEventListener("scroll", checkScrollPosition);
+        }
+        window.removeEventListener("resize", handleResize);
+      };
     }
-    return () => {
-      if (container) {
-        container.removeEventListener("scroll", checkScrollPosition);
-      }
-    };
-  }, []);
+  }, [categories]);
 
   const genderOptions = [
     "MENS",
@@ -224,18 +253,18 @@ export default function ChipsChategoriesFilter({
   };
 
   return (
-    <div className="w-full ">
+    <div className="w-full">
       <div className="w-full">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between py-4 space-y-4 md:space-y-0 pb-2">
           {/* Categories Scroll */}
 
           {/* Categories Scroll with Arrows */}
           <div className="w-full md:max-w-[72%] md:flex-1 relative">
-            {/* Left Arrow */}
-            {showLeftArrow && (
+            {/* Left Arrow - Only show when overflowing AND showLeftArrow is true */}
+            {isOverflowing && showLeftArrow && (
               <button
                 onClick={() => scroll("left")}
-                className="hidden md:block absolute left-0 z-10 bg-black dark:bg-white backdrop-blur-sm  p-1   transition-all"
+                className="hidden md:block absolute left-0 z-10 bg-black dark:bg-white backdrop-blur-sm p-1 transition-all"
                 style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
                 aria-label="Scroll left"
               >
@@ -254,7 +283,7 @@ export default function ChipsChategoriesFilter({
               }}
               onScroll={checkScrollPosition}
             >
-              <div className="flex space-x-2  px-1">
+              <div className="flex space-x-2 px-1">
                 {categories.map((category: any) => (
                   <button
                     key={category.name}
@@ -273,11 +302,11 @@ export default function ChipsChategoriesFilter({
               </div>
             </div>
 
-            {/* Right Arrow */}
-            {showRightArrow && (
+            {/* Right Arrow - Only show when overflowing AND showRightArrow is true */}
+            {isOverflowing && showRightArrow && (
               <button
                 onClick={() => scroll("right")}
-                className="hidden md:block absolute right-0 z-10 bg-none backdrop-blur-sm  p-1  bg-black dark:bg-white transition-all"
+                className="hidden md:block absolute right-0 z-10 bg-none backdrop-blur-sm p-1 bg-black dark:bg-white transition-all"
                 style={{ top: "50%", transform: "translateY(-50%)" }} // Adjust vertical position
                 aria-label="Scroll right"
               >
