@@ -41,18 +41,8 @@ function Pagination({
   const startProduct = (currentPage - 1) * productsPerPage + 1;
   const endProduct = Math.min(currentPage * productsPerPage, totalProducts);
 
-  if (totalPages <= 1) {
-    return (
-      <div className="flex justify-end w-full mt-8">
-        <div className="text-sm text-muted-foreground">
-          Viewing {totalProducts} products
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div className="flex items-center justify-between w-full mt-8 mb-8 py-8 border-t border-b dark:border-gray-300 border-gray-700">
+    <div className="flex items-center justify-between w-full mt-8 mb-8 py-8 border-t border-b border-gray-700 dark:border-gray-300">
       <div className="flex items-center gap-2">
         {totalPages > 1 && (
           <Button
