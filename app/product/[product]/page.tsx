@@ -439,7 +439,6 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                     </Button>
                   </div>
                 </div> */}
-
                 <Button
                   onClick={handleAddToCart}
                   className={`w-2/3 md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
@@ -450,9 +449,17 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                   disabled={!allVariationsSelected()}
                 >
                   <ShoppingCart className="mr-2 h-12 w-4" />
-                  {allVariationsSelected() ? "Add To Bag" : "Select Options"}
+                  {!allVariationsSelected() 
+                    ? "Select Options" 
+                    : (selectedVariation 
+                        ? selectedVariation.stock_status === "onbackorder" 
+                          ? "Preorder" 
+                          : "Add To Bag"
+                        : product.stock_status === "onbackorder" 
+                          ? "Preorder" 
+                          : "Add To Bag")
+                  }
                 </Button>
-
                 <Button
                   className={`w-2/3 md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
                   onClick={handleWishlistToggle}
