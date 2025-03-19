@@ -441,24 +441,26 @@ const ProductPage: React.FC<{ params: { product: string } }> = ({ params }) => {
                 </div> */}
                 <Button
                   onClick={handleAddToCart}
-                  className={`w-2/3 md:flex-1 bg-red text-white rounded-full h-12 flex items-center justify-center ${
-                    !allVariationsSelected()
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
+                  className={`w-2/3 md:flex-1 text-white rounded-full h-12 flex items-center justify-center ${
+                    !allVariationsSelected() ? "opacity-50 cursor-not-allowed" : ""
+                  } ${
+                    (selectedVariation && selectedVariation.stock_status === "onbackorder") ||
+                    (!selectedVariation && product.stock_status === "onbackorder")
+                      ? "bg-gray-500"
+                      : "bg-red"
                   }`}
                   disabled={!allVariationsSelected()}
                 >
                   <ShoppingCart className="mr-2 h-12 w-4" />
-                  {!allVariationsSelected() 
-                    ? "Select Options" 
-                    : (selectedVariation 
-                        ? selectedVariation.stock_status === "onbackorder" 
-                          ? "Preorder" 
-                          : "Add To Bag"
-                        : product.stock_status === "onbackorder" 
-                          ? "Preorder" 
-                          : "Add To Bag")
-                  }
+                  {!allVariationsSelected()
+                    ? "Select Options"
+                    : selectedVariation
+                    ? selectedVariation.stock_status === "onbackorder"
+                      ? "Preorder"
+                      : "Add To Bag"
+                    : product.stock_status === "onbackorder"
+                    ? "Preorder"
+                    : "Add To Bag"}
                 </Button>
                 <Button
                   className={`w-2/3 md:flex-1 rounded-full h-12 flex items-center justify-center bg-black text-white dark:text-black dark:bg-white border-2 border-gray-700 dark:border-gray-200`}
